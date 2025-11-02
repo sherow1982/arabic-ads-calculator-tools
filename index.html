@@ -1,474 +1,127 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="أدوات مجانية احترافية لحساب تكلفة الإعلانات الممولة على جميع المنصات - مؤسسة إعلانات العرب">
-    <meta name="keywords" content="حاسبة إعلانات، تكلفة النقرة، عائد الاستثمار، إعلانات جوجل، فيسبوك، تيك توك، حاسبة CPC، حاسبة ROI">
-    <meta name="author" content="مؤسسة إعلانات العرب">
-    <meta property="og:title" content="أدوات مجانية لحساب تكلفة الإعلانات - مؤسسة إعلانات العرب">
-    <meta property="og:description" content="أدوات احترافية مجانية لحساب تكلفة الإعلانات الممولة وعائد الاستثمار على جميع المنصات الرقمية">
-    <meta property="og:url" content="https://github.com/sherow1982/arabic-ads-calculator-tools">
-    <meta property="og:image" content="https://arabsad.com/logo.png">
-    <title>أدوات احترافية مجانية لحساب تكلفة الإعلانات - مؤسسة إعلانات العرب</title>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            padding: 40px 20px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .header h1 {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header .subtitle {
-            font-size: 1.3em;
-            margin-bottom: 25px;
-            opacity: 0.9;
-        }
-        
-        .header .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            display: block;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-        
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .tool-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-        
-        .tool-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-        }
-        
-        .tool-title {
-            font-size: 1.8em;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        
-        .tool-description {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.8;
-        }
-        
-        .tool-features {
-            list-style: none;
-            margin-bottom: 25px;
-        }
-        
-        .tool-features li {
-            color: #555;
-            margin-bottom: 8px;
-            position: relative;
-            padding-right: 25px;
-        }
-        
-        .tool-features li::before {
-            content: '✅';
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-        
-        .tool-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        .tool-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* About Section */
-        .about-section {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .about-section h2 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .service-item {
-            background: #f8f9ff;
-            padding: 20px;
-            border-radius: 15px;
-            border-right: 4px solid #667eea;
-        }
-        
-        .service-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .service-title {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .service-desc {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        /* Contact Section */
-        .contact-section {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .contact-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        .contact-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        
-        .contact-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            color: white;
-            padding: 30px 20px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .footer p {
-            margin-bottom: 10px;
-            opacity: 0.9;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5em;
-            }
-            
-            .header .stats {
-                gap: 20px;
-            }
-            
-            .stat-number {
-                font-size: 2em;
-            }
-            
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .tool-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .tool-card:nth-child(2) { animation-delay: 0.2s; }
-        .tool-card:nth-child(3) { animation-delay: 0.4s; }
-        .tool-card:nth-child(4) { animation-delay: 0.6s; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>أدوات الإعلانات العربية المجانية | مؤسسة إعلانات العرب</title>
+  <meta name="description" content="مجموعة أدوات عربية مجانية لحساب تكلفة النقرة CPC، تكلفة الاكتساب CPA، وعائد الاستثمار ROI لجميع منصات الإعلانات (Google, Meta, TikTok, Snapchat, YouTube)">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="مؤسسة إعلانات العرب">
+  
+  <meta property="og:title" content="أدوات الإعلانات العربية المجانية">
+  <meta property="og:description" content="حاسبات عربية مجانية لإعلانات جوجل، فيسبوك، تيك توك، سناب شات ويوتيوب: CPC, CPA, ROI, Budget">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sherow1982.github.io/arabic-ads-calculator-tools/">
+  <meta property="og:image" content="https://arabsad.com/assets/images/og-image.jpg">
+  
+  <link rel="canonical" href="https://sherow1982.github.io/arabic-ads-calculator-tools/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--g:linear-gradient(135deg,var(--p) 0%,var(--s) 100%);--card:#ffffff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Cairo","IBM Plex Sans Arabic",system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.7;background:var(--g);color:var(--text)}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    .hero{background:rgba(255,255,255,.1);border-radius:24px;padding:40px 20px;color:#fff;text-align:center;backdrop-filter:blur(10px)}
+    .hero h1{font-size:clamp(28px,4vw,44px);margin-bottom:8px}
+    .hero p{opacity:.95}
+    .stats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .stat{min-width:160px}
+    .stat .num{font-size:28px;font-weight:800}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin:28px 0}
+    .card{background:var(--card);border-radius:20px;padding:22px;box-shadow:0 12px 30px rgba(10,37,64,.1);transition:.25s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(10,37,64,.14)}
+    .icon{font-size:36px;margin-bottom:8px}
+    h3{font-size:22px;margin:6px 0 8px}
+    .muted{color:var(--muted)}
+    ul{list-style:none;margin:14px 0}
+    li{position:relative;padding-right:24px;margin:6px 0;color:#334155}
+    li:before{content:"✅";position:absolute;right:0;top:0}
+    .btn{display:inline-block;background:var(--g);color:#fff;text-decoration:none;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(102,126,234,.3);font-weight:700}
+    .btn:hover{transform:translateY(-2px)}
+    .about,.contact{background:#fff;border-radius:20px;padding:26px;box-shadow:0 12px 30px rgba(10,37,64,.08)}
+    .contact{background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;text-align:center}
+    .footer{margin-top:18px;text-align:center;color:#e2e8f0}
+    @media(max-width:640px){.container{padding:14px}}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🚀 أدوات الإعلانات الاحترافية</h1>
-            <div class="subtitle">مجموعة شاملة من الأدوات المجانية لحساب تكلفة وعائد الإعلانات الممولة</div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">عميل راضي</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">8</span>
-                    <span class="stat-label">مشاريع Live Demo</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">95%</span>
-                    <span class="stat-label">معدل نجاح الحملات</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Tools Grid -->
-        <div class="tools-grid">
-            <div class="tool-card">
-                <span class="tool-icon">📊</span>
-                <h3 class="tool-title">حاسبة تكلفة النقرة (CPC)</h3>
-                <p class="tool-description">احسب تكلفة النقرة الواحدة بدقة لتحسين ميزانيتك الإعلانية وتحقيق أفضل عائد استثمار.</p>
-                <ul class="tool-features">
-                    <li>حساب دقيق لتكلفة النقرة</li>
-                    <li>مقارنة بين المنصات المختلفة</li>
-                    <li>نصائح لتحسين الأداء</li>
-                    <li>واجهة سهلة الاستخدام</li>
-                </ul>
-                <a href="cpc-calculator.html" class="tool-btn">استخدم الأداة</a>
-            </div>
-            
-            <div class="tool-card">
-                <span class="tool-icon">💰</span>
-                <h3 class="tool-title">حاسبة عائد الاستثمار (ROI)</h3>
-                <p class="tool-description">قيس عائد استثمارك الفعلي من الحملات الإعلانية واحصل على تحليل شامل للأداء.</p>
-                <ul class="tool-features">
-                    <li>حساب عائد الاستثمار الدقيق</li>
-                    <li>تحليل الأرباح والخسائر</li>
-                    <li>توصيات للتحسين</li>
-                    <li>تقارير بصرية واضحة</li>
-                </ul>
-                <a href="roi-calculator.html" class="tool-btn">استخدم الأداة</a>
-            </div>
-            
-            <div class="tool-card">
-                <span class="tool-icon">🎯</span>
-                <h3 class="tool-title">حاسبة التحويلات (قريباً)</h3>
-                <p class="tool-description">احسب معدل التحويل وتكلفة الاكتساب لتحسين أداء حملاتك الإعلانية.</p>
-                <ul class="tool-features">
-                    <li>حساب معدل التحويل</li>
-                    <li>تكلفة اكتساب العميل</li>
-                    <li>تحليل قمع المبيعات</li>
-                    <li>مقارنات تفصيلية</li>
-                </ul>
-                <a href="#" class="tool-btn" style="opacity: 0.6; cursor: not-allowed;">قريباً</a>
-            </div>
-            
-            <div class="tool-card">
-                <span class="tool-icon">📈</span>
-                <h3 class="tool-title">مخطط الميزانية (قريباً)</h3>
-                <p class="tool-description">خطط ميزانيتك الإعلانية بذكاء وقسمها على المنصات المختلفة لتحقيق أفضل النتائج.</p>
-                <ul class="tool-features">
-                    <li>تخطيط الميزانية الذكي</li>
-                    <li>توزيع على المنصات</li>
-                    <li>توقعات الأداء</li>
-                    <li>تتبع الإنفاق</li>
-                </ul>
-                <a href="#" class="tool-btn" style="opacity: 0.6; cursor: not-allowed;">قريباً</a>
-            </div>
-        </div>
-        
-        <!-- About Section -->
-        <div class="about-section">
-            <h2>🌟 عن مؤسسة إعلانات العرب</h2>
-            <p style="text-align: center; font-size: 1.2em; color: #666; margin-bottom: 30px;">نحن فريق من خبراء التسويق الرقمي المتخصصين في إدارة الحملات الإعلانية الممولة عبر جميع المنصات الرقمية في المنطقة العربية.</p>
-            
-            <div class="services-grid">
-                <div class="service-item">
-                    <span class="service-icon">🎯</span>
-                    <div class="service-title">إعلانات جوجل</div>
-                    <div class="service-desc">حملات البحث والشبكة الإعلانية ويوتيوب والتسوق</div>
-                </div>
-                
-                <div class="service-item">
-                    <span class="service-icon">📱</span>
-                    <div class="service-title">فيسبوك وإنستجرام</div>
-                    <div class="service-desc">إعلانات فيسبوك وإنستجرام والماسنجر</div>
-                </div>
-                
-                <div class="service-item">
-                    <span class="service-icon">🎵</span>
-                    <div class="service-title">تيك توك وسناب شات</div>
-                    <div class="service-desc">استراتيجيات تيك توك وحملات سناب شات</div>
-                </div>
-                
-                <div class="service-item">
-                    <span class="service-icon">📊</span>
-                    <div class="service-title">تحليل البيانات</div>
-                    <div class="service-desc">تقارير مفصلة وتحليل الأداء المتقدم</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Contact Section -->
-        <div class="contact-section">
-            <h2>📞 هل تريد تطبيق استراتيجيات متقدمة؟</h2>
-            <p style="font-size: 1.2em; margin-bottom: 20px;">تواصل مع خبراء الإعلانات في مؤسسة إعلانات العرب</p>
-            <p>أكثر من 500 شركة تثق بخبرتنا في تحقيق أفضل عائد استثمار من الإعلانات الممولة</p>
-            
-            <div class="contact-buttons">
-                <a href="https://arabsad.com" target="_blank" class="contact-btn">
-                    🌐 الموقع الرسمي
-                </a>
-                <a href="https://wa.me/201110760081" target="_blank" class="contact-btn">
-                    💬 واتساب مباشر
-                </a>
-                <a href="mailto:info@arabsad.com" class="contact-btn">
-                    📧 البريد الإلكتروني
-                </a>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p><strong>مؤسسة إعلانات العرب</strong> - رواد التسويق الرقمي في المنطقة العربية</p>
-            <p>تم تطوير هذه الأدوات بحب ❤️ لخدمة المجتمع العربي</p>
-            <p style="font-size: 0.9em; opacity: 0.7;">جميع الحقوق محفوظة © 2025</p>
-        </div>
-    </div>
-    
-    <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "أدوات حساب تكلفة الإعلانات العربية",
-        "description": "مجموعة من الأدوات المجانية لحساب تكلفة وعائد الإعلانات الممولة",
-        "url": "https://github.com/sherow1982/arabic-ads-calculator-tools",
-        "author": {
-            "@type": "Organization",
-            "name": "مؤسسة إعلانات العرب",
-            "url": "https://arabsad.com"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
+  <div class="container">
+    <section class="hero">
+      <h1>🚀 أدوات الإعلانات العربية المجانية</h1>
+      <p>حاسبات عربية احترافية لحساب CPC، CPA، ROI وتخطيط الميزانية لجميع المنصات</p>
+      <div class="stats">
+        <div class="stat"><div class="num">500+</div><div class="muted">شركات استخدمت الأدوات</div></div>
+        <div class="stat"><div class="num">98%</div><div class="muted">معدل رضا المستخدمين</div></div>
+        <div class="stat"><div class="num">99.2%</div><div class="muted">دقة الحسابات</div></div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="قائمة الأدوات">
+      <article class="card">
+        <div class="icon">📊</div>
+        <h3>حاسبة تكلفة النقرة (CPC)</h3>
+        <p class="muted">احسب تكلفة النقرة الحقيقة وقارن بين المنصات وحدد الميزانيات المثلى</p>
+        <ul>
+          <li>حساب فوري ودقيق</li>
+          <li>مقارنات Google/Meta/TikTok</li>
+          <li>نصائح تحسين تلقائية</li>
+        </ul>
+        <a class="btn" href="cpc-calculator.html">استخدام الأداة</a>
+      </article>
+
+      <article class="card">
+        <div class="icon">💰</div>
+        <h3>حاسبة عائد الاستثمار (ROI)</h3>
+        <p class="muted">قِس الربحية الحقيقية للحملات وتعرّف على قرارات التوسّع أو الإيقاف</p>
+        <ul>
+          <li>حساب نسبة ومبالغ الربح</li>
+          <li>تتبّع التكاليف الثابتة/المتحركة</li>
+          <li>تقارير بصرية مختصرة</li>
+        </ul>
+        <a class="btn" href="roi-calculator.html">استخدام الأداة</a>
+      </article>
+
+      <article class="card">
+        <div class="icon">🎯</div>
+        <h3>حاسبة CPA (قريباً)</h3>
+        <p class="muted">احسب تكلفة الاكتساب المثالية حسب القطاع والجمهور ومسار التحويل</p>
+        <ul>
+          <li>نماذج جاهزة حسب الصناعة</li>
+          <li>تحسين مسار التحويل</li>
+          <li>تحذيرات تخطي الميزانية</li>
+        </ul>
+        <a class="btn" style="pointer-events:none;opacity:.65">قريباً</a>
+      </article>
+
+      <article class="card">
+        <div class="icon">📈</div>
+        <h3>مخطط الميزانية الذكي (قريباً)</h3>
+        <p class="muted">وزّع ميزانيتك بذكاء على المنصات لتحقيق أقصى عائد</p>
+        <ul>
+          <li>نمذجة بميزانية ثابتة/مرنة</li>
+          <li>توقعات الأداء</li>
+          <li>توصيات آلية</li>
+        </ul>
+        <a class="btn" style="pointer-events:none;opacity:.65">قريباً</a>
+      </article>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <h2 id="about-title">🌟 عن مؤسسة إعلانات العرب</h2>
+      <p class="muted">نخدم السوق العربي بأدوات مجانية وعمليّات تسويقية مدفوعة بالبيانات لضمان أفضل عائد على الاستثمار.</p>
+    </section>
+
+    <section class="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">📞 تحتاج مساعدة في حملاتك؟</h2>
+      <p>تواصل مباشرة مع الخبراء على واتساب</p>
+      <p style="margin-top:10px"><a class="btn" href="https://wa.me/201110760081" target="_blank" rel="noopener">واتساب مباشر</a></p>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 مؤسسة إعلانات العرب – أدوات مجانية للمسوقين العرب</p>
+    </footer>
+  </div>
 </body>
 </html>
