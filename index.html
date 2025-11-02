@@ -59,6 +59,7 @@
     .section-title{color:#fff;margin:18px 0 10px;font-size:1.5rem}
     .footer{margin-top:24px;text-align:center;color:#e2e8f0;padding:18px;background:rgba(0,0,0,.1);border-radius:15px}
     .new-badge{position:absolute;top:8px;right:8px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;animation:pulse 2s infinite}
+    .alert-badge{position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;animation:pulse 2s infinite}
     
     /* Floating Buttons */
     .whatsapp-float {
@@ -313,7 +314,7 @@
       "CPC Calculator", "ROI Calculator", "CPA Calculator", "CTR Calculator", 
       "CVR Calculator", "Profit Margin Calculator", "Budget Planner", 
       "UTM Generator", "WhatsApp Message Generator", "Social Content Planner",
-      "Arabic Multi-Dialect Chatbot", "Audience Calculator"
+      "Arabic Multi-Dialect Chatbot", "Audience Calculator", "Ads Platform Alerts"
     ]
   }
   </script>
@@ -327,6 +328,7 @@
   <div class="container">
     <nav class="nav">
       <a href="#tools">🧠 الأدوات</a>
+      <a href="alerts.html">🚨 تنبيهات المنصات</a>
       <a href="about.html">📊 عن الأدوات</a>
       <a href="all-tools.html">✨ كل الأدوات</a>
       <a href="https://arabsad.com" target="_blank" rel="noopener">🌐 الموقع</a>
@@ -334,9 +336,9 @@
 
     <header class="hero">
       <h1>🚀 أدوات الإعلانات العربية المجانية</h1>
-      <p>حاسبات عربية احترافية: CPC, CPA, ROI, CVR, CTR + مخطط الميزانية + مولد UTM + مولد رسائل واتساب + بوت ذكي متعدد اللهجات</p>
+      <p>حاسبات عربية احترافية: CPC, CPA, ROI, CVR, CTR + مخطط الميزانية + مولد UTM + مولد رسائل واتساب + بوت ذكي متعدد اللهجات + تنبيهات تحديثات المنصات</p>
       <div style="background:rgba(239,68,68,.2);padding:8px 16px;border-radius:999px;display:inline-block;margin-top:12px;font-weight:700">
-        ✨ تم تفعيل جميع الأدوات + بوت ذكي جديد!
+        ✨ تم تفعيل جميع الأدوات + بوت ذكي + تنبيهات تلقائية!
       </div>
     </header>
 
@@ -409,7 +411,7 @@
       </article>
     </section>
 
-    <h2 class="section-title">🔗 التتبع والمراسلة</h2>
+    <h2 class="section-title">🔗 التتبع والمراسلة والتنبيهات</h2>
     <section class="grid">
       <article class="card" onclick="trackToolClick('UTM Generator')">
         <div class="new-badge">جديد</div>
@@ -434,12 +436,20 @@
         <p class="muted">أنشئ خطة نشر أسبوعية ذكية</p>
         <a class="btn" href="social-content-planner.html">فتح الأداة</a>
       </article>
+      
+      <article class="card" onclick="trackToolClick('Ads Platform Alerts')">
+        <div class="alert-badge">عاجل</div>
+        <div class="icon">🚨</div>
+        <h3>تنبيهات تحديثات المنصات</h3>
+        <p class="muted">آخر تحديثات Google, Meta, TikTok</p>
+        <a class="btn" href="alerts.html">فتح الأداة</a>
+      </article>
     </section>
 
     <footer class="footer">
       <p>&copy; 2025 مؤسسة إعلانات العرب – أدوات مجانية للمسوقين العرب</p>
       <div style="margin-top:8px;font-size:14px;opacity:0.8">
-        ✨ تحديث جديد: تم تفعيل جميع الأدوات + بوت ذكي متعدد اللهجات - 2 نوفمبر 2025
+        ✨ تحديث جديد: تفعيل 15 أداة + بوت ذكي + تنبيهات تلقائية - 2 نوفمبر 2025
       </div>
     </footer>
   </div>
@@ -465,7 +475,7 @@
                   <i class="fas fa-robot"></i>
               </div>
               <div>
-                  <h6 style="margin: 0; font-size: 16px;">مساعد الحاسبات العربي</h6>
+                  <h6 style="margin: 0; font-size: 16px;">مساعح الحاسبات العربي</h6>
                   <small style="opacity: 0.9;">متصل الآن - يفهم جميع اللهجات</small>
               </div>
           </div>
@@ -477,13 +487,14 @@
               <div class="message-content">
                   أهلاً وسهلاً! 👋<br>
                   أنا مساعدك الذكي لحاسبات الإعلانات<br>
-                  اسألني عن أي حاجة بأي لهجة عربية وهساعدك فوراً! 🚀
+                  اسألني عن أي حاجة بأي لهجة عربية وهساعدك فوراً! 🚀<br><br>
+                  <strong>جديد:</strong> اسألني عن "تنبيهات" لمعرفة آخر التحديثات! 🚨
               </div>
           </div>
       </div>
       
       <div class="chatbot-input">
-          <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا... (مثل: عايز أحسب CPC)">
+          <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا... (مثل: عايز أحسب CPC أو تنبيهات)">
           <button id="chatSend">
               <i class="fas fa-paper-plane"></i>
           </button>
@@ -573,6 +584,11 @@
     function generateSimpleBotResponse(userMessage) {
         const msg = userMessage.toLowerCase();
         
+        // تنبيهات
+        if (msg.includes('تنبيه') || msg.includes('تحديث') || msg.includes('اخبار') || msg.includes('alerts')) {
+            return '🚨 ممتاز! عندنا أداة جديدة للتنبيهات التلقائية<br><br><a href="alerts.html" style="background:#ef4444;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">🚨 تنبيهات المنصات →</a>';
+        }
+        
         if (msg.includes('cpc') || msg.includes('تكلفة النقرة')) {
             return '💰 ممتاز! هذي من أفضل أدواتنا<br><br><a href="cpc-calculator.html" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة CPC →</a>';
         }
@@ -585,7 +601,7 @@
             return '📈 عايز توزع ميزانيتك بذكاء؟<br><br><a href="budget-planner.html" style="background:#8b5cf6;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">مخطط الميزانية →</a>';
         }
         
-        return '😊 شكراً لسؤالك! عندنا 12 أداة مجانية:<br><br><a href="all-tools.html" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">عرض كل الأدوات →</a>';
+        return '😊 شكراً لسؤالك! عندنا 15 أداة مجانية:<br><br><a href="all-tools.html" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">عرض كل الأدوات →</a>';
     }
     
     // Track tool clicks from homepage
