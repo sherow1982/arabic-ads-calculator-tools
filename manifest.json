@@ -1,13 +1,13 @@
 {
-  "name": "أدوات الإعلانات العربية - حاسبات متقدمة",
+  "name": "أدوات الإعلانات العربية - 18 أداة مجانية",
   "short_name": "حاسبات الإعلانات",
-  "description": "مجموعة شاملة من أدوات حساب تكلفة الإعلانات الممولة مجانية للمسوقين العرب",
-  "start_url": "/",
+  "description": "مجموعة شاملة من 18 أداة مجانية لتحسين أداء إعلاناتك الرقمية مع بوت ذكي وتنبيهات تلقائية",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "./",
   "lang": "ar",
   "dir": "rtl",
   "categories": ["business", "productivity", "finance"],
@@ -15,42 +15,48 @@
     {
       "src": "favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ],
   "shortcuts": [
     {
+      "name": "تنبيهات المنصات",
+      "short_name": "تنبيهات",
+      "description": "آخر تحديثات منصات الإعلانات",
+      "url": "./alerts.html",
+      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
+    },
+    {
       "name": "حاسبة ROI",
       "short_name": "ROI",
       "description": "حساب عائد الاستثمار",
-      "url": "/roi-calculator.html",
-      "icons": [{ "src": "favicon.svg", "sizes": "96x96" }]
-    },
-    {
-      "name": "حاسبة CPC",
-      "short_name": "CPC",
-      "description": "حساب تكلفة النقرة",
-      "url": "/cpc-calculator.html",
-      "icons": [{ "src": "favicon.svg", "sizes": "96x96" }]
+      "url": "./roi-calculator.html",
+      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
     },
     {
       "name": "مخطط الميزانية",
       "short_name": "ميزانية",
       "description": "توزيع الميزانية بذكاء",
-      "url": "/budget-planner.html",
-      "icons": [{ "src": "favicon.svg", "sizes": "96x96" }]
+      "url": "./budget-planner.html",
+      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
+    },
+    {
+      "name": "محلل المنافسة",
+      "short_name": "منافسة",
+      "description": "تحليل أداء المنافسين",
+      "url": "./competition-analyzer.html",
+      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
     }
+  ],
+  "features": [
+    "Cross Platform",
+    "Offline Support", 
+    "Push Notifications",
+    "Background Sync",
+    "Arabic RTL Support",
+    "Multi-Dialect Chatbot",
+    "Real-time Platform Alerts",
+    "18 Free Marketing Tools"
   ]
 }
