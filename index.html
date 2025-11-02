@@ -74,52 +74,11 @@
     .badge { background: #10b981; color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
     .badge.new { background: #ef4444; } .badge.advanced { background: #8b5cf6; } .badge.popular { background: #f59e0b; } .badge.ai { background: #6366f1; }
     
-    /* محرر TinyMCE */
-    .editor-section {
-      margin: 30px 0;
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
-    .editor-section h2 {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 15px;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    .editor-actions {
-      margin: 20px 0;
-      text-align: center;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .editor-btn {
-      background: linear-gradient(45deg, #3498db, #2980b9);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-    .editor-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-    }
-    
     @media (max-width: 768px) { 
       .hero-section h1 { font-size: 2.3rem; } 
       .tools-grid { grid-template-columns: 1fr; gap: 15px; } 
       .tool-card { padding: 18px; } 
       .category { padding: 20px; }
-      .editor-actions { flex-direction: column; align-items: center; }
-      .editor-btn { width: 200px; }
     }
   </style>
 </head>
@@ -166,51 +125,6 @@
       </div>
     </div>
 
-    <!-- قسم المحرر العربي المدمج -->
-    <section class="editor-section">
-      <h2>✍️ محرر المحتوى العربي المتقدم</h2>
-      <p style="text-align: center; margin-bottom: 20px; color: #666;">اكتب وحرّر محتواك العربي بسهولة مع دعم كامل لـ RTL والحفظ التلقائي</p>
-      
-      <!-- المحرر الرئيسي -->
-      <textarea class="arabic-editor" name="main-content">
-        <h2>🎯 مرحباً بمحرر المحتوى العربي المتقدم!</h2>
-        
-        <div class="calculator-note">
-          <h3>💡 مميزات المحرر:</h3>
-          <ul>
-            <li><strong>دعم كامل للغة العربية</strong> مع اتجاه RTL</li>
-            <li><strong>حفظ تلقائي</strong> كل 30 ثانية</li>
-            <li><strong>قوالب خاصة</strong> بالحاسبات والأدوات</li>
-            <li><strong>تصدير HTML</strong> جاهز للنشر</li>
-            <li><strong>تبديل سريع</strong> بين العربية والإنجليزية</li>
-          </ul>
-        </div>
-        
-        <h3>📊 مثال على استخدام الحاسبة:</h3>
-        <p>يمكنك الآن كتابة ملاحظاتك وتعليقاتك على نتائج الحاسبات:</p>
-        
-        <blockquote>
-          <p>"بعد استخدام حاسبة ROI، وجدت أن حملتي على فيسبوك تحقق عائد <span class="highlight">350%</span> وهو أداء ممتاز!"</p>
-        </blockquote>
-        
-        <h3>🎨 جرب التنسيقات المختلفة:</h3>
-        <ul>
-          <li>✨ <em>نص مائل</em></li>
-          <li>💪 <strong>نص عريض</strong></li>
-          <li>🎯 <u>نص مسطر</u></li>
-        </ul>
-      </textarea>
-      
-      <!-- أزرار المحرر -->
-      <div class="editor-actions">
-        <button class="editor-btn" onclick="getEditorContent()">📄 عرض المحتوى</button>
-        <button class="editor-btn" onclick="saveEditorContent()">💾 حفظ كملف</button>
-        <button class="editor-btn" onclick="clearEditor()">🗑️ مسح المحرر</button>
-        <button class="editor-btn" onclick="addCalculatorTemplate()">📊 إضافة قالب حاسبة</button>
-      </div>
-    </section>
-
-    <!-- باقي المحتوى... -->
     <!-- القسم الأول: أدوات الكلمات المفتاحية والتوليد -->
     <section class="category">
       <h2><i class="fas fa-key"></i> أدوات الكلمات المفتاحية والتوليد (4 أدوات)</h2>
@@ -294,59 +208,8 @@
       </div>
     </section>
 
-    <!-- حاسبات الأداء الأساسية -->
-    <section class="category">
-      <h2><i class="fas fa-calculator"></i> حاسبات الأداء والتكلفة الأساسية (7 أدوات)</h2>
-      <div class="tools-grid">
-        <div class="tool-card">
-          <div class="badges"><span class="badge popular">شائع</span></div>
-          <div class="tool-icon"><i class="fas fa-calculator"></i></div>
-          <h3 class="tool-title">حاسبة CPC المتقدمة</h3>
-          <p class="tool-description">حساب تكلفة النقرة مع مقارنات السوق العربي وتوصيات التحسين</p>
-          <a href="cpc-calculator.html" class="tool-link"><i class="fas fa-calculator"></i> احسب CPC</a>
-        </div>
-        <div class="tool-card">
-          <div class="badges"><span class="badge popular">شائع</span></div>
-          <div class="tool-icon" style="color:#10b981"><i class="fas fa-chart-line"></i></div>
-          <h3 class="tool-title">حاسبة ROI الشاملة</h3>
-          <p class="tool-description">قياس عائد الاستثمار مع تحليل مفصل للربحية ونقطة التعادل</p>
-          <a href="roi-calculator.html" class="tool-link"><i class="fas fa-chart-line"></i> احسب العائد</a>
-        </div>
-        <div class="tool-card">
-          <div class="badges"><span class="badge popular">محدث</span></div>
-          <div class="tool-icon" style="color:#ef4444"><i class="fas fa-money-bill-trend-up"></i></div>
-          <h3 class="tool-title">حاسبة ROAS المطورة</h3>
-          <p class="tool-description">حساب عائد الإنفاق الإعلاني مع مقارنة معايير الصناعة</p>
-          <a href="roas-calculator.html" class="tool-link"><i class="fas fa-money-bill-trend-up"></i> احسب ROAS</a>
-        </div>
-        <div class="tool-card">
-          <div class="tool-icon" style="color:#f59e0b"><i class="fas fa-user-plus"></i></div>
-          <h3 class="tool-title">حاسبة CPA الدقيقة</h3>
-          <p class="tool-description">حساب تكلفة اكتساب العميل مع تحليل مسار التحويل</p>
-          <a href="cpa-calculator.html" class="tool-link"><i class="fas fa-user-plus"></i> احسب CPA</a>
-        </div>
-        <div class="tool-card">
-          <div class="tool-icon" style="color:#8b5cf6"><i class="fas fa-mouse-pointer"></i></div>
-          <h3 class="tool-title">حاسبة CTR المحسنة</h3>
-          <p class="tool-description">حساب معدل النقر مع نصائح فورية للتحسين</p>
-          <a href="ctr-calculator.html" class="tool-link"><i class="fas fa-mouse-pointer"></i> احسب CTR</a>
-        </div>
-        <div class="tool-card">
-          <div class="tool-icon" style="color:#06b6d4"><i class="fas fa-exchange-alt"></i></div>
-          <h3 class="tool-title">حاسبة CVR المتطورة</h3>
-          <p class="tool-description">قياس معدل التحويل مع تحليل نقاط الضعف وحلول التحسين</p>
-          <a href="cvr-calculator.html" class="tool-link"><i class="fas fa-exchange-alt"></i> احسب CVR</a>
-        </div>
-        <div class="tool-card">
-          <div class="tool-icon" style="color:#0ea5e9"><i class="fas fa-percentage"></i></div>
-          <h3 class="tool-title">حاسبة هامش الربح</h3>
-          <p class="tool-description">حساب هامش الربح وضمان ربحية الحملات قبل التوسع</p>
-          <a href="profit-margin-calculator.html" class="tool-link"><i class="fas fa-percentage"></i> احسب الهامش</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- الأدوات الأخرى... (باقي المحتوى) -->
+    <!-- باقي الأقسام... -->
+    
     <!-- ملخص شامل -->
     <div style="background:var(--gradient);color:white;padding:40px;border-radius:20px;text-align:center;margin:40px 0">
       <h2 style="margin-bottom:20px;font-size:1.8rem">🏆 المجموعة الكاملة - 27 أداة في مكان واحد</h2>
@@ -378,13 +241,12 @@
       <p>&copy; 2025 مؤسسة إعلانات العرب – 27 أداة احترافية مجانية للمسوقين العرب</p>
       
       <div style="margin-top: 20px; font-size: 14px; opacity: 0.9; line-height: 1.5; text-align: center;">
-        🚀 <strong>تحديث نوفمبر 2025:</strong> 7 أدوات متقدمة جديدة + بوت ذكي محدّث + تنبيهات تلقائية + محرر عربي متقدم<br>
-        <small style="opacity: 0.8;">آخر تحديث: 3 نوفمبر 2025 | المجموع النهائي: 27 أداة + محرر TinyMCE | تم بناؤها بحب للمجتمع العربي ❤️</small>
+        🚀 <strong>تحديث نوفمبر 2025:</strong> 7 أدوات متقدمة جديدة + بوت ذكي محدّث + تنبيهات تلقائية<br>
+        <small style="opacity: 0.8;">آخر تحديث: 3 نوفمبر 2025 | المجموع النهائي: 27 أداة | تم بناؤها بحب للمجتمع العربي ❤️</small>
       </div>
       
       <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">📊 27 أداة شاملة</span>
-        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">✍️ محرر عربي متقدم</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🌍 6 منصات مدعومة</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🤖 بوت ذكي متطور</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🚨 تنبيهات حية</span>
@@ -440,105 +302,6 @@
     </div>
   </div>
 
-  <!-- محرر TinyMCE العربي -->
-  <script src="./assets/tinymce-editor.js"></script>
-  
-  <!-- وظائف المحرر -->
-  <script>
-    function getEditorContent() {
-      const editor = tinymce.get('main-content');
-      if (editor) {
-        const content = editor.getContent();
-        alert('محتوى المحرر:\n\n' + content.substring(0, 300) + '...');
-      } else {
-        alert('المحرر غير محمل بعد، انتظر قليلاً...');
-      }
-    }
-    
-    function saveEditorContent() {
-      const editor = tinymce.get('main-content');
-      if (editor) {
-        const content = editor.getContent();
-        const blob = new Blob([`
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>محتوى من حاسبة الإعلانات العربية</title>
-    <style>
-        body {
-            font-family: 'Cairo', Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.7;
-        }
-        .calculator-note {
-            background: #e3f2fd;
-            border-right: 4px solid #2196f3;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        h1, h2, h3 { color: #2c3e50; }
-    </style>
-</head>
-<body>
-    ${content}
-    <hr style="margin: 30px 0;">
-    <p style="text-align: center; color: #666; font-size: 12px;">
-        تم إنشاؤه بواسطة أدوات الإعلانات العربية - https://sherow1982.github.io/arabic-ads-calculator-tools/
-    </p>
-</body>
-</html>
-        `], { type: 'text/html;charset=utf-8' });
-        
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `حاسبة-إعلانات-${Date.now()}.html`;
-        link.click();
-        URL.revokeObjectURL(url);
-        
-        alert('✅ تم حفظ المحتوى بنجاح!');
-      } else {
-        alert('المحرر غير محمل بعد، انتظر قليلاً...');
-      }
-    }
-    
-    function clearEditor() {
-      const editor = tinymce.get('main-content');
-      if (editor && confirm('هل تريد مسح جميع المحتوى؟')) {
-        editor.setContent('');
-        alert('✅ تم مسح المحرر!');
-      }
-    }
-    
-    function addCalculatorTemplate() {
-      const editor = tinymce.get('main-content');
-      if (editor) {
-        const template = `
-          <div class="calculator-note">
-            <h3>📊 نتائج الحاسبة</h3>
-            <p><strong>الأداة المستخدمة:</strong> [اسم الحاسبة]</p>
-            <p><strong>النتيجة:</strong> [النتيجة هنا]</p>
-            <p><strong>التوصية:</strong> [التوصية هنا]</p>
-            <p><strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar')}</p>
-          </div>
-        `;
-        editor.insertContent(template);
-        alert('✅ تم إضافة قالب الحاسبة!');
-      }
-    }
-  </script>
-
   <!-- الجافاسكريبت -->
   <script src="shared-scripts.js"></script>
   <script src="chatbot.js"></script>
@@ -547,11 +310,10 @@
   <script>
     // تتبع عرض الأدوات المباشر في الصفحة الرئيسية
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'homepage_with_editor_view', {
+      gtag('event', 'homepage_view', {
         event_category: 'Homepage Experience',
-        event_label: 'TinyMCE Editor Integration',
-        tools_count: 27,
-        editor_enabled: true
+        event_label: 'Clean Tools Overview',
+        tools_count: 27
       });
     }
   </script>
