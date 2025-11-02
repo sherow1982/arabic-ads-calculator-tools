@@ -1,83 +1,540 @@
-// مخطط الإعلانات الموسمية الذكي
-// Seasonal Ads Planner - Advanced Arabic Version
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مخطط الإعلانات الموسمية | مؤسسة إعلانات العرب</title>
-    <meta name="description" content="أداة ذكية للتخطيط للحملات الإعلانية الموسمية مع التنبؤ بالطلب وتوزيع الميزانية">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>مخطط الإعلانات الموسمية - تنبؤ بالطلب وتوزيع الميزانية | أدوات الإعلانات العربية</title>
+  <meta name="description" content="خطط لحملاتك الموسمية مع التنبؤ بالطلب وتوزيع الميزانية الأمثل لرمضان والجمعة البيضاء والعيد">
+  <meta name="keywords" content="إعلانات موسمية, رمضان, الجمعة البيضاء, العيد, تخطيط الحملات, مواسم الذروة">
+  
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../global-styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    .planner-wrapper {
+      background: var(--gradient);
+      min-height: 100vh;
+      padding: 20px;
+    }
     
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --gradient-primary: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
-            --light-color: #f8fafc;
-            --border-color: #e2e8f0;
-            --text-primary: #1f2937;
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--gradient-primary);
-            min-height: 100vh;
-            padding: 20px;
-            direction: rtl;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .content {
-            padding: 30px;
-            text-align: center;
-        }
-
-        .calculate-btn {
-            padding: 15px 30px;
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-    </style>
+    .season-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+    
+    .season-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .season-card.selected {
+      border-color: var(--primary);
+      background: rgba(102,126,234,0.05);
+      transform: translateY(-5px);
+    }
+    
+    .season-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .season-emoji {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+    
+    .season-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    
+    .season-period {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    
+    .season-impact {
+      background: var(--light-bg);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .timeline-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 25px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+    
+    .timeline-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary);
+      margin-left: 20px;
+      flex-shrink: 0;
+    }
+    
+    .timeline-content {
+      flex-grow: 1;
+    }
+    
+    .timeline-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    
+    .timeline-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .budget-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .budget-period {
+      background: var(--light-bg);
+      border: 2px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .period-name {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    
+    .period-budget {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .period-percentage {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    
+    @media (max-width: 768px) {
+      .season-cards,
+      .budget-breakdown {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>📅 مخطط الإعلانات الموسمية الذكي</h1>
-            <p>خطط لحملاتك الموسمية مع التنبؤ بالطلب وتوزيع الميزانية الأمثل عبر السنة</p>
-        </header>
-        
-        <div class="content">
-            <h3>قريباً - أداة ذكية للتخطيط الموسمي</h3>
-            <button class="calculate-btn" onclick="alert('ستكون متاحة قريباً!')">
-                📊 ابدأ التخطيط
-            </button>
+  <div class="planner-wrapper">
+    <!-- زر العودة -->
+    <a href="../index.html" class="unified-back-btn">
+      <i class="fas fa-arrow-right"></i> العودة للرئيسية
+    </a>
+    
+    <div class="unified-card">
+      <!-- Header -->
+      <div class="unified-header">
+        <h1><i class="fas fa-calendar-star"></i> مخطط الإعلانات الموسمية</h1>
+        <p>خطط لحملاتك الموسمية مع التنبؤ بالطلب وتوزيع الميزانية الأمثل</p>
+      </div>
+      
+      <!-- اختيار الموسم -->
+      <div class="season-cards" id="seasonCards">
+        <div class="season-card" data-season="ramadan">
+          <span class="season-emoji">🌙</span>
+          <div class="season-name">رمضان المبارك</div>
+          <div class="season-period">مارس - أبريل</div>
+          <div class="season-impact">زيادة 300% في الطلب</div>
         </div>
+        
+        <div class="season-card" data-season="eid">
+          <span class="season-emoji">🎆</span>
+          <div class="season-name">عيد الفطر</div>
+          <div class="season-period">مايو - يونيو</div>
+          <div class="season-impact">زيادة 200% في الطلب</div>
+        </div>
+        
+        <div class="season-card" data-season="back-to-school">
+          <span class="season-emoji">🎒</span>
+          <div class="season-name">العودة للمدرسة</div>
+          <div class="season-period">أغسطس - سبتمبر</div>
+          <div class="season-impact">زيادة 150% في الطلب</div>
+        </div>
+        
+        <div class="season-card" data-season="national-day">
+          <span class="season-emoji">🇸🇦</span>
+          <div class="season-name">اليوم الوطني</div>
+          <div class="season-period">سبتمبر</div>
+          <div class="season-impact">زيادة 120% في الطلب</div>
+        </div>
+        
+        <div class="season-card" data-season="black-friday">
+          <span class="season-emoji">🛋</span>
+          <div class="season-name">الجمعة البيضاء</div>
+          <div class="season-period">نوفمبر</div>
+          <div class="season-impact">زيادة 400% في الطلب</div>
+        </div>
+        
+        <div class="season-card" data-season="new-year">
+          <span class="season-emoji">🎉</span>
+          <div class="season-name">رأس السنة</div>
+          <div class="season-period">ديسمبر - يناير</div>
+          <div class="season-impact">زيادة 180% في الطلب</div>
+        </div>
+      </div>
+      
+      <!-- إعدادات الحملة -->
+      <form id="seasonalForm">
+        <div class="unified-form-grid">
+          <div class="unified-form-group">
+            <label for="totalBudget">
+              <i class="fas fa-dollar-sign"></i>
+              الميزانية الإجمالية (ريال)
+            </label>
+            <input type="number" id="totalBudget" min="1000" step="500" required placeholder="10000">
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="businessCategory">
+              <i class="fas fa-store"></i>
+              فئة النشاط التجاري
+            </label>
+            <select id="businessCategory" required>
+              <option value="">اختر الفئة</option>
+              <option value="fashion">أزياء وموضة</option>
+              <option value="electronics">إلكترونيات</option>
+              <option value="food">مأكولات ومشروبات</option>
+              <option value="beauty">تجميل وعناية</option>
+              <option value="home">منزل وحديقة</option>
+              <option value="gifts">هدايا</option>
+              <option value="travel">سياحة وسفر</option>
+              <option value="sports">رياضة ولياقة</option>
+            </select>
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="planningHorizon">
+              <i class="fas fa-clock"></i>
+              أفق التخطيط
+            </label>
+            <select id="planningHorizon" required>
+              <option value="">اختر الفترة</option>
+              <option value="current-season">الموسم الحالي</option>
+              <option value="next-season">الموسم القادم</option>
+              <option value="full-year">عام كامل</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="unified-btn-primary">
+          <i class="fas fa-chart-line"></i>
+          ابدأ التخطيط الموسمي الآن
+        </button>
+      </form>
+      
+      <!-- النتائج -->
+      <div id="results" class="unified-results">
+        <!-- رسالة نجاح -->
+        <div class="unified-success-message">
+          <i class="fas fa-check-circle"></i>
+          تم إعداد خطة الحملة الموسمية بنجاح! إليك التفاصيل
+        </div>
+        
+        <!-- الجدول الزمني -->
+        <div id="seasonalTimeline" class="timeline-section">
+          <h3><i class="fas fa-timeline"></i> الجدول الزمني للحملة</h3>
+          <div id="timelineItems">
+            <!-- سيتم ملؤها بـ JavaScript -->
+          </div>
+        </div>
+        
+        <!-- توزيع الميزانية -->
+        <div id="budgetDistribution" class="budget-breakdown">
+          <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+        
+        <!-- توصيات مخصصة -->
+        <div class="unified-recommendations">
+          <h3><i class="fas fa-lightbulb"></i> توصيات مخصصة للموسم</h3>
+          <div id="seasonalRecommendations">
+            <!-- سيتم ملؤها بـ JavaScript -->
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  
+  <!-- أزرار عائمة -->
+  <a href="https://wa.me/201110760081" class="unified-whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <!-- Global JavaScript -->
+  <script src="../shared-scripts.js"></script>
+  
+  <script>
+    let selectedSeason = null;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      setupSeasonSelection();
+      setupForm();
+    });
+    
+    function setupSeasonSelection() {
+      const seasonCards = document.querySelectorAll('.season-card');
+      seasonCards.forEach(card => {
+        card.addEventListener('click', function() {
+          seasonCards.forEach(c => c.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedSeason = this.dataset.season;
+        });
+      });
+    }
+    
+    function setupForm() {
+      const form = document.getElementById('seasonalForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!selectedSeason) {
+          alert('يرجى اختيار الموسم أولاً');
+          return;
+        }
+        
+        calculateSeasonalPlan();
+      });
+    }
+    
+    function calculateSeasonalPlan() {
+      const data = {
+        season: selectedSeason,
+        totalBudget: parseFloat(document.getElementById('totalBudget').value),
+        businessCategory: document.getElementById('businessCategory').value,
+        planningHorizon: document.getElementById('planningHorizon').value
+      };
+      
+      // حساب الخطة
+      const seasonalData = getSeasonalData(data.season);
+      const timeline = generateTimeline(data.season, data.planningHorizon);
+      const budgetDistribution = calculateBudgetDistribution(data.totalBudget, seasonalData);
+      const recommendations = generateSeasonalRecommendations(data.season, data.businessCategory);
+      
+      // عرض النتائج
+      displayTimeline(timeline);
+      displayBudgetDistribution(budgetDistribution);
+      displaySeasonalRecommendations(recommendations);
+      
+      // إظهار النتائج
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      
+      // تتبع
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'seasonal_planning', {
+          event_category: 'Seasonal Planner',
+          event_label: data.season,
+          value: Math.round(data.totalBudget),
+          business_category: data.businessCategory
+        });
+      }
+    }
+    
+    function getSeasonalData(season) {
+      const seasonalPatterns = {
+        'ramadan': {
+          peakMultiplier: 3.0,
+          duration: 30,
+          peakDays: [15, 20, 25], // أيام الذروة
+          preferredChannels: ['facebook', 'instagram', 'youtube']
+        },
+        'eid': {
+          peakMultiplier: 2.0,
+          duration: 7,
+          peakDays: [1, 2, 3],
+          preferredChannels: ['google-shopping', 'facebook', 'instagram']
+        },
+        'black-friday': {
+          peakMultiplier: 4.0,
+          duration: 5,
+          peakDays: [1], // يوم واحد ذروة
+          preferredChannels: ['google-shopping', 'facebook', 'display']
+        },
+        'back-to-school': {
+          peakMultiplier: 1.5,
+          duration: 21,
+          peakDays: [7, 14],
+          preferredChannels: ['google-search', 'youtube', 'facebook']
+        },
+        'national-day': {
+          peakMultiplier: 1.2,
+          duration: 3,
+          peakDays: [1],
+          preferredChannels: ['facebook', 'instagram', 'display']
+        },
+        'new-year': {
+          peakMultiplier: 1.8,
+          duration: 14,
+          peakDays: [1, 7],
+          preferredChannels: ['youtube', 'facebook', 'google-search']
+        }
+      };
+      
+      return seasonalPatterns[season] || seasonalPatterns['ramadan'];
+    }
+    
+    function generateTimeline(season, horizon) {
+      const timelines = {
+        'ramadan': [
+          { phase: 'تحضير مبكر', period: '30 يوم قبل', task: 'إعداد الأصول والرسائل الرمضانية' },
+          { phase: 'إطلاق مبكر', period: '14 يوم قبل', task: 'بدء حملات Awareness مع ميزانية 30%' },
+          { phase: 'ذروة العشر الأول', period: 'أيام 1-10', task: 'زيادة الميزانية إلى 50% وتفعيل Shopping Ads' },
+          { phase: 'ذروة العشر الأوسط', period: 'أيام 11-20', task: 'أقصى ميزانية 100% + Remarketing مكثف' },
+          { phase: 'العشر الأخير', period: 'أيام 21-30', task: 'تركيز على الهدايا والتحضير للعيد' }
+        ],
+        'black-friday': [
+          { phase: 'تحضير مبكر', period: '21 يوم قبل', task: 'تجهيز العروض والخصومات والمخزون' },
+          { phase: 'حملة Teaser', period: '7 أيام قبل', task: 'إعلانات تشويقية "Coming Soon" بميزانية 20%' },
+          { phase: 'يوم الجمعة البيضاء', period: 'اليوم المحدد', task: 'أقصى ميزانية 100% مع مراقبة مباشرة' },
+          { phase: 'عطلة نهاية الأسبوع', period: 'السبت-الأحد', task: 'استغلال زخم التسوق بعروض ممتدة' }
+        ]
+      };
+      
+      return timelines[season] || timelines['ramadan'];
+    }
+    
+    function calculateBudgetDistribution(totalBudget, seasonalData) {
+      const phases = {
+        'ramadan': {
+          'تحضير': { percentage: 15, days: 30 },
+          'بداية رمضان': { percentage: 25, days: 10 },
+          'ذروة وسط': { percentage: 40, days: 10 },
+          'نهاية رمضان': { percentage: 20, days: 10 }
+        },
+        'black-friday': {
+          'تحضير': { percentage: 20, days: 21 },
+          'Pre-Launch': { percentage: 15, days: 7 },
+          'يوم الجمعة': { percentage: 50, days: 1 },
+          'عطلة نهاية الأسبوع': { percentage: 15, days: 2 }
+        }
+      };
+      
+      const distribution = phases[selectedSeason] || phases['ramadan'];
+      
+      return Object.entries(distribution).map(([phase, data]) => ({
+        phase: phase,
+        budget: Math.round(totalBudget * data.percentage / 100),
+        percentage: data.percentage,
+        dailyBudget: Math.round((totalBudget * data.percentage / 100) / data.days),
+        duration: data.days
+      }));
+    }
+    
+    function generateSeasonalRecommendations(season, category) {
+      const recommendations = {
+        'ramadan': {
+          'fashion': 'ركّز على العبايات والملابس التراثية مع رسائل روحانية',
+          'food': 'استغل فترتي السحور والإفطار بإعلانات مجدولة',
+          'electronics': 'ركّز على الهدايا التقنية وأجهزة البيت الذكي',
+          'beauty': 'أبرز منتجات العناية الخاصة برمضان (عطور، مرطبات)',
+          'home': 'منتجات تزيين المنزل بالطابع الرمضاني',
+          'gifts': 'هدايا رمضانية مع تغليف فاخر وكارت معايدة'
+        },
+        'black-friday': {
+          'fashion': 'خصومات تصل 50% مع عداد تنازلي في اليوم',
+          'electronics': 'باندلز وعروض حصرية ليوم واحد فقط',
+          'beauty': 'مجموعات هدايا مخفضة مع تغليف جذاب',
+          'home': 'عروض تجديد المنزل قبل الشتاء'
+        }
+      };
+      
+      return recommendations[season] || {};
+    }
+    
+    function displayTimeline(timeline) {
+      const container = document.getElementById('timelineItems');
+      
+      container.innerHTML = timeline.map(item => `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-title">${item.phase} (${item.period})</div>
+            <div class="timeline-desc">${item.task}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function displayBudgetDistribution(distribution) {
+      const container = document.getElementById('budgetDistribution');
+      
+      container.innerHTML = distribution.map(item => `
+        <div class="budget-period">
+          <div class="period-name">${item.phase}</div>
+          <div class="period-budget">${item.budget.toLocaleString()} ريال</div>
+          <div class="period-percentage">${item.percentage}% (لمدة ${item.duration} يوم)</div>
+          <div style="margin-top: 8px; font-size: 0.8rem; color: var(--muted);">
+            ${item.dailyBudget.toLocaleString()} ريال/يوم
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function displaySeasonalRecommendations(recommendations) {
+      const container = document.getElementById('seasonalRecommendations');
+      const businessCategory = document.getElementById('businessCategory').value;
+      
+      const generalTips = [
+        '📅 ابدأ التحضير مبكراً - المنافسة في المواسم عالية جداً',
+        '🎨 استخدم أصول إبداعية مخصصة للموسم مع رسائل عاطفية',
+        '📈 راقب الأداء يومياً وكن مستعداً لزيادة الميزانية بسرعة',
+        '⚡ فعّل Automated Rules لزيادة الميزانية عند انخفاض CPA'
+      ];
+      
+      const categorySpecific = recommendations[businessCategory] || 'اتبع أفضل الممارسات لقطاعك';
+      
+      const allTips = [categorySpecific, ...generalTips];
+      
+      container.innerHTML = allTips.map(tip => `
+        <div class="unified-recommendation-item">${tip}</div>
+      `).join('');
+    }
+  </script>
 </body>
 </html>
