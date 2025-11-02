@@ -1,0 +1,45 @@
+# Robots.txt for Arabic Ads Calculator Tools
+# أدوات الإعلانات العربية - مؤسسة إعلانات العرب
+# Updated: 2025-11-02
+
+User-agent: *
+Allow: /
+
+# Allow all calculator tools
+Allow: /index.html
+Allow: /cpc-calculator.html
+Allow: /roi-calculator.html
+Allow: /cpa-calculator.html
+Allow: /budget-planner.html
+Allow: /audience-calculator.html
+
+# PWA files
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /favicon.svg
+Allow: /favicon.ico
+
+# Sitemap location
+Sitemap: https://sherow1982.github.io/arabic-ads-calculator-tools/sitemap.xml
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Block SEO audit tools (not needed for tools site)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Host directive
+Host: https://sherow1982.github.io/arabic-ads-calculator-tools
