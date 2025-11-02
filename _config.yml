@@ -1,0 +1,73 @@
+# Jekyll Configuration for Arabic Ads Calculator Tools
+# أدوات الإعلانات العربية - مؤسسة إعلانات العرب
+
+title: "أدوات الإعلانات العربية"
+description: "حاسبات مجانية لCPC, CPA, ROI وتخطيط الميزانية - مؤسسة إعلانات العرب"
+url: "https://sherow1982.github.io"
+baseurl: "/arabic-ads-calculator-tools"
+
+author:
+  name: "مؤسسة إعلانات العرب"
+  email: "info@arabsad.com"
+  url: "https://arabsad.com"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude files
+exclude:
+  - README.md
+  - LICENSE
+  - .github/
+  - .gitignore
+
+# Language and direction
+lang: ar
+direction: rtl
+
+# SEO settings
+seo:
+  type: WebSite
+  name: "أدوات الإعلانات العربية"
+  links:
+    - "https://arabsad.com"
+    - "https://wa.me/201110760081"
+
+# Social profiles
+social:
+  name: "مؤسسة إعلانات العرب"
+  links:
+    - "https://github.com/sherow1982"
+    - "https://arabsad.com"
+
+# Google Analytics (placeholder)
+# google_analytics: G-XXXXXXXXXX
+
+# Collections
+collections:
+  tools:
+    output: true
+    permalink: /:name/
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      lang: "ar"
+      dir: "rtl"
+  - scope:
+      path: ""
+      type: "tools"
+    values:
+      layout: "tool"
