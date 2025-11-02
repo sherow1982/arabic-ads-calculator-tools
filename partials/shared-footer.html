@@ -1,0 +1,247 @@
+    <!-- Shared Footer -->
+    <footer class="shared-footer">
+      <div class="footer-links">
+        <a href="about.html">عن الأدوات</a>
+        <a href="all-tools.html">جميع الأدوات</a>
+        <a href="https://arabsad.com" target="_blank">الموقع الرسمي</a>
+        <a href="https://wa.me/201110760081" target="_blank">واتساب</a>
+        <a href="mailto:info@arabsad.com">تواصل معنا</a>
+      </div>
+      
+      <p>&copy; 2025 مؤسسة إعلانات العرب – أدوات مجانية للمسوقين العرب</p>
+      
+      <div style="margin-top: 15px; font-size: 14px; opacity: 0.8; line-height: 1.4;">
+        ✨ تحديث جديد: جميع الأدوات مفعّلة + بوت ذكي متعدد اللهجات<br>
+        <small>تم آخر تحديث: 2 نوفمبر 2025</small>
+      </div>
+      
+      <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          📊 12+ أداة مجانية
+        </span>
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          🌍 دعم جميع المنصات
+        </span>
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          🤖 بوت ذكي
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Action Buttons -->
+  <!-- WhatsApp Contact Button -->
+  <a href="#whatsappContact" class="whatsapp-float" id="whatsappBtn">
+    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+  </a>
+  
+  <!-- Smart Chatbot Button -->
+  <button class="chatbot-float" id="chatbotToggle">
+    <i class="fas fa-comments" style="font-size: 1.5rem;"></i>
+  </button>
+  
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Chatbot Mini Window -->
+  <div id="miniChatWindow" style="position: fixed; bottom: 100px; left: 24px; width: 320px; max-width: calc(100vw - 48px); background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 1001; display: none; overflow: hidden;">
+    <div style="background: var(--gradient); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong>مساعد الحاسبات العربي</strong>
+        <div style="font-size: 12px; opacity: 0.9;">يفهم جميع اللهجات العربية</div>
+      </div>
+      <button id="closeMiniChat" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">&times;</button>
+    </div>
+    
+    <div id="miniChatMessages" style="padding: 15px; max-height: 200px; overflow-y: auto;">
+      <div style="background: #f3f4f6; padding: 10px; border-radius: 10px; font-size: 14px; line-height: 1.4;">
+        أهلاً! 👋 أنا مساعدك الذكي<br>
+        قول ايه اللي محتاجه وهرشدك للأداة الصح! 🎯
+      </div>
+    </div>
+    
+    <div style="padding: 10px; border-top: 1px solid #e5e7eb;">
+      <div style="display: flex; gap: 5px;">
+        <input type="text" id="miniChatInput" placeholder="اكتب هنا... (مثل: عايز أحسب ROI)" 
+               style="flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 20px; font-size: 14px; font-family: inherit;">
+        <button id="miniChatSend" style="background: var(--gradient); color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared JavaScript -->
+  <script src="chatbot.js"></script>
+  <script>
+    // Analytics tracking functions
+    function trackButtonClick(buttonName, toolName) {
+      gtag('event', 'click', {
+        event_category: 'Tool Navigation',
+        event_label: toolName + ' - ' + buttonName,
+        tool_name: toolName
+      });
+    }
+    
+    function trackFormSubmission(toolName, formData) {
+      gtag('event', 'form_submit', {
+        event_category: 'Tool Usage',
+        event_label: toolName,
+        tool_name: toolName
+      });
+    }
+    
+    function trackResultGenerated(toolName, result) {
+      gtag('event', 'result_generated', {
+        event_category: 'Calculation',
+        event_label: toolName,
+        value: 1,
+        tool_name: toolName
+      });
+    }
+    
+    // WhatsApp Integration
+    document.getElementById('whatsappBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const toolName = document.title.split('|')[0].trim();
+      const message = `أريد استشارة عن: ${toolName}`;
+      const url = `https://wa.me/201110760081?text=${encodeURIComponent(message)}`;
+      
+      trackButtonClick('WhatsApp Contact', toolName);
+      window.open(url, '_blank');
+    });
+    
+    // Mini Chatbot Functionality
+    const chatToggle = document.getElementById('chatbotToggle');
+    const miniChat = document.getElementById('miniChatWindow');
+    const closeMiniChat = document.getElementById('closeMiniChat');
+    const miniChatInput = document.getElementById('miniChatInput');
+    const miniChatSend = document.getElementById('miniChatSend');
+    const miniChatMessages = document.getElementById('miniChatMessages');
+    
+    chatToggle.addEventListener('click', () => {
+      const isVisible = miniChat.style.display === 'block';
+      miniChat.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible) {
+        miniChatInput.focus();
+        trackButtonClick('Chatbot Open', document.title.split('|')[0].trim());
+      }
+    });
+    
+    closeMiniChat.addEventListener('click', () => {
+      miniChat.style.display = 'none';
+    });
+    
+    function addMiniChatMessage(text, isBot = false) {
+      const msgDiv = document.createElement('div');
+      const bgColor = isBot ? '#f3f4f6' : '#667eea';
+      const textColor = isBot ? '#374151' : 'white';
+      const align = isBot ? 'left' : 'right';
+      
+      msgDiv.innerHTML = `<div style="background: ${bgColor}; color: ${textColor}; padding: 8px 12px; border-radius: 10px; margin: 8px 0; font-size: 13px; line-height: 1.4; text-align: ${align}; ${isBot ? 'margin-right: 20px;' : 'margin-left: 20px;'}">${text}</div>`;
+      miniChatMessages.appendChild(msgDiv);
+      miniChatMessages.scrollTop = miniChatMessages.scrollHeight;
+    }
+    
+    function sendMiniChatMessage() {
+      const message = miniChatInput.value.trim();
+      if (!message) return;
+      
+      addMiniChatMessage(message, false);
+      miniChatInput.value = '';
+      
+      // Track chat usage
+      trackButtonClick('Chatbot Message', message.substring(0, 20));
+      
+      // Bot response
+      setTimeout(() => {
+        let response = '😊 شكراً لسؤالك!';
+        
+        const msg = message.toLowerCase();
+        const currentTool = document.title.toLowerCase();
+        
+        if (msg.includes('cpc') || msg.includes('تكلفة النقرة')) {
+          response = '📊 ممتاز! جرب <a href="cpc-calculator.html" style="color: #667eea; font-weight: bold;">حاسبة CPC</a>';
+        } else if (msg.includes('roi') || msg.includes('عائد')) {
+          response = '📈 زين! استخدم <a href="roi-calculator.html" style="color: #10b981; font-weight: bold;">حاسبة ROI</a>';
+        } else if (msg.includes('cpa') || msg.includes('عميل')) {
+          response = '🎯 أكيد! <a href="cpa-calculator.html" style="color: #f59e0b; font-weight: bold;">حاسبة CPA</a> هتفيدك';
+        } else if (msg.includes('ميزانية') || msg.includes('budget')) {
+          response = '📊 ممتاز! <a href="budget-planner.html" style="color: #8b5cf6; font-weight: bold;">مخطط الميزانية</a> هيوزعلك فلوسك بذكاء';
+        } else if (msg.includes('utm') || msg.includes('تتبع')) {
+          response = '🔗 زين! <a href="utm-generator.html" style="color: #06b6d4; font-weight: bold;">مولد UTM</a> لروابط تتبع احترافية';
+        } else if (msg.includes('واتساب') || msg.includes('رسائل')) {
+          response = '💬 ممتاز! <a href="whatsapp-generator.html" style="color: #25d366; font-weight: bold;">مولد واتساب</a> هيعطيك رسائل جاهزة';
+        } else if (msg.includes('مساعدة') || msg.includes('help')) {
+          response = '🤝 أكيد هساعدك! عندنا 12 أداة مجانية:<br><br>💰 <a href="cpc-calculator.html">CPC</a> | 📈 <a href="roi-calculator.html">ROI</a> | 🎯 <a href="cpa-calculator.html">CPA</a><br>📊 <a href="budget-planner.html">ميزانية</a> | 🔗 <a href="utm-generator.html">UTM</a> | 💬 <a href="whatsapp-generator.html">واتساب</a>';
+        } else {
+          // Detect current tool and suggest related tools
+          if (currentTool.includes('cpc')) {
+            response = 'هذي حاسبة CPC! جرب كمان <a href="roi-calculator.html" style="color: #10b981;">حاسبة ROI</a> أو <a href="budget-planner.html" style="color: #8b5cf6;">مخطط الميزانية</a>';
+          } else if (currentTool.includes('roi')) {
+            response = 'هذي حاسبة ROI! جرب كمان <a href="cpa-calculator.html" style="color: #f59e0b;">حاسبة CPA</a> أو <a href="profit-margin-calculator.html" style="color: #ef4444;">حاسبة الربح</a>';
+          } else {
+            response = 'تقدر تجرب أدواتنا التانية:<br><br>• <a href="./">العودة للرئيسية</a><br>• <a href="all-tools.html">عرض كل الأدوات</a><br>• <a href="https://wa.me/201110760081" target="_blank">تواصل معنا</a>';
+          }
+        }
+        
+        addMiniChatMessage(response, true);
+      }, 1200);
+    }
+    
+    miniChatSend.addEventListener('click', sendMiniChatMessage);
+    miniChatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMiniChatMessage();
+    });
+    
+    // Back to top functionality
+    window.addEventListener('scroll', () => {
+      const backToTop = document.getElementById('backToTop');
+      if (window.pageYOffset > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      trackButtonClick('Back to Top', document.title.split('|')[0].trim());
+    });
+    
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(function(registration) {
+          console.log('SW registered: ', registration);
+        }).catch(function(registrationError) {
+          console.log('SW registration failed: ', registrationError);
+        });
+      });
+    }
+    
+    // PWA Install Prompt
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install suggestion after 10 seconds
+      setTimeout(() => {
+        if (miniChat.style.display === 'none' || !miniChat.style.display) {
+          addMiniChatMessage('📱 هل تريد تثبيت الأدوات كتطبيق على جهازك؟<br><small style="opacity: 0.7;">اضغط على زر التثبيت في شريط العنوان</small>', true);
+          miniChat.style.display = 'block';
+          
+          setTimeout(() => {
+            miniChat.style.display = 'none';
+          }, 8000);
+        }
+      }, 10000);
+    });
+  </script>
+</body>
+</html>
