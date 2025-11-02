@@ -11,46 +11,253 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
     .container{max-width:1200px;margin:0 auto;padding:24px}
     .nav{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.1);border-radius:15px;padding:16px 20px;backdrop-filter:blur(10px)}
-    .nav a{color:#fff;text-decoration:none;padding:8px 16px;border-radius:20px;background:rgba(255,255,255,.1);font-weight:600}
-    .hero{background:rgba(255,255,255,.1);border-radius:24px;padding:40px 20px;color:#fff;text-align:center;margin-bottom:24px}
+    .nav a{color:#fff;text-decoration:none;padding:8px 16px;border-radius:20px;background:rgba(255,255,255,.1);font-weight:600;transition:all 0.3s ease}
+    .nav a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+    .hero{background:rgba(255,255,255,.1);border-radius:24px;padding:40px 20px;color:#fff;text-align:center;margin-bottom:24px;backdrop-filter:blur(10px)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-    .card{background:var(--white);border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(10,37,64,.1);position:relative}
+    .card{background:var(--white);border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(10,37,64,.1);position:relative;transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(10,37,64,.15)}
     .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--bg);border-radius:18px 18px 0 0}
     .icon{font-size:32px;margin-bottom:10px}
     h3{font-size:20px;margin:6px 0 8px}
     .muted{color:var(--muted);margin-bottom:14px}
-    .btn{display:inline-block;background:var(--bg);color:#fff;text-decoration:none;padding:10px 18px;border-radius:999px;font-weight:700}
-    .section-title{color:#fff;margin:18px 0 10px}
+    .btn{display:inline-block;background:var(--bg);color:#fff;text-decoration:none;padding:10px 18px;border-radius:999px;font-weight:700;transition:all 0.3s ease}
+    .btn:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(102,126,234,0.3)}
+    .section-title{color:#fff;margin:18px 0 10px;font-size:1.5rem}
     .footer{margin-top:24px;text-align:center;color:#e2e8f0;padding:18px;background:rgba(0,0,0,.1);border-radius:15px}
-    .new-badge{position:absolute;top:8px;right:8px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800}
-    @media(max-width:768px){.container{padding:16px}.grid{grid-template-columns:1fr}}
+    .new-badge{position:absolute;top:8px;right:8px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;animation:pulse 2s infinite}
+    
+    /* Floating Buttons */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 60px;
+        height: 60px;
+        background: #25d366;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        z-index: 1000;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+        box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
+        color: white;
+    }
+    
+    .chatbot-float {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        z-index: 1000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .chatbot-float:hover {
+        transform: scale(1.1);
+        box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    .back-to-top {
+        position: fixed;
+        bottom: 100px;
+        right: 24px;
+        width: 45px;
+        height: 45px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        z-index: 999;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .back-to-top:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+    }
+    
+    /* Chatbot Window */
+    .chatbot-window {
+        position: fixed;
+        bottom: 100px;
+        left: 24px;
+        width: 350px;
+        max-width: calc(100vw - 48px);
+        height: 500px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        z-index: 1001;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chatbot-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chatbot-avatar {
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chatbot-messages {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        max-height: 350px;
+    }
+
+    .message {
+        margin-bottom: 1rem;
+        display: flex;
+    }
+
+    .user-message {
+        justify-content: flex-end;
+    }
+
+    .bot-message {
+        justify-content: flex-start;
+    }
+
+    .message-content {
+        max-width: 80%;
+        padding: 0.75rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .user-message .message-content {
+        background: #2563eb;
+        color: white;
+        border-bottom-right-radius: 5px;
+    }
+
+    .bot-message .message-content {
+        background: #f3f4f6;
+        color: #374151;
+        border-bottom-left-radius: 5px;
+    }
+
+    .bot-message .message-content a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .bot-message .message-content a:hover {
+        text-decoration: underline;
+    }
+
+    .chatbot-input {
+        padding: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* Mobile Responsiveness */
+    @media(max-width:768px){
+        .container{padding:16px}
+        .grid{grid-template-columns:1fr}
+        
+        .chatbot-window {
+            bottom: 90px;
+            left: 12px;
+            right: 12px;
+            width: auto;
+            max-width: none;
+        }
+        
+        .whatsapp-float {
+            bottom: 12px !important;
+            right: 12px !important;
+            width: 50px !important;
+            height: 50px !important;
+        }
+        
+        .chatbot-float {
+            bottom: 12px !important;
+            left: 12px !important;
+            width: 50px !important;
+            height: 50px !important;
+        }
+        
+        .back-to-top {
+            bottom: 80px !important;
+            right: 12px !important;
+            width: 40px !important;
+            height: 40px !important;
+        }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <nav class="nav">
-      <a href="#tools">🧰 الأدوات</a>
+      <a href="#tools">🧠 الأدوات</a>
       <a href="about.html">📊 عن الأدوات</a>
       <a href="all-tools.html">✨ كل الأدوات</a>
       <a href="https://arabsad.com" target="_blank" rel="noopener">🌐 الموقع</a>
-      <a href="https://wa.me/201110760081?text=أريد%20استشارة%20مجانية" target="_blank" rel="noopener">📱 واتساب</a>
+      <a href="advanced-tools/chatbot-integration.html">🤖 بوت ذكي</a>
     </nav>
 
     <header class="hero">
       <h1>🚀 أدوات الإعلانات العربية المجانية</h1>
-      <p>حاسبات عربية احترافية: CPC, CPA, ROI, CVR, CTR + مخطط الميزانية + مولد UTM + مولد رسائل واتساب</p>
+      <p>حاسبات عربية احترافية: CPC, CPA, ROI, CVR, CTR + مخطط الميزانية + مولد UTM + مولد رسائل واتساب + بوت ذكي متعدد اللهجات</p>
       <div style="background:rgba(239,68,68,.2);padding:8px 16px;border-radius:999px;display:inline-block;margin-top:12px;font-weight:700">
-        ✨ تم تفعيل جميع الأدوات حديثاً!
+        ✨ تم تفعيل جميع الأدوات + بوت ذكي جديد!
       </div>
     </header>
 
-    <h2 id="tools" class="section-title">🧰 الأدوات الأساسية</h2>
+    <h2 id="tools" class="section-title">🧠 الأدوات الأساسية</h2>
     <section class="grid">
       <article class="card"><div class="icon">📊</div><h3>حاسبة تكلفة النقرة (CPC)</h3><p class="muted">احسب تكلفة النقرة وقارن المنصات</p><a class="btn" href="cpc-calculator.html">فتح الأداة</a></article>
       <article class="card"><div class="new-badge">جديد</div><div class="icon">💰</div><h3>حاسبة عائد الاستثمار (ROI)</h3><p class="muted">احسب الربحية واتخذ قرار التوسّع</p><a class="btn" href="roi-calculator.html">فتح الأداة</a></article>
@@ -63,6 +270,7 @@
       <article class="card"><div class="new-badge">جديد</div><div class="icon">📈</div><h3>حاسبة معدل التحويل (CVR)</h3><p class="muted">قارن أداءك بمعايير السوق</p><a class="btn" href="cvr-calculator.html">فتح الأداة</a></article>
       <article class="card"><div class="new-badge">جديد</div><div class="icon">👆</div><h3>حاسبة معدل النقر (CTR)</h3><p class="muted">ارفع جاذبية إعلاناتك</p><a class="btn" href="ctr-calculator.html">فتح الأداة</a></article>
       <article class="card"><div class="new-badge">جديد</div><div class="icon">💰</div><h3>حاسبة هامش الربح</h3><p class="muted">حدد السعر الأمثل مع تكاليف الإعلان</p><a class="btn" href="profit-margin-calculator.html">فتح الأداة</a></article>
+      <article class="card"><div class="new-badge">جديد</div><div class="icon">📅</div><h3>حاسبة الجمهور المستهدف</h3><p class="muted">احسب حجم جمهورك والوصول المتوقع</p><a class="btn" href="audience-calculator.html">فتح الأداة</a></article>
     </section>
 
     <h2 class="section-title">🔗 التتبع والمراسلة</h2>
@@ -73,11 +281,62 @@
     </section>
 
     <footer class="footer">
-      <p>© 2025 مؤسسة إعلانات العرب – أدوات مجانية للمسوقين العرب</p>
+      <p>&copy; 2025 مؤسسة إعلانات العرب – أدوات مجانية للمسوقين العرب</p>
       <div style="margin-top:8px;font-size:14px;opacity:0.8">
-        ✨ تحديث جديد: تم تفعيل جميع الأدوات - 2 نوفمبر 2025
+        ✨ تحديث جديد: تم تفعيل جميع الأدوات + بوت ذكي متعدد اللهجات - 2 نوفمبر 2025
       </div>
     </footer>
+  </div>
+
+  <!-- Floating Buttons - Separated -->
+  <!-- WhatsApp Button - Right Side -->
+  <a href="https://wa.me/201110760081?text=أريد%20استشارة%20مجانية" class="whatsapp-float" target="_blank">
+      <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+  </a>
+  
+  <!-- Chatbot Button - Left Side -->
+  <button id="chatbotToggle" class="chatbot-float">
+      <i class="fas fa-comments" style="font-size: 1.5rem;"></i>
+  </button>
+  
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Chatbot Window -->
+  <div id="chatbotWindow" class="chatbot-window">
+      <div class="chatbot-header">
+          <div class="d-flex align-items-center">
+              <div class="chatbot-avatar">
+                  <i class="fas fa-robot"></i>
+              </div>
+              <div class="ms-3">
+                  <h6 class="mb-0">مساعد الحاسبات العربي</h6>
+                  <small class="text-light">متصل الآن - يفهم جميع اللهجات</small>
+              </div>
+          </div>
+          <button id="chatbotClose" style="background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;">&times;</button>
+      </div>
+      
+      <div class="chatbot-messages" id="chatMessages">
+          <div class="message bot-message">
+              <div class="message-content">
+                  أهلاً وسهلاً! 👋<br>
+                  أنا مساعدك الذكي لحاسبات الإعلانات<br>
+                  اسألني عن أي حاجة بأي لهجة عربية وهساعدك فوراً! 🚀
+              </div>
+          </div>
+      </div>
+      
+      <div class="chatbot-input">
+          <div class="input-group">
+              <input type="text" id="chatInput" class="form-control" placeholder="اكتب سؤالك هنا... (مثل: عايز أحسب CPC)" style="border:none;padding:12px;">
+              <button id="chatSend" style="background:#667eea;color:white;border:none;padding:12px 16px;border-radius:0 10px 10px 0;">
+                  <i class="fas fa-paper-plane"></i>
+              </button>
+          </div>
+      </div>
   </div>
 
 <script type="application/ld+json">
@@ -103,9 +362,169 @@
   "featureList": [
     "CPC Calculator", "ROI Calculator", "CPA Calculator", "CTR Calculator", 
     "CVR Calculator", "Profit Margin Calculator", "Budget Planner", 
-    "UTM Generator", "WhatsApp Message Generator", "Social Content Planner"
+    "UTM Generator", "WhatsApp Message Generator", "Social Content Planner",
+    "Arabic Multi-Dialect Chatbot", "Audience Calculator"
   ]
 }
+</script>
+
+<script src="chatbot.js"></script>
+<script>
+    // Chatbot functionality with multi-dialect support
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const backToTop = document.getElementById('backToTop');
+
+    // Toggle chatbot
+    chatbotToggle.addEventListener('click', () => {
+        const isVisible = chatbotWindow.style.display === 'flex';
+        chatbotWindow.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible) {
+            chatInput.focus();
+        }
+    });
+
+    chatbotClose.addEventListener('click', () => {
+        chatbotWindow.style.display = 'none';
+    });
+
+    // Send message
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        addMessage(message, 'user');
+        chatInput.value = '';
+
+        // Show typing indicator
+        const typingDiv = addTypingIndicator();
+        
+        // Bot response with delay
+        setTimeout(() => {
+            typingDiv.remove();
+            const response = window.ArabicMarketingBot ? 
+                window.ArabicMarketingBot.generateResponse(message) :
+                generateCalculatorBotResponse(message);
+            addMessage(response, 'bot');
+        }, 1500);
+    }
+
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function addTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot-message';
+        typingDiv.innerHTML = '<div class="message-content" style="color:#9ca3af;">جاري الكتابة...</div>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return typingDiv;
+    }
+
+    function generateCalculatorBotResponse(userMessage) {
+        const msg = userMessage.toLowerCase();
+        
+        // Detect dialect and respond accordingly
+        if (msg.includes('cpc') || msg.includes('تكلفة النقرة') || msg.includes('نقرة')) {
+            if (msg.includes('عايز') || msg.includes('عاوز')) {
+                return '📊 أكيد هساعدك فوراً!<br><br><a href="cpc-calculator.html" target="_blank" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة CPC →</a><br><br>هتعرف تكلفة كل نقرة في كل منصة!';
+            } else if (msg.includes('هلا') || msg.includes('وين')) {
+                return '📊 زين والله! هاقدر أساعدك<br><br><a href="cpc-calculator.html" target="_blank" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة CPC →</a><br><br>هذي عشان تعرف كم تكلفة كل نقرة!';
+            }
+            return '📊 ممتاز! هذي من أفضل أدواتنا<br><br><a href="cpc-calculator.html" target="_blank" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة CPC →</a>';
+        }
+        
+        if (msg.includes('roi') || msg.includes('عائد') || msg.includes('ربح') || msg.includes('خسارة')) {
+            if (msg.includes('عايز') || msg.includes('عاوز')) {
+                return '💰 بالظبط! هاقدر أعرفك لو حملتك مربحة<br><br><a href="roi-calculator.html" target="_blank" style="background:#10b981;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة ROI →</a>';
+            }
+            return '💰 عايز تعرف عائد استثمارك؟<br><br><a href="roi-calculator.html" target="_blank" style="background:#10b981;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة ROI →</a>';
+        }
+        
+        if (msg.includes('cpa') || msg.includes('تكلفة الاكتساب') || msg.includes('عميل')) {
+            return '🎯 ممتاز! هتعرف كم بيكلفك عميل واحد<br><br><a href="cpa-calculator.html" target="_blank" style="background:#f59e0b;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">حاسبة CPA →</a>';
+        }
+        
+        if (msg.includes('ميزانية') || msg.includes('budget') || msg.includes('فلوس')) {
+            return '📈 عايز توزع ميزانيتك بذكاء؟<br><br><a href="budget-planner.html" target="_blank" style="background:#8b5cf6;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">مخطط الميزانية →</a>';
+        }
+        
+        if (msg.includes('utm') || msg.includes('تتبع') || msg.includes('رابط')) {
+            return '🔗 محتاج روابط تتبع؟<br><br><a href="utm-generator.html" target="_blank" style="background:#06b6d4;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">مولد UTM →</a>';
+        }
+        
+        if (msg.includes('واتساب') || msg.includes('whatsapp') || msg.includes('رسائل')) {
+            return '💬 عايز رسائل واتساب احترافية؟<br><br><a href="whatsapp-generator.html" target="_blank" style="background:#25d366;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">مولد واتساب →</a>';
+        }
+        
+        // Greetings in different dialects
+        if (msg.includes('سلام') || msg.includes('أهلا') || msg.includes('مرحب') || msg.includes('هاي') || msg.includes('هلا')) {
+            if (msg.includes('هلا') || msg.includes('وين')) {
+                return 'هلا وغلا! 👋 أقدر أساعدك بحاسبات الإعلانات<br><br>قول وين محتاج مساعدة! 🚀';
+            } else if (msg.includes('عايز') || msg.includes('عامل')) {
+                return 'أهلاً وسهلاً! 😊 عندنا كل الحاسبات اللي محتاجها<br><br>قولني عايز إيه بالظبط؟';
+            }
+            return 'أهلاً وسهلاً! 👋 كيف يمكنني مساعدتك في حاسبات الإعلانات؟';
+        }
+        
+        // Help requests
+        if (msg.includes('مساعد') || msg.includes('ساعد') || msg.includes('help')) {
+            return '🤝 أكيد هساعدك! عندنا 12 أداة مجانية:<br><br>📊 <a href="cpc-calculator.html">CPC</a> | 💰 <a href="roi-calculator.html">ROI</a> | 🎯 <a href="cpa-calculator.html">CPA</a> | 📈 <a href="budget-planner.html">ميزانية</a><br>🔗 <a href="utm-generator.html">UTM</a> | 💬 <a href="whatsapp-generator.html">واتساب</a> | 📅 <a href="social-content-planner.html">محتوى</a><br><br>قولني ايه اللي محتاجه!';
+        }
+        
+        // Default response with tool suggestions
+        return '😊 شكراً لسؤالك! عندنا 12 أداة مجانية:<br><br>• <a href="cpc-calculator.html">حاسبة CPC</a> - تكلفة النقرة<br>• <a href="roi-calculator.html">حاسبة ROI</a> - عائد الاستثمار<br>• <a href="budget-planner.html">مخطط الميزانية</a> - توزيع ذكي<br>• <a href="whatsapp-generator.html">مولد واتساب</a> - رسائل جاهزة<br><br>قولني ايه اللي محتاجه! 🎯';
+    }
+    
+    // Back to top functionality
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTop.style.display = 'flex';
+        } else {
+            backToTop.style.display = 'none';
+        }
+    });
+    
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // PWA install prompt
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Show install suggestion in chat if opened
+        if (chatbotWindow.style.display === 'flex') {
+            setTimeout(() => {
+                addMessage('📱 هل تريد تثبيت الأدوات كتطبيق على جهازك؟<br><small>اضغط على زر التثبيت في شريط العنوان</small>', 'bot');
+            }, 3000);
+        }
+    });
+    
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js');
+        });
+    }
 </script>
 </body>
 </html>
