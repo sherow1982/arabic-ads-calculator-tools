@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>حاسبة هامش الربح للمتاجر | أدوات الإعلانات العربية</title>
+  <meta name="description" content="حاسبة عربية مجانية لحساب هامش الربح وتحديد الأسعار المثلى للمتاجر الإلكترونية مع حساب تكاليف الإعلانات">
+  <link rel="canonical" href="https://sherow1982.github.io/arabic-ads-calculator-tools/profit-margin-calculator.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#059669">
+  
+  <style>
+    :root{--p:#059669;--s:#047857;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#064e3b;--muted:#6b7280;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);min-height:100vh;line-height:1.6}
+    .container{max-width:1100px;margin:0 auto;padding:20px}
+    
+    .nav{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
+    .nav a{background:rgba(255,255,255,.2);color:#fff;text-decoration:none;padding:10px 20px;border-radius:25px;font-weight:600;backdrop-filter:blur(10px);transition:.3s}
+    .nav a:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
+    
+    .header{background:rgba(255,255,255,.95);border-radius:20px;padding:40px 30px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.1);margin-bottom:24px}
+    .header h1{color:var(--text);font-size:clamp(24px,4vw,36px);margin-bottom:16px;font-weight:800}
+    .header p{color:var(--muted);font-size:18px}
+    
+    .calc{background:var(--white);border-radius:20px;padding:32px;box-shadow:0 20px 40px rgba(0,0,0,.1);margin-bottom:24px}
+    .section{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #f3f4f6}
+    .section:last-child{border-bottom:none}
+    .section h3{color:var(--text);margin-bottom:16px;font-size:20px}
+    
+    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:20px}
+    .group{display:flex;flex-direction:column}
+    .group label{color:var(--text);font-weight:700;margin-bottom:8px;font-size:16px}
+    .group input,.group select{padding:12px 16px;border:2px solid #e5e7eb;border-radius:12px;font-size:16px;transition:.3s}
+    .group input:focus,.group select:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(5,150,105,.1)}
+    
+    .btn-calc{background:var(--bg);color:#fff;border:none;padding:16px 32px;border-radius:30px;font-size:18px;font-weight:700;cursor:pointer;width:100%;transition:.3s;margin:20px 0}
+    .btn-calc:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(5,150,105,.3)}
+    
+    .results{background:var(--p);color:#fff;border-radius:20px;padding:32px;margin-bottom:24px;display:none}
+    .results.show{display:block;animation:slideUp .5s ease}
+    .main-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:24px}
+    .main-metric{background:rgba(255,255,255,.2);padding:24px;border-radius:12px;text-align:center;backdrop-filter:blur(10px)}
+    .metric-value{font-size:32px;font-weight:800;margin-bottom:8px}
+    .metric-label{font-size:14px;opacity:.9}
+    
+    .breakdown{background:rgba(255,255,255,.15);padding:20px;border-radius:12px;margin-top:20px}
+    .breakdown h4{margin-bottom:16px;font-size:18px}
+    .breakdown-grid{display:grid;gap:12px}
+    .breakdown-item{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);padding:12px 16px;border-radius:8px}
+    
+    .recommendations{background:var(--white);border-radius:20px;padding:32px;box-shadow:0 20px 40px rgba(0,0,0,.1);margin-bottom:24px}
+    .rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .rec-card{background:#ecfdf5;padding:20px;border-radius:12px;border-right:4px solid var(--p)}
+    .rec-card h4{color:var(--text);margin-bottom:8px}
+    .rec-card p{color:var(--muted)}
+    
+    .contact{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border-radius:20px;padding:32px;text-align:center}
+    .contact-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .contact-btn{background:rgba(255,255,255,.2);color:#fff;text-decoration:none;padding:12px 24px;border-radius:25px;font-weight:600;transition:.3s;border:2px solid rgba(255,255,255,.3)}
+    .contact-btn:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
+    
+    @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:768px){.container{padding:16px}.row{grid-template-columns:1fr}.nav{flex-direction:column;align-items:center}.main-metrics{grid-template-columns:1fr}.contact-btns{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="nav">
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="cpc-calculator.html">📊 CPC</a>
+      <a href="cpa-calculator.html">🎯 CPA</a>
+      <a href="whatsapp-generator.html">📱 واتساب</a>
+      <a href="https://arabsad.com" target="_blank">🌐 الموقع</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="header">
+      <h1>💰 حاسبة هامش الربح للمتاجر</h1>
+      <p>احسب الهوامش الحقيقية مع حساب تكاليف الإعلانات وحدد الأسعار المثلى لضمان ربحية مستدامة</p>
+    </header>
+
+    <!-- Calculator -->
+    <main class="calc">
+      <form id="profitForm">
+        <!-- تفاصيل المنتج -->
+        <div class="section">
+          <h3>📱 تفاصيل المنتج</h3>
+          <div class="row">
+            <div class="group">
+              <label for="productName">🏷️ اسم المنتج:</label>
+              <input type="text" id="productName" placeholder="مثال: جهاز لابتوب" required>
+            </div>
+            
+            <div class="group">
+              <label for="costPrice">💵 سعر التكلفة (ريال):</label>
+              <input type="number" id="costPrice" step="0.01" min="0" placeholder="1000" required>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="group">
+              <label for="sellingPrice">💰 سعر البيع (ريال):</label>
+              <input type="number" id="sellingPrice" step="0.01" min="0" placeholder="1500" required>
+            </div>
+            
+            <div class="group">
+              <label for="quantity">📦 عدد القطع:</label>
+              <input type="number" id="quantity" min="1" value="1" required>
+            </div>
+          </div>
+        </div>
+        
+        <!-- تكاليف إضافية -->
+        <div class="section">
+          <h3>🚚 تكاليف إضافية</h3>
+          <div class="row">
+            <div class="group">
+              <label for="shippingCost">📱 رسوم الشحن:</label>
+              <input type="number" id="shippingCost" step="0.01" min="0" placeholder="50">
+            </div>
+            
+            <div class="group">
+              <label for="transactionFees">💳 رسوم الدفع (%):</label>
+              <input type="number" id="transactionFees" step="0.01" min="0" max="10" placeholder="2.9" value="2.9">
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="group">
+              <label for="platformFees">🛍️ عمولة المنصة (%):</label>
+              <input type="number" id="platformFees" step="0.01" min="0" max="20" placeholder="5">
+            </div>
+            
+            <div class="group">
+              <label for="otherCosts">📄 تكاليف أخرى:</label>
+              <input type="number" id="otherCosts" step="0.01" min="0" placeholder="25">
+            </div>
+          </div>
+        </div>
+        
+        <!-- تكاليف الإعلانات -->
+        <div class="section">
+          <h3>📢 تكاليف الإعلانات</h3>
+          <div class="row">
+            <div class="group">
+              <label for="adSpend">💸 مصروف إعلاني يومي:</label>
+              <input type="number" id="adSpend" step="0.01" min="0" placeholder="200">
+            </div>
+            
+            <div class="group">
+              <label for="conversionRate">🎯 معدل التحويل (%):</label>
+              <input type="number" id="conversionRate" step="0.1" min="0" max="100" placeholder="2.5">
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="group">
+              <label for="dailyVisitors">👥 عدد الزوار يومياً:</label>
+              <input type="number" id="dailyVisitors" min="0" placeholder="500">
+            </div>
+            
+            <div class="group">
+              <label for="targetMargin">🎯 هامش الربح المستهدف (%):</label>
+              <input type="number" id="targetMargin" min="5" max="80" placeholder="25" value="25">
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-calc">🧮 احسب الهامش والربحية</button>
+      </form>
+    </main>
+
+    <!-- Results -->
+    <section class="results" id="results">
+      <h3 style="text-align:center;font-size:28px;margin-bottom:24px">📊 تحليل الربحية الشامل</h3>
+      
+      <div class="main-metrics">
+        <div class="main-metric">
+          <div class="metric-value" id="profitMargin">0%</div>
+          <div class="metric-label">هامش الربح الحالي</div>
+        </div>
+        
+        <div class="main-metric">
+          <div class="metric-value" id="netProfit">0 ر</div>
+          <div class="metric-label">صافي الربح</div>
+        </div>
+        
+        <div class="main-metric">
+          <div class="metric-value" id="totalCosts">0 ر</div>
+          <div class="metric-label">إجمالي التكاليف</div>
+        </div>
+        
+        <div class="main-metric">
+          <div class="metric-value" id="breakEven">0 ر</div>
+          <div class="metric-label">نقطة التعادل</div>
+        </div>
+      </div>
+      
+      <div class="breakdown">
+        <h4>📈 تفصيل التكاليف:</h4>
+        <div class="breakdown-grid" id="costsBreakdown"></div>
+      </div>
+      
+      <div class="breakdown">
+        <h4>📈 توصيات التسعير:</h4>
+        <div class="breakdown-grid" id="pricingRecommendations"></div>
+      </div>
+    </section>
+
+    <!-- Recommendations -->
+    <section class="recommendations">
+      <h3 style="text-align:center;margin-bottom:24px;color:var(--text);font-size:24px">💡 نصائح لزيادة الربحية</h3>
+      <div class="rec-grid">
+        <div class="rec-card">
+          <h4>🚀 حسّن التحويل</h4>
+          <p>زيادة معدل التحويل 1% تعني زيادة الربح بنفس النسبة</p>
+        </div>
+        
+        <div class="rec-card">
+          <h4>📊 قلل تكلفة الإعلان</h4>
+          <p>حسّن جودة الإعلانات لخفض CPC وزيادة الهامش</p>
+        </div>
+        
+        <div class="tip">
+          <h4>🛍️ بيع متعدد</h4>
+          <p>عروض بندل (Bundle) تزيد متوسط قيمة الطلب 40%</p>
+        </div>
+        
+        <div class="rec-card">
+          <h4>🎆 برامج ولاء</h4>
+          <p>عملاء مخلصون يشترون أكثر بنسبة 65% وبتكلفة أقل</p>
+        </div>
+        
+        <div class="rec-card">
+          <h4>🔍 حلل المنافسين</h4>
+          <p>ادرس أسعار المنافسين واعرض قيمة أفضل</p>
+        </div>
+        
+        <div class="rec-card">
+          <h4>⚡ حسّن العمليات</h4>
+          <p>عمليات أكثر كفاءة = تكاليف أقل = هوامش أكبر</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact">
+      <h2>🚀 تريد زيادة أرباحك 50%؟</h2>
+      <p>خبراء مؤسسة إعلانات العرب يساعدونك في بناء استراتيجيات تسعير ذكية وحملات عالية الربحية</p>
+      <div class="contact-btns">
+        <a href="https://wa.me/201110760081?text=أريد استراتيجية تسعير وأرباح أعلى لمتجري" target="_blank" class="contact-btn">📱 واتساب</a>
+        <a href="https://arabsad.com" target="_blank" class="contact-btn">🌐 الموقع</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.getElementById('profitForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // جمع البيانات
+      const costPrice = parseFloat(document.getElementById('costPrice').value);
+      const sellingPrice = parseFloat(document.getElementById('sellingPrice').value);
+      const quantity = parseInt(document.getElementById('quantity').value);
+      const shippingCost = parseFloat(document.getElementById('shippingCost').value) || 0;
+      const transactionFees = parseFloat(document.getElementById('transactionFees').value) || 0;
+      const platformFees = parseFloat(document.getElementById('platformFees').value) || 0;
+      const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
+      const adSpend = parseFloat(document.getElementById('adSpend').value) || 0;
+      const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
+      const dailyVisitors = parseInt(document.getElementById('dailyVisitors').value) || 0;
+      const targetMargin = parseFloat(document.getElementById('targetMargin').value) || 25;
+      
+      // حسابات أساسية
+      const totalRevenue = sellingPrice * quantity;
+      const productCost = costPrice * quantity;
+      const transactionCost = (totalRevenue * transactionFees / 100);
+      const platformCost = (totalRevenue * platformFees / 100);
+      
+      // حساب تكلفة الإعلان للوحدة
+      let adCostPerUnit = 0;
+      if (adSpend > 0 && conversionRate > 0 && dailyVisitors > 0) {
+        const dailyConversions = (dailyVisitors * conversionRate / 100);
+        adCostPerUnit = dailyConversions > 0 ? (adSpend / dailyConversions) : 0;
+      }
+      
+      const totalCosts = productCost + shippingCost + transactionCost + platformCost + otherCosts + (adCostPerUnit * quantity);
+      const netProfit = totalRevenue - totalCosts;
+      const profitMargin = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
+      
+      // نقطة التعادل
+      const breakEvenPrice = totalCosts;
+      const recommendedPrice = totalCosts / (1 - targetMargin/100);
+      
+      // عرض النتائج الرئيسية
+      document.getElementById('profitMargin').textContent = profitMargin.toFixed(1) + '%';
+      document.getElementById('netProfit').textContent = netProfit.toFixed(2) + ' ر';
+      document.getElementById('totalCosts').textContent = totalCosts.toFixed(2) + ' ر';
+      document.getElementById('breakEven').textContent = breakEvenPrice.toFixed(2) + ' ر';
+      
+      // تفصيل التكاليف
+      const costsHTML = `
+        <div class="breakdown-item"><span>تكلفة المنتج:</span><span>${productCost.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>رسوم الشحن:</span><span>${shippingCost.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>رسوم الدفع:</span><span>${transactionCost.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>عمولة المنصة:</span><span>${platformCost.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>تكلفة الإعلان:</span><span>${(adCostPerUnit * quantity).toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>تكاليف أخرى:</span><span>${otherCosts.toFixed(2)} ر</span></div>
+      `;
+      document.getElementById('costsBreakdown').innerHTML = costsHTML;
+      
+      // توصيات التسعير
+      const pricingHTML = `
+        <div class="breakdown-item"><span>السعر الحالي:</span><span>${sellingPrice.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>نقطة التعادل:</span><span>${breakEvenPrice.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>سعر مقترح (${targetMargin}% هامش):</span><span>${recommendedPrice.toFixed(2)} ر</span></div>
+        <div class="breakdown-item"><span>زيادة مقترحة:</span><span>${(recommendedPrice - sellingPrice).toFixed(2)} ر</span></div>
+      `;
+      document.getElementById('pricingRecommendations').innerHTML = pricingHTML;
+      
+      document.getElementById('results').classList.add('show');
+      document.getElementById('results').scrollIntoView({behavior: 'smooth'});
+      
+      console.log('💰 Profit Margin Calculator used:', {profitMargin: profitMargin.toFixed(1), netProfit: netProfit.toFixed(2)});
+    });
+  </script>
+</body>
+</html>
