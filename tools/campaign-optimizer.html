@@ -1,209 +1,643 @@
-// محسن أداء الحملات الذكي
-// Campaign Performance Optimizer - Advanced Arabic Version
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محسن أداء الحملات الذكي | مؤسسة إعلانات العرب</title>
-    <meta name="description" content="أداة ذكية لتحليل وتحسين أداء حملات الإعلانات الممولة مع توصيات مخصصة">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>محسّن الحملات الذكي - تشخيص آلي وخطة عمل | أدوات الإعلانات العربية</title>
+  <meta name="description" content="حلل أداء حملاتك واحصل على توصيات ذكية لتحسين النتائج وزيادة العائد مع خطة عمل مفصلة">
+  <meta name="keywords" content="Campaign Optimizer, تحسين الحملات, تشخيص الأداء, توصيات ذكية, خطة عمل">
+  
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../global-styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    .optimizer-wrapper {
+      background: var(--gradient);
+      min-height: 100vh;
+      padding: 20px;
+    }
     
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --dark-color: #1f2937;
-            --light-color: #f8fafc;
-            --border-color: #e2e8f0;
-            --text-primary: #1f2937;
-            --text-secondary: #64748b;
-            --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            --gradient-success: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--gradient-primary);
-            min-height: 100vh;
-            padding: 20px;
-            direction: rtl;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-        }
-
-        .header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 30px;
-        }
-
-        .input-section {
-            background: var(--light-color);
-            padding: 25px;
-            border-radius: var(--border-radius);
-            border: 2px solid var(--border-color);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        .input-group input,
-        .input-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            direction: rtl;
-        }
-
-        .analyze-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            margin-top: 20px;
-        }
-
-        .results-section {
-            background: white;
-            border: 2px solid var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 25px;
-        }
-
-        .performance-score {
-            background: var(--gradient-success);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            color: white;
-            margin-bottom: 25px;
-        }
-
-        .score-value {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px;
-            }
-        }
-    </style>
+    .health-score {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 20px;
+      margin: 25px 0;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      position: relative;
+    }
+    
+    .score-excellent { background: linear-gradient(135deg, #10b981, #059669); }
+    .score-good { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .score-average { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .score-poor { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    
+    .score-label {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .score-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    
+    .issues-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+    
+    .issue-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      border-left: 5px solid #ef4444;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+    
+    .issue-card.warning {
+      border-left-color: #f59e0b;
+    }
+    
+    .issue-card.info {
+      border-left-color: #3b82f6;
+    }
+    
+    .issue-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .issue-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+    }
+    
+    .issue-critical { background: #ef4444; }
+    .issue-warning { background: #f59e0b; }
+    .issue-info { background: #3b82f6; }
+    
+    .issue-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    
+    .issue-desc {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+    
+    .issue-action {
+      background: var(--light-bg);
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid var(--border);
+    }
+    
+    .action-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .action-steps {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    
+    .metrics-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .metric-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 2px solid var(--border);
+    }
+    
+    .metric-current {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .metric-benchmark {
+      color: var(--success);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+    
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    
+    .priority-critical { background: #fee2e2; color: #991b1b; }
+    .priority-high { background: #fef3c7; color: #92400e; }
+    .priority-medium { background: #dbeafe; color: #1e40af; }
+    
+    @media (max-width: 768px) {
+      .issues-grid,
+      .metrics-comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>⚡ محسن أداء الحملات الذكي</h1>
-            <p>حلل أداء حملاتك واحصل على توصيات مخصصة لتحسين النتائج وزيادة العائد</p>
-        </header>
-
-        <div class="main-content">
-            <div class="input-section">
-                <h3 class="section-title">📊 بيانات الحملة الحالية</h3>
-                
-                <div class="input-group">
-                    <label for="campaign-name">اسم الحملة</label>
-                    <input type="text" id="campaign-name" placeholder="مثال: حملة المنتجات الصيفية">
-                </div>
-
-                <div class="input-group">
-                    <label for="platform">منصة الإعلان</label>
-                    <select id="platform">
-                        <option value="google-ads">Google Ads</option>
-                        <option value="facebook-ads">Meta Ads (Facebook/Instagram)</option>
-                        <option value="tiktok-ads">TikTok Ads</option>
-                        <option value="snapchat-ads">Snapchat Ads</option>
-                        <option value="youtube-ads">YouTube Ads</option>
-                        <option value="linkedin-ads">LinkedIn Ads</option>
-                    </select>
-                </div>
-
-                <button class="analyze-btn" onclick="analyzeCampaign()">
-                    🔍 تحليل أداء الحملة
-                </button>
-            </div>
-
-            <div class="results-section">
-                <h3 class="section-title">📈 نتائج التحليل</h3>
-                
-                <div class="performance-score">
-                    <div class="score-value">85</div>
-                    <div>درجة أداء الحملة</div>
-                </div>
-            </div>
+  <div class="optimizer-wrapper">
+    <!-- زر العودة -->
+    <a href="../index.html" class="unified-back-btn">
+      <i class="fas fa-arrow-right"></i> العودة للرئيسية
+    </a>
+    
+    <div class="unified-card">
+      <!-- Header -->
+      <div class="unified-header">
+        <h1><i class="fas fa-chart-line"></i> محسّن الحملات الذكي</h1>
+        <p>حلل أداء حملاتك واحصل على توصيات ذكية لتحسين النتائج وزيادة العائد</p>
+      </div>
+      
+      <!-- نموذج إدخال بيانات الحملة -->
+      <form id="optimizerForm">
+        <div class="unified-form-grid">
+          <div class="unified-form-group">
+            <label for="campaignType">
+              <i class="fas fa-bullseye"></i>
+              نوع الحملة
+            </label>
+            <select id="campaignType" required>
+              <option value="">اختر نوع الحملة</option>
+              <option value="search">Google Search Ads</option>
+              <option value="display">Google Display Ads</option>
+              <option value="facebook">Facebook/Instagram Ads</option>
+              <option value="shopping">Google Shopping</option>
+              <option value="youtube">YouTube Ads</option>
+              <option value="performance-max">Performance Max</option>
+            </select>
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="monthlyBudget">
+              <i class="fas fa-dollar-sign"></i>
+              الميزانية الشهرية (ريال)
+            </label>
+            <input type="number" id="monthlyBudget" min="500" step="100" required placeholder="5000">
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="currentCTR">
+              <i class="fas fa-hand-pointer"></i>
+              معدل النقر الحالي (%)
+            </label>
+            <input type="number" id="currentCTR" min="0.1" max="50" step="0.1" required placeholder="2.5">
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="currentCPC">
+              <i class="fas fa-mouse-pointer"></i>
+              متوسط CPC الحالي (ريال)
+            </label>
+            <input type="number" id="currentCPC" min="0.1" step="0.1" required placeholder="1.8">
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="currentCVR">
+              <i class="fas fa-chart-bar"></i>
+              معدل التحويل الحالي (%)
+            </label>
+            <input type="number" id="currentCVR" min="0.1" max="50" step="0.1" required placeholder="3.2">
+          </div>
+          
+          <div class="unified-form-group">
+            <label for="currentROAS">
+              <i class="fas fa-chart-line"></i>
+              ROAS الحالي
+            </label>
+            <input type="number" id="currentROAS" min="0.1" step="0.1" required placeholder="4.2">
+          </div>
         </div>
+        
+        <button type="submit" class="unified-btn-primary">
+          <i class="fas fa-search"></i>
+          شخّص أداء الحملة الآن
+        </button>
+      </form>
+      
+      <!-- النتائج -->
+      <div id="results" class="unified-results">
+        <!-- رسالة نجاح -->
+        <div class="unified-success-message">
+          <i class="fas fa-check-circle"></i>
+          تم تشخيص أداء الحملة بنجاح! إليك التقييم وخطة التحسين
+        </div>
+        
+        <!-- نقاط الصحة -->
+        <div id="healthScore" class="health-score">
+          <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+        
+        <!-- مقارنة مع معايير الصناعة -->
+        <div id="metricsComparison" class="metrics-comparison">
+          <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+        
+        <!-- المشاكل والحلول -->
+        <div id="issuesAndSolutions" class="issues-grid">
+          <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+      </div>
     </div>
-
-    <script>
-        function analyzeCampaign() {
-            alert('جاري تحليل أداء الحملة...');
+  </div>
+  
+  <!-- أزرار عائمة -->
+  <a href="https://wa.me/201110760081" class="unified-whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <!-- Global JavaScript -->
+  <script src="../shared-scripts.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('optimizerForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        analyzeCampaign();
+      });
+    });
+    
+    function analyzeCampaign() {
+      // جمع البيانات
+      const data = {
+        campaignType: document.getElementById('campaignType').value,
+        monthlyBudget: parseFloat(document.getElementById('monthlyBudget').value),
+        currentCTR: parseFloat(document.getElementById('currentCTR').value),
+        currentCPC: parseFloat(document.getElementById('currentCPC').value),
+        currentCVR: parseFloat(document.getElementById('currentCVR').value),
+        currentROAS: parseFloat(document.getElementById('currentROAS').value)
+      };
+      
+      // حساب نقاط الصحة
+      const healthScore = calculateHealthScore(data);
+      
+      // مقارنة مع معايير الصناعة
+      const benchmarks = getBenchmarks(data.campaignType);
+      
+      // تشخيص المشاكل
+      const issues = diagnoseIssues(data, benchmarks);
+      
+      // عرض النتائج
+      displayHealthScore(healthScore, data);
+      displayMetricsComparison(data, benchmarks);
+      displayIssuesAndSolutions(issues);
+      
+      // إظهار النتائج
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      
+      // تتبع
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'campaign_optimization', {
+          event_category: 'Campaign Optimizer',
+          event_label: data.campaignType,
+          value: Math.round(data.monthlyBudget),
+          health_score: healthScore.score
+        });
+      }
+    }
+    
+    function calculateHealthScore(data) {
+      const benchmarks = getBenchmarks(data.campaignType);
+      
+      let score = 0;
+      let maxScore = 500;
+      
+      // تقييم CTR (100 نقطة)
+      const ctrScore = Math.min(100, (data.currentCTR / benchmarks.goodCTR) * 100);
+      score += ctrScore;
+      
+      // تقييم CPC (100 نقطة) - عكسي (أقل = أفضل)
+      const cpcScore = Math.min(100, (benchmarks.goodCPC / data.currentCPC) * 100);
+      score += cpcScore;
+      
+      // تقييم CVR (100 نقطة)
+      const cvrScore = Math.min(100, (data.currentCVR / benchmarks.goodCVR) * 100);
+      score += cvrScore;
+      
+      // تقييم ROAS (100 نقطة)
+      const roasScore = Math.min(100, (data.currentROAS / benchmarks.goodROAS) * 100);
+      score += roasScore;
+      
+      // تقييم الميزانية (100 نقطة)
+      const budgetScore = data.monthlyBudget >= 2000 ? 100 : (data.monthlyBudget / 2000) * 100;
+      score += budgetScore;
+      
+      const finalScore = Math.round((score / maxScore) * 100);
+      
+      let level, color, advice;
+      if (finalScore >= 85) {
+        level = 'ممتاز';
+        color = 'excellent';
+        advice = 'حملة عالية الأداء! ركّز على توسيع الوصول';
+      } else if (finalScore >= 70) {
+        level = 'جيد';
+        color = 'good';
+        advice = 'أداء جيد مع مجال للتحسين';
+      } else if (finalScore >= 50) {
+        level = 'متوسط';
+        color = 'average';
+        advice = 'يحتاج تحسين في عدة نقاط';
+      } else {
+        level = 'ضعيف';
+        color = 'poor';
+        advice = 'يحتاج إعادة هيكلة شاملة';
+      }
+      
+      return { score: finalScore, level, color, advice };
+    }
+    
+    function getBenchmarks(campaignType) {
+      const benchmarks = {
+        'search': { goodCTR: 3.5, goodCPC: 2.0, goodCVR: 4.0, goodROAS: 4.0 },
+        'display': { goodCTR: 0.8, goodCPC: 1.2, goodCVR: 2.0, goodROAS: 3.0 },
+        'facebook': { goodCTR: 2.0, goodCPC: 1.5, goodCVR: 3.0, goodROAS: 3.5 },
+        'shopping': { goodCTR: 1.5, goodCPC: 1.8, goodCVR: 2.5, goodROAS: 5.0 },
+        'youtube': { goodCTR: 1.0, goodCPC: 1.0, goodCVR: 2.0, goodROAS: 3.0 },
+        'performance-max': { goodCTR: 2.5, goodCPC: 1.6, goodCVR: 3.5, goodROAS: 4.5 }
+      };
+      
+      return benchmarks[campaignType] || benchmarks['search'];
+    }
+    
+    function diagnoseIssues(data, benchmarks) {
+      const issues = [];
+      
+      // تشخيص CTR
+      if (data.currentCTR < benchmarks.goodCTR * 0.5) {
+        issues.push({
+          type: 'critical',
+          title: 'CTR منخفض جداً',
+          description: `معدل النقر ${data.currentCTR}% أقل من المعيار المقبول ${benchmarks.goodCTR}%`,
+          priority: 'critical',
+          action: {
+            title: 'الحل الفوري',
+            steps: '• اختبر عناوين جديدة مع أرقام وأسئلة\n• حسّن وصف الإعلان ليطابق اهتمام الجمهور\n• استخدم صور وفيديو عالية الجودة\n• ضيّق الاستهداف لجمهور أكثر اهتماماً'
+          }
+        });
+      } else if (data.currentCTR < benchmarks.goodCTR * 0.8) {
+        issues.push({
+          type: 'warning',
+          title: 'CTR يحتاج تحسين',
+          description: `يمكن رفع CTR من ${data.currentCTR}% إلى ${benchmarks.goodCTR}%`,
+          priority: 'high',
+          action: {
+            title: 'خطوات التحسين',
+            steps: '• جرّب Ad Extensions (الاتصال، الموقع، الروابط)\n• ازِد Call-to-Action قوي وواضح\n• اختبر أوقات عرض مختلفة\n• استخدم العروض والخصومات'
+          }
+        });
+      }
+      
+      // تشخيص CPC
+      if (data.currentCPC > benchmarks.goodCPC * 1.5) {
+        issues.push({
+          type: 'critical',
+          title: 'CPC مرتفع جداً',
+          description: `تكلفة النقرة ${data.currentCPC} ريال أعلى من المعيار ${benchmarks.goodCPC} ريال`,
+          priority: 'critical',
+          action: {
+            title: 'تقليل CPC فوراً',
+            steps: '• ارفع Quality Score بتحسين صفحة الهبوط\n• استخدم الكلمات طويلة الذيل أقل منافسة\n• قلّل المزايدة تدريجياً وراقب النتائج\n• فعّل Automated Bidding إذا لم شغى بعد'
+          }
+        });
+      }
+      
+      // تشخيص CVR
+      if (data.currentCVR < benchmarks.goodCVR * 0.6) {
+        issues.push({
+          type: 'critical',
+          title: 'معدل تحويل ضعيف',
+          description: `CVR ${data.currentCVR}% أقل بكثير من المعيار ${benchmarks.goodCVR}%`,
+          priority: 'critical',
+          action: {
+            title: 'تحسين صفحة الهبوط',
+            steps: '• طابق رسالة الإعلان مع محتوى الصفحة\n• بسّط عملية الشراء أو التسجيل\n• أضف شهادات وضمانات الثقة\n• اختبر CTA مختلفة ("اشترِ الآن" بدلاً من "تعرف أكثر")'
+          }
+        });
+      }
+      
+      // تشخيص ROAS
+      if (data.currentROAS < benchmarks.goodROAS * 0.7) {
+        issues.push({
+          type: 'warning',
+          title: 'ROAS يحتاج رفع',
+          description: `ROAS الحالي ${data.currentROAS} أقل من المستهدف ${benchmarks.goodROAS}`,
+          priority: 'high',
+          action: {
+            title: 'رفع ROAS',
+            steps: '• ارفع متوسط قيمة الطلب (AOV)\n• حسّن جودة الزيارات باستهداف أدق\n• استخدم Remarketing للعملاء السابقين\n• اختبر عروض Bundle أو Upselling'
+          }
+        });
+      }
+      
+      // مشاكل متقدمة
+      const cpa = data.currentCPC / (data.currentCVR / 100);
+      if (cpa > (data.monthlyBudget / 30)) {
+        issues.push({
+          type: 'warning',
+          title: 'ميزانية غير فعالة',
+          description: `CPA ${cpa.toFixed(0)} ريال مرتفع مقارنة بالميزانية اليومية`,
+          priority: 'medium',
+          action: {
+            title: 'إعادة توزيع الميزانية',
+            steps: '• ارفع الميزانية اليومية إلى ${Math.round(cpa * 1.5)} ريال\n• أو قلّل CPA بتحسين CVR وCPC\n• استخدم Dayparting للتركيز على أفضل الأوقات'
+          }
+        });
+      }
+      
+      // توصيات عامة حسب نوع الحملة
+      const campaignAdvice = {
+        'search': 'استخدم Responsive Search Ads مع 15 عنوان مختلف لاختبار أفضل تركيبة',
+        'facebook': 'فعّل Advantage+ Creative لتحسين الإبداعات تلقائياً',
+        'shopping': 'تأكد من جودة بيانات المنتجات في Merchant Center',
+        'display': 'استخدم Responsive Display Ads مع عدة أحجام',
+        'youtube': 'ارفع جودة الفيديو واستخدم YouTube Shorts',
+        'performance-max': 'فعّل Asset Groups مختلفة لكل فئة منتجات'
+      };
+      
+      if (campaignAdvice[data.campaignType]) {
+        issues.push({
+          type: 'info',
+          title: `نصيحة خاصة بـ ${data.campaignType}`,
+          description: 'استفد من ميزات هذا نوع الحملات',
+          priority: 'medium',
+          action: {
+            title: 'تحسين مخصوص',
+            steps: campaignAdvice[data.campaignType]
+          }
+        });
+      }
+      
+      return issues;
+    }
+    
+    function displayHealthScore(healthScore, data) {
+      const container = document.getElementById('healthScore');
+      
+      container.innerHTML = `
+        <div class="score-circle score-${healthScore.color}">
+          ${healthScore.score}/100
+        </div>
+        <div class="score-label">نقاط صحة الحملة: ${healthScore.level}</div>
+        <div class="score-desc">${healthScore.advice}</div>
+      `;
+    }
+    
+    function displayMetricsComparison(data, benchmarks) {
+      const container = document.getElementById('metricsComparison');
+      
+      const metrics = [
+        { 
+          label: 'معدل النقر (CTR)',
+          current: data.currentCTR.toFixed(1) + '%',
+          benchmark: benchmarks.goodCTR + '%',
+          status: data.currentCTR >= benchmarks.goodCTR ? 'good' : 'needs-work'
+        },
+        {
+          label: 'تكلفة النقرة (CPC)',
+          current: data.currentCPC.toFixed(2) + ' ريال',
+          benchmark: benchmarks.goodCPC + ' ريال',
+          status: data.currentCPC <= benchmarks.goodCPC ? 'good' : 'needs-work'
+        },
+        {
+          label: 'معدل التحويل (CVR)',
+          current: data.currentCVR.toFixed(1) + '%',
+          benchmark: benchmarks.goodCVR + '%',
+          status: data.currentCVR >= benchmarks.goodCVR ? 'good' : 'needs-work'
+        },
+        {
+          label: 'عائد الإنفاق (ROAS)',
+          current: data.currentROAS.toFixed(1),
+          benchmark: benchmarks.goodROAS.toFixed(1),
+          status: data.currentROAS >= benchmarks.goodROAS ? 'good' : 'needs-work'
         }
-    </script>
+      ];
+      
+      container.innerHTML = metrics.map(metric => `
+        <div class="metric-card">
+          <div class="metric-label">${metric.label}</div>
+          <div class="metric-current">${metric.current}</div>
+          <div class="metric-benchmark ${metric.status === 'good' ? 'text-success' : 'text-warning'}">
+            المعيار: ${metric.benchmark}
+            ${metric.status === 'good' ? '✓' : '⚠️'}
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function displayIssuesAndSolutions(issues) {
+      const container = document.getElementById('issuesAndSolutions');
+      
+      if (issues.length === 0) {
+        container.innerHTML = `
+          <div class="issue-card info">
+            <div class="issue-header">
+              <div class="issue-icon issue-info">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="issue-title">أداء ممتاز!</div>
+            </div>
+            <div class="issue-desc">
+              حملتك تحقق أداءً ممتازاً في جميع المقاييس. ركّز على توسيع الوصول وزيادة الميزانية.
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      // ترتيب المشاكل حسب الأولوية
+      const priorityOrder = { 'critical': 1, 'high': 2, 'medium': 3 };
+      issues.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+      
+      container.innerHTML = issues.map(issue => `
+        <div class="issue-card ${issue.type}">
+          <div class="issue-header">
+            <div class="issue-icon issue-${issue.type}">
+              <i class="fas fa-${issue.type === 'critical' ? 'exclamation-triangle' : 
+                              issue.type === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
+            </div>
+            <div class="issue-title">${issue.title}</div>
+          </div>
+          
+          <div class="priority-badge priority-${issue.priority}">
+            أولوية ${issue.priority === 'critical' ? 'عاجلة' : 
+                       issue.priority === 'high' ? 'عالية' : 'متوسطة'}
+          </div>
+          
+          <div class="issue-desc">${issue.description}</div>
+          
+          <div class="issue-action">
+            <div class="action-title">
+              <i class="fas fa-tools"></i>
+              ${issue.action.title}
+            </div>
+            <div class="action-steps">${issue.action.steps}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
 </body>
 </html>
