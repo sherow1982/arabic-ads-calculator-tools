@@ -1,1 +1,155 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>شريط موحد</title><script src="shared-nav.js"></script></head><body></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>مخطط الميزانية الذكي | أدوات الإعلانات العربية</title>
+  <meta name="description" content="وزّع ميزانيتك الإعلانية بذكاء بين المنصات حسب الأداء والتكلفة.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+    .container{max-width:1000px;margin:0 auto;padding:20px}
+    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
+    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
+    .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    label{display:block;font-weight:700;color:var(--text);margin-bottom:8px}
+    input,select{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
+    .btn{background:var(--bg);color:#fff;border:none;padding:14px 24px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+    table{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px}
+    th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:center}
+    th{background:#f8fafc;font-weight:800}
+    .result{overflow:auto}
+  </style>
+</head>
+<body>
+  <script src="shared-nav.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>📊 مخطط الميزانية الذكي</h1>
+      <p>وزّع الميزانية تلقائياً بناءً على تكلفة التحويل المتوقعة والأولوية</p>
+    </header>
+
+    <div class="card">
+      <div class="form-row">
+        <div>
+          <label for="budget">الميزانية الكلية (ريال)</label>
+          <input id="budget" type="number" min="0" step="0.01" placeholder="مثال: 5000">
+        </div>
+        <div>
+          <label for="goal">هدف التحويلات</label>
+          <input id="goal" type="number" min="0" step="1" placeholder="اختياري">
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn" id="addRow">+ منصة جديدة</button>
+        <button class="btn" id="calc">احسب التوزيع</button>
+      </div>
+      <div class="result">
+        <table id="table">
+          <thead>
+            <tr>
+              <th>المنصة</th>
+              <th>CPA متوقع (ريال)</th>
+              <th>الأولوية (1-5)</th>
+              <th>الميزانية المخصصة</th>
+              <th>التحويلات المتوقعة</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3">الإجمالي</th>
+              <th id="sumBudget">0</th>
+              <th id="sumConv">0</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>نصائح</h3>
+      <ul>
+        <li>ارفع الميزانية لمنصات CPA المنخفض مع أولوية أعلى</li>
+        <li>استمر في المراجعة الأسبوعية لتعديل الأوزان بناءً على الأداء</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const tbody = document.getElementById('tbody');
+    const addRowBtn = document.getElementById('addRow');
+    const calcBtn = document.getElementById('calc');
+
+    const defaultRows = [
+      { platform:'Google', cpa:35, priority:5 },
+      { platform:'Facebook', cpa:28, priority:4 },
+      { platform:'TikTok', cpa:38, priority:3 }
+    ];
+
+    function addRow(data={platform:'',cpa:0,priority:3}){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input value="${data.platform}" placeholder="منصة"></td>
+        <td><input type="number" min="0" step="0.01" value="${data.cpa}"></td>
+        <td><input type="number" min="1" max="5" step="1" value="${data.priority}"></td>
+        <td class="alloc">0</td>
+        <td class="conv">0</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    defaultRows.forEach(addRow);
+
+    addRowBtn.addEventListener('click', ()=> addRow());
+
+    calcBtn.addEventListener('click', ()=>{
+      const budget = parseFloat(document.getElementById('budget').value||0);
+      const goal = parseInt(document.getElementById('goal').value||0);
+      const rows = [...tbody.querySelectorAll('tr')].map(tr=>{
+        const [plat,cpa,prio] = tr.querySelectorAll('input');
+        return { tr, cpa:parseFloat(cpa.value||0), priority:parseInt(prio.value||1) };
+      });
+
+      // وزن = أولوية / CPA (كلما زاد الوزن زادت الحصة)
+      const weights = rows.map(r=> ({ r, w: (r.priority>0 && r.cpa>0)? (r.priority/r.cpa): 0 }));
+      const sumW = weights.reduce((s,x)=> s + x.w, 0);
+
+      let totalAlloc = 0, totalConv = 0;
+      weights.forEach(({r,w})=>{
+        const alloc = sumW>0 ? budget*(w/sumW) : 0;
+        const conv = (r.cpa>0)? alloc/r.cpa : 0;
+        r.tr.querySelector('.alloc').textContent = alloc.toFixed(2);
+        r.tr.querySelector('.conv').textContent = Math.floor(conv);
+        totalAlloc += alloc; totalConv += conv;
+      });
+
+      // إذا كان هناك هدف تحويلات، أعد تحجيم الميزانية لتلبية الهدف تقريبياً
+      if(goal>0 && totalConv>0){
+        const scale = goal/totalConv;
+        let sumBudget = 0, sumConversions = 0;
+        weights.forEach(({r})=>{
+          const allocCell = r.tr.querySelector('.alloc');
+          const convCell = r.tr.querySelector('.conv');
+          const alloc = parseFloat(allocCell.textContent)*scale;
+          const conv = Math.floor(parseFloat(convCell.textContent)*scale);
+          allocCell.textContent = alloc.toFixed(2);
+          convCell.textContent = conv;
+          sumBudget += alloc; sumConversions += conv;
+        });
+        document.getElementById('sumBudget').textContent = sumBudget.toFixed(2);
+        document.getElementById('sumConv').textContent = sumConversions;
+      } else {
+        document.getElementById('sumBudget').textContent = totalAlloc.toFixed(2);
+        document.getElementById('sumConv').textContent = Math.floor(totalConv);
+      }
+    });
+  </script>
+</body>
+</html>
