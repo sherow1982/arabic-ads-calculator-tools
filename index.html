@@ -15,11 +15,6 @@
   <meta property="og:url" content="https://sherow1982.github.io/arabic-ads-calculator-tools/">
   <meta property="og:image" content="https://arabsad.com/assets/images/tools-og-image.jpg">
   
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="أدوات الإعلانات العربية">
-  <meta name="twitter:description" content="حاسبات مجانية لCPC, ROI, CPA وتخطيط الميزانية">
-  
   <link rel="canonical" href="https://sherow1982.github.io/arabic-ads-calculator-tools/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
@@ -31,395 +26,64 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    :root {
-      --primary: #667eea;
-      --secondary: #764ba2;
-      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      --card-bg: #ffffff;
-      --text-primary: #0a2540;
-      --text-muted: #64748b;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --shadow: 0 12px 30px rgba(10, 37, 64, 0.1);
-    }
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b;--success:#10b981;--warning:#f59e0b}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
     
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    .nav{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.1);border-radius:15px;padding:16px 20px;backdrop-filter:blur(10px)}
+    .nav-brand{color:#fff;font-weight:800;font-size:18px;margin-left:20px}
+    .nav a{color:#fff;text-decoration:none;padding:8px 16px;border-radius:20px;background:rgba(255,255,255,.1);font-weight:600;transition:.3s}
+    .nav a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
     
-    body {
-      font-family: 'Cairo', 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-      line-height: 1.7;
-      background: var(--gradient);
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
+    .hero{background:rgba(255,255,255,.1);border-radius:24px;padding:40px 20px;color:#fff;text-align:center;backdrop-filter:blur(10px);margin-bottom:32px}
+    .hero h1{font-size:clamp(28px,4vw,44px);margin-bottom:16px;font-weight:800}
+    .hero p{font-size:18px;opacity:.95;margin-bottom:24px}
+    .stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+    .stat{min-width:160px;text-align:center}
+    .stat .num{font-size:32px;font-weight:800;display:block;margin-bottom:4px}
+    .stat .label{font-size:14px;opacity:.8}
     
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin:32px 0}
+    .card{background:var(--white);border-radius:20px;padding:28px;box-shadow:0 12px 30px rgba(10,37,64,.1);transition:.3s;position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--bg)}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(10,37,64,.15)}
+    .icon{font-size:40px;margin-bottom:16px;display:block}
+    h3{font-size:24px;margin:8px 0 12px;color:var(--text);font-weight:700}
+    .muted{color:var(--muted);margin-bottom:20px;line-height:1.8}
+    ul{list-style:none;margin:16px 0 24px}
+    li{position:relative;padding-right:28px;margin:8px 0;color:#334155}
+    li::before{content:'✅';position:absolute;right:0;top:0}
+    .btn{display:inline-block;background:var(--bg);color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:700;box-shadow:0 8px 24px rgba(102,126,234,.3);transition:.3s;border:none;cursor:pointer}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(102,126,234,.4)}
+    .btn:disabled{opacity:.6;pointer-events:none;cursor:not-allowed}
+    .btn.available{background:var(--success);box-shadow:0 8px 24px rgba(16,185,129,.3)}
     
-    /* Header Navigation */
-    .nav {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 16px 20px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
+    .about,.contact{background:var(--white);border-radius:20px;padding:32px;margin:24px 0;box-shadow:0 12px 30px rgba(10,37,64,.08)}
+    .contact{background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;text-align:center}
+    .contact h2{margin-bottom:16px;font-size:28px}
+    .contact-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:24px}
+    .contact-btn{background:rgba(255,255,255,.2);color:#fff;text-decoration:none;padding:14px 28px;border-radius:30px;font-weight:600;transition:.3s;border:2px solid rgba(255,255,255,.3)}
+    .contact-btn:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
     
-    .nav-brand {
-      color: white;
-      font-weight: 800;
-      font-size: 18px;
-    }
+    .footer{margin-top:24px;text-align:center;color:#e2e8f0;padding:24px;background:rgba(0,0,0,.1);border-radius:15px;backdrop-filter:blur(5px)}
+    .footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+    .footer-links a{color:#e2e8f0;text-decoration:none;padding:8px 12px;border-radius:15px;background:rgba(255,255,255,.1);transition:.3s}
+    .footer-links a:hover{background:rgba(255,255,255,.2)}
     
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+    .pwa-install{position:fixed;bottom:20px;left:20px;background:var(--bg);color:#fff;border:none;padding:12px 20px;border-radius:25px;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(102,126,234,.3);z-index:1000;transform:translateY(100px);transition:.3s;display:none}
+    .pwa-install.show{display:block;transform:translateY(0)}
     
-    .nav-link {
-      color: white;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .card{animation:fadeInUp .6s ease-out}
+    .card:nth-child(2){animation-delay:.1s}
+    .card:nth-child(3){animation-delay:.2s}
+    .card:nth-child(4){animation-delay:.3s}
     
-    .nav-link:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
+    .skip-link{position:absolute;top:-40px;left:6px;background:var(--text);color:#fff;padding:8px;text-decoration:none;border-radius:4px;z-index:1000}
+    .skip-link:focus{top:6px}
     
-    /* Hero Section */
-    .hero {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 40px 20px;
-      color: #fff;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      margin-bottom: 32px;
-    }
-    
-    .hero h1 {
-      font-size: clamp(28px, 4vw, 44px);
-      margin-bottom: 16px;
-      font-weight: 800;
-    }
-    
-    .hero p {
-      font-size: 18px;
-      opacity: 0.95;
-      margin-bottom: 24px;
-    }
-    
-    .stats {
-      display: flex;
-      gap: 32px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-    
-    .stat {
-      min-width: 160px;
-      text-align: center;
-    }
-    
-    .stat .num {
-      font-size: 32px;
-      font-weight: 800;
-      display: block;
-      margin-bottom: 4px;
-    }
-    
-    .stat .label {
-      font-size: 14px;
-      opacity: 0.8;
-    }
-    
-    /* Tools Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin: 32px 0;
-    }
-    
-    .card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--gradient);
-    }
-    
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(10, 37, 64, 0.15);
-    }
-    
-    .icon {
-      font-size: 40px;
-      margin-bottom: 16px;
-      display: block;
-    }
-    
-    h3 {
-      font-size: 24px;
-      margin: 8px 0 12px;
-      color: var(--text-primary);
-      font-weight: 700;
-    }
-    
-    .muted {
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      line-height: 1.8;
-    }
-    
-    ul {
-      list-style: none;
-      margin: 16px 0 24px;
-    }
-    
-    li {
-      position: relative;
-      padding-right: 28px;
-      margin: 8px 0;
-      color: #334155;
-    }
-    
-    li::before {
-      content: '✅';
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    
-    .btn {
-      display: inline-block;
-      background: var(--gradient);
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 999px;
-      font-weight: 700;
-      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-      transition: all 0.3s ease;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
-    }
-    
-    .btn:disabled {
-      opacity: 0.6;
-      pointer-events: none;
-      cursor: not-allowed;
-    }
-    
-    /* About & Contact */
-    .about, .contact {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 32px;
-      margin: 24px 0;
-      box-shadow: var(--shadow);
-    }
-    
-    .contact {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      color: #fff;
-      text-align: center;
-    }
-    
-    .contact h2 {
-      margin-bottom: 16px;
-      font-size: 28px;
-    }
-    
-    .contact-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-    
-    .contact-btn {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      padding: 14px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .contact-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    /* Footer */
-    .footer {
-      margin-top: 24px;
-      text-align: center;
-      color: #e2e8f0;
-      padding: 24px;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-    }
-    
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    
-    .footer-links a {
-      color: #e2e8f0;
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .footer-links a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    /* PWA Install Button */
-    .pwa-install {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-      z-index: 1000;
-      transform: translateY(100px);
-      transition: transform 0.3s ease;
-      display: none;
-    }
-    
-    .pwa-install.show {
-      display: block;
-      transform: translateY(0);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        padding: 16px;
-      }
-      
-      .nav {
-        padding: 12px 16px;
-      }
-      
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .hero {
-        padding: 32px 16px;
-      }
-      
-      .stats {
-        gap: 20px;
-      }
-      
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .contact-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .footer-links {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-    
-    /* Loading Animation */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .card {
-      animation: fadeInUp 0.6s ease-out;
-    }
-    
-    .card:nth-child(2) { animation-delay: 0.1s; }
-    .card:nth-child(3) { animation-delay: 0.2s; }
-    .card:nth-child(4) { animation-delay: 0.3s; }
-    
-    /* Skip Link for Accessibility */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 6px;
-      background: var(--text-primary);
-      color: white;
-      padding: 8px;
-      text-decoration: none;
-      border-radius: 4px;
-      z-index: 1000;
-    }
-    
-    .skip-link:focus {
-      top: 6px;
-    }
+    @media(max-width:768px){.container{padding:16px}.nav{padding:12px 16px;flex-direction:column;align-items:center}.nav-brand{margin:0 0 12px}.grid{grid-template-columns:1fr}.stats{gap:20px}.contact-btns,.footer-links{flex-direction:column;align-items:center}}
   </style>
 </head>
 <body>
@@ -427,172 +91,146 @@
   
   <div class="container">
     <!-- Navigation -->
-    <nav class="nav" role="navigation" aria-label="التنقل الرئيسي">
+    <nav class="nav" role="navigation">
       <div class="nav-brand">🚀 أدوات الإعلانات</div>
-      <div class="nav-links">
-        <a href="#main" class="nav-link">🏠 الرئيسية</a>
-        <a href="https://arabsad.com" target="_blank" rel="noopener" class="nav-link">🌐 الموقع الرسمي</a>
-        <a href="https://wa.me/201110760081?text=أريد استشارة مجانية حول أدوات الإعلانات" target="_blank" rel="noopener" class="nav-link">📞 واتساب</a>
-      </div>
+      <a href="#main">🏠 الرئيسية</a>
+      <a href="https://arabsad.com" target="_blank" rel="noopener">🌐 الموقع</a>
+      <a href="https://wa.me/201110760081?text=أريد استشارة مجانية" target="_blank" rel="noopener">📞 واتساب</a>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <main id="main" role="main">
       <section class="hero">
         <h1>🚀 أدوات الإعلانات العربية المجانية</h1>
         <p>حاسبات عربية احترافية لحساب CPC، CPA، ROI وتخطيط الميزانية لجميع المنصات</p>
         <div class="stats">
-          <div class="stat">
-            <div class="num">500+</div>
-            <div class="label">شركات استخدمت الأدوات</div>
-          </div>
-          <div class="stat">
-            <div class="num">98%</div>
-            <div class="label">معدل رضا المستخدمين</div>
-          </div>
-          <div class="stat">
-            <div class="num">99.2%</div>
-            <div class="label">دقة الحسابات</div>
-          </div>
+          <div class="stat"><div class="num">500+</div><div class="label">شركة استخدمت الأدوات</div></div>
+          <div class="stat"><div class="num">98%</div><div class="label">معدل رضا المستخدمين</div></div>
+          <div class="stat"><div class="num">99.2%</div><div class="label">دقة الحسابات</div></div>
+          <div class="stat"><div class="num">جديد</div><div class="label">أدوات مفعّلة الآن!</div></div>
         </div>
       </section>
 
       <!-- Tools Grid -->
-      <section class="grid" aria-label="قائمة الأدوات">
+      <section class="grid">
         <article class="card">
           <div class="icon">📊</div>
           <h3>حاسبة تكلفة النقرة (CPC)</h3>
-          <p class="muted">احسب تكلفة النقرة الحقيقة وقارن بين المنصات وحدد الميزانيات المثلى لحملاتك</p>
+          <p class="muted">احسب تكلفة النقرة الحقيقة وقارن بين المنصات وحدد الميزانيات المثلى</p>
           <ul>
-            <li>حساب فوري ودقيق للCPC</li>
-            <li>مقارنات Google/Meta/TikTok/Snapchat</li>
+            <li>حساب فوري ودقيق</li>
+            <li>مقارنات Google/Meta/TikTok</li>
             <li>نصائح تحسين تلقائية</li>
             <li>تقدير الميزانية المطلوبة</li>
           </ul>
-          <a class="btn" href="cpc-calculator.html" aria-label="فتح حاسبة تكلفة النقرة">استخدم الأداة</a>
+          <a class="btn available" href="cpc-calculator.html">✅ متاح الآن</a>
         </article>
 
         <article class="card">
           <div class="icon">💰</div>
           <h3>حاسبة عائد الاستثمار (ROI)</h3>
-          <p class="muted">قِس الربحية الحقيقية للحملات وتعرّف على قرارات التوسّع أو الإيقاف ببيانات دقيقة</p>
+          <p class="muted">قِس الربحية الحقيقية للحملات وتعرّف على قرارات التوسّع أو الإيقاف</p>
           <ul>
             <li>حساب نسبة ومبالغ الربح</li>
             <li>تتبّع التكاليف الثابتة/المتحركة</li>
-            <li>تقارير بصرية واضحة</li>
+            <li>تقارير بصرية مختصرة</li>
             <li>توصيات ذكية للتحسين</li>
           </ul>
-          <a class="btn" href="roi-calculator.html" aria-label="فتح حاسبة عائد الاستثمار">استخدم الأداة</a>
+          <a class="btn available" href="roi-calculator.html">✅ متاح الآن</a>
         </article>
 
         <article class="card">
           <div class="icon">🎯</div>
           <h3>حاسبة تكلفة الاكتساب (CPA)</h3>
-          <p class="muted">احسب تكلفة الاكتساب المثالية حسب القطاع والجمهور ومسار التحويل المخصص</p>
+          <p class="muted">احسب تكلفة الاكتساب المثالية حسب القطاع والجمهور ومسار التحويل</p>
           <ul>
             <li>نماذج جاهزة حسب الصناعة</li>
             <li>تحسين مسار التحويل</li>
             <li>تحذيرات تخطي الميزانية</li>
             <li>بيانات حقيقية من الخليج</li>
           </ul>
-          <button class="btn" disabled aria-label="حاسبة CPA قريباً">🗓️ قريباً (ديسمبر 2025)</button>
+          <a class="btn available" href="cpa-calculator.html">✅ متاح الآن</a>
         </article>
 
         <article class="card">
           <div class="icon">📈</div>
           <h3>مخطط الميزانية الذكي</h3>
-          <p class="muted">وزّع ميزانيتك بذكاء على المنصات المختلفة لتحقيق أقصى عائد على استثمارك</p>
+          <p class="muted">وزّع ميزانيتك بذكاء على المنصات المختلفة لتحقيق أقصى عائد</p>
           <ul>
             <li>نمذجة بميزانية ثابتة أو مرنة</li>
             <li>توقعات الأداء حسب المنصة</li>
             <li>توصيات آلية للتحسين</li>
             <li>خطط بديلة متعددة</li>
           </ul>
-          <button class="btn" disabled aria-label="مخطط الميزانية قريباً">🗓️ قريباً (ديسمبر 2025)</button>
+          <a class="btn available" href="budget-planner.html">✅ متاح الآن</a>
         </article>
       </section>
 
-      <!-- About Section -->
-      <section class="about" aria-labelledby="about-title">
-        <h2 id="about-title">🌟 عن مؤسسة إعلانات العرب</h2>
-        <p class="muted">نحن فريق من خبراء التسويق الرقمي المتخصصين في إدارة الحملات الإعلانية الممولة عبر جميع المنصات الرقمية. نخدم السوق العربي بأدوات مجانية وخدمات مدفوعة بالبيانات لضمان أفضل عائد على الاستثمار.</p>
-        
-        <div style="margin-top: 24px; text-align: center;">
-          <a href="https://arabsad.com/services-page.html" target="_blank" rel="noopener" class="btn" style="margin: 8px;">💼 خدماتنا الاحترافية</a>
-          <a href="https://arabsad.com/blog/" target="_blank" rel="noopener" class="btn" style="margin: 8px;">📚 مدونة التسويق</a>
+      <!-- About -->
+      <section class="about">
+        <h2>🌟 عن مؤسسة إعلانات العرب</h2>
+        <p class="muted">نحن فريق من خبراء التسويق الرقمي المتخصصين في إدارة الحملات الإعلانية عبر جميع المنصات. نخدم السوق العربي بأدوات مجانية وخدمات مدفوعة بالبيانات.</p>
+        <div style="margin-top:24px;text-align:center">
+          <a href="https://arabsad.com/services-page.html" target="_blank" rel="noopener" class="btn" style="margin:8px">💼 خدماتنا</a>
+          <a href="https://arabsad.com/blog/" target="_blank" rel="noopener" class="btn" style="margin:8px">📚 مدونتنا</a>
         </div>
       </section>
 
-      <!-- Contact Section -->
-      <section class="contact" aria-labelledby="contact-title">
-        <h2 id="contact-title">📞 تحتاج مساعدة في حملاتك؟</h2>
+      <!-- Contact -->
+      <section class="contact">
+        <h2>📞 تحتاج مساعدة في حملاتك؟</h2>
         <p>تواصل مباشرة مع فريق الخبراء في مؤسسة إعلانات العرب</p>
-        <p style="margin: 16px 0; font-size: 18px; font-weight: 600;">أكثر من 500 شركة تثق بخبرتنا في التسويق الرقمي</p>
+        <p style="margin:16px 0;font-size:18px;font-weight:600">أكثر من 500 شركة تثق بخبرتنا في التسويق الرقمي</p>
         
-        <div class="contact-buttons">
-          <a href="https://wa.me/201110760081?text=أريد استشارة مجانية حول أدوات الإعلانات" target="_blank" rel="noopener" class="contact-btn">
-            📱 واتساب مباشر
-          </a>
-          <a href="https://arabsad.com" target="_blank" rel="noopener" class="contact-btn">
-            🌐 الموقع الرسمي
-          </a>
-          <a href="mailto:info@arabsad.com" class="contact-btn">
-            📧 بريد إلكتروني
-          </a>
+        <div class="contact-btns">
+          <a href="https://wa.me/201110760081?text=أريد استشارة مجانية" target="_blank" rel="noopener" class="contact-btn">📱 واتساب</a>
+          <a href="https://arabsad.com" target="_blank" rel="noopener" class="contact-btn">🌐 الموقع</a>
+          <a href="mailto:info@arabsad.com" class="contact-btn">📧 بريد</a>
         </div>
       </section>
     </main>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
+    <footer class="footer">
       <div class="footer-links">
         <a href="https://github.com/sherow1982/arabic-ads-calculator-tools" target="_blank" rel="noopener">💻 GitHub</a>
-        <a href="https://arabsad.com" target="_blank" rel="noopener">🌐 الموقع الرسمي</a>
+        <a href="https://arabsad.com" target="_blank" rel="noopener">🌐 الموقع</a>
         <a href="https://arabsad.com/privacy-policy.html" target="_blank" rel="noopener">🔒 الخصوصية</a>
         <a href="https://arabsad.com/terms-of-service.html" target="_blank" rel="noopener">📄 الشروط</a>
       </div>
       <p><strong>© 2025 مؤسسة إعلانات العرب</strong> – أدوات مجانية للمسوقين العرب</p>
-      <p style="font-size: 14px; opacity: 0.8; margin-top: 8px;">تم تطوير هذه الأدوات بحب ❤️ لخدمة المجتمع العربي</p>
+      <p style="font-size:14px;opacity:.8;margin-top:8px">تم تطوير هذه الأدوات بحب ❤️ لخدمة المجتمع العربي</p>
     </footer>
   </div>
   
-  <!-- PWA Install Button -->
-  <button id="pwaInstall" class="pwa-install" aria-label="تثبيت أدوات الإعلانات كتطبيق">
-    📱 ثبّت التطبيق
-  </button>
+  <!-- PWA Install -->
+  <button id="pwaInstall" class="pwa-install">📱 ثبّت كتطبيق</button>
   
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "WebApplication",
     "name": "أدوات الإعلانات العربية",
-    "description": "مجموعة أدوات مجانية لحساب تكلفة وعائد الإعلانات الممولة",
+    "description": "مجموعة أدوات مجانية لحساب تكلفة وعائد الإعلانات",
     "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web Browser",
     "author": {
       "@type": "Organization",
       "name": "مؤسسة إعلانات العرب",
-      "url": "https://arabsad.com",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+201110760081",
-        "contactType": "customer service"
-      }
+      "url": "https://arabsad.com"
     },
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "USD",
-      "description": "أدوات مجانية بالكامل"
+      "priceCurrency": "USD"
     }
   }
   </script>
   
-  <!-- Scripts -->
   <script>
-    // PWA Installation
+    // PWA Install
     let deferredPrompt;
     const installBtn = document.getElementById('pwaInstall');
     
@@ -602,7 +240,7 @@
       installBtn.classList.add('show');
     });
     
-    installBtn.addEventListener('click', async () => {
+    installBtn?.addEventListener('click', async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
@@ -612,43 +250,18 @@
       }
     });
     
-    // Service Worker Registration
+    // Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
         try {
-          const registration = await navigator.serviceWorker.register('/sw.js');
-          console.log('✅ Service Worker registered successfully');
-          
-          // Check for updates
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // Show update notification
-                showUpdateNotification();
-              }
-            });
-          });
-          
+          await navigator.serviceWorker.register('/sw.js');
+          console.log('✅ Service Worker registered');
         } catch (error) {
-          console.log('❌ Service Worker registration failed:', error);
+          console.log('❌ SW registration failed:', error);
         }
       });
     }
     
-    function showUpdateNotification() {
-      const notification = document.createElement('div');
-      notification.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; right: 0; background: #10b981; color: white; padding: 16px; text-align: center; z-index: 10000;">
-          🔄 يتوفر تحديث جديد للأدوات
-          <button onclick="location.reload()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; margin-right: 16px; border-radius: 20px; cursor: pointer;">تحديث الآن</button>
-          <button onclick="this.parentNode.parentNode.remove()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer;">إغلاق</button>
-        </div>
-      `;
-      document.body.appendChild(notification);
-    }
-    
-    // Analytics placeholder
     console.log('📊 أدوات الإعلانات العربية جاهزة!');
   </script>
 </body>
