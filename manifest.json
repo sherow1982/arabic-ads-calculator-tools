@@ -1,0 +1,118 @@
+{
+  "name": "أدوات الإعلانات العربية - مؤسسة إعلانات العرب",
+  "short_name": "أدوات الإعلانات",
+  "description": "حاسبات مجانية عربية لـ CPC, ROI, CPA وتخطيط الميزانية لجميع منصات الإعلانات",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "https://arabsad.com/assets/images/tools-screenshot-wide.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "أدوات الإعلانات العربية على الشاشة العريضة"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/tools-screenshot-narrow.webp", 
+      "sizes": "750x1334",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "أدوات الإعلانات العربية على الجوال"
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://arabsad.com/assets/images/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-96.png", 
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-128.png",
+      "sizes": "128x128", 
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://arabsad.com/assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "حاسبة CPC",
+      "short_name": "CPC",
+      "description": "حساب تكلفة النقرة",
+      "url": "/cpc-calculator.html",
+      "icons": [
+        {
+          "src": "https://arabsad.com/assets/images/cpc-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "حاسبة ROI", 
+      "short_name": "ROI",
+      "description": "حساب عائد الاستثمار",
+      "url": "/roi-calculator.html",
+      "icons": [
+        {
+          "src": "https://arabsad.com/assets/images/roi-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "واتساب مباشر",
+      "short_name": "واتساب", 
+      "description": "تواصل مع الخبراء",
+      "url": "https://wa.me/201110760081?text=أريد استشارة مجانية حول أدوات الإعلانات",
+      "icons": [
+        {
+          "src": "https://arabsad.com/assets/images/whatsapp-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
