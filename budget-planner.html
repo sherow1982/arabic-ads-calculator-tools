@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مخطط ذكي لتوزيع الميزانية على منصات الإعلانات المختلفة - مؤسسة إعلانات العرب">
+    <title>مخطط الميزانية الذكي - أدوات إعلانات العرب</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b95 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .input-section {
+            background: #fff8f0;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid #ff9a56;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: #ff9a56;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 154, 86, 0.1);
+        }
+        
+        .objective-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .objective-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 20px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .objective-btn.active {
+            background: #ff9a56;
+            color: white;
+            border-color: #ff9a56;
+            transform: translateY(-2px);
+        }
+        
+        .objective-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b95 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 30px 0;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 154, 86, 0.4);
+        }
+        
+        .result {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .result.show {
+            display: block;
+            animation: fadeInScale 0.6s ease-out;
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .budget-distribution {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .platform-budget {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .platform-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .platform-amount {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .platform-percentage {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .recommendations-advanced {
+            background: #f0f8ff;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid #667eea;
+        }
+        
+        .recommendations-advanced h4 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .recommendation-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-right: 4px solid #ff9a56;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .recommendation-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .recommendation-desc {
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #eee;
+        }
+        
+        .footer a {
+            color: #ff9a56;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+            padding: 10px 20px;
+            border: 2px solid #ff9a56;
+            border-radius: 25px;
+            transition: all 0.3s;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .footer a:hover {
+            background: #ff9a56;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .objective-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-budget {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 مخطط الميزانية الذكي</h1>
+            <p>أداة متقدمة لتوزيع ميزانيتك الإعلانية بذكاء على المنصات المختلفة لتحقيق أقصى عائد استثمار</p>
+        </div>
+        
+        <div class="input-section">
+            <h3 style="margin-bottom: 25px; color: #333; font-size: 1.8em;">🎯 حدد هدفك الرئيسي:</h3>
+            <div class="objective-selector">
+                <div class="objective-btn active" onclick="selectObjective(this, 'awareness')">
+                    🔍 زيادة الوعي
+                </div>
+                <div class="objective-btn" onclick="selectObjective(this, 'traffic')">
+                    💆 جلب زيارات
+                </div>
+                <div class="objective-btn" onclick="selectObjective(this, 'conversions')">
+                    💰 زيادة المبيعات
+                </div>
+                <div class="objective-btn" onclick="selectObjective(this, 'leads')">
+                    📝 جمع عملاء محتملين
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="totalBudget">💰 الميزانية الإجمالية (بالدولار):</label>
+                    <input type="number" id="totalBudget" placeholder="مثال: 5000" min="100" step="10">
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">⏱️ مدة الحملة:</label>
+                    <select id="duration">
+                        <option value="7">أسبوع واحد</option>
+                        <option value="14">أسبوعين</option>
+                        <option value="30" selected>شهر واحد</option>
+                        <option value="60">شهرين</option>
+                        <option value="90">ثلاثة أشهر</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="businessType">🏢 نوع العمل:</label>
+                    <select id="businessType">
+                        <option value="ecommerce">متجر إلكتروني</option>
+                        <option value="services">خدمات مهنية</option>
+                        <option value="saas">تطبيق أو برنامج</option>
+                        <option value="local">عمل محلي</option>
+                        <option value="education">تعليم وتدريب</option>
+                        <option value="healthcare">رعاية صحية</option>
+                        <option value="finance">خدمات مالية</option>
+                        <option value="realestate">عقارات</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="targetMarket">🌍 السوق المستهدف:</label>
+                    <select id="targetMarket">
+                        <option value="gcc">دول الخليج</option>
+                        <option value="levant">بلاد الشام</option>
+                        <option value="northafrica">شمال أفريقيا</option>
+                        <option value="mena">الشرق الأوسط كامل</option>
+                        <option value="saudi">السعودية فقط</option>
+                        <option value="uae">الإمارات فقط</option>
+                        <option value="egypt">مصر فقط</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateBudgetDistribution()">
+                🧮 احسب التوزيع الأمثل
+            </button>
+        </div>
+        
+        <div id="result" class="result">
+            <div class="budget-distribution">
+                <h3 style="text-align: center; font-size: 2.2em; margin-bottom: 25px;">📊 توزيع الميزانية المقترح</h3>
+                <div id="budgetBreakdown"></div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; margin-top: 20px; text-align: center;">
+                    <h4 style="margin-bottom: 15px;">📈 النتائج المتوقعة:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div>
+                            <div id="totalReach" style="font-size: 1.8em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">إجمالي الوصول</div>
+                        </div>
+                        <div>
+                            <div id="totalClicks" style="font-size: 1.8em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">إجمالي النقرات</div>
+                        </div>
+                        <div>
+                            <div id="expectedROI" style="font-size: 1.8em; font-weight: bold;">0%</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">عائد متوقع</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recommendations-advanced">
+                <h4>🔥 استراتيجية التنفيذ المتقدمة:</h4>
+                <div id="advancedRecommendations"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p style="margin-bottom: 20px; color: #666; font-size: 1.2em;">هل تريد تطبيق هذه الاستراتيجية بخبرة مهنية؟</p>
+            <a href="https://arabsad.com" target="_blank">🌐 زر الموقع الرسمي</a>
+            <a href="https://wa.me/201110760081" target="_blank">💬 تواصل فوري</a>
+            <a href="mailto:info@arabsad.com">📧 استشارة مجانية</a>
+        </div>
+    </div>
+    
+    <script>
+        let selectedObjective = 'awareness';
+        
+        function selectObjective(element, objective) {
+            document.querySelectorAll('.objective-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            selectedObjective = objective;
+        }
+        
+        function calculateBudgetDistribution() {
+            const totalBudget = parseFloat(document.getElementById('totalBudget').value);
+            const duration = parseInt(document.getElementById('duration').value);
+            const businessType = document.getElementById('businessType').value;
+            const targetMarket = document.getElementById('targetMarket').value;
+            
+            if (!totalBudget || totalBudget < 100) {
+                alert('يرجى إدخال ميزانية لا تقل عن 100 دولار');
+                return;
+            }
+            
+            // توزيع ذكي بناءً على الهدف
+            const distributions = {
+                awareness: { google: 30, facebook: 25, instagram: 20, tiktok: 15, youtube: 10 },
+                traffic: { google: 40, facebook: 20, instagram: 15, tiktok: 15, youtube: 10 },
+                conversions: { google: 45, facebook: 30, instagram: 15, tiktok: 5, youtube: 5 },
+                leads: { google: 35, facebook: 35, instagram: 15, linkedin: 10, youtube: 5 }
+            };
+            
+            const distribution = distributions[selectedObjective];
+            const breakdown = document.getElementById('budgetBreakdown');
+            
+            let html = '';
+            let totalReach = 0;
+            let totalClicks = 0;
+            
+            Object.entries(distribution).forEach(([platform, percentage]) => {
+                const amount = (totalBudget * percentage / 100).toFixed(0);
+                const platformNames = {
+                    google: '🎯 جوجل',
+                    facebook: '📱 فيسبوك',
+                    instagram: '📷 إنستجرام',
+                    tiktok: '🎥 تيك توك',
+                    youtube: '📺 يوتيوب',
+                    linkedin: '👥 لينكد إن'
+                };
+                
+                html += `
+                    <div class="platform-budget">
+                        <div>
+                            <div class="platform-name">${platformNames[platform]}</div>
+                            <div class="platform-percentage">${percentage}% من الميزانية</div>
+                        </div>
+                        <div class="platform-amount">$${amount}</div>
+                    </div>
+                `;
+                
+                // حسابات تقديرية
+                const platformMetrics = {
+                    google: { avgCPC: 2.5, avgCTR: 3.2 },
+                    facebook: { avgCPC: 0.8, avgCTR: 1.5 },
+                    instagram: { avgCPC: 1.2, avgCTR: 1.8 },
+                    tiktok: { avgCPC: 0.6, avgCTR: 2.1 },
+                    youtube: { avgCPC: 1.8, avgCTR: 2.0 },
+                    linkedin: { avgCPC: 3.0, avgCTR: 0.8 }
+                };
+                
+                if (platformMetrics[platform]) {
+                    const clicks = Math.round(amount / platformMetrics[platform].avgCPC);
+                    const reach = Math.round(clicks / (platformMetrics[platform].avgCTR / 100));
+                    totalClicks += clicks;
+                    totalReach += reach;
+                }
+            });
+            
+            breakdown.innerHTML = html;
+            
+            // عرض النتائج الإجمالية
+            document.getElementById('totalReach').textContent = totalReach.toLocaleString('ar-EG');
+            document.getElementById('totalClicks').textContent = totalClicks.toLocaleString('ar-EG');
+            
+            // عائد متوقع بناءً على نوع العمل
+            const expectedROI = {
+                ecommerce: 150, services: 200, saas: 300, local: 120,
+                education: 180, healthcare: 250, finance: 400, realestate: 160
+            };
+            
+            document.getElementById('expectedROI').textContent = expectedROI[businessType] + '%';
+            
+            // توصيات متقدمة
+            generateAdvancedRecommendations(selectedObjective, businessType, totalBudget, targetMarket);
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function generateAdvancedRecommendations(objective, business, budget, market) {
+            const recommendations = [];
+            
+            // توصيات بناءً على الهدف
+            const objectiveRecs = {
+                awareness: [
+                    { title: 'ابدأ بحملات الوعي', desc: 'ركز على الوصول الواسع قبل التحويلات' },
+                    { title: 'استخدم الفيديو', desc: 'المحتوى البصري يحقق وصول أعلى بـ 300%' }
+                ],
+                traffic: [
+                    { title: 'استهدف الكلمات العالية النية', desc: 'ركز على الباحثين عن حلول محددة' },
+                    { title: 'حسّن صفحة الهبوط', desc: 'اجعلها سريعة ومتطابقة مع الإعلان' }
+                ],
+                conversions: [
+                    { title: 'استخدم Pixel تتبع', desc: 'تتبع التحويلات وحسّن الاستهداف' },
+                    { title: 'اختبر CTA مختلفة', desc: 'جرب نصوص وأزرار متنوعة' }
+                ],
+                leads: [
+                    { title: 'استخدم Lead Forms', desc: 'نماذج بسيطة داخل المنصة' },
+                    { title: 'قدم قيمة فورية', desc: 'كتاب إلكتروني أو استشارة مجانية' }
+                ]
+            };
+            
+            const recs = objectiveRecs[objective] || [];
+            
+            // توصيات بناءً على نوع العمل
+            if (business === 'ecommerce') {
+                recs.push({ title: 'فعّل Dynamic Ads', desc: 'إعلانات ديناميكية للمنتجات' });
+            }
+            
+            if (budget > 5000) {
+                recs.push({ title: 'استخدم الذكاء الاصطناعي', desc: 'تطبيق Automated Bidding المتقدم' });
+            }
+            
+            recs.push({ title: 'استعن بالخبراء', desc: 'فريق مؤسسة إعلانات العرب يضمن لك أفضل نتائج' });
+            
+            const recsHTML = recs.map(rec => `
+                <div class="recommendation-item">
+                    <div class="recommendation-title">${rec.title}</div>
+                    <div class="recommendation-desc">${rec.desc}</div>
+                </div>
+            `).join('');
+            
+            document.getElementById('advancedRecommendations').innerHTML = recsHTML;
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
