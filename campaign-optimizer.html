@@ -1,211 +1,37 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 محسن الحملات الإعلانية | أدوات الإعلانات العربية</title>
-    <meta name="description" content="احصل على توصيات مخصصة لتحسين أداء حملاتك الإعلانية وزيادة العائد">
-    
-    <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
-    
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-676ZKH3ECD', { page_title: 'Campaign Optimizer', content_group1: 'Optimization Tools' });
-    </script>
-    
-    <style>
-        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; padding: 20px; direction: rtl; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        .header { text-align: center; color: white; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 20px; margin-bottom: 25px; }
-        .card { background: white; border-radius: 20px; padding: 30px; margin-bottom: 20px; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; }
-        .btn-primary { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 16px; border-radius: 50px; font-size: 18px; cursor: pointer; }
-        .optimization-card { background: #f0f9ff; border: 2px solid #3b82f6; border-radius: 15px; padding: 20px; margin: 15px 0; }
-        .score-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 15px; }
-        .back-btn { display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="مؤسسة إعلانات العرب">
+  <meta name="language" content="Arabic">
+  <title>محسن الحملات | أدوات الإعلانات العربية</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="global-styles.css">
+  <link rel="stylesheet" href="global-search.css">
 </head>
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    
-    <div class="container">
-        <a href="./" class="back-btn">← العودة للرئيسية</a>
-        
-        <div class="header">
-            <h1>🚀 محسن الحملات الإعلانية</h1>
-            <p>احصل على توصيات مخصصة لتحسين أداء حملاتك</p>
-        </div>
-        
-        <div class="card">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>الميزانية اليومية (ريال)</label>
-                    <input id="budget" type="number" placeholder="مثال: 300">
-                </div>
-                <div class="form-group">
-                    <label>معدل النقر الحالي CTR (%)</label>
-                    <input id="currentCtr" type="number" step="0.1" placeholder="مثال: 1.5">
-                </div>
-                <div class="form-group">
-                    <label>معدل التحويل الحالي CVR (%)</label>
-                    <input id="currentCvr" type="number" step="0.1" placeholder="مثال: 3.2">
-                </div>
-                <div class="form-group">
-                    <label>متوسط قيمة الطلب (ريال)</label>
-                    <input id="avgOrderValue" type="number" placeholder="مثال: 150">
-                </div>
-            </div>
-            
-            <button class="btn-primary" onclick="optimizeCampaign()">تحليل وتحسين الحملة</button>
-            
-            <div id="results" style="display: none;">
-                <div style="text-align: center; margin: 25px 0;">
-                    <div id="scoreCircle" class="score-circle">0</div>
-                    <h3>نقاط الحملة الإجمالية</h3>
-                </div>
-                
-                <div id="optimizations"></div>
-            </div>
-        </div>
-    </div>
+  <div class="unified-container">
+    <nav class="unified-nav">
+      <a href="./"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="all-tools.html"><i class="fas fa-tools"></i> جميع الأدوات</a>
+    </nav>
 
-    <script>
-        function optimizeCampaign() {
-            const budget = parseFloat(document.getElementById('budget').value);
-            const ctr = parseFloat(document.getElementById('currentCtr').value);
-            const cvr = parseFloat(document.getElementById('currentCvr').value);
-            const aov = parseFloat(document.getElementById('avgOrderValue').value);
-            
-            if (!budget || !ctr || !cvr || !aov) {
-                alert('يرجى إدخال جميع البيانات');
-                return;
-            }
-            
-            // Calculate performance score
-            let score = 0;
-            const optimizations = [];
-            
-            // CTR Analysis
-            if (ctr >= 2.0) {
-                score += 30;
-            } else if (ctr >= 1.0) {
-                score += 20;
-                optimizations.push({
-                    title: '📈 تحسين معدل النقر',
-                    desc: 'معدل النقر الخاص بك جيد لكن يمكن تحسينه. جرب عناوين أكثر جاذبية وصور أوضح.',
-                    priority: 'متوسط'
-                });
-            } else {
-                score += 10;
-                optimizations.push({
-                    title: '🚨 معدل النقر منخفض',
-                    desc: 'معدل النقر أقل من المطلوب. راجع استهدافك وحسن عناوينك وصورك فوراً.',
-                    priority: 'عالي'
-                });
-            }
-            
-            // CVR Analysis
-            if (cvr >= 4.0) {
-                score += 30;
-            } else if (cvr >= 2.0) {
-                score += 20;
-                optimizations.push({
-                    title: '🎯 تحسين صفحة الهبوط',
-                    desc: 'معدل التحويل جيد. حسن سرعة تحميل الصفحة وعبارة الدعوة للعمل لزيادته.',
-                    priority: 'متوسط'
-                });
-            } else {
-                score += 10;
-                optimizations.push({
-                    title: '🔄 معدل التحويل يحتاج تحسين عاجل',
-                    desc: 'معدل التحويل منخفض جداً. راجع صفحة الهبوط والعرض والسعر.',
-                    priority: 'عالي'
-                });
-            }
-            
-            // Budget efficiency
-            const dailyConversions = (budget / (100/ctr) / (100/cvr)) * 100;
-            if (dailyConversions >= 5) {
-                score += 25;
-            } else if (dailyConversions >= 2) {
-                score += 15;
-                optimizations.push({
-                    title: '💰 تحسين كفاءة الميزانية',
-                    desc: 'يمكن تحسين كفاءة إنفاق الميزانية عبر تحسين الاستهداف والجودة.',
-                    priority: 'متوسط'
-                });
-            } else {
-                score += 5;
-                optimizations.push({
-                    title: '⚠️ كفاءة الميزانية ضعيفة',
-                    desc: 'الميزانية لا تحقق تحويلات كافية. قلل CPC أو حسن CVR.',
-                    priority: 'عالي'
-                });
-            }
-            
-            // AOV Analysis
-            if (aov >= 200) {
-                score += 15;
-            } else if (aov >= 100) {
-                score += 10;
-                optimizations.push({
-                    title: '🛒 زيادة قيمة الطلب المتوسطة',
-                    desc: 'جرب عروض الحزم أو المنتجات المكملة لزيادة قيمة الطلب.',
-                    priority: 'منخفض'
-                });
-            }
-            
-            // Display score
-            const scoreCircle = document.getElementById('scoreCircle');
-            scoreCircle.textContent = score;
-            
-            if (score >= 80) {
-                scoreCircle.style.background = '#10b981';
-                scoreCircle.style.color = 'white';
-            } else if (score >= 60) {
-                scoreCircle.style.background = '#f59e0b';
-                scoreCircle.style.color = 'white';
-            } else {
-                scoreCircle.style.background = '#ef4444';
-                scoreCircle.style.color = 'white';
-            }
-            
-            // Display optimizations
-            let optimizationsHtml = optimizations.map(opt => `
-                <div class="optimization-card">
-                    <h4 style="margin-bottom: 10px; color: #1e40af;">${opt.title}</h4>
-                    <p style="margin-bottom: 10px;">${opt.desc}</p>
-                    <span style="background: ${opt.priority === 'عالي' ? '#ef4444' : opt.priority === 'متوسط' ? '#f59e0b' : '#10b981'}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px;">أولوية ${opt.priority}</span>
-                </div>
-            `).join('');
-            
-            if (optimizations.length === 0) {
-                optimizationsHtml = '<div class="optimization-card"><h4 style="color: #10b981;">🎉 ممتاز! حملتك محسّنة بشكل جيد</h4><p>لا توجد توصيات عاجلة. استمر في المراقبة والتحسين المستمر.</p></div>';
-            }
-            
-            document.getElementById('optimizations').innerHTML = optimizationsHtml;
-            document.getElementById('results').style.display = 'block';
-            
-            gtag('event', 'campaign_optimized', {
-                event_category: 'Campaign Optimizer',
-                tool_name: 'campaign_optimizer',
-                performance_score: score,
-                optimizations_count: optimizations.length
-            });
-        }
-    </script>
+    <div class="unified-search-wrapper">
+      <div class="unified-search" id="globalSearchBar">
+        <select id="globalSearchFilter" class="filter-select">
+          <option value="all">كل الموقع</option>
+          <option value="tools">الأدوات فقط</option>
+          <option value="advanced">الأدوات المتقدمة</option>
+          <option value="basic">الأدوات الأساسية</option>
+        </select>
+        <input id="globalSearchInput" type="search" placeholder="ابحث في 27 أداة..." aria-label="بحث">
+        <button id="globalSearchBtn" class="search-btn"><i class="fas fa-search"></i> بحث</button>
+      </div>
+    </div>
+  </div>
+  <script src="global-search.js" defer></script>
 </body>
 </html>
