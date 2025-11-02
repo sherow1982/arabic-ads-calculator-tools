@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>حاسبة عائد الاستثمار ROI | أدوات الإعلانات العربية</title>
   <meta name="description" content="احسب عائد الاستثمار ROI لحملاتك الإعلانية وحدد مدى ربحيتها. أداة مجانية من مؤسسة إعلانات العرب">
+  
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-676ZKH3ECD', { page_title: 'ROI Calculator', content_group1: 'Calculator Tools' });
+  </script>
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#667eea">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +67,10 @@
   </style>
 </head>
 <body>
-  <script src="shared-nav.js"></script>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   
   <div class="container">
     <header class="header">
@@ -225,6 +249,15 @@
       document.getElementById('result').scrollIntoView({ 
         behavior: 'smooth',
         block: 'nearest'
+      });
+
+      // GA4 event
+      gtag('event', 'calculation_completed', {
+        event_category: 'ROI Calculator',
+        event_label: period,
+        tool_name: 'roi_calculator',
+        net_profit: Math.round(netProfit),
+        roi_value: Math.round(roi)
       });
     });
   </script>
