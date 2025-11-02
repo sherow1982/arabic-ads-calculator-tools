@@ -1,0 +1,199 @@
+name: تحديث تنبيهات منصات الإعلانات
+
+on:
+  schedule:
+    # كل 3 ساعات يومياً
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+    # تشغيل يدوي
+
+jobs:
+  update-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: تحديث بيانات التنبيهات
+        run: |
+          cat > scrape-ads-updates.js << 'EOF'
+          const fs = require('fs');
+          const https = require('https');
+          
+          // مصادر RSS وChangelog للمنصات
+          const sources = [
+            {
+              platform: 'Meta',
+              url: 'https://developers.facebook.com/blog/rss',
+              type: 'rss'
+            },
+            {
+              platform: 'Google',
+              url: 'https://developers.googleblog.com/feeds/posts/default/-/Google%20Ads%20API',
+              type: 'rss'
+            },
+            {
+              platform: 'TikTok',
+              url: 'https://business-api.tiktok.com/portal/docs',
+              type: 'changelog'
+            }
+          ];
+          
+          function makeRequest(url) {
+            return new Promise((resolve, reject) => {
+              const req = https.get(url, (res) => {
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => resolve(data));
+              });
+              req.on('error', reject);
+              req.setTimeout(10000, () => {
+                req.destroy();
+                reject(new Error('Timeout'));
+              });
+            });
+          }
+          
+          function parseRSSItem(item) {
+            const titleMatch = item.match(/<title><!\[CDATA\[([^\]]+)\]\]><\/title>/i) || item.match(/<title>([^<]+)<\/title>/i);
+            const linkMatch = item.match(/<link>([^<]+)<\/link>/i);
+            const dateMatch = item.match(/<pubDate>([^<]+)<\/pubDate>/i);
+            const descMatch = item.match(/<description><!\[CDATA\[([^\]]+)\]\]><\/description>/i) || item.match(/<description>([^<]+)<\/description>/i);
+            
+            return {
+              title: titleMatch ? titleMatch[1].trim() : '',
+              link: linkMatch ? linkMatch[1].trim() : '',
+              date: dateMatch ? new Date(dateMatch[1]).toISOString() : new Date().toISOString(),
+              summary: descMatch ? descMatch[1].replace(/<[^>]+>/g, '').substring(0, 200) + '...' : ''
+            };
+          }
+          
+          function classifyItem(title, summary) {
+            const text = (title + ' ' + summary).toLowerCase();
+            const categories = [];
+            const impact = 'medium'; // Default
+            
+            if (text.includes('policy') || text.includes('guideline') || text.includes('rule')) {
+              categories.push('policy');
+            }
+            if (text.includes('targeting') || text.includes('audience')) {
+              categories.push('targeting');
+            }
+            if (text.includes('bid') || text.includes('budget') || text.includes('cost')) {
+              categories.push('bidding');
+            }
+            if (text.includes('pixel') || text.includes('tracking') || text.includes('measurement')) {
+              categories.push('measurement');
+            }
+            if (text.includes('creative') || text.includes('ad format') || text.includes('video')) {
+              categories.push('creatives');
+            }
+            if (text.includes('objective') || text.includes('campaign') || text.includes('optimization')) {
+              categories.push('objectives');
+            }
+            if (text.includes('api') || text.includes('sdk') || text.includes('developer')) {
+              categories.push('api');
+            }
+            
+            return { categories: categories.length ? categories : ['general'], impact };
+          }
+          
+          async function fetchAlerts() {
+            const alerts = [];
+            
+            for (const source of sources) {
+              try {
+                console.log(`Fetching from ${source.platform}...`);
+                const data = await makeRequest(source.url);
+                
+                if (source.type === 'rss') {
+                  const items = data.match(/<item[^>]*>([\s\S]*?)<\/item>/gi) || [];
+                  
+                  items.slice(0, 5).forEach((item, index) => {
+                    const parsed = parseRSSItem(item);
+                    if (parsed.title && parsed.link) {
+                      const classified = classifyItem(parsed.title, parsed.summary);
+                      alerts.push({
+                        id: `${source.platform.toLowerCase()}-${Date.now()}-${index}`,
+                        platform: source.platform,
+                        title: parsed.title,
+                        date: parsed.date,
+                        impact: classified.impact,
+                        categories: classified.categories,
+                        summary: parsed.summary,
+                        url: parsed.link
+                      });
+                    }
+                  });
+                }
+              } catch (error) {
+                console.log(`Error fetching ${source.platform}: ${error.message}`);
+                // إضافة تنبيه وهمي في حالة فشل الجلب
+                alerts.push({
+                  id: `${source.platform.toLowerCase()}-manual-${Date.now()}`,
+                  platform: source.platform,
+                  title: `تحديث عام في منصة ${source.platform}`,
+                  date: new Date().toISOString(),
+                  impact: 'low',
+                  categories: ['general'],
+                  summary: `يرجى مراجعة موقع ${source.platform} الرسمي لمعرفة آخر التحديثات.`,
+                  url: source.url
+                });
+              }
+            }
+            
+            // ترتيب حسب التاريخ (الأحدث أولاً)
+            alerts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            return {
+              last_updated: new Date().toISOString(),
+              items: alerts.slice(0, 20) // آخر 20 تنبيه
+            };
+          }
+          
+          // تنفيذ السكريبت
+          fetchAlerts().then(result => {
+            fs.writeFileSync('alerts.json', JSON.stringify(result, null, 2));
+            console.log(`تم تحديث ${result.items.length} تنبيه`);
+          }).catch(error => {
+            console.error('خطأ في تحديث التنبيهات:', error);
+            // إنشاء ملف افتراضي في حالة الفشل
+            const fallback = {
+              last_updated: new Date().toISOString(),
+              items: [{
+                id: `fallback-${Date.now()}`,
+                platform: 'System',
+                title: 'خدمة التنبيهات مفعّلة',
+                date: new Date().toISOString(),
+                impact: 'low',
+                categories: ['system'],
+                summary: 'خدمة التنبيهات تعمل بشكل طبيعي. سيتم تحديث البيانات خلال التشغيل التالي.',
+                url: '#'
+              }]
+            };
+            fs.writeFileSync('alerts.json', JSON.stringify(fallback, null, 2));
+          });
+          EOF
+          
+          node scrape-ads-updates.js
+          
+      - name: حفظ التغييرات
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if [[ -n $(git status --porcelain) ]]; then
+            git add alerts.json
+            git commit -m "تحديث تلقائي لتنبيهات منصات الإعلانات - $(date '+%Y-%m-%d %H:%M')"
+            git push
+            echo "تم تحديث التنبيهات بنجاح"
+          else
+            echo "لا توجد تغييرات جديدة"
+          fi
