@@ -1,1 +1,80 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>شريط موحد</title><script src="shared-nav.js"></script></head><body></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>مولد رسائل واتساب | أدوات الإعلانات العربية</title>
+  <meta name="description" content="أنشئ روابط رسائل واتساب جاهزة مع إمكانية تضمين UTM.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
+    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
+    .form-group{margin-bottom:16px}
+    label{display:block;font-weight:700;color:var(--text);margin-bottom:6px}
+    input,textarea{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
+    textarea{min-height:120px}
+    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .btn{background:var(--bg);color:#fff;border:none;padding:12px 20px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+    .output{background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:14px;margin-top:16px;word-break:break-all}
+  </style>
+</head>
+<body>
+  <script src="shared-nav.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>📱 مولد رسائل واتساب</h1>
+      <p>روابط جاهزة مع نص مُسبق + UTM اختياري</p>
+    </header>
+
+    <div class="card">
+      <div class="row">
+        <div class="form-group"><label for="phone">رقم الواتساب (برمز الدولة بدون +)</label><input id="phone" placeholder="201110760081"></div>
+        <div class="form-group"><label for="base">رابط صفحة الهبوط (اختياري)</label><input id="base" placeholder="https://example.com"></div>
+      </div>
+      <div class="form-group"><label for="text">نص الرسالة</label><textarea id="text" placeholder="أهلاً، أريد استشارة..."></textarea></div>
+      <details>
+        <summary>خيارات UTM (اختياري)</summary>
+        <div class="row" style="margin-top:10px">
+          <div class="form-group"><label for="source">utm_source</label><input id="source" placeholder="whatsapp"></div>
+          <div class="form-group"><label for="medium">utm_medium</label><input id="medium" placeholder="organic"></div>
+          <div class="form-group"><label for="campaign">utm_campaign</label><input id="campaign" placeholder="support_chat"></div>
+          <div class="form-group"><label for="content">utm_content</label><input id="content" placeholder="cta_button"></div>
+        </div>
+      </details>
+      <button class="btn" id="build">توليد الرابط</button>
+      <div class="output" id="out"></div>
+    </div>
+  </div>
+
+  <script>
+    function build(){
+      const phone = document.getElementById('phone').value.trim();
+      const base = document.getElementById('base').value.trim();
+      const text = document.getElementById('text').value.trim();
+      if(!phone){ alert('أدخل رقم الهاتف'); return; }
+      let msg = text;
+      if(base){
+        const p = new URLSearchParams();
+        const add=(k,v)=>{ if(v) p.set(k,v); };
+        add('utm_source', document.getElementById('source').value.trim());
+        add('utm_medium', document.getElementById('medium').value.trim());
+        add('utm_campaign', document.getElementById('campaign').value.trim());
+        add('utm_content', document.getElementById('content').value.trim());
+        const url = base + (p.toString()? (base.includes('?')?'&':'?')+p.toString(): '');
+        msg = (msg? msg+'\n' : '') + url;
+      }
+      const wa = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      document.getElementById('out').textContent = wa;
+    }
+    document.getElementById('build').addEventListener('click', build);
+  </script>
+</body>
+</html>
