@@ -1,0 +1,73 @@
+  <!-- الفوتر الموحد لجميع الصفحات -->
+  <footer class="unified-footer">
+    <div class="unified-footer-links">
+      <a href="about.html">عن الأدوات</a>
+      <a href="all-tools.html">جميع الأدوات</a>
+      <a href="alerts.html">التنبيهات</a>
+      <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer">الموقع الرسمي</a>
+      <a href="https://wa.me/201110760081" target="_blank" rel="noopener noreferrer">واتساب</a>
+      <a href="mailto:info@arabsad.com">تواصل معنا</a>
+    </div>
+    
+    <p>&copy; 2025 مؤسسة إعلانات العرب – 18 أداة مجانية للمسوقين العرب</p>
+    
+    <div style="margin-top: 15px; font-size: 14px; opacity: 0.8; line-height: 1.4;">
+      ✨ تحديث جديد: 18 أداة مفعّلة + بوت ذكي + تنبيهات تلقائية<br>
+      <small>تم آخر تحديث: 2 نوفمبر 2025</small>
+    </div>
+    
+    <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+        📊 18 أداة مجانية
+      </span>
+      <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+        🌍 6 منصات مدعومة
+      </span>
+      <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+        🤖 بوت ذكي متعدد اللهجات
+      </span>
+      <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+        🚨 تنبيهات تلقائية
+      </span>
+    </div>
+  </footer>
+</div>
+
+<!-- الأزرار العائمة -->
+<!-- زر واتساب -->
+<a href="#whatsapp" class="unified-whatsapp-float" id="whatsappBtn">
+  <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+</a>
+
+<!-- زر البوت الذكي -->
+<button class="unified-chatbot-float" id="chatbotToggle" style="position: fixed; bottom: 24px; left: 24px; width: 60px; height: 60px; background: var(--gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); z-index: 1000; cursor: pointer; transition: all 0.3s ease;">
+  <i class="fas fa-comments" style="font-size: 1.5rem;"></i>
+</button>
+
+<!-- نافذة البوت المصغرة -->
+<div id="miniChatWindow" style="position: fixed; bottom: 100px; left: 24px; width: 320px; max-width: calc(100vw - 48px); background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 1001; display: none; overflow: hidden;">
+  <div style="background: var(--gradient); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <strong>مساعد الحاسبات العربي 🤖</strong>
+      <div style="font-size: 12px; opacity: 0.9;">يفهم جميع اللهجات العربية</div>
+    </div>
+    <button id="closeMiniChat" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">&times;</button>
+  </div>
+  
+  <div id="miniChatMessages" style="padding: 15px; max-height: 200px; overflow-y: auto;">
+    <div style="background: #f3f4f6; padding: 10px; border-radius: 10px; font-size: 14px; line-height: 1.4;">
+      أهلاً! 👋 أنا مساعدك الذكي<br>
+      قول ايه اللي محتاجه وهرشدك للأداة الصح! 🎯
+    </div>
+  </div>
+  
+  <div style="padding: 10px; border-top: 1px solid #e5e7eb;">
+    <div style="display: flex; gap: 5px;">
+      <input type="text" id="miniChatInput" placeholder="اكتب هنا... (مثل: عايز أحسب ROI)" 
+             style="flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 20px; font-size: 14px; font-family: inherit;">
+      <button id="miniChatSend" style="background: var(--gradient); color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>
