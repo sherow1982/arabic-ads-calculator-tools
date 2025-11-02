@@ -1,100 +1,357 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>كل الأدوات | أدوات الإعلانات العربية</title>
-  <meta name="description" content="فهرس شامل لكل أدوات التسويق العربية: CPC, CPA, ROI, CVR, CTR, مخطط الميزانية، UTM، واتساب، محتوى السوشيال - محدّث يوم 2 نوفمبر 2025">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#667eea">
-  <style>
-    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);padding-top:70px}
-    .container{max-width:1200px;margin:0 auto;padding:20px}
-    .header{background:rgba(255,255,255,.1);border-radius:18px;color:#fff;text-align:center;padding:28px;backdrop-filter:blur(10px);margin-bottom:16px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0}
-    .input,select{padding:10px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.85)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 10px 24px rgba(10,37,64,.1)}
-    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;margin-bottom:8px}
-    .primary{background:rgba(102,126,234,.14);color:#1e293b}
-    .accent{background:rgba(16,185,129,.14);color:#064e3b}
-    .trace{background:rgba(245,158,11,.14);color:#7c2d12}
-    .new{background:rgba(239,68,68,.14);color:#7f1d1d;font-weight:800}
-    .title{font-weight:800;margin:6px 0 8px}
-    .desc{color:#64748b;font-size:14px;margin-bottom:10px}
-    .link{display:inline-block;text-decoration:none;color:#fff;background:linear-gradient(135deg,#667eea,#764ba2);padding:8px 14px;border-radius:999px;font-weight:700}
-    @media(max-width:768px){.container{padding:14px}.grid{grid-template-columns:1fr}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ جميع الأدوات | أدوات الإعلانات العربية</title>
+    <meta name="description" content="اكتشف جميع الأدوات المجانية لحساب تكلفة وعائد الإعلانات الممولة - من CPC إلى ROI ومخطط الميزانية">
+    
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-676ZKH3ECD');
+    </script>
+    
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --white: #ffffff;
+            --text: #1a202c;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --muted: #64748b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', -apple-system, sans-serif;
+            background: var(--gradient);
+            min-height: 100vh;
+            color: var(--text);
+            direction: rtl;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        
+        .search-box {
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .tool-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        
+        .tool-description {
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <script src="shared-nav.js"></script>
-  <div class="container">
-    <header class="header">
-      <h1>🧰 كل الأدوات</h1>
-      <p>ابحث وفلتر للوصول السريع للأداة المناسبة • <strong>محدّث حديثاً!</strong></p>
-    </header>
-
-    <div class="controls">
-      <input id="search" class="input" placeholder="ابحث بالاسم أو بالكلمات الدلالية (CPC, واتساب, ميزانية)">
-      <select id="category">
-        <option value="">كل التصنيفات</option>
-        <option value="primary">الأدوات الأساسية</option>
-        <option value="accent">أدوات التحسين والتحليل</option>
-        <option value="trace">أدوات التتبع والمراسلة</option>
-      </select>
-    </div>
-
-    <section class="grid" id="toolsGrid"></section>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     
-    <div style="text-align:center;margin-top:30px;padding:20px;background:rgba(255,255,255,.1);border-radius:16px;color:#fff">
-      <p>💡 <strong>تحديث جديد:</strong> تم تفعيل وتطوير جميع الأدوات بالكامل!</p>
-      <p style="margin:8px 0 0 0;font-size:14px;opacity:0.8">آخر تحديث: 2 نوفمبر 2025</p>
-    </div>
-  </div>
-
-  <script>
-    const tools = [
-      { title:'حاسبة CPC', desc:'احسب تكلفة النقرة وقارن المنصات', url:'cpc-calculator.html', cat:'primary', tags:['cpc','click','نقرة'], isNew:false },
-      { title:'حاسبة ROI', desc:'قِس الربحية الدقيقة لحملاتك', url:'roi-calculator.html', cat:'primary', tags:['roi','ربحية','عائد'], isNew:false },
-      { title:'حاسبة CPA', desc:'احسب تكلفة اكتساب العميل', url:'cpa-calculator.html', cat:'primary', tags:['cpa','اكتساب','تحويل'], isNew:true },
-      { title:'مخطط الميزانية', desc:'توزيع ذكي لميزانيتك', url:'budget-planner.html', cat:'primary', tags:['budget','ميزانية','توزيع'], isNew:true },
-      { title:'حاسبة CVR', desc:'معدل تحويل الزوار', url:'cvr-calculator.html', cat:'accent', tags:['cvr','تحويل','landing'], isNew:true },
-      { title:'حاسبة CTR', desc:'معدل النقر ومقارنات الصناعة', url:'ctr-calculator.html', cat:'accent', tags:['ctr','نقر','إعلان'], isNew:true },
-      { title:'هامش الربح', desc:'تسعير ذكي وحساب الهوامش', url:'profit-margin-calculator.html', cat:'accent', tags:['profit','margin','تسعير'], isNew:true },
-      { title:'مولد UTM', desc:'إنشاء روابط تتبع احترافية', url:'utm-generator.html', cat:'trace', tags:['utm','tracking','تتبع'], isNew:true },
-      { title:'مولد واتساب', desc:'قوالب رسائل + UTM', url:'whatsapp-generator.html', cat:'trace', tags:['whatsapp','واتساب','رسائل'], isNew:true },
-      { title:'مخطط المحتوى', desc:'أفضل أوقات النشر + أفكار', url:'social-content-planner.html', cat:'trace', tags:['social','content','محتوى'], isNew:true }
-    ];
-
-    const grid = document.getElementById('toolsGrid');
-    const search = document.getElementById('search');
-    const category = document.getElementById('category');
-
-    function render(){
-      const q = search.value.trim().toLowerCase();
-      const c = category.value;
-      grid.innerHTML = tools
-        .filter(t => (!c || t.cat===c))
-        .filter(t => !q || t.title.toLowerCase().includes(q) || t.tags.some(tag => tag.includes(q)))
-        .map(t => `
-          <article class="card">
-            <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px">
-              <span class="badge ${t.cat}">${ t.cat==='primary'?'أساسية': t.cat==='accent'?'تحسين/تحليل':'تتبع/مراسلة' }</span>
-              ${t.isNew ? '<span class="badge new">جديد!</span>' : ''}
+    <div class="container">
+        <div class="header">
+            <h1>✨ جميع أدوات الإعلانات</h1>
+            <p>اكتشف مجموعتنا الشاملة من الأدوات المجانية لتحسين إعلاناتك</p>
+            
+            <div class="search-box">
+                <input type="text" id="toolSearch" placeholder="ابحث عن أداة... (مثل: ROI, CPC, ميزانية)">
+                <i class="fas fa-search"></i>
             </div>
-            <h3 class="title">${t.title}</h3>
-            <p class="desc">${t.desc}</p>
-            <a class="link" href="${t.url}">فتح الأداة</a>
-          </article>
-        `)
-        .join('');
-    }
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">📊 حاسبات الأداء والتكلفة</h2>
+            <div class="tools-grid">
+                <a href="cpc-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">💰</div>
+                    <h3 class="tool-title">حاسبة CPC</h3>
+                    <p class="tool-description">احسب تكلفة النقرة المتوقعة لحملتك الإعلانية</p>
+                    <span class="tool-badge">أساسي</span>
+                </a>
+                
+                <a href="roi-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">📈</div>
+                    <h3 class="tool-title">حاسبة ROI</h3>
+                    <p class="tool-description">قيس عائد الاستثمار من حملاتك الإعلانية</p>
+                    <span class="tool-badge">شائع</span>
+                </a>
+                
+                <a href="cpa-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">🎯</div>
+                    <h3 class="tool-title">حاسبة CPA</h3>
+                    <p class="tool-description">احسب تكلفة الحصول على عميل جديد</p>
+                    <span class="tool-badge">مهم</span>
+                </a>
+                
+                <a href="ctr-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">🔖</div>
+                    <h3 class="tool-title">حاسبة CTR</h3>
+                    <p class="tool-description">قيس معدل النقر وجودة إعلاناتك</p>
+                    <span class="tool-badge">تحليلي</span>
+                </a>
+                
+                <a href="cvr-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">🔄</div>
+                    <h3 class="tool-title">حاسبة CVR</h3>
+                    <p class="tool-description">احسب معدل تحويل الزوار لعملاء</p>
+                    <span class="tool-badge">تحويل</span>
+                </a>
+                
+                <a href="profit-margin-calculator.html" class="tool-card" data-category="performance">
+                    <div class="tool-icon">📉</div>
+                    <h3 class="tool-title">حاسبة هامش الربح</h3>
+                    <p class="tool-description">احسب هامش ربحك من المبيعات</p>
+                    <span class="tool-badge">مالي</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">📅 أدوات التخطيط والتنظيم</h2>
+            <div class="tools-grid">
+                <a href="budget-planner.html" class="tool-card" data-category="planning">
+                    <div class="tool-icon">📊</div>
+                    <h3 class="tool-title">مخطط الميزانية</h3>
+                    <p class="tool-description">وزّع ميزانيتك بذكاء بين المنصات</p>
+                    <span class="tool-badge">ذكي</span>
+                </a>
+                
+                <a href="audience-calculator.html" class="tool-card" data-category="planning">
+                    <div class="tool-icon">🎯</div>
+                    <h3 class="tool-title">حاسبة الجمهور</h3>
+                    <p class="tool-description">قدّر حجم جمهورك المستهدف بدقة</p>
+                    <span class="tool-badge">استهداف</span>
+                </a>
+                
+                <a href="social-content-planner.html" class="tool-card" data-category="planning">
+                    <div class="tool-icon">📅</div>
+                    <h3 class="tool-title">مخطط المحتوى</h3>
+                    <p class="tool-description">أنشئ خطة نشر أسبوعية ذكية</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">🔗 أدوات التوليد والروابط</h2>
+            <div class="tools-grid">
+                <a href="utm-generator.html" class="tool-card" data-category="generation">
+                    <div class="tool-icon">🔗</div>
+                    <h3 class="tool-title">مولد UTM</h3>
+                    <p class="tool-description">أنشئ روابط تتبع احترافية لحملاتك</p>
+                    <span class="tool-badge">تتبع</span>
+                </a>
+                
+                <a href="whatsapp-generator.html" class="tool-card" data-category="generation">
+                    <div class="tool-icon">💬</div>
+                    <h3 class="tool-title">مولد واتساب</h3>
+                    <p class="tool-description">أنشئ روابط واتساب جاهزة مع رسائل</p>
+                    <span class="tool-badge">تواصل</span>
+                </a>
+            </div>
+        </div>
+        
+        <div style="text-align: center; padding: 40px 20px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; margin-top: 40px; color: white;">
+            <h3 style="margin-bottom: 15px;">🚀 هل تريد استشارة مخصصة؟</h3>
+            <p style="margin-bottom: 20px; opacity: 0.9;">تواصل مع فريق الخبراء لدينا</p>
+            <a href="https://wa.me/201110760081?text=أريد%20استشارة%20عن%20الإعلانات%20الممولة" 
+               style="background: #25d366; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                تواصل عبر واتساب
+            </a>
+        </div>
+    </div>
 
-    search.addEventListener('input', render);
-    category.addEventListener('change', render);
-    render();
-  </script>
+    <script>
+        // Search functionality
+        document.getElementById('toolSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            toolCards.forEach(card => {
+                const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || 
+                    card.href.toLowerCase().includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Track search
+            if (searchTerm.length > 2) {
+                gtag('event', 'search', {
+                    event_category: 'Tool Discovery',
+                    search_term: searchTerm
+                });
+            }
+        });
+        
+        // Track tool clicks
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const toolName = this.querySelector('.tool-title').textContent;
+                gtag('event', 'tool_accessed', {
+                    event_category: 'Navigation',
+                    event_label: toolName,
+                    tool_name: toolName
+                });
+            });
+        });
+        
+        // Track page view
+        gtag('event', 'page_view', {
+            page_title: 'All Tools Directory',
+            content_group1: 'Tool Directory'
+        });
+    </script>
 </body>
 </html>
