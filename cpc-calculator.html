@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة تكلفة النقرة (CPC) - مؤسسة إعلانات العرب</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        input[type="number"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 20px 0;
+        }
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .result {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .tips {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .tips h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .tips ul {
+            color: #856404;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 حاسبة تكلفة النقرة</h1>
+        <div class="subtitle">أداة مجانية لحساب تكلفة النقرة في الإعلانات الممولة</div>
+        
+        <div class="input-group">
+            <label for="budget">💰 الميزانية الإجمالية (بالدولار):</label>
+            <input type="number" id="budget" placeholder="مثال: 1000" min="1" step="0.01">
+        </div>
+        
+        <div class="input-group">
+            <label for="clicks">💆 عدد النقرات المتوقعة:</label>
+            <input type="number" id="clicks" placeholder="مثال: 500" min="1" step="1">
+        </div>
+        
+        <button class="calculate-btn" onclick="calculateCPC()">حساب تكلفة النقرة</button>
+        
+        <div id="result" class="result">
+            <h3>نتيجة الحساب:</h3>
+            <div class="result-value" id="cpcValue">$0.00</div>
+            <p>تكلفة النقرة الواحدة</p>
+        </div>
+        
+        <div class="tips">
+            <h3>💡 نصائح لتحسين تكلفة النقرة:</h3>
+            <ul>
+                <li>استخدم الكلمات المفتاحية الطويلة لتقليل المنافسة</li>
+                <li>حسّن جودة الإعلان (Quality Score)</li>
+                <li>استهدف الجمهور المناسب بدقة</li>
+                <li>اختبر أوقات مختلفة للنشر</li>
+                <li>استخدم الكلمات المفتاحية السالبة</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>تم إنشاء هذه الأداة بواسطة:</p>
+            <a href="https://arabsad.com" target="_blank">🌐 مؤسسة إعلانات العرب</a><br>
+            <a href="https://wa.me/201110760081" target="_blank">📱 تواصل معنا عبر واتساب</a>
+        </div>
+    </div>
+    
+    <script>
+        function calculateCPC() {
+            const budget = parseFloat(document.getElementById('budget').value);
+            const clicks = parseInt(document.getElementById('clicks').value);
+            
+            if (!budget || !clicks || budget <= 0 || clicks <= 0) {
+                alert('يرجى إدخال قيم صحيحة للميزانية وعدد النقرات');
+                return;
+            }
+            
+            const cpc = budget / clicks;
+            
+            document.getElementById('cpcValue').textContent = '$' + cpc.toFixed(2);
+            document.getElementById('result').classList.add('show');
+            
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateCPC();
+            }
+        });
+    </script>
+</body>
+</html>
