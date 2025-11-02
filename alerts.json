@@ -1,45 +1,145 @@
 {
-  "last_updated": "2025-11-02T11:58:00Z",
+  "last_updated": "2025-11-02T16:42:00Z",
   "items": [
     {
-      "id": "meta-ads-2025-11-policy-creative-checks",
+      "id": "meta-ads-2025-11-02-landing-page-optimization",
       "platform": "Meta",
-      "title": "تحديث سياسات مراجعة الإعلانات مع فحوصات تلقائية للصور والفيديو",
-      "date": "2025-11-02T08:00:00Z",
+      "title": "إطلاق Landing Page View Optimization لتحسين جودة الزيارات وزيادة ROI",
+      "date": "2025-11-02T12:00:00Z",
       "impact": "high",
-      "categories": ["policy", "creatives", "measurement"],
-      "summary": "بدأت Meta بإطلاق فحوصات تلقائية جديدة على العناصر الإبداعية للكشف عن النص الكثيف، المحتوى الحساس، وفيديوهات الذكاء الاصطناعي. قد تتغير أوقات الموافقة لبعض الحسابات.",
-      "url": "https://www.facebook.com/business/help"
+      "categories": ["optimization", "objectives", "measurement"],
+      "summary": "بدلاً من التركيز على النقرات، يمكن الآن تحسين الحملات للمستخدمين الذين يحملون الصفحة فعلياً. يحسن جودة العملاء المحتملين ويقلل الفجوة بين النقرات والجلسات الفعلية.",
+      "url": "https://www.facebook.com/business/help/landing-page-optimization"
     },
     {
-      "id": "google-ads-2025-11-bidding-ppo",
+      "id": "meta-ads-2025-11-reels-trending-ads-launch",
+      "platform": "Meta",
+      "title": "إطلاق Reels Trending Ads لتضخيم المحتوى الرائج وزيادة الوصول",
+      "date": "2025-11-01T10:30:00Z",
+      "impact": "medium",
+      "categories": ["creatives", "objectives", "ai"],
+      "summary": "نوع جديد من الإعلانات يركز على تضخيم المحتوى الذي يحقق انتشاراً طبيعياً. يسمح باستغلال المحتوى عالي التفاعل وتحويله إلى إعلان مدفوع.",
+      "url": "https://www.facebook.com/business/help/reels-trending-ads"
+    },
+    {
+      "id": "meta-threads-ads-testing-2025",
+      "platform": "Meta",
+      "title": "اختبار إعلانات Threads مع Carousel وAdvantage+ Catalog وApp Ads",
+      "date": "2025-10-30T14:00:00Z",
+      "impact": "medium",
+      "categories": ["platform-expansion", "creatives", "objectives"],
+      "summary": "Meta تختبر ثلاثة أنواع إعلانات جديدة على Threads. لا يتطلب وجود بروفايل نشط على المنصة - يمكن استخدام حساب Instagram أو Facebook.",
+      "url": "https://about.meta.com/technologies/threads/ads-testing"
+    },
+    {
+      "id": "google-ads-api-v20-june-2025",
       "platform": "Google",
-      "title": "تحسينات على Smart Bidding مع نموذج Predictive Purchase Optimization",
-      "date": "2025-11-01T17:30:00Z",
+      "title": "Google Ads API v20 - دعم Performance Max وDemand Gen مع قياس محسّن",
+      "date": "2025-06-04T16:00:00Z",
       "impact": "medium",
-      "categories": ["bidding", "ai", "objectives"],
-      "summary": "نموذج توقعي جديد لتحسين احتمالية الشراء في الحملات Performance Max وSearch. يفضل تفعيل تتبع التحويلات المحسن.",
-      "url": "https://ads.google.com/home/resources/announcements/"
+      "categories": ["api", "measurement", "objectives"],
+      "summary": "إطلاق نسخة 20 من Google Ads API مع دعم محسّن لحملات Performance Max وDemand Gen. يتضمن كلمات مفتاحية سالبة على مستوى الحملة وتقرير محسّن.",
+      "url": "https://developers.google.com/google-ads/api/docs/release-notes/v20"
     },
     {
-      "id": "tiktok-ads-2025-10-shopping-beta",
-      "platform": "TikTok",
-      "title": "إطلاق TikTok Shop Ads في مزيد من الدول ودعم كتالوج محسّن",
-      "date": "2025-10-29T12:00:00Z",
-      "impact": "medium",
-      "categories": ["objectives", "catalog", "creatives"],
-      "summary": "توسيع خصائص TikTok Shop Ads مع نماذج كتالوج جديدة وواجهة تتبع مبيعات محسنة.",
-      "url": "https://ads.tiktok.com/business/"
-    },
-    {
-      "id": "linkedin-ads-2025-10-leadgen-improv",
-      "platform": "LinkedIn",
-      "title": "تحديث نماذج Lead Gen مع أسئلة مخصصة وشروط موافقة GDPR",
-      "date": "2025-10-27T09:10:00Z",
+      "id": "google-ads-2025-roadmap-five-releases",
+      "platform": "Google",
+      "title": "خارطة طريق Google Ads API 2025: 5 إطلاقات مخططة (V19-V21)",
+      "date": "2025-10-15T11:00:00Z",
       "impact": "low",
-      "categories": ["leads", "policy"],
-      "summary": "إضافة أسئلة مخصصة جديدة وخيارات موافقة صريحة تلائم الأسواق الأوروبية.",
-      "url": "https://www.linkedin.com/help/lms"
+      "categories": ["api", "roadmap"],
+      "summary": "Google أعلنت جدولها الزمني لعام 2025: 3 إطلاقات رئيسية (V19 في فبراير، V20 منتصف العام، V21 في الربع الأخير) وإطلاقان فرعيان. يساعد المطورين على تخطيط مواردهم.",
+      "url": "https://developers.google.com/google-ads/api/docs/roadmap"
+    },
+    {
+      "id": "tiktok-shop-ads-catalog-2025",
+      "platform": "TikTok",
+      "title": "TikTok Shop Ads - ميزات كتالوج محسّنة وتوسيع جغرافي",
+      "date": "2025-10-29T09:15:00Z",
+      "impact": "medium",
+      "categories": ["catalog", "ecommerce", "objectives"],
+      "summary": "توسيع خصائص TikTok Shop Ads مع نماذج كتالوج جديدة وواجهة تتبع مبيعات محسنة. توفر APIs جديدة لإدارة المنتجات وربط مصادر الأحداث.",
+      "url": "https://ads.tiktok.com/business/resources/shop-ads"
+    },
+    {
+      "id": "tiktok-api-2025-restrictions-privacy",
+      "platform": "TikTok",
+      "title": "تشديد قيود الوصول لـ TikTok API ومتطلبات موافقة أقوى",
+      "date": "2025-09-03T13:20:00Z",
+      "impact": "high",
+      "categories": ["api", "policy", "privacy"],
+      "summary": "تشديد في متطلبات الموافقة على TikTok API. يجب تقديم معلومات أكثر عن المشروع، ومراجعة فردية لكل طلب، وحدود بيانات أقوى لحماية الخصوصية.",
+      "url": "https://developers.tiktok.com/doc/changelog"
+    },
+    {
+      "id": "meta-ai-powered-value-rules-2025",
+      "platform": "Meta",
+      "title": "إضافة AI-Powered Value Rules لحملات العلامات التجارية",
+      "date": "2025-09-15T08:45:00Z",
+      "impact": "medium",
+      "categories": ["ai", "optimization", "bidding"],
+      "summary": "ميزة جديدة تعتمد على الذكاء الاصطناعي لتحديد قواعد القيمة تلقائياً في حملات العلامات التجارية. يهدف لتحسين التركيز على العملاء عاليي القيمة.",
+      "url": "https://www.facebook.com/business/help/ai-value-rules"
+    },
+    {
+      "id": "meta-format-display-options-2025",
+      "platform": "Meta",
+      "title": "إضافة Format Display Options لتحكم في عرض الإعلانات",
+      "date": "2025-09-10T12:30:00Z",
+      "impact": "low",
+      "categories": ["creatives", "placement"],
+      "summary": "إعداد جديد يسمح بالتحكم في طريقة عرض أشكال الإعلانات عبر المواضع والأجهزة المختلفة.",
+      "url": "https://www.facebook.com/business/help/format-display"
+    },
+    {
+      "id": "meta-ad-sequencing-auction-campaigns",
+      "platform": "Meta",
+      "title": "Ad Sequencing لحملات المزاد - عرض تتابعي للرسائل",
+      "date": "2025-09-08T15:00:00Z",
+      "impact": "medium",
+      "categories": ["objectives", "creatives", "strategy"],
+      "summary": "ميزة جديدة تسمح بعرض إعلانات متتابعة للمستخدم نفسه حسب ترتيب محدد. تحسن فعالية الرسالة التسويقية عبر عرض قصة متماسكة.",
+      "url": "https://www.facebook.com/business/help/ad-sequencing"
+    },
+    {
+      "id": "meta-restricted-words-ai-advantage-plus",
+      "platform": "Meta",
+      "title": "إضافة Restricted Words للنصوص المُولدة بالذكاء الاصطناعي",
+      "date": "2025-08-25T14:15:00Z",
+      "impact": "medium",
+      "categories": ["ai", "creatives", "policy"],
+      "summary": "إعداد جديد في Advantage+ يسمح بتحديد كلمات محظورة لا يجب أن يستخدمها الذكاء الاصطناعي عند إنشاء نصوص الإعلانات. يحفظ هوية العلامة ويتجنب المصطلحات غير المرغوبة.",
+      "url": "https://www.facebook.com/business/help/advantage-plus-creative"
+    },
+    {
+      "id": "meta-dynamic-content-ar-ads-2025",
+      "platform": "Meta",
+      "title": "Dynamic Content مع AR Ads وفيديوهات 360 درجة لتحسين الأداء",
+      "date": "2025-08-20T11:00:00Z",
+      "impact": "medium",
+      "categories": ["creatives", "ai", "ar"],
+      "summary": "تعزيز Dynamic Content مع إعلانات AR وفيديوهات 360 درجة. يمكن رفع عدة عناوين، وسائط، وعناصر إبداعية وترك الذكاء الاصطناعي يخصصها لكل منصة ومستخدم.",
+      "url": "https://about.meta.com/technologies/advertising/ar-ads"
+    },
+    {
+      "id": "google-ads-target-frequency-monthly-2025",
+      "platform": "Google",
+      "title": "Target Frequency Monthly Forecasts في ReachPlanService لتحسين خطط الوصول",
+      "date": "2025-08-15T10:20:00Z",
+      "impact": "low",
+      "categories": ["api", "planning", "reach"],
+      "summary": "إضافة دعم لتوقعات Target Frequency الشهرية في ReachPlanService. يساعد في تخطيط الحملات بتقديرات وصول أكثر دقة على المدى الطويل.",
+      "url": "https://developers.google.com/google-ads/api/docs/release-notes/v19-1"
+    },
+    {
+      "id": "linkedin-leadgen-gdpr-compliance-2025",
+      "platform": "LinkedIn",
+      "title": "LinkedIn Lead Gen - تحديث نماذج العملاء المحتملين مع GDPR",
+      "date": "2025-07-22T16:30:00Z",
+      "impact": "low",
+      "categories": ["leads", "policy", "privacy"],
+      "summary": "إضافة أسئلة مخصصة جديدة وخيارات موافقة صريحة تتناسب مع قواعد GDPR في الأسواق الأوروبية والعالمية.",
+      "url": "https://www.linkedin.com/help/lms/answer/a1339265"
     }
   ]
 }
