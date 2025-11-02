@@ -3,14 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>مولد روابط UTM للتتبع | أدوات الإعلانات العربية</title>
-  <meta name="description" content="مولد عربي مجاني لروابط UTM Parameters لتتبع حملاتك الإعلانية على Google, Meta, TikTok وجميع المنصات بدقة عالية">
+  <title>مولد روابط UTM | أدوات الإعلانات العربية</title>
+  <meta name="description" content="أنشئ روابط UTM احترافية لتعقّب الحملات عبر المنصات.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#10b981">
-  <script src="shared-nav.js"></script>
+  <meta name="theme-color" content="#667eea">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
+    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
+    .form-group{margin-bottom:16px}
+    label{display:block;font-weight:700;color:var(--text);margin-bottom:6px}
+    input{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
+    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .btn{background:var(--bg);color:#fff;border:none;padding:12px 20px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+    .output{background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:14px;margin-top:16px;word-break:break-all}
+  </style>
 </head>
 <body>
-<!-- rest of content is loaded from original file; this is only to insert shared nav early -->
-<script>/* no-op */</script>
+  <script src="shared-nav.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>🔗 مولد روابط UTM</h1>
+      <p>أنشئ روابط تتبع احترافية للحملات وتأكد من تناسق الوسوم</p>
+    </header>
+
+    <div class="card">
+      <div class="form-group">
+        <label for="base">الرابط الأساسي (URL)</label>
+        <input id="base" placeholder="https://example.com/landing">
+      </div>
+      <div class="row">
+        <div class="form-group"><label for="source">utm_source</label><input id="source" placeholder="facebook"></div>
+        <div class="form-group"><label for="medium">utm_medium</label><input id="medium" placeholder="cpc"></div>
+        <div class="form-group"><label for="campaign">utm_campaign</label><input id="campaign" placeholder="black_friday"></div>
+        <div class="form-group"><label for="content">utm_content</label><input id="content" placeholder="video_ad_a"></div>
+        <div class="form-group"><label for="term">utm_term</label><input id="term" placeholder="keyword"></div>
+      </div>
+      <button class="btn" id="build">توليد الرابط</button>
+      <div class="output" id="out"></div>
+    </div>
+  </div>
+
+  <script>
+    function encode(v){return encodeURIComponent(v||'').replace(/%20/g,'+');}
+    function buildUTM(){
+      const base = document.getElementById('base').value.trim();
+      if(!base){ alert('أدخل الرابط الأساسي'); return; }
+      const params = new URLSearchParams();
+      const add=(k,v)=>{ if(v) params.set(k, v); };
+      add('utm_source', document.getElementById('source').value.trim());
+      add('utm_medium', document.getElementById('medium').value.trim());
+      add('utm_campaign', document.getElementById('campaign').value.trim());
+      add('utm_content', document.getElementById('content').value.trim());
+      add('utm_term', document.getElementById('term').value.trim());
+      const sep = base.includes('?') ? '&' : '?';
+      const url = base + (params.toString()? sep+params.toString(): '');
+      document.getElementById('out').textContent = url;
+    }
+    document.getElementById('build').addEventListener('click', buildUTM);
+  </script>
 </body>
 </html>
