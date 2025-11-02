@@ -2,9 +2,29 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>📅 مخطط المحتوى للسوشيال | أدوات الإعلانات العربية</title>
-  <meta name="description" content="أنشئ خطة نشر أسبوعية ذكية مع أفضل أوقات النشر وأفكار محتوى لجميع المنصات.">
+  <meta name="description" content="أنشئ خطة نشر أسبوعية ذكية مع أفضل أوقات النشر وأفكار محتوى لجميع المنصات العربية.">
+  
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-676ZKH3ECD', { page_title: 'Social Content Planner', content_group1: 'Planning Tools' });
+  </script>
+  
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#667eea">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -290,7 +310,6 @@
       top: 8px;
     }
     
-    /* Floating buttons */
     .whatsapp-float {
       position: fixed;
       bottom: 24px;
@@ -388,6 +407,10 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
   <div class="container">
     <a href="./" class="back-btn">
       <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
@@ -508,7 +531,7 @@
 
   <!-- Floating Buttons -->
   <a href="https://wa.me/201110760081?text=أريد%20استشارة%20عن%20مخطط%20المحتوى%20للسوشيال" 
-       class="whatsapp-float" target="_blank">
+       class="whatsapp-float" target="_blank" onclick="trackWhatsApp()">
     <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
   </a>
   
@@ -585,67 +608,10 @@
         beauty: ['تحدي المكياج', 'نصيحة اليوم', 'لوك مميز', 'سؤال جمالي', 'تحويل قبل وبعد', 'روتين جمالي', 'مشاركة تجربة'],
         fashion: ['تنسيق اليوم', 'أي إطلالة أفضل', 'نصائح الموضة', 'تحدي الأناقة', 'مقارنة اطلالات', 'اختيار متابع', 'ترند الموسم'],
         general: ['أسئلة تفاعلية', 'استطلاع رأي', 'مسابقات صغيرة', 'تحديات ممتعة', 'محتوى متابعين', 'قصص ملهمة', 'نصائح يومية']
-      },
-      traffic: {
-        ecommerce: ['رابط منتج جديد', 'عرض محدود', 'دليل شراء', 'مراجعة شاملة', 'مقارنة منتجات', 'رابط كتالوج', 'عرض موسمي'],
-        restaurant: ['رابط قائمة جديدة', 'حجز طاولة أونلاين', 'عرض توصيل', 'قسائم خصم', 'رابط الموقع', 'عرض مناسبة', 'معلومات التواصل'],
-        beauty: ['دروس مكياج', 'روتين عناية', 'رابط منتج', 'استشارة مجانية', 'رابط المدونة', 'دليل العناية', 'تبويب الخدمات'],
-        fashion: ['رابط كولكشن', 'دليل المقاسات', 'نصائح شراء', 'عرض موسمي', 'رابط المتجر', 'تنسيقات متنوعة', 'قطع مميزة'],
-        general: ['رابط المدونة', 'صفحة الخدمات', 'عرض خاص', 'فيديو تعريفي', 'دليل مفصل', 'معلومات التواصل', 'رابط الموقع']
-      },
-      conversion: {
-        ecommerce: ['تخفيضات فلاش', 'شحن مجاني', 'ضمان استرجاع', 'عرض حزمة', 'كود خصم', 'عداد عكسي', 'شهادة عميل'],
-        restaurant: ['وجبة مجانية', 'خصم 50%', 'عرض عائلي', 'توصيل مجاني', 'حجز فوري', 'قائمة محدودة', 'عرض يوم واحد'],
-        beauty: ['استشارة مجانية', 'خصم أول جلسة', 'حزمة عناية', 'تجربة مجانية', 'عرض محدود', 'حجز موعد', 'ضمان الجودة'],
-        fashion: ['تصفية نهائية', 'قطعة مجانية', 'خصم العضوية', 'عرض موسم', 'دعوة مباشرة', 'تجربة افتراضية', 'استبدال مجاني'],
-        general: ['عرض محدود الوقت', 'خصم حصري', 'ضمان الجودة', 'شهادة عميل', 'دعوة للعمل', 'استشارة مجانية', 'تجربة مجانية']
-      },
-      community: {
-        ecommerce: ['صور العملاء', 'تقييمات صادقة', 'مجتمع العملاء', 'قصص نجاح', 'مشاركة تجارب', 'أحداث مجتمعية', 'شراكة محلية'],
-        restaurant: ['زيارات العملاء', 'أطباق مميزة', 'مناسبات خاصة', 'ذكريات جميلة', 'عائلة المطعم', 'أحداث مجتمعية', 'قصص الزبائن'],
-        beauty: ['تحويلات حقيقية', 'نصائح المتابعات', 'قبل وبعد مذهلة', 'تجارب عملاء', 'مجتمع الجمال', 'خبيرات متابعات', 'تحديات جمالية'],
-        fashion: ['إطلالات متابعات', 'تنسيقات مبدعة', 'موضة الشارع', 'أناقة المجتمع', 'قصص إلهام', 'تحديات أناقة', 'مشاركة متابعين'],
-        general: ['محتوى متابعين', 'قصص نجاح', 'فعاليات تفاعلية', 'مشاركة المجتمع', 'قيم مشتركة', 'لحظات خاصة', 'ذكريات جميلة']
       }
     };
 
-    const platformTips = {
-      facebook: [
-        'الفيديوهات القصيرة (1-2 دقيقة) أفضل من الطويلة',
-        'استخدم الهاشتاجات المحلية (3-5 هاشتاجات)',
-        'الرد على التعليقات خلال 30 دقيقة يزيد الوصول',
-        'المحتوى التفاعلي (استطلاعات/أسئلة) يحصل على متابعة أعلى'
-      ],
-      instagram: [
-        'جودة الصور أهم من الكمية - استثمر في التصوير',
-        'الستوريز اليومية تزيد التفاعل مع المتابعين',
-        'استخدم 10-15 هاشتاج مختلط (شائع + متخصص)',
-        'انشر Reels يومياً للوصول الأوسع - الخوارزمية تفضلهم'
-      ],
-      tiktok: [
-        'التوقيت مهم جداً - انشر في أوقات الذروة المحلية',
-        'اتبع التريندات والهاشتاجات الرائجة',
-        'الفيديو الأول 15 ثانية هي الأهم - اجعلها جذابة',
-        'التفاعل في أول ساعة يحدد نجاح الفيديو'
-      ],
-      twitter: [
-        'التغريدات القصيرة والمباشرة أفضل من الطويلة',
-        'استخدم الهاشتاجات الترندية اليومية',
-        'الرد السريع على المنشنات يزيد المتابعة',
-        'شارك الأخبار والآراء مع إضافة قيمة'
-      ],
-      linkedin: [
-        'المحتوى المهني يعمل أفضل في ساعات العمل',
-        'شارك خبراتك وإنجازاتك المهنية',
-        'المقالات الطويلة تحصل على تفاعل أعلى',
-        'التفاعل مع منشورات الآخرين في مجالك'
-      ]
-    };
-
-    const dayNames = [
-      'السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 
-      'الأربعاء', 'الخميس', 'الجمعة'
-    ];
+    const dayNames = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
 
     function generateWeeklyPlan() {
       const platform = document.getElementById('platform').value;
@@ -684,7 +650,7 @@
           `<span class="time-tag">${time}</span>`
         ).join('');
         
-        // Content ideas for this day (rotate through available content)
+        // Content ideas for this day
         const dayContentStart = (index * 2) % contentPool.length;
         const dayContent = [
           contentPool[dayContentStart],
@@ -693,7 +659,7 @@
           `<span class="content-tag">${content}</span>`
         ).join('');
         
-        // Post type for this day (rotate through available types)
+        // Post type for this day
         const dayPostType = data.postTypes[index % data.postTypes.length];
         
         tableHtml += `
@@ -708,19 +674,22 @@
       tableHtml += '</tbody></table>';
       document.getElementById('weeklyPlan').innerHTML = tableHtml;
       
-      // Generate custom tips
-      generateCustomTips(platform, goal, industry);
-      
-      // Show results with animation
+      // Show results
       const results = document.getElementById('results');
       results.style.display = 'block';
       
+      // GA4 tracking
+      gtag('event', 'content_plan_generated', {
+        event_category: 'Social Content Planner',
+        tool_name: 'social_content_planner',
+        platform: platform,
+        goal: goal,
+        posts_per_day: postsPerDay
+      });
+      
       // Smooth scroll to results
       setTimeout(() => {
-        results.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
+        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 300);
     }
     
@@ -737,36 +706,11 @@
       return names[platform] || platform;
     }
     
-    function generateCustomTips(platform, goal, industry) {
-      let tips = [...(platformTips[platform] || [])];
-      
-      // Add goal-specific tips
-      const goalTips = {
-        awareness: 'ركز على القيمة المضافة وليس البيع المباشر',
-        engagement: 'اطرح أسئلة واطلب آراء المتابعين بانتظام',
-        traffic: 'استخدم عبارات تحفز على النقر (CTA قوية)',
-        conversion: 'اربط العاطفة بالفائدة العملية والحاجة',
-        community: 'شارك محتوى متابعيك واذكرهم بانتظام'
-      };
-      
-      // Add industry-specific tips
-      const industryTips = {
-        ecommerce: 'اعرض المنتجات في بيئتها الطبيعية وفي الاستخدام',
-        restaurant: 'صور الأطباق تحتاج إضاءة طبيعية وزوايا مناسبة',
-        beauty: 'فيديوهات التطبيق والتحويل أقوى من الصور',
-        fashion: 'اعرض القطع على أشخاص حقيقيين وبتنسيقات متنوعة',
-        tech: 'اشرح الفوائد وليس فقط المزايا التقنية'
-      };
-      
-      if (goalTips[goal]) tips.push(goalTips[goal]);
-      if (industryTips[industry]) tips.push(industryTips[industry]);
-      
-      // Add general Arabic market tips
-      tips.push('أفضل أوقات النشر في العالم العربي: 12-2 ظهراً و 7-9 مساءً');
-      tips.push('تجنب النشر وقت صلاة الجمعة والعطل الرسمية');
-      
-      const tipsHtml = tips.map(tip => `<li>${tip}</li>`).join('');
-      document.getElementById('customTips').innerHTML = tipsHtml;
+    function trackWhatsApp() {
+      gtag('event', 'whatsapp_contact', {
+        event_category: 'Contact',
+        event_label: 'Social Content Planner'
+      });
     }
 
     // Back to top functionality
@@ -779,18 +723,17 @@
       }
     });
     
-    // Form validation
-    document.getElementById('perDay').addEventListener('input', function() {
-      const value = parseInt(this.value);
-      if (value < 1) this.value = 1;
-      if (value > 5) this.value = 5;
-    });
-    
     // Auto-generate plan on page load
     window.addEventListener('load', () => {
       setTimeout(() => {
         generateWeeklyPlan();
       }, 500);
+    });
+    
+    // Track page view
+    gtag('event', 'page_view', {
+      page_title: 'Social Content Planner',
+      content_group1: 'Planning Tools'
     });
   </script>
 </body>
