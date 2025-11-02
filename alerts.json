@@ -1,0 +1,45 @@
+{
+  "last_updated": "2025-11-02T11:58:00Z",
+  "items": [
+    {
+      "id": "meta-ads-2025-11-policy-creative-checks",
+      "platform": "Meta",
+      "title": "تحديث سياسات مراجعة الإعلانات مع فحوصات تلقائية للصور والفيديو",
+      "date": "2025-11-02T08:00:00Z",
+      "impact": "high",
+      "categories": ["policy", "creatives", "measurement"],
+      "summary": "بدأت Meta بإطلاق فحوصات تلقائية جديدة على العناصر الإبداعية للكشف عن النص الكثيف، المحتوى الحساس، وفيديوهات الذكاء الاصطناعي. قد تتغير أوقات الموافقة لبعض الحسابات.",
+      "url": "https://www.facebook.com/business/help"
+    },
+    {
+      "id": "google-ads-2025-11-bidding-ppo",
+      "platform": "Google",
+      "title": "تحسينات على Smart Bidding مع نموذج Predictive Purchase Optimization",
+      "date": "2025-11-01T17:30:00Z",
+      "impact": "medium",
+      "categories": ["bidding", "ai", "objectives"],
+      "summary": "نموذج توقعي جديد لتحسين احتمالية الشراء في الحملات Performance Max وSearch. يفضل تفعيل تتبع التحويلات المحسن.",
+      "url": "https://ads.google.com/home/resources/announcements/"
+    },
+    {
+      "id": "tiktok-ads-2025-10-shopping-beta",
+      "platform": "TikTok",
+      "title": "إطلاق TikTok Shop Ads في مزيد من الدول ودعم كتالوج محسّن",
+      "date": "2025-10-29T12:00:00Z",
+      "impact": "medium",
+      "categories": ["objectives", "catalog", "creatives"],
+      "summary": "توسيع خصائص TikTok Shop Ads مع نماذج كتالوج جديدة وواجهة تتبع مبيعات محسنة.",
+      "url": "https://ads.tiktok.com/business/"
+    },
+    {
+      "id": "linkedin-ads-2025-10-leadgen-improv",
+      "platform": "LinkedIn",
+      "title": "تحديث نماذج Lead Gen مع أسئلة مخصصة وشروط موافقة GDPR",
+      "date": "2025-10-27T09:10:00Z",
+      "impact": "low",
+      "categories": ["leads", "policy"],
+      "summary": "إضافة أسئلة مخصصة جديدة وخيارات موافقة صريحة تلائم الأسواق الأوروبية.",
+      "url": "https://www.linkedin.com/help/lms"
+    }
+  ]
+}
