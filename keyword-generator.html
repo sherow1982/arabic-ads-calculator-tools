@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="مؤسسة إعلانات العرب">
+  <meta name="language" content="Arabic">
+  
+  <title>مولد الكلمات المفتاحية العربي المجاني - اقتراح كلمات للإعلانات والسيو | أدوات الإعلانات العربية</title>
+  <meta name="description" content="ولّد مئات الكلمات المفتاحية العربية مجاناً لحملاتك الإعلانية والسيو. يدعم جميع اللهجات العربية مع اقتراحات ذكية وتصدير CSV مباشر">
+  <meta name="keywords" content="مولد كلمات مفتاحية, keyword generator, كلمات مفتاحية عربية, SEO عربي, Google Ads keywords, اقتراح كلمات, بحث كلمات">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="مولد الكلمات المفتاحية العربي المجاني">
+  <meta property="og:description" content="ولّد مئات الكلمات المفتاحية العربية مجاناً لحملاتك الإعلانية والسيو مع دعم جميع اللهجات">
+  <meta property="og:url" content="https://sherow1982.github.io/arabic-ads-calculator-tools/keyword-generator.html">
+  <meta property="og:type" content="website">
+  
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-676ZKH3ECD');
+  </script>
+  
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#667eea">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="global-styles.css">
+  
+  <style>
+    .keyword-results {
+      margin-top: 25px;
+    }
+    
+    .keyword-category {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 15px 0;
+      border-right: 4px solid var(--primary);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .keywords-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 15px 0;
+    }
+    
+    .keyword-item {
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    
+    .keyword-item:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    
+    .keyword-item.copied {
+      background: #10b981;
+      color: white;
+    }
+    
+    .export-section {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      border: 2px solid var(--primary);
+    }
+    
+    .export-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      margin: 5px 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .export-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .stats-bar {
+      background: #f8fafc;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+    
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+      margin: 0 auto 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+  <!-- الهيدر الموحد -->
+  <div class="unified-container">
+    <!-- التنقل الموحد -->
+    <nav class="unified-nav">
+      <a href="./" class="nav-home">
+        <i class="fas fa-home"></i> الرئيسية
+      </a>
+      <a href="alerts.html" class="nav-alerts">
+        <i class="fas fa-bell"></i> التنبيهات
+      </a>
+      <a href="cpc-calculator.html" class="nav-tool">
+        <i class="fas fa-calculator"></i> CPC
+      </a>
+      <a href="roi-calculator.html" class="nav-tool">
+        <i class="fas fa-chart-line"></i> ROI
+      </a>
+      <a href="roas-calculator.html" class="nav-tool">
+        <i class="fas fa-money-bill-trend-up"></i> ROAS
+      </a>
+      <a href="keyword-generator.html" class="nav-tool nav-active">
+        <i class="fas fa-key"></i> الكلمات
+      </a>
+      <a href="all-tools.html" class="nav-all-tools">
+        <i class="fas fa-tools"></i> كل الأدوات
+      </a>
+      <a href="https://arabsad.com" target="_blank" class="nav-website" rel="noopener noreferrer">
+        <i class="fas fa-external-link-alt"></i> الموقع
+      </a>
+    </nav>
+
+    <!-- العنوان الرئيسي -->
+    <div class="unified-header">
+      <h1>🔑 مولد الكلمات المفتاحية العربي</h1>
+      <p>ولّد مئات الكلمات المفتاحية العربية مجاناً لحملاتك الإعلانية والسيو مع دعم جميع اللهجات والأسواق</p>
+    </div>
+
+    <!-- النموذج -->
+    <div class="unified-card">
+      <form id="keywordForm" class="unified-form-grid">
+        <div class="unified-form-group">
+          <label for="seedKeyword">
+            <i class="fas fa-seedling"></i>
+            الكلمة الأساسية (Seed Keyword)
+          </label>
+          <input type="text" id="seedKeyword" placeholder="مثال: مطعم، عقار، موبايل، ملابس" required>
+          <small style="color: var(--muted); margin-top: 5px;">💡 ادخل كلمة واحدة أو كلمتين كحد أقصى</small>
+        </div>
+        
+        <div class="unified-form-group">
+          <label for="region">
+            <i class="fas fa-globe-asia"></i>
+            السوق المستهدف
+          </label>
+          <select id="region" required>
+            <option value="">اختر السوق</option>
+            <option value="gulf">دول الخليج العربي</option>
+            <option value="egypt">مصر</option>
+            <option value="levant">الشام (سوريا، لبنان، الأردن)</option>
+            <option value="maghreb">المغرب العربي</option>
+            <option value="general">عموم الدول العربية</option>
+          </select>
+        </div>
+        
+        <div class="unified-form-group">
+          <label for="platform">
+            <i class="fas fa-bullhorn"></i>
+            المنصة الإعلانية
+          </label>
+          <select id="platform" required>
+            <option value="">اختر المنصة</option>
+            <option value="google">Google Ads</option>
+            <option value="youtube">YouTube Ads</option>
+            <option value="meta">Meta (Facebook + Instagram)</option>
+            <option value="tiktok">TikTok Ads</option>
+            <option value="seo">محركات البحث (SEO)</option>
+            <option value="general">جميع المنصات</option>
+          </select>
+        </div>
+        
+        <div class="unified-form-group">
+          <label for="keywordType">
+            <i class="fas fa-list-ul"></i>
+            نوع الكلمات المطلوبة
+          </label>
+          <select id="keywordType" required>
+            <option value="">اختر النوع</option>
+            <option value="related">كلمات مترابطة ومرادفات</option>
+            <option value="questions">أسئلة شائعة</option>
+            <option value="longtail">كلمات طويلة الذيل</option>
+            <option value="commercial">كلمات تجارية</option>
+            <option value="local">كلمات محلية</option>
+            <option value="all">جميع الأنواع</option>
+          </select>
+        </div>
+      </form>
+      
+      <button type="submit" form="keywordForm" class="unified-btn-primary">
+        <i class="fas fa-magic"></i>
+        ولّد الكلمات المفتاحية الآن
+      </button>
+    </div>
+
+    <!-- Loading Animation -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>جاري توليد الكلمات المفتاحية...</p>
+    </div>
+
+    <!-- النتائج -->
+    <div id="results" class="unified-results keyword-results">
+      <div class="unified-success-message">
+        <i class="fas fa-check-circle"></i>
+        <span>تم توليد الكلمات بنجاح! اضغط على أي كلمة لنسخها</span>
+      </div>
+      
+      <!-- إحصائيات -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-number" id="totalKeywords">0</div>
+          <div class="stat-label">إجمالي الكلمات</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="relatedCount">0</div>
+          <div class="stat-label">كلمات مترابطة</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="questionsCount">0</div>
+          <div class="stat-label">أسئلة</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="longtailCount">0</div>
+          <div class="stat-label">طويلة الذيل</div>
+        </div>
+      </div>
+      
+      <!-- أزرار التصدير -->
+      <div class="export-section">
+        <h3 style="margin-bottom: 15px;"><i class="fas fa-download"></i> تصدير الكلمات</h3>
+        <button id="copyAllBtn" class="export-btn">
+          <i class="fas fa-copy"></i> نسخ الكل
+        </button>
+        <button id="exportCSVBtn" class="export-btn">
+          <i class="fas fa-file-csv"></i> تصدير CSV
+        </button>
+        <button id="sendToBidEstimator" class="export-btn">
+          <i class="fas fa-calculator"></i> قدّر تكلفة المزايدة
+        </button>
+        <button id="createBudgetPlan" class="export-btn">
+          <i class="fas fa-chart-pie"></i> إنشاء خطة ميزانية
+        </button>
+      </div>
+      
+      <!-- الكلمات المترابطة -->
+      <div id="relatedKeywords" class="keyword-category">
+        <h3 class="category-title">
+          <i class="fas fa-link"></i>
+          الكلمات المترابطة والمرادفات
+          <span id="relatedBadge" style="background: #10b981; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">0</span>
+        </h3>
+        <div id="relatedGrid" class="keywords-grid"></div>
+      </div>
+      
+      <!-- الأسئلة الشائعة -->
+      <div id="questionsKeywords" class="keyword-category">
+        <h3 class="category-title">
+          <i class="fas fa-question-circle"></i>
+          الأسئلة الشائعة
+          <span id="questionsBadge" style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">0</span>
+        </h3>
+        <div id="questionsGrid" class="keywords-grid"></div>
+      </div>
+      
+      <!-- الكلمات طويلة الذيل -->
+      <div id="longtailKeywords" class="keyword-category">
+        <h3 class="category-title">
+          <i class="fas fa-list-alt"></i>
+          الكلمات طويلة الذيل
+          <span id="longtailBadge" style="background: #8b5cf6; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">0</span>
+        </h3>
+        <div id="longtailGrid" class="keywords-grid"></div>
+      </div>
+      
+      <!-- الكلمات التجارية -->
+      <div id="commercialKeywords" class="keyword-category">
+        <h3 class="category-title">
+          <i class="fas fa-shopping-cart"></i>
+          الكلمات التجارية
+          <span id="commercialBadge" style="background: #ef4444; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">0</span>
+        </h3>
+        <div id="commercialGrid" class="keywords-grid"></div>
+      </div>
+      
+      <!-- الكلمات المحلية -->
+      <div id="localKeywords" class="keyword-category">
+        <h3 class="category-title">
+          <i class="fas fa-map-marker-alt"></i>
+          الكلمات المحلية
+          <span id="localBadge" style="background: #06b6d4; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">0</span>
+        </h3>
+        <div id="localGrid" class="keywords-grid"></div>
+      </div>
+    </div>
+
+    <!-- الفوتر الموحد -->
+    <footer class="unified-footer">
+      <div class="unified-footer-links">
+        <a href="about.html">عن الأدوات</a>
+        <a href="all-tools.html">جميع الأدوات</a>
+        <a href="alerts.html">التنبيهات</a>
+        <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer">الموقع الرسمي</a>
+        <a href="https://wa.me/201110760081" target="_blank" rel="noopener noreferrer">واتساب</a>
+        <a href="mailto:info@arabsad.com">تواصل معنا</a>
+      </div>
+      
+      <p>&copy; 2025 مؤسسة إعلانات العرب – 19 أداة مجانية للمسوقين العرب</p>
+      
+      <div style="margin-top: 15px; font-size: 14px; opacity: 0.8; line-height: 1.4;">
+        ✨ تحديث جديد: 19 أداة مفعّلة + بوت ذكي + تنبيهات تلقائية<br>
+        <small>تم آخر تحديث: 2 نوفمبر 2025</small>
+      </div>
+      
+      <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          🔑 مولد كلمات جديد
+        </span>
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          🌍 6 منصات مدعومة
+        </span>
+        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 13px;">
+          🤖 بوت ذكي متعدد اللهجات
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- الأزرار العائمة -->
+  <a href="#whatsapp" class="unified-whatsapp-float" id="whatsappBtn">
+    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+  </a>
+  
+  <button class="unified-chatbot-float" id="chatbotToggle" style="position: fixed; bottom: 24px; left: 24px; width: 60px; height: 60px; background: var(--gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); z-index: 1000; cursor: pointer; transition: all 0.3s ease;">
+    <i class="fas fa-comments" style="font-size: 1.5rem;"></i>
+  </button>
+  
+  <button class="unified-back-to-top" id="backToTop" style="display: none;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- نافذة البوت المصغرة -->
+  <div id="miniChatWindow" style="position: fixed; bottom: 100px; left: 24px; width: 320px; max-width: calc(100vw - 48px); background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 1001; display: none; overflow: hidden;">
+    <div style="background: var(--gradient); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong>مساعد الحاسبات العربي 🤖</strong>
+        <div style="font-size: 12px; opacity: 0.9;">يفهم جميع اللهجات العربية</div>
+      </div>
+      <button id="closeMiniChat" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">&times;</button>
+    </div>
+    
+    <div id="miniChatMessages" style="padding: 15px; max-height: 200px; overflow-y: auto;">
+      <div style="background: #f3f4f6; padding: 10px; border-radius: 10px; font-size: 14px; line-height: 1.4;">
+        أهلاً! 👋 أنا مساعدك الذكي<br>
+        هذا مولد الكلمات المفتاحية الجديد!<br>
+        جرب كتابة كلمة مثل "مطعم" أو "عقار" 🔑
+      </div>
+    </div>
+    
+    <div style="padding: 10px; border-top: 1px solid #e5e7eb;">
+      <div style="display: flex; gap: 5px;">
+        <input type="text" id="miniChatInput" placeholder="اكتب هنا... (مثل: عايز كلمات عن الأكل)" 
+               style="flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 20px; font-size: 14px; font-family: inherit;">
+        <button id="miniChatSend" style="background: var(--gradient); color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الجافاسكريبت -->
+  <script src="shared-scripts.js"></script>
+  <script src="chatbot.js"></script>
+  
+  <script>
+    // Arabic Keyword Generator Logic
+    class ArabicKeywordGenerator {
+      constructor() {
+        this.regions = {
+          gulf: {
+            cities: ['الرياض', 'جدة', 'الدمام', 'دبي', 'أبوظبي', 'الدوحة', 'الكويت', 'المنامة', 'مسقط'],
+            dialectWords: ['حق', 'مال', 'شلون', 'وين', 'زين', 'يالله']
+          },
+          egypt: {
+            cities: ['القاهرة', 'الإسكندرية', 'الجيزة', 'شبرا الخيمة', 'بورسعيد', 'السويس'],
+            dialectWords: ['بتاع', 'عشان', 'ازاي', 'فين', 'ايه', 'اللي']
+          },
+          levant: {
+            cities: ['دمشق', 'حلب', 'بيروت', 'عمان', 'إربد', 'حمص'],
+            dialectWords: ['تبع', 'عشان', 'كيف', 'وين', 'شو', 'هيك']
+          },
+          maghreb: {
+            cities: ['الرباط', 'الدار البيضاء', 'فاس', 'مراكش', 'الجزائر', 'وهران', 'تونس'],
+            dialectWords: ['ديال', 'باش', 'كيفاش', 'فين', 'شنو', 'هادا']
+          },
+          general: {
+            cities: ['الرياض', 'القاهرة', 'دبي', 'بيروت', 'الدوحة', 'الكويت'],
+            dialectWords: []
+          }
+        };
+        
+        this.prefixes = {
+          related: ['أفضل', 'أرخص', 'أجود', 'أكبر', 'أصغر', 'أحدث', 'أقدم', 'أسرع', 'أبطأ', 'أقوى'],
+          commercial: ['شراء', 'بيع', 'متجر', 'محل', 'شركة', 'مؤسسة', 'عرض', 'خصم', 'تخفيض', 'صفقة'],
+          questions: ['ما هو', 'كيف', 'متى', 'أين', 'لماذا', 'من', 'ماذا', 'كم', 'أي', 'هل'],
+          longtail: ['طريقة', 'كيفية', 'دليل', 'شرح', 'تعلم', 'نصائح', 'أسرار', 'استراتيجية']
+        };
+        
+        this.suffixes = {
+          commercial: ['للبيع', 'للشراء', 'بالتقسيط', 'مستعمل', 'جديد', 'مضمون', 'بالضمان', 'توصيل مجاني'],
+          local: ['قريب مني', 'في المنطقة', 'بالقرب من', 'أقرب', 'محلي', 'في المدينة'],
+          questions: ['؟', 'كيف؟', 'أين؟', 'متى؟', 'لماذا؟']
+        };
+      }
+      
+      generateKeywords(seed, region, platform, type) {
+        const keywords = {
+          related: [],
+          questions: [],
+          longtail: [],
+          commercial: [],
+          local: []
+        };
+        
+        const regionData = this.regions[region] || this.regions.general;
+        
+        // Generate related keywords
+        if (type === 'related' || type === 'all') {
+          this.prefixes.related.forEach(prefix => {
+            keywords.related.push(`${prefix} ${seed}`);
+          });
+          
+          // Add plural/singular variations
+          const variations = this.getWordVariations(seed);
+          keywords.related.push(...variations);
+        }
+        
+        // Generate questions
+        if (type === 'questions' || type === 'all') {
+          this.prefixes.questions.forEach(question => {
+            keywords.questions.push(`${question} ${seed}`);
+            keywords.questions.push(`${question} أفضل ${seed}`);
+          });
+          
+          // Common question patterns
+          keywords.questions.push(`كيفية اختيار ${seed}`);
+          keywords.questions.push(`مميزات ${seed}`);
+          keywords.questions.push(`عيوب ${seed}`);
+        }
+        
+        // Generate long-tail keywords
+        if (type === 'longtail' || type === 'all') {
+          this.prefixes.longtail.forEach(prefix => {
+            keywords.longtail.push(`${prefix} ${seed}`);
+            keywords.longtail.push(`${prefix} اختيار ${seed}`);
+          });
+        }
+        
+        // Generate commercial keywords
+        if (type === 'commercial' || type === 'all') {
+          this.prefixes.commercial.forEach(prefix => {
+            keywords.commercial.push(`${prefix} ${seed}`);
+          });
+          
+          this.suffixes.commercial.forEach(suffix => {
+            keywords.commercial.push(`${seed} ${suffix}`);
+          });
+        }
+        
+        // Generate local keywords
+        if (type === 'local' || type === 'all') {
+          regionData.cities.forEach(city => {
+            keywords.local.push(`${seed} ${city}`);
+            keywords.local.push(`${seed} في ${city}`);
+          });
+          
+          this.suffixes.local.forEach(suffix => {
+            keywords.local.push(`${seed} ${suffix}`);
+          });
+        }
+        
+        // Clean and deduplicate
+        Object.keys(keywords).forEach(key => {
+          keywords[key] = [...new Set(keywords[key])];
+          keywords[key] = keywords[key].filter(kw => kw.length > 3 && kw.length < 100);
+        });
+        
+        return keywords;
+      }
+      
+      getWordVariations(word) {
+        const variations = [];
+        
+        // Remove diacritics
+        const noDiacritics = word.replace(/[\u064B-\u0652]/g, '');
+        if (noDiacritics !== word) variations.push(noDiacritics);
+        
+        // Add/remove articles
+        if (word.startsWith('ال')) {
+          variations.push(word.substring(2));
+        } else {
+          variations.push('ال' + word);
+        }
+        
+        // Plural/singular attempts (basic)
+        if (word.endsWith('ة')) {
+          variations.push(word.slice(0, -1) + 'ات');
+        }
+        
+        if (!word.endsWith('ين') && !word.endsWith('ون')) {
+          variations.push(word + 'ين');
+        }
+        
+        return variations;
+      }
+    }
+    
+    const keywordGenerator = new ArabicKeywordGenerator();
+    let generatedKeywords = {};
+    
+    document.getElementById('keywordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const seed = document.getElementById('seedKeyword').value.trim();
+      const region = document.getElementById('region').value;
+      const platform = document.getElementById('platform').value;
+      const type = document.getElementById('keywordType').value;
+      
+      if (!seed || !region || !platform || !type) {
+        alert('يرجى ملء جميع الحقول');
+        return;
+      }
+      
+      // Show loading
+      document.getElementById('loading').style.display = 'block';
+      
+      // Generate keywords with delay for UX
+      setTimeout(() => {
+        generatedKeywords = keywordGenerator.generateKeywords(seed, region, platform, type);
+        
+        displayResults();
+        
+        // Track generation
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'keyword_generation', {
+            event_category: 'Keyword Generator',
+            event_label: `${region}_${platform}_${type}`,
+            seed_keyword: seed,
+            total_generated: getTotalKeywords()
+          });
+        }
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      }, 1500);
+    });
+    
+    function displayResults() {
+      const categories = ['related', 'questions', 'longtail', 'commercial', 'local'];
+      
+      categories.forEach(category => {
+        const grid = document.getElementById(`${category}Grid`);
+        const badge = document.getElementById(`${category}Badge`);
+        const keywords = generatedKeywords[category] || [];
+        
+        grid.innerHTML = '';
+        badge.textContent = keywords.length;
+        
+        keywords.forEach(keyword => {
+          const item = document.createElement('div');
+          item.className = 'keyword-item';
+          item.textContent = keyword;
+          item.addEventListener('click', () => copyKeyword(item, keyword));
+          grid.appendChild(item);
+        });
+      });
+      
+      // Update stats
+      const total = getTotalKeywords();
+      document.getElementById('totalKeywords').textContent = total;
+      document.getElementById('relatedCount').textContent = generatedKeywords.related?.length || 0;
+      document.getElementById('questionsCount').textContent = generatedKeywords.questions?.length || 0;
+      document.getElementById('longtailCount').textContent = generatedKeywords.longtail?.length || 0;
+    }
+    
+    function getTotalKeywords() {
+      return Object.values(generatedKeywords).reduce((total, keywords) => total + (keywords?.length || 0), 0);
+    }
+    
+    function copyKeyword(element, keyword) {
+      navigator.clipboard.writeText(keyword).then(() => {
+        element.classList.add('copied');
+        element.textContent = '✅ تم النسخ!';
+        
+        setTimeout(() => {
+          element.classList.remove('copied');
+          element.textContent = keyword;
+        }, 2000);
+        
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'keyword_copied', {
+            event_category: 'Keyword Generator',
+            event_label: keyword
+          });
+        }
+      });
+    }
+    
+    // Export functions
+    document.getElementById('copyAllBtn').addEventListener('click', function() {
+      const allKeywords = Object.values(generatedKeywords).flat().join('\n');
+      navigator.clipboard.writeText(allKeywords).then(() => {
+        this.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-copy"></i> نسخ الكل';
+        }, 3000);
+      });
+    });
+    
+    document.getElementById('exportCSVBtn').addEventListener('click', function() {
+      const csvContent = generateCSV();
+      downloadCSV(csvContent, `keywords-${document.getElementById('seedKeyword').value}-${new Date().toISOString().split('T')[0]}.csv`);
+      
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'csv_export', {
+          event_category: 'Keyword Generator',
+          event_label: 'CSV Download',
+          total_keywords: getTotalKeywords()
+        });
+      }
+    });
+    
+    document.getElementById('sendToBidEstimator').addEventListener('click', function() {
+      const topKeywords = Object.values(generatedKeywords).flat().slice(0, 20).join(',');
+      const url = `keyword-bid-estimator.html?keywords=${encodeURIComponent(topKeywords)}`;
+      window.open(url, '_blank');
+      
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'tool_integration', {
+          event_category: 'Keyword Generator',
+          event_label: 'Send to Bid Estimator'
+        });
+      }
+    });
+    
+    document.getElementById('createBudgetPlan').addEventListener('click', function() {
+      window.open('budget-planner.html', '_blank');
+      
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'tool_integration', {
+          event_category: 'Keyword Generator',
+          event_label: 'Create Budget Plan'
+        });
+      }
+    });
+    
+    function generateCSV() {
+      let csv = 'الفئة,الكلمة المفتاحية,النوع\n';
+      
+      Object.entries(generatedKeywords).forEach(([category, keywords]) => {
+        const categoryName = {
+          related: 'مترابطة',
+          questions: 'أسئلة',
+          longtail: 'طويلة الذيل',
+          commercial: 'تجارية',
+          local: 'محلية'
+        }[category];
+        
+        keywords.forEach(keyword => {
+          csv += `${categoryName},${keyword},${category}\n`;
+        });
+      });
+      
+      return csv;
+    }
+    
+    function downloadCSV(csvContent, filename) {
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
