@@ -1,9 +1,119 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>تضمين شريط موحد</title>
-<script src="shared-nav.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>حاسبة معدل التحويل CVR | أدوات الإعلانات العربية</title>
+  <meta name="description" content="احسب معدل التحويل CVR وقارنه بمعايير الصناعة لكل منصة ومرحلة.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
+    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
+    .form-group{margin-bottom:20px}
+    label{display:block;font-weight:700;color:var(--text);margin-bottom:8px}
+    input,select{width:100%;padding:14px 18px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
+    .btn{background:var(--bg);color:#fff;border:none;padding:16px 32px;border-radius:999px;font-size:18px;font-weight:700;cursor:pointer;width:100%;margin:20px 0}
+    .result{background:#f8fafc;border:2px solid #e2e8f0;border-radius:16px;padding:25px;text-align:center;margin-top:25px;display:none}
+    .result.show{display:block}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+    .metric{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:15px}
+    .metric .v{font-size:24px;font-weight:800}
+    .badge{display:inline-block;padding:6px 12px;border-radius:20px;font-weight:700;margin-top:10px}
+    .ok{background:#dcfce7;color:#166534}
+    .warn{background:#fef3c7;color:#92400e}
+    .bad{background:#fee2e2;color:#991b1b}
+  </style>
 </head>
-<body></body>
+<body>
+  <script src="shared-nav.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>📈 حاسبة معدل التحويل (CVR)</h1>
+      <p>احسب CVR = التحويلات ÷ النقرات وقارن الأداء بمعايير المنصات والقطاعات</p>
+    </header>
+
+    <div class="card">
+      <form id="cvrForm">
+        <div class="form-group">
+          <label for="clicks">النقرات</label>
+          <input id="clicks" type="number" min="1" step="1" placeholder="مثال: 1200" required>
+        </div>
+        <div class="form-group">
+          <label for="conversions">التحويلات</label>
+          <input id="conversions" type="number" min="0" step="1" placeholder="مثال: 60" required>
+        </div>
+        <div class="form-group">
+          <label for="industry">نوع النشاط (اختياري)</label>
+          <select id="industry">
+            <option value="">عام</option>
+            <option value="ecommerce">متجر إلكتروني</option>
+            <option value="leadgen">توليد عملاء محتملين</option>
+            <option value="saas">برمجيات SaaS</option>
+            <option value="services">خدمات</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">احسب CVR</button>
+      </form>
+
+      <div id="result" class="result">
+        <div class="grid">
+          <div class="metric"><div class="v" id="cvr">-</div><div>CVR %</div></div>
+          <div class="metric"><div class="v" id="bench">-</div><div>معيار تقديري %</div></div>
+          <div class="metric"><div class="v" id="gap">-</div><div>فرق عن المعيار (ن.م)</div></div>
+        </div>
+        <div class="badge" id="status"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💡 رفع CVR</h3>
+      <ul>
+        <li>تحسين سرعة الصفحة وتجربة المستخدم وتبسيط النماذج</li>
+        <li>رفع الملاءمة بين الرسالة الإعلانية والصفحة المقصودة</li>
+        <li>استخدام إثبات اجتماعي، ضمانات، وسياسات إرجاع واضحة</li>
+        <li>اختبار A/B للعناوين والأزرار والتسعير والعروض</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const benches = {
+      ecommerce: 2.0,
+      leadgen: 6.0,
+      saas: 3.0,
+      services: 5.0,
+      '': 3.5
+    };
+
+    const pct = n=> (Number(n).toFixed(2)+'%');
+
+    cvrForm.addEventListener('submit', e=>{
+      e.preventDefault();
+      const clk = parseInt(clicks.value);
+      const conv = parseInt(conversions.value);
+      const ind = industry.value || '';
+      if(!clk || clk<=0 || conv<0){ alert('تحقق من القيم'); return; }
+      const cvr = (conv/clk)*100;
+      const bench = benches[ind] ?? benches[''];
+      const gap = cvr - bench;
+      document.getElementById('cvr').textContent = pct(cvr);
+      document.getElementById('bench').textContent = pct(bench);
+      document.getElementById('gap').textContent = (gap>=0?'+':'')+Number(gap).toFixed(2);
+      const status = document.getElementById('status');
+      if(cvr >= bench*1.25){ status.textContent='ممتاز'; status.className='badge ok'; }
+      else if(cvr >= bench*0.75){ status.textContent='جيد'; status.className='badge warn'; }
+      else { status.textContent='ضعيف'; status.className='badge bad'; }
+      result.classList.add('show');
+      result.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  </script>
+</body>
 </html>
