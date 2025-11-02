@@ -1,1 +1,195 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>شريط موحد</title><script src="shared-nav.js"></script></head><body></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>حاسبة تكلفة النقرة CPC | أدوات الإعلانات العربية</title>
+  <meta name="description" content="احسب تكلفة النقرة CPC وقارن أداء حملاتك على مختلف المنصات. أداة مجانية من مؤسسة إعلانات العرب">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
+    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
+    .form-group{margin-bottom:20px}
+    label{display:block;font-weight:700;color:var(--text);margin-bottom:8px;font-size:16px}
+    input,select{width:100%;padding:14px 18px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px;font-family:inherit;transition:all 0.3s ease}
+    input:focus,select:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(102,126,234,.1)}
+    .btn{background:var(--bg);color:#fff;border:none;padding:16px 32px;border-radius:999px;font-size:18px;font-weight:700;cursor:pointer;transition:all 0.3s ease;width:100%;margin:20px 0}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(102,126,234,.3)}
+    .result{background:#f8fafc;border:2px solid #e2e8f0;border-radius:16px;padding:25px;text-align:center;margin-top:25px;display:none}
+    .result.show{display:block}
+    .result-number{font-size:48px;font-weight:800;color:var(--p);margin-bottom:10px}
+    .result-label{font-size:18px;color:var(--muted);margin-bottom:20px}
+    .benchmark{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+    .benchmark-item{background:#fff;border-radius:12px;padding:15px;text-align:center;border:2px solid #f1f5f9}
+    .benchmark-value{font-size:24px;font-weight:700;color:var(--text)}
+    .benchmark-platform{font-size:14px;color:var(--muted);margin-top:5px}
+    .tips{background:#f0f9ff;border:2px solid #bae6fd;border-radius:16px;padding:20px;margin-top:20px}
+    .tips h3{color:#0369a1;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+    .tips ul{list-style:none;padding:0}
+    .tips li{padding:8px 0;border-bottom:1px solid #e0f2fe;display:flex;align-items:flex-start;gap:8px}
+    .tips li:last-child{border-bottom:none}
+    .performance-indicator{display:inline-block;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;margin-top:10px}
+    .excellent{background:#dcfce7;color:#166534}
+    .good{background:#fef3c7;color:#92400e}
+    .average{background:#fed7aa;color:#9a3412}
+    .poor{background:#fee2e2;color:#991b1b}
+    @media(max-width:768px){.container{padding:15px}.card{padding:20px}.result-number{font-size:36px}}
+  </style>
+</head>
+<body>
+  <script src="shared-nav.js"></script>
+  
+  <div class="container">
+    <header class="header">
+      <h1>📊 حاسبة تكلفة النقرة (CPC)</h1>
+      <p>احسب تكلفة النقرة وقارن أداء حملاتك على مختلف المنصات الإعلانية</p>
+    </header>
+
+    <div class="card">
+      <form id="cpcForm">
+        <div class="form-group">
+          <label for="totalSpent">إجمالي المبلغ المنفق (بالريال السعودي)</label>
+          <input type="number" id="totalSpent" min="0" step="0.01" placeholder="مثال: 1000" required>
+        </div>
+
+        <div class="form-group">
+          <label for="totalClicks">إجمالي عدد النقرات</label>
+          <input type="number" id="totalClicks" min="1" step="1" placeholder="مثال: 250" required>
+        </div>
+
+        <div class="form-group">
+          <label for="platform">المنصة الإعلانية</label>
+          <select id="platform" required>
+            <option value="">اختر المنصة</option>
+            <option value="google">جوجل أدز</option>
+            <option value="facebook">فيسبوك</option>
+            <option value="instagram">انستقرام</option>
+            <option value="snapchat">سناب شات</option>
+            <option value="tiktok">تيك توك</option>
+            <option value="twitter">تويتر</option>
+            <option value="linkedin">لينكد إن</option>
+            <option value="youtube">يوتيوب</option>
+            <option value="other">أخرى</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">احسب تكلفة النقرة</button>
+      </form>
+
+      <div id="result" class="result">
+        <div id="cpcValue" class="result-number"></div>
+        <div class="result-label">ريال سعودي لكل نقرة</div>
+        <div id="performance" class="performance-indicator"></div>
+        
+        <div class="benchmark">
+          <div class="benchmark-item">
+            <div id="platformBenchmark" class="benchmark-value">-</div>
+            <div class="benchmark-platform">متوسط المنصة</div>
+          </div>
+          <div class="benchmark-item">
+            <div class="benchmark-value">2.50</div>
+            <div class="benchmark-platform">متوسط السوق</div>
+          </div>
+          <div class="benchmark-item">
+            <div id="savingsPercent" class="benchmark-value">-</div>
+            <div class="benchmark-platform">مقارنة بالمتوسط</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card tips">
+      <h3>💡 نصائح لتحسين تكلفة النقرة</h3>
+      <ul>
+        <li><span>🎯</span> حسّن استهداف الجمهور لتقليل النقرات غير المؤهلة</li>
+        <li><span>📝</span> اكتب إعلانات جذابة ومرتبطة بالكلمات المفتاحية</li>
+        <li><span>📱</span> تأكد من تحسين الصفحة المقصودة لزيادة معدل التحويل</li>
+        <li><span>⏰</span> اختبر أوقات عرض مختلفة للوصول للجمهور الأنسب</li>
+        <li><span>🔄</span> اختبر A/B للإعلانات والاستهداف باستمرار</li>
+        <li><span>📊</span> راقب الكلمات المفتاحية السلبية لتقليل النقرات غير المرغوبة</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const platformBenchmarks = {
+      google: 2.32,
+      facebook: 1.86,
+      instagram: 2.05,
+      snapchat: 3.20,
+      tiktok: 2.75,
+      twitter: 2.45,
+      linkedin: 5.80,
+      youtube: 1.65,
+      other: 2.50
+    };
+
+    document.getElementById('cpcForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const totalSpent = parseFloat(document.getElementById('totalSpent').value);
+      const totalClicks = parseInt(document.getElementById('totalClicks').value);
+      const platform = document.getElementById('platform').value;
+      
+      if (!totalSpent || !totalClicks || !platform) {
+        alert('يرجى ملء جميع الحقول');
+        return;
+      }
+      
+      const cpc = (totalSpent / totalClicks).toFixed(2);
+      const platformBenchmark = platformBenchmarks[platform];
+      const marketAverage = 2.50;
+      
+      // عرض النتيجة
+      document.getElementById('cpcValue').textContent = cpc;
+      document.getElementById('platformBenchmark').textContent = platformBenchmark.toFixed(2);
+      
+      // حساب النسبة مقارنة بمتوسط السوق
+      const savingsPercent = (((marketAverage - parseFloat(cpc)) / marketAverage) * 100).toFixed(1);
+      const savingsElement = document.getElementById('savingsPercent');
+      
+      if (savingsPercent > 0) {
+        savingsElement.textContent = `${savingsPercent}% وفر`;
+        savingsElement.style.color = '#10b981';
+      } else {
+        savingsElement.textContent = `${Math.abs(savingsPercent)}% أعلى`;
+        savingsElement.style.color = '#ef4444';
+      }
+      
+      // تقييم الأداء
+      const performanceElement = document.getElementById('performance');
+      const cpcValue = parseFloat(cpc);
+      
+      if (cpcValue <= 1.5) {
+        performanceElement.textContent = 'ممتاز جداً';
+        performanceElement.className = 'performance-indicator excellent';
+      } else if (cpcValue <= 2.5) {
+        performanceElement.textContent = 'جيد';
+        performanceElement.className = 'performance-indicator good';
+      } else if (cpcValue <= 4.0) {
+        performanceElement.textContent = 'متوسط';
+        performanceElement.className = 'performance-indicator average';
+      } else {
+        performanceElement.textContent = 'يحتاج تحسين';
+        performanceElement.className = 'performance-indicator poor';
+      }
+      
+      document.getElementById('result').classList.add('show');
+      
+      // انتقال سلس للنتيجة
+      document.getElementById('result').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    });
+  </script>
+</body>
+</html>
