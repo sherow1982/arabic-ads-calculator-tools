@@ -1,0 +1,209 @@
+// محسن أداء الحملات الذكي
+// Campaign Performance Optimizer - Advanced Arabic Version
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محسن أداء الحملات الذكي | مؤسسة إعلانات العرب</title>
+    <meta name="description" content="أداة ذكية لتحليل وتحسين أداء حملات الإعلانات الممولة مع توصيات مخصصة">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-primary: #1f2937;
+            --text-secondary: #64748b;
+            --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .input-section {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            direction: rtl;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .results-section {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+        }
+
+        .performance-score {
+            background: var(--gradient-success);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚡ محسن أداء الحملات الذكي</h1>
+            <p>حلل أداء حملاتك واحصل على توصيات مخصصة لتحسين النتائج وزيادة العائد</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h3 class="section-title">📊 بيانات الحملة الحالية</h3>
+                
+                <div class="input-group">
+                    <label for="campaign-name">اسم الحملة</label>
+                    <input type="text" id="campaign-name" placeholder="مثال: حملة المنتجات الصيفية">
+                </div>
+
+                <div class="input-group">
+                    <label for="platform">منصة الإعلان</label>
+                    <select id="platform">
+                        <option value="google-ads">Google Ads</option>
+                        <option value="facebook-ads">Meta Ads (Facebook/Instagram)</option>
+                        <option value="tiktok-ads">TikTok Ads</option>
+                        <option value="snapchat-ads">Snapchat Ads</option>
+                        <option value="youtube-ads">YouTube Ads</option>
+                        <option value="linkedin-ads">LinkedIn Ads</option>
+                    </select>
+                </div>
+
+                <button class="analyze-btn" onclick="analyzeCampaign()">
+                    🔍 تحليل أداء الحملة
+                </button>
+            </div>
+
+            <div class="results-section">
+                <h3 class="section-title">📈 نتائج التحليل</h3>
+                
+                <div class="performance-score">
+                    <div class="score-value">85</div>
+                    <div>درجة أداء الحملة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeCampaign() {
+            alert('جاري تحليل أداء الحملة...');
+        }
+    </script>
+</body>
+</html>

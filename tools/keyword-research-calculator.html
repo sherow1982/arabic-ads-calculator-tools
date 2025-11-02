@@ -1,0 +1,782 @@
+// حاسبة الكلمات المفتاحية المتقدمة
+// Advanced Keyword Research Calculator - Arabic Version
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الكلمات المفتاحية المتقدمة | مؤسسة إعلانات العرب</title>
+    <meta name="description" content="أداة شاملة لبحث وتحليل الكلمات المفتاحية مع تقدير التكلفة والمنافسة للسوق العربي">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-primary: #1f2937;
+            --text-secondary: #64748b;
+            --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .input-section {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            direction: rtl;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .keyword-suggestions {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            width: calc(100% - 30px);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+
+        .suggestion-item:hover {
+            background: var(--light-color);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .results-section {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+        }
+
+        .keyword-analysis {
+            background: var(--gradient-success);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .analysis-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .analysis-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 15px;
+            background: var(--light-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .competition-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .competition-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .competition-low {
+            background: var(--success-color);
+        }
+
+        .competition-medium {
+            background: var(--warning-color);
+        }
+
+        .competition-high {
+            background: var(--danger-color);
+        }
+
+        .keyword-suggestions-list {
+            margin: 25px 0;
+        }
+
+        .suggestion-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--light-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-keyword {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .suggestion-stats {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .suggestion-score {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .optimization-tips {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-top: 25px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tip-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tip-description {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔍 حاسبة الكلمات المفتاحية المتقدمة</h1>
+            <p>اكتشف أفضل الكلمات المفتاحية لحملاتك مع تحليل شامل للتكلفة والمنافسة والفرص</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h3 class="section-title">🔧 معلومات البحث</h3>
+                
+                <div class="input-group">
+                    <label for="main-keyword">الكلمة المفتاحية الأساسية</label>
+                    <input type="text" id="main-keyword" placeholder="مثال: أحذية رياضية" oninput="getSuggestions()">
+                    <div class="keyword-suggestions" id="keyword-suggestions"></div>
+                </div>
+
+                <div class="input-group">
+                    <label for="target-country">الدولة المستهدفة</label>
+                    <select id="target-country">
+                        <option value="saudi-arabia">السعودية 🇸🇦</option>
+                        <option value="uae">الإمارات 🇦🇪</option>
+                        <option value="kuwait">الكويت 🇰🇼</option>
+                        <option value="qatar">قطر 🇶🇦</option>
+                        <option value="bahrain">البحرين 🇧🇭</option>
+                        <option value="oman">عُمان 🇴🇲</option>
+                        <option value="egypt">مصر 🇪🇬</option>
+                        <option value="jordan">الأردن 🇯🇴</option>
+                        <option value="lebanon">لبنان 🇱🇧</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="industry">القطاع/الصناعة</label>
+                    <select id="industry">
+                        <option value="ecommerce">التجارة الإلكترونية</option>
+                        <option value="fashion">الأزياء والملابس</option>
+                        <option value="electronics">الإلكترونيات</option>
+                        <option value="food">الطعام والمشروبات</option>
+                        <option value="travel">السفر والسياحة</option>
+                        <option value="education">التعليم</option>
+                        <option value="health">الصحة والجمال</option>
+                        <option value="automotive">السيارات</option>
+                        <option value="real-estate">العقارات</option>
+                        <option value="services">الخدمات</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="monthly-budget">الميزانية الشهرية المتاحة</label>
+                    <input type="number" id="monthly-budget" placeholder="10000" min="100">
+                </div>
+
+                <div class="input-group">
+                    <label for="target-position">الموقع المستهدف في النتائج</label>
+                    <select id="target-position">
+                        <option value="1-3">المراكز 1-3 (أعلى الصفحة)</option>
+                        <option value="4-6">المراكز 4-6 (وسط الصفحة)</option>
+                        <option value="7-10">المراكز 7-10 (أسفل الصفحة)</option>
+                        <option value="anywhere">أي موقع في الصفحة الأولى</option>
+                    </select>
+                </div>
+
+                <button class="calculate-btn" onclick="analyzeKeywords()">
+                    🔍 تحليل الكلمات المفتاحية
+                </button>
+            </div>
+
+            <div class="results-section">
+                <h3 class="section-title">📊 نتائج التحليل</h3>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحليل الكلمة المفتاحية وجلب البيانات...</p>
+                </div>
+
+                <div id="results" style="display: none;">
+                    <div class="keyword-analysis">
+                        <div class="analysis-value" id="opportunity-score">-</div>
+                        <div class="analysis-label">درجة الفرصة</div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value" id="estimated-cpc">-</div>
+                            <div class="metric-label">التكلفة المقدرة للنقرة</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="monthly-searches">-</div>
+                            <div class="metric-label">عمليات البحث الشهرية</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="competition-level">-</div>
+                            <div class="metric-label">مستوى المنافسة</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="expected-clicks">-</div>
+                            <div class="metric-label">النقرات المتوقعة</div>
+                        </div>
+                    </div>
+
+                    <div class="competition-bar">
+                        <div class="competition-fill" id="competition-bar"></div>
+                    </div>
+
+                    <div class="keyword-suggestions-list">
+                        <h4 style="margin-bottom: 15px; color: var(--text-primary);">💡 اقتراحات كلمات مفتاحية</h4>
+                        <div id="suggestions-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="optimization-tips full-width" id="optimization-tips" style="display: none;">
+                <h3>🎯 نصائح تحسين الكلمات المفتاحية</h3>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <div class="tip-icon">🎯</div>
+                        <div class="tip-title">استخدم الكلمات الطويلة</div>
+                        <div class="tip-description">الكلمات المفتاحية الطويلة (3-4 كلمات) أقل منافسة وأكثر تحديداً للجمهور المستهدف</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon">📍</div>
+                        <div class="tip-title">أضف الموقع الجغرافي</div>
+                        <div class="tip-description">استخدم أسماء المدن والمناطق لاستهداف محلي أكثر دقة وتكلفة أقل</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon">🔄</div>
+                        <div class="tip-title">اختبر وحسن باستمرار</div>
+                        <div class="tip-description">راقب أداء الكلمات المفتاحية أسبوعياً وأضف كلمات جديدة وأزل غير المربحة</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon">📊</div>
+                        <div class="tip-title">استخدم الكلمات السلبية</div>
+                        <div class="tip-description">أضف كلمات سلبية لتجنب النقرات غير المرغوبة وتحسين جودة الزيارات</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات العملات للدول العربية
+        const countryCurrencies = {
+            'saudi-arabia': { symbol: 'ر.س', name: 'ريال سعودي', rate: 1 },
+            'uae': { symbol: 'د.إ', name: 'درهم إماراتي', rate: 1.02 },
+            'kuwait': { symbol: 'د.ك', name: 'دينار كويتي', rate: 0.3 },
+            'qatar': { symbol: 'ر.ق', name: 'ريال قطري', rate: 1.36 },
+            'bahrain': { symbol: 'د.ب', name: 'دينار بحريني', rate: 0.38 },
+            'oman': { symbol: 'ر.ع', name: 'ريال عماني', rate: 0.38 },
+            'egypt': { symbol: 'ج.م', name: 'جنيه مصري', rate: 30.9 },
+            'jordan': { symbol: 'د.أ', name: 'دينار أردني', rate: 0.71 },
+            'lebanon': { symbol: 'ل.ل', name: 'ليرة لبنانية', rate: 89500 }
+        };
+
+        // بيانات أسعار الكلمات المفتاحية للصناعات
+        const industryCPCData = {
+            'ecommerce': { baseCPC: 2.5, competition: 0.8 },
+            'fashion': { baseCPC: 1.8, competition: 0.7 },
+            'electronics': { baseCPC: 3.2, competition: 0.9 },
+            'food': { baseCPC: 1.5, competition: 0.6 },
+            'travel': { baseCPC: 2.8, competition: 0.8 },
+            'education': { baseCPC: 4.5, competition: 0.5 },
+            'health': { baseCPC: 5.2, competition: 0.7 },
+            'automotive': { baseCPC: 3.8, competition: 0.8 },
+            'real-estate': { baseCPC: 6.5, competition: 0.9 },
+            'services': { baseCPC: 4.2, competition: 0.6 }
+        };
+
+        // اقتراحات الكلمات المفتاحية حسب الصناعة
+        const keywordSuggestions = {
+            'ecommerce': ['متجر اونلاين', 'تسوق عبر الانترنت', 'منتجات', 'عروض', 'خصومات'],
+            'fashion': ['أزياء نسائية', 'ملابس رجالية', 'فساتين', 'أحذية', 'إكسسوارات'],
+            'electronics': ['جوالات', 'لابتوب', 'كاميرات', 'سماعات', 'أجهزة منزلية'],
+            'food': ['مطعم', 'توصيل طعام', 'حلويات', 'مأكولات', 'مشروبات'],
+            'travel': ['حجز فنادق', 'رحلات سياحية', 'تذاكر طيران', 'سفر', 'عطلات'],
+            'education': ['دورات تدريبية', 'تعليم عن بعد', 'كورسات', 'شهادات', 'تطوير مهارات'],
+            'health': ['عيادة', 'طبيب', 'صحة', 'علاج', 'أدوية'],
+            'automotive': ['سيارات للبيع', 'قطع غيار', 'صيانة سيارات', 'تأمين', 'رخص'],
+            'real-estate': ['شقق للبيع', 'فلل للإيجار', 'عقارات', 'استثمار عقاري', 'أراضي'],
+            'services': ['خدمات', 'استشارات', 'صيانة', 'تنظيف', 'توصيل']
+        };
+
+        function analyzeKeywords() {
+            const keyword = document.getElementById('main-keyword').value.trim();
+            const country = document.getElementById('target-country').value;
+            const industry = document.getElementById('industry').value;
+            const budget = parseFloat(document.getElementById('monthly-budget').value) || 0;
+            const position = document.getElementById('target-position').value;
+
+            if (!keyword) {
+                alert('يرجى إدخال الكلمة المفتاحية');
+                return;
+            }
+
+            if (budget === 0) {
+                alert('يرجى إدخال الميزانية الشهرية');
+                return;
+            }
+
+            // إظهار شاشة التحميل
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('optimization-tips').style.display = 'none';
+
+            setTimeout(() => {
+                const analysis = performKeywordAnalysis(keyword, country, industry, budget, position);
+                displayResults(analysis, country);
+                
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('optimization-tips').style.display = 'block';
+            }, 2500);
+        }
+
+        function performKeywordAnalysis(keyword, country, industry, budget, position) {
+            const currency = countryCurrencies[country];
+            const industryData = industryCPCData[industry];
+            
+            // حساب تقديري للـ CPC
+            const baseCPC = industryData.baseCPC * currency.rate;
+            const positionMultiplier = getPositionMultiplier(position);
+            const estimatedCPC = baseCPC * positionMultiplier;
+
+            // تقدير عمليات البحث الشهرية
+            const keywordLength = keyword.split(' ').length;
+            let monthlySearches = 8500;
+            if (keywordLength >= 3) monthlySearches *= 0.6;
+            if (keywordLength >= 4) monthlySearches *= 0.4;
+            
+            // حساب النقرات المتوقعة
+            const ctrRate = getExpectedCTR(position);
+            const expectedClicks = Math.round((monthlySearches * ctrRate) / 100);
+            const clicksWithBudget = Math.min(expectedClicks, Math.round(budget / estimatedCPC));
+
+            // حساب درجة الفرصة
+            const competitionScore = (1 - industryData.competition) * 30;
+            const budgetScore = Math.min((budget / (estimatedCPC * expectedClicks)) * 40, 40);
+            const positionScore = position === '1-3' ? 30 : position === '4-6' ? 25 : 20;
+            const opportunityScore = Math.round(competitionScore + budgetScore + positionScore);
+
+            // إنشاء اقتراحات الكلمات المفتاحية
+            const suggestions = generateKeywordSuggestions(keyword, industry, country);
+
+            return {
+                mainKeyword: keyword,
+                estimatedCPC: estimatedCPC,
+                monthlySearches: monthlySearches,
+                competitionLevel: industryData.competition,
+                expectedClicks: clicksWithBudget,
+                opportunityScore: opportunityScore,
+                suggestions: suggestions,
+                currency: currency
+            };
+        }
+
+        function getPositionMultiplier(position) {
+            const multipliers = {
+                '1-3': 1.5,
+                '4-6': 1.2,
+                '7-10': 1.0,
+                'anywhere': 0.9
+            };
+            return multipliers[position] || 1.0;
+        }
+
+        function getExpectedCTR(position) {
+            const ctrRates = {
+                '1-3': 8.5,
+                '4-6': 4.2,
+                '7-10': 2.1,
+                'anywhere': 3.8
+            };
+            return ctrRates[position] || 3.8;
+        }
+
+        function generateKeywordSuggestions(mainKeyword, industry, country) {
+            const baseSuggestions = keywordSuggestions[industry] || [];
+            const suggestions = [];
+
+            baseSuggestions.forEach(suggestion => {
+                const combinedKeyword = `${suggestion} ${mainKeyword}`;
+                const score = Math.floor(Math.random() * 30) + 70; // درجة عشوائية بين 70-100
+                const estimatedCPC = (Math.random() * 3 + 1).toFixed(2);
+                const searches = Math.floor(Math.random() * 5000) + 1000;
+
+                suggestions.push({
+                    keyword: combinedKeyword,
+                    score: score,
+                    cpc: estimatedCPC,
+                    searches: searches
+                });
+            });
+
+            // إضافة اقتراحات إضافية
+            const additionalSuggestions = [
+                `${mainKeyword} رخيص`,
+                `${mainKeyword} جودة عالية`,
+                `أفضل ${mainKeyword}`,
+                `${mainKeyword} أصلي`,
+                `${mainKeyword} مخفض`
+            ];
+
+            additionalSuggestions.forEach(suggestion => {
+                const score = Math.floor(Math.random() * 25) + 60;
+                const estimatedCPC = (Math.random() * 2 + 0.8).toFixed(2);
+                const searches = Math.floor(Math.random() * 3000) + 500;
+
+                suggestions.push({
+                    keyword: suggestion,
+                    score: score,
+                    cpc: estimatedCPC,
+                    searches: searches
+                });
+            });
+
+            return suggestions.sort((a, b) => b.score - a.score).slice(0, 8);
+        }
+
+        function displayResults(analysis, country) {
+            const currency = countryCurrencies[country];
+            
+            // عرض درجة الفرصة
+            document.getElementById('opportunity-score').textContent = analysis.opportunityScore;
+            
+            // عرض المقاييس
+            document.getElementById('estimated-cpc').textContent = analysis.estimatedCPC.toFixed(2) + ' ' + currency.symbol;
+            document.getElementById('monthly-searches').textContent = analysis.monthlySearches.toLocaleString('ar-SA');
+            document.getElementById('expected-clicks').textContent = analysis.expectedClicks.toLocaleString('ar-SA');
+            
+            // عرض مستوى المنافسة
+            const competitionText = analysis.competitionLevel > 0.7 ? 'عالي' : analysis.competitionLevel > 0.4 ? 'متوسط' : 'منخفض';
+            document.getElementById('competition-level').textContent = competitionText;
+            
+            // عرض شريط المنافسة
+            const competitionBar = document.getElementById('competition-bar');
+            const competitionPercentage = analysis.competitionLevel * 100;
+            competitionBar.style.width = competitionPercentage + '%';
+            
+            if (analysis.competitionLevel > 0.7) {
+                competitionBar.className = 'competition-fill competition-high';
+            } else if (analysis.competitionLevel > 0.4) {
+                competitionBar.className = 'competition-fill competition-medium';
+            } else {
+                competitionBar.className = 'competition-fill competition-low';
+            }
+            
+            // عرض اقتراحات الكلمات المفتاحية
+            const suggestionsList = document.getElementById('suggestions-list');
+            suggestionsList.innerHTML = analysis.suggestions.map(suggestion => `
+                <div class="suggestion-card">
+                    <div class="suggestion-info">
+                        <div class="suggestion-keyword">${suggestion.keyword}</div>
+                        <div class="suggestion-stats">
+                            تكلفة النقرة: ${suggestion.cpc} ${currency.symbol} | 
+                            عمليات البحث: ${suggestion.searches.toLocaleString('ar-SA')}
+                        </div>
+                    </div>
+                    <div class="suggestion-score">${suggestion.score}</div>
+                </div>
+            `).join('');
+        }
+
+        function getSuggestions() {
+            // هذه الوظيفة يمكن تطويرها للحصول على اقتراحات فورية أثناء الكتابة
+            const keyword = document.getElementById('main-keyword').value.trim();
+            if (keyword.length < 2) {
+                document.getElementById('keyword-suggestions').style.display = 'none';
+                return;
+            }
+            
+            // محاكاة اقتراحات سريعة
+            const quickSuggestions = [
+                keyword + ' رخيص',
+                keyword + ' جودة عالية',
+                'أفضل ' + keyword,
+                keyword + ' أصلي',
+                keyword + ' بالجملة'
+            ];
+            
+            const suggestionsDiv = document.getElementById('keyword-suggestions');
+            suggestionsDiv.innerHTML = quickSuggestions.map(suggestion => 
+                `<div class="suggestion-item" onclick="selectSuggestion('${suggestion}')">${suggestion}</div>`
+            ).join('');
+            
+            suggestionsDiv.style.display = 'block';
+        }
+
+        function selectSuggestion(keyword) {
+            document.getElementById('main-keyword').value = keyword;
+            document.getElementById('keyword-suggestions').style.display = 'none';
+        }
+
+        // إخفاء الاقتراحات عند النقر خارجها
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.input-group')) {
+                document.getElementById('keyword-suggestions').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
