@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>كل الأدوات | أدوات الإعلانات العربية</title>
+  <meta name="description" content="فهرس شامل لكل أدوات التسويق العربية: CPC, CPA, ROI, CVR, CTR, مخطط الميزانية، UTM، واتساب، محتوى السوشيال">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#667eea">
+  <style>
+    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:1200px;margin:0 auto;padding:20px}
+    .header{background:rgba(255,255,255,.1);border-radius:18px;color:#fff;text-align:center;padding:28px;backdrop-filter:blur(10px);margin-bottom:16px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+    .input,select{padding:10px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.85)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 10px 24px rgba(10,37,64,.1)}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;margin-bottom:8px}
+    .primary{background:rgba(102,126,234,.14);color:#1e293b}
+    .accent{background:rgba(16,185,129,.14);color:#064e3b}
+    .trace{background:rgba(245,158,11,.14);color:#7c2d12}
+    .title{font-weight:800;margin:6px 0 8px}
+    .desc{color:#64748b;font-size:14px;margin-bottom:10px}
+    .link{display:inline-block;text-decoration:none;color:#fff;background:linear-gradient(135deg,#667eea,#764ba2);padding:8px 14px;border-radius:999px;font-weight:700}
+    @media(max-width:768px){.container{padding:14px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <script src="shared-nav.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>🧰 كل الأدوات</h1>
+      <p>ابحث وفلتر للوصول السريع للأداة المناسبة</p>
+    </header>
+
+    <div class="controls">
+      <input id="search" class="input" placeholder="ابحث بالاسم أو بالكلمات الدلالية (CPC, واتساب, ميزانية)">
+      <select id="category">
+        <option value="">كل التصنيفات</option>
+        <option value="primary">الأدوات الأساسية</option>
+        <option value="accent">أدوات التحسين والتحليل</option>
+        <option value="trace">أدوات التتبع والمراسلة</option>
+      </select>
+    </div>
+
+    <section class="grid" id="toolsGrid"></section>
+  </div>
+
+  <script>
+    const tools = [
+      { title:'حاسبة CPC', desc:'احسب تكلفة النقرة وقارن المنصات', url:'cpc-calculator.html', cat:'primary', tags:['cpc','click','نقرة'] },
+      { title:'حاسبة ROI', desc:'قِس الربحية الدقيقة لحملاتك', url:'roi-calculator.html', cat:'primary', tags:['roi','ربحية','عائد'] },
+      { title:'حاسبة CPA', desc:'احسب تكلفة اكتساب العميل', url:'cpa-calculator.html', cat:'primary', tags:['cpa','اكتساب','تحويل'] },
+      { title:'مخطط الميزانية', desc:'توزيع ذكي لميزانيتك', url:'budget-planner.html', cat:'primary', tags:['budget','ميزانية','توزيع'] },
+      { title:'حاسبة CVR', desc:'معدل تحويل الزوار', url:'cvr-calculator.html', cat:'accent', tags:['cvr','تحويل','landing'] },
+      { title:'حاسبة CTR', desc:'معدل النقر ومقارنات الصناعة', url:'ctr-calculator.html', cat:'accent', tags:['ctr','نقر','إعلان'] },
+      { title:'هامش الربح', desc:'تسعير ذكي وحساب الهوامش', url:'profit-margin-calculator.html', cat:'accent', tags:['profit','margin','تسعير'] },
+      { title:'مولد UTM', desc:'إنشاء روابط تتبع احترافية', url:'utm-generator.html', cat:'trace', tags:['utm','tracking','تتبع'] },
+      { title:'مولد واتساب', desc:'قوالب رسائل + UTM', url:'whatsapp-generator.html', cat:'trace', tags:['whatsapp','واتساب','رسائل'] },
+      { title:'مخطط المحتوى', desc:'أفضل أوقات النشر + أفكار', url:'social-content-planner.html', cat:'trace', tags:['social','content','محتوى'] }
+    ];
+
+    const grid = document.getElementById('toolsGrid');
+    const search = document.getElementById('search');
+    const category = document.getElementById('category');
+
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const c = category.value;
+      grid.innerHTML = tools
+        .filter(t => (!c || t.cat===c))
+        .filter(t => !q || t.title.toLowerCase().includes(q) || t.tags.some(tag => tag.includes(q)))
+        .map(t => `
+          <article class="card">
+            <span class="badge ${t.cat}">${ t.cat==='primary'?'أساسية': t.cat==='accent'?'تحسين/تحليل':'تتبع/مراسلة' }</span>
+            <h3 class="title">${t.title}</h3>
+            <p class="desc">${t.desc}</p>
+            <a class="link" href="${t.url}">فتح الأداة</a>
+          </article>
+        `)
+        .join('');
+    }
+
+    search.addEventListener('input', render);
+    category.addEventListener('change', render);
+    render();
+  </script>
+</body>
+</html>
