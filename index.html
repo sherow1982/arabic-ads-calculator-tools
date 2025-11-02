@@ -52,21 +52,476 @@
   <link rel="stylesheet" href="global-styles.css">
   <link rel="stylesheet" href="global-search.css">
   
-  <style>/* keep minimal page-specific overrides here */</style>
+  <style>
+    .hero-section { text-align: center; color: white; padding: 40px 25px; background: rgba(255,255,255,0.1); border-radius: 25px; margin-bottom: 30px; backdrop-filter: blur(15px); }
+    .hero-section h1 { font-size: 2.8rem; margin-bottom: 15px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .hero-section p { font-size: 1.2rem; opacity: 0.95; line-height: 1.5; max-width: 700px; margin: 0 auto 25px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 15px; margin: 25px 0; }
+    .stat-item { background: rgba(255,255,255,0.15); padding: 20px 15px; border-radius: 15px; text-align: center; backdrop-filter: blur(10px); }
+    .stat-number { font-size: 2.2rem; font-weight: 800; margin-bottom: 5px; }
+    .category { margin: 35px 0; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .category h2 { background: var(--gradient); color: white; padding: 15px 25px; border-radius: 15px; text-align: center; font-size: 1.3rem; margin-bottom: 25px; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+    .tool-card { background: #fafafa; border-radius: 18px; padding: 22px; border: 1px solid #e2e8f0; transition: all 0.3s ease; position: relative; }
+    .tool-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); border-color: var(--primary); }
+    .tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); border-radius: 18px 18px 0 0; }
+    .tool-icon { font-size: 2.2rem; margin-bottom: 12px; color: var(--primary); text-align: center; }
+    .tool-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); text-align: center; line-height: 1.3; }
+    .tool-description { color: var(--muted); margin-bottom: 15px; line-height: 1.4; text-align: center; font-size: 0.9rem; }
+    .tool-link { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--gradient); color: white; padding: 10px 18px; border-radius: 22px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; }
+    .tool-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.3); color: white; text-decoration: none; }
+    .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; justify-content: center; }
+    .badge { background: #10b981; color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
+    .badge.new { background: #ef4444; } .badge.advanced { background: #8b5cf6; } .badge.popular { background: #f59e0b; } .badge.ai { background: #6366f1; }
+    @media (max-width: 768px) { .hero-section h1 { font-size: 2.3rem; } .tools-grid { grid-template-columns: 1fr; gap: 15px; } .tool-card { padding: 18px; } .category { padding: 20px; } }
+  </style>
 </head>
 <body>
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
-  <!-- Use shared header with global search embedded -->
-  <!--#include file="partials/shared-header.html" -->
-  
-  <!-- existing homepage body preserved below -->
   <div class="unified-container">
-    <!-- المحتوى كما سبق (الأقسام والبطاقات) دون تكرار شريط البحث -->
+    <!-- التنقل الموحد -->
+    <nav class="unified-nav">
+      <a href="./" class="nav-home nav-active"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="alerts.html" class="nav-alerts"><i class="fas fa-bell"></i> التنبيهات</a>
+      <a href="keyword-generator.html" class="nav-tool"><i class="fas fa-key"></i> الكلمات</a>
+      <a href="cpc-calculator.html" class="nav-tool"><i class="fas fa-calculator"></i> CPC</a>
+      <a href="roi-calculator.html" class="nav-tool"><i class="fas fa-chart-line"></i> ROI</a>
+      <a href="roas-calculator.html" class="nav-tool"><i class="fas fa-money-bill-trend-up"></i> ROAS</a>
+      <a href="budget-planner.html" class="nav-tool"><i class="fas fa-chart-pie"></i> الميزانية</a>
+      <a href="tools-directory.html" class="nav-showcase"><i class="fas fa-list"></i> الدليل</a>
+    </nav>
+
+    <!-- شريط البحث الموحد -->
+    <div class="unified-search-wrapper">
+      <div class="unified-search" id="globalSearchBar">
+        <select id="globalSearchFilter" class="filter-select">
+          <option value="all">كل الموقع</option>
+          <option value="tools">الأدوات فقط</option>
+          <option value="advanced">الأدوات المتقدمة</option>
+          <option value="basic">الأدوات الأساسية</option>
+        </select>
+        <input id="globalSearchInput" type="search" placeholder="ابحث في 27 أداة... (مثال: ROAS، Performance Max، مزايدة)" aria-label="بحث">
+        <button id="globalSearchBtn" class="search-btn"><i class="fas fa-search"></i> بحث</button>
+      </div>
+    </div>
+
+    <!-- القسم الرئيسي -->
+    <div class="hero-section">
+      <h1>🚀 أدوات الإعلانات العربية الشاملة</h1>
+      <p>مجموعة كاملة من <strong>27 أداة مجانية</strong> لتحسين أداء إعلاناتك الرقمية - كلها في مكان واحد مع بوت ذكي وتنبيهات تلقائية</p>
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-number">27</div><div>أداة مجانية</div></div>
+        <div class="stat-item"><div class="stat-number">7</div><div>متقدمة جديدة</div></div>
+        <div class="stat-item"><div class="stat-number">6</div><div>منصات مدعومة</div></div>
+        <div class="stat-item"><div class="stat-number">12</div><div>لهجة عربية</div></div>
+        <div class="stat-item"><div class="stat-number">24/7</div><div>تنبيهات تلقائية</div></div>
+      </div>
+    </div>
+
+    <!-- القسم الأول: أدوات الكلمات المفتاحية والتوليد -->
+    <section class="category">
+      <h2><i class="fas fa-key"></i> أدوات الكلمات المفتاحية والتوليد (4 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon"><i class="fas fa-key"></i></div>
+          <h3 class="tool-title">مولد الكلمات المفتاحية الذكي</h3>
+          <p class="tool-description">توليد مئات الكلمات العربية بذكاء مع دعم جميع اللهجات وتصدير CSV</p>
+          <a href="keyword-generator.html" class="tool-link"><i class="fas fa-key"></i> ولّد الكلمات</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon"><i class="fas fa-search"></i></div>
+          <h3 class="tool-title">حاسبة الكلمات المفتاحية المتقدمة</h3>
+          <p class="tool-description">بحث متقدم مع تحليل التكلفة والمنافسة وتقدير الفرص والتوصيات الذكية</p>
+          <a href="tools/keyword-research-calculator.html" class="tool-link"><i class="fas fa-search"></i> ابدأ البحث المتقدم</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#8b5cf6"><i class="fas fa-coins"></i></div>
+          <h3 class="tool-title">مقدر مزايدة الكلمات</h3>
+          <p class="tool-description">حساب المزايدة المثلى للكلمات حسب المنصة والسوق مع التوصيات</p>
+          <a href="keyword-bid-estimator.html" class="tool-link"><i class="fas fa-coins"></i> قدّر المزايدة</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#06b6d4"><i class="fas fa-link"></i></div>
+          <h3 class="tool-title">مولد UTM الاحترافي</h3>
+          <p class="tool-description">إنشاء روابط UTM احترافية لتتبع مصادر الزيارات بدقة عالية</p>
+          <a href="utm-generator.html" class="tool-link"><i class="fas fa-link"></i> ولّد روابط UTM</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- الأدوات المتقدمة الجديدة -->
+    <section class="category">
+      <h2><i class="fas fa-rocket"></i> الأدوات المتقدمة الجديدة (6 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#10b981"><i class="fas fa-chart-bar"></i></div>
+          <h3 class="tool-title">محسن أداء الحملات الذكي</h3>
+          <p class="tool-description">تحليل ذكي مع توصيات مرتبة حسب الأولوية لتحسين النتائج بنسبة تصل 300%</p>
+          <a href="tools/campaign-optimizer.html" class="tool-link"><i class="fas fa-rocket"></i> حسّن الأداء الآن</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">Google</span></div>
+          <div class="tool-icon" style="color:#6366f1"><i class="fas fa-target"></i></div>
+          <h3 class="tool-title">حاسبة Performance Max المتقدمة</h3>
+          <p class="tool-description">توزيع ذكي للميزانية عبر جميع قنوات Google مع مقارنة الاستراتيجيات</p>
+          <a href="tools/performance-max-calculator.html" class="tool-link"><i class="fas fa-bullseye"></i> احسب Performance Max</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">تحليل</span></div>
+          <div class="tool-icon" style="color:#3b82f6"><i class="fas fa-chart-line"></i></div>
+          <h3 class="tool-title">محلل البيانات التسويقية الشامل</h3>
+          <p class="tool-description">لوحة تحكم تفاعلية لتحليل مسار التحويل متعدد القنوات والتقارير المفصلة</p>
+          <a href="tools/marketing-data-analyzer.html" class="tool-link"><i class="fas fa-analytics"></i> ابدأ التحليل الشامل</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">مزايدة</span></div>
+          <div class="tool-icon" style="color:#1e40af"><i class="fas fa-coins"></i></div>
+          <h3 class="tool-title">حاسبة المزايدة الذكية</h3>
+          <p class="tool-description">تحديد استراتيجية المزايدة المثلى مع Target CPA/ROAS وتقييم المخاطر</p>
+          <a href="tools/smart-bidding-calculator.html" class="tool-link"><i class="fas fa-brain"></i> احسب المزايدة الذكية</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">موسمي</span></div>
+          <div class="tool-icon" style="color:#0f766e"><i class="fas fa-calendar-alt"></i></div>
+          <h3 class="tool-title">مخطط الإعلانات الموسمية الذكي</h3>
+          <p class="tool-description">تخطيط موسمي مع التنبؤ بالطلب للمواسم العربية والإسلامية والعالمية</p>
+          <a href="tools/seasonal-ads-planner.html" class="tool-link"><i class="fas fa-calendar-check"></i> ابدأ التخطيط الموسمي</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge advanced">متقدم</span><span class="badge ai">إسناد</span></div>
+          <div class="tool-icon" style="color:#7c3aed"><i class="fas fa-exchange-alt"></i></div>
+          <h3 class="tool-title">حاسبة التحويل والإسناد</h3>
+          <p class="tool-description">تحليل مسار التحويل مع 5 نماذج إسناد وخريطة رحلة العميل التفاعلية</p>
+          <a href="tools/attribution-calculator.html" class="tool-link"><i class="fas fa-route"></i> حلل التحويلات المتقدمة</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- حاسبات الأداء الأساسية -->
+    <section class="category">
+      <h2><i class="fas fa-calculator"></i> حاسبات الأداء والتكلفة الأساسية (7 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span></div>
+          <div class="tool-icon"><i class="fas fa-calculator"></i></div>
+          <h3 class="tool-title">حاسبة CPC المتقدمة</h3>
+          <p class="tool-description">حساب تكلفة النقرة مع مقارنات السوق العربي وتوصيات التحسين</p>
+          <a href="cpc-calculator.html" class="tool-link"><i class="fas fa-calculator"></i> احسب CPC</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span></div>
+          <div class="tool-icon" style="color:#10b981"><i class="fas fa-chart-line"></i></div>
+          <h3 class="tool-title">حاسبة ROI الشاملة</h3>
+          <p class="tool-description">قياس عائد الاستثمار مع تحليل مفصل للربحية ونقطة التعادل</p>
+          <a href="roi-calculator.html" class="tool-link"><i class="fas fa-chart-line"></i> احسب العائد</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">محدث</span></div>
+          <div class="tool-icon" style="color:#ef4444"><i class="fas fa-money-bill-trend-up"></i></div>
+          <h3 class="tool-title">حاسبة ROAS المطورة</h3>
+          <p class="tool-description">حساب عائد الإنفاق الإعلاني مع مقارنة معايير الصناعة</p>
+          <a href="roas-calculator.html" class="tool-link"><i class="fas fa-money-bill-trend-up"></i> احسب ROAS</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#f59e0b"><i class="fas fa-user-plus"></i></div>
+          <h3 class="tool-title">حاسبة CPA الدقيقة</h3>
+          <p class="tool-description">حساب تكلفة اكتساب العميل مع تحليل مسار التحويل</p>
+          <a href="cpa-calculator.html" class="tool-link"><i class="fas fa-user-plus"></i> احسب CPA</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#8b5cf6"><i class="fas fa-mouse-pointer"></i></div>
+          <h3 class="tool-title">حاسبة CTR المحسنة</h3>
+          <p class="tool-description">حساب معدل النقر مع نصائح فورية للتحسين</p>
+          <a href="ctr-calculator.html" class="tool-link"><i class="fas fa-mouse-pointer"></i> احسب CTR</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#06b6d4"><i class="fas fa-exchange-alt"></i></div>
+          <h3 class="tool-title">حاسبة CVR المتطورة</h3>
+          <p class="tool-description">قياس معدل التحويل مع تحليل نقاط الضعف وحلول التحسين</p>
+          <a href="cvr-calculator.html" class="tool-link"><i class="fas fa-exchange-alt"></i> احسب CVR</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#0ea5e9"><i class="fas fa-percentage"></i></div>
+          <h3 class="tool-title">حاسبة هامش الربح</h3>
+          <p class="tool-description">حساب هامش الربح وضمان ربحية الحملات قبل التوسع</p>
+          <a href="profit-margin-calculator.html" class="tool-link"><i class="fas fa-percentage"></i> احسب الهامش</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- أدوات التخطيط والتنظيم -->
+    <section class="category">
+      <h2><i class="fas fa-calendar-alt"></i> أدوات التخطيط والتنظيم (4 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon"><i class="fas fa-chart-pie"></i></div>
+          <h3 class="tool-title">مخطط الميزانية الذكي</h3>
+          <p class="tool-description">توزيع ذكي للميزانية على المنصات مع توصيات مخصصة للأداء الأمثل</p>
+          <a href="budget-planner.html" class="tool-link"><i class="fas fa-chart-pie"></i> خطط ميزانيتك</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#f59e0b"><i class="fas fa-users"></i></div>
+          <h3 class="tool-title">حاسبة الجمهور المتقدمة</h3>
+          <p class="tool-description">تقدير حجم الوصول وحجم الجمهور بدقة عالية وفق الميزانية والاستهداف</p>
+          <a href="audience-calculator.html" class="tool-link"><i class="fas fa-users"></i> قدّر الجمهور</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#06b6d4"><i class="fas fa-calendar-week"></i></div>
+          <h3 class="tool-title">مخطط المحتوى الاجتماعي</h3>
+          <p class="tool-description">خطة نشر ذكية ومنظمة لجميع منصات السوشيال ميديا مع توصيات المحتوى</p>
+          <a href="social-content-planner.html" class="tool-link"><i class="fas fa-calendar-week"></i> أنشئ خطتك</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#ec4899"><i class="fas fa-eye"></i></div>
+          <h3 class="tool-title">حاسبة الانطباعات المتقدمة</h3>
+          <p class="tool-description">توقع الانطباعات والوصول بحسب المنصة والميزانية مع تحليل مفصل</p>
+          <a href="impression-calculator.html" class="tool-link"><i class="fas fa-eye"></i> قدّر الوصول</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- أدوات التحليل والتحسين -->
+    <section class="category">
+      <h2><i class="fas fa-search-plus"></i> أدوات التحليل والتحسين (3 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#ef4444"><i class="fas fa-search"></i></div>
+          <h3 class="tool-title">محلل المنافسة المتقدم</h3>
+          <p class="tool-description">مقارنة الأداء مع السوق العربي وتحديد فرص التفوق والنمو المستقبلي</p>
+          <a href="competition-analyzer.html" class="tool-link"><i class="fas fa-search"></i> حلّل المنافسة</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#10b981"><i class="fas fa-rocket"></i></div>
+          <h3 class="tool-title">محسن الحملات الأساسي</h3>
+          <p class="tool-description">توصيات فورية وسريعة لتحسين نتائج حملاتك وزيادة الكفاءة</p>
+          <a href="campaign-optimizer.html" class="tool-link"><i class="fas fa-rocket"></i> حسّن حملاتك</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#f59e0b"><i class="fas fa-clock"></i></div>
+          <h3 class="tool-title">مدير تكرار الإعلانات</h3>
+          <p class="tool-description">ضبط التكرار المثالي لتجنب إزعاج الجمهور مع تحليل السلوك</p>
+          <a href="frequency-capper.html" class="tool-link"><i class="fas fa-clock"></i> احسب التكرار</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- أدوات التوليد والتواصل -->
+    <section class="category">
+      <h2><i class="fas fa-tools"></i> أدوات التوليد والتواصل (1 أداة)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#25d366"><i class="fab fa-whatsapp"></i></div>
+          <h3 class="tool-title">مولد رسائل واتساب</h3>
+          <p class="tool-description">قوالب رسائل جاهزة للتسويق وخدمة العملاء مع تخصيص احترافي</p>
+          <a href="whatsapp-generator.html" class="tool-link"><i class="fab fa-whatsapp"></i> ولّد رسائل</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- الخدمات والتنبيهات الذكية -->
+    <section class="category">
+      <h2><i class="fas fa-bell"></i> الخدمات والتنبيهات الذكية (2 خدمة)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">تلقائي</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#ef4444"><i class="fas fa-bell"></i></div>
+          <h3 class="tool-title">تنبيهات المنصات التلقائية</h3>
+          <p class="tool-description">آخر تحديثات Meta وGoogle وTikTok وباقي المنصات محدثة تلقائياً كل 3 ساعات</p>
+          <a href="alerts.html" class="tool-link"><i class="fas fa-bell"></i> فعّل التنبيهات</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">محدث</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#25d366"><i class="fas fa-robot"></i></div>
+          <h3 class="tool-title">البوت الذكي متعدد اللهجات</h3>
+          <p class="tool-description">مساعد ذكي مع 200+ إجابة يفهم المصرية والخليجية والشامية والمغربية والفصحى</p>
+          <a href="#chatbot" onclick="document.getElementById('chatbotToggle').click()" class="tool-link"><i class="fas fa-comments"></i> تحدث معه الآن</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ملخص شامل -->
+    <div style="background:var(--gradient);color:white;padding:40px;border-radius:20px;text-align:center;margin:40px 0">
+      <h2 style="margin-bottom:20px;font-size:1.8rem">🏆 المجموعة الكاملة - 27 أداة في مكان واحد</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:20px;margin:25px 0">
+        <div><div style="font-size:2rem;font-weight:800">27</div><div>أداة متنوعة</div></div>
+        <div><div style="font-size:2rem;font-weight:800">7</div><div>متقدمة جديدة</div></div>
+        <div><div style="font-size:2rem;font-weight:800">6</div><div>فئات متخصصة</div></div>
+        <div><div style="font-size:2rem;font-weight:800">100%</div><div>مجاني تماماً</div></div>
+        <div><div style="font-size:2rem;font-weight:800">0</div><div>رسوم مخفية</div></div>
+      </div>
+      
+      <div style="margin-top:25px;font-size:0.9rem;opacity:0.9">
+        <p>آخر تحديث: 2 نوفمبر 2025 | تم بناء المجموعة بحب للمجتمع العربي ❤️</p>
+      </div>
+    </div>
+
+    <!-- الفوتر الموحد -->
+    <footer class="unified-footer">
+      <div class="unified-footer-links">
+        <a href="about.html">عن الأدوات</a>
+        <a href="tools-directory.html">دليل الأدوات</a>
+        <a href="complete-tools-showcase.html">العرض الشامل</a>
+        <a href="alerts.html">التنبيهات</a>
+        <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer">الموقع الرسمي</a>
+        <a href="https://wa.me/201110760081" target="_blank" rel="noopener noreferrer">واتساب</a>
+        <a href="https://facebook.com/arabads.me" target="_blank" rel="noopener noreferrer">فيسبوك</a>
+      </div>
+      
+      <p>&copy; 2025 مؤسسة إعلانات العرب – 27 أداة احترافية مجانية للمسوقين العرب</p>
+      
+      <div style="margin-top: 20px; font-size: 14px; opacity: 0.9; line-height: 1.5; text-align: center;">
+        🚀 <strong>تحديث نوفمبر 2025:</strong> 7 أدوات متقدمة جديدة + بوت ذكي محدّث + تنبيهات تلقائية<br>
+        <small style="opacity: 0.8;">آخر تحديث: 2 نوفمبر 2025 | المجموع النهائي: 27 أداة متكاملة | تم بناؤها بحب للمجتمع العربي ❤️</small>
+      </div>
+      
+      <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">📊 27 أداة شاملة</span>
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🌍 6 منصات مدعومة</span>
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🤖 بوت ذكي متطور</span>
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🚨 تنبيهات حية</span>
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">⚡ أدوات متقدمة</span>
+      </div>
+    </footer>
   </div>
 
+  <!-- الأزرار العائمة -->
+  <a href="https://wa.me/201110760081" class="unified-whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+  </a>
+  
+  <button class="unified-chatbot-float" id="chatbotToggle" style="position: fixed; bottom: 24px; left: 24px; width: 60px; height: 60px; background: var(--gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); z-index: 1000; cursor: pointer; transition: all 0.3s ease;">
+    <i class="fas fa-comments" style="font-size: 1.5rem;"></i>
+  </button>
+  
+  <button class="unified-back-to-top" id="backToTop" style="display: none;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- نافذة البوت المصغرة -->
+  <div id="miniChatWindow" style="position: fixed; bottom: 100px; left: 24px; width: 350px; max-width: calc(100vw - 48px); background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 1001; display: none; overflow: hidden;">
+    <div style="background: var(--gradient); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong>مساعد الأدوات الذكي 🤖</strong>
+        <div style="font-size: 12px; opacity: 0.9; margin-top: 3px;">يفهم جميع اللهجات العربية - 27 أداة</div>
+      </div>
+      <button id="closeMiniChat" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 5px;">&times;</button>
+    </div>
+    
+    <div id="miniChatMessages" style="padding: 20px; max-height: 250px; overflow-y: auto;">
+      <div style="background: #f8fafc; padding: 15px; border-radius: 15px; font-size: 14px; line-height: 1.5;">
+        <strong>أهلاً وسهلاً! 👋</strong><br>
+        أنا مساعدك الذكي للـ 27 أداة! 🎯<br><br>
+        <strong>جرب مثلاً:</strong><br>
+        • "عايز أحسب ROI"<br>
+        • "محتاج مخطط ميزانية"<br>
+        • "أريد تحليل كلمات مفتاحية"<br>
+        • "بدي Performance Max"<br>
+        • "وديت مزايدة ذكية"<br><br>
+        <em>مع دعم كامل للهجات العربية!</em> ✨
+      </div>
+    </div>
+    
+    <div style="padding: 15px; border-top: 1px solid #e5e7eb;">
+      <div style="display: flex; gap: 8px;">
+        <input type="text" id="miniChatInput" placeholder="مثال: عايز أحسب مزايدة ذكية أو محتاج تحليل بيانات" 
+               style="flex: 1; padding: 10px 15px; border: 1px solid #d1d5db; border-radius: 25px; font-size: 14px; font-family: inherit;">
+        <button id="miniChatSend" style="background: var(--gradient); color: white; border: none; padding: 10px 15px; border-radius: 25px; cursor: pointer; min-width: 45px;">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الجافاسكريبت -->
   <script src="shared-scripts.js"></script>
   <script src="chatbot.js"></script>
   <script defer src="global-search.js"></script>
+  
+  <script>
+    // تتبع عرض الأدوات المباشر في الصفحة الرئيسية
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'homepage_all_tools_view', {
+        event_category: 'Homepage Experience',
+        event_label: 'Direct Tools Display',
+        tools_count: 27,
+        display_type: 'all_tools_on_homepage'
+      });
+    }
+    
+    // تتبع النقرات على الأدوات مباشرة من الصفحة الرئيسية
+    document.querySelectorAll('.tool-link').forEach(link => {
+      link.addEventListener('click', function() {
+        const toolCard = this.closest('.tool-card');
+        const toolName = toolCard ? toolCard.querySelector('.tool-title').textContent.trim() : 'Unknown Tool';
+        const categorySection = toolCard ? toolCard.closest('.category') : null;
+        const categoryName = categorySection ? categorySection.querySelector('h2').textContent.trim() : 'Unknown Category';
+        const isAdvanced = toolCard && toolCard.querySelector('.badge.advanced, .badge.new');
+        
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'direct_tool_access', {
+            event_category: 'Homepage Direct Access',
+            event_label: toolName,
+            tool_name: toolName.toLowerCase().replace(/\s+/g, '_'),
+            category: categoryName,
+            tool_type: isAdvanced ? 'advanced' : 'basic',
+            access_method: 'homepage_direct'
+          });
+        }
+      });
+    });
+    
+    // إحصائيات عرض الفئات
+    const categoryObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const categoryTitle = entry.target.querySelector('h2').textContent.trim();
+          const toolsCount = entry.target.querySelectorAll('.tool-card').length;
+          
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'category_view', {
+              event_category: 'Category Engagement',
+              event_label: categoryTitle,
+              tools_in_category: toolsCount,
+              view_type: 'homepage_scroll'
+            });
+          }
+        }
+      });
+    });
+    
+    document.querySelectorAll('.category').forEach(category => {
+      categoryObserver.observe(category);
+    });
+    
+    // أنيميشن تدريجي للبطاقات
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      });
+      
+      document.querySelectorAll('.tool-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
+        cardObserver.observe(card);
+      });
+    });
+  </script>
 </body>
 </html>
