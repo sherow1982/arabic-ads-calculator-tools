@@ -3,102 +3,643 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>مخطط المحتوى للسوشيال | أدوات الإعلانات العربية</title>
-  <meta name="description" content="أنشئ خطة نشر أسبوعية سريعة مع أفضل أوقات النشر المقترحة وأفكار محتوى.">
+  <title>📅 مخطط المحتوى للسوشيال | أدوات الإعلانات العربية</title>
+  <meta name="description" content="أنشئ خطة نشر أسبوعية ذكية مع أفضل أوقات النشر المقترحة وأفكار محتوى متنوعة لجميع المنصات.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#667eea">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
-    .container{max-width:1100px;margin:0 auto;padding:20px}
-    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
-    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
-    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-    label{display:block;font-weight:700;color:var(--text);margin-bottom:6px}
-    input,select{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
-    table{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px}
-    th,td{padding:10px;border-bottom:1px solid #eef2f7;text-align:center}
-    th{background:#f8fafc;font-weight:800}
-    .tag{display:inline-block;background:#eef2ff;color:#3730a3;padding:4px 8px;border-radius:999px;font-size:12px;margin:2px}
-  </style}
+    :root {
+      --p: #667eea;
+      --s: #764ba2;
+      --bg: linear-gradient(135deg, var(--p), var(--s));
+      --white: #fff;
+      --text: #0a2540;
+      --muted: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Cairo', system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(10, 37, 64, .12);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(10, 37, 64, .18);
+    }
+    
+    .header {
+      text-align: center;
+      color: #fff;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 20px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    label {
+      display: block;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--p);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .btn {
+      background: var(--bg);
+      color: var(--white);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      text-decoration: none;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    th, td {
+      padding: 12px 10px;
+      text-align: center;
+      border-bottom: 1px solid #eef2f7;
+    }
+    
+    th {
+      background: #f8fafc;
+      font-weight: 800;
+      color: var(--text);
+      font-size: 14px;
+    }
+    
+    td {
+      font-size: 13px;
+    }
+    
+    .tag {
+      display: inline-block;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px;
+      white-space: nowrap;
+    }
+    
+    .time-tag {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .content-tag {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .platform-icon {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .stat-card {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--p);
+    }
+    
+    .tips {
+      background: #f0f9ff;
+      border-left: 4px solid #0ea5e9;
+      padding: 15px 20px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 20px;
+    }
+    
+    .tips h4 {
+      color: #0c4a6e;
+      margin-bottom: 10px;
+    }
+    
+    .tips ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .tips li {
+      padding: 5px 0;
+      position: relative;
+      padding-right: 20px;
+    }
+    
+    .tips li:before {
+      content: '💡';
+      position: absolute;
+      right: 0;
+      top: 5px;
+    }
+    
+    #planResults {
+      display: none;
+    }
+    
+    .success-message {
+      background: #dcfce7;
+      color: #166534;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .row {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        font-size: 12px;
+      }
+      
+      th, td {
+        padding: 8px 5px;
+      }
+      
+      .tag {
+        font-size: 10px;
+        padding: 3px 6px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <script src="shared-nav.js"></script>
   <div class="container">
+    <a href="./" class="back-btn">
+      <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+      العودة للرئيسية
+    </a>
+    
     <header class="header">
-      <h1>📅 مخطط المحتوى للسوشيال</h1>
-      <p>أفضل أوقات النشر المقترحة + أفكار محتوى بحسب الهدف والمنصة</p>
+      <div class="platform-icon">📅</div>
+      <h1>مخطط المحتوى للسوشيال</h1>
+      <p>أفضل أوقات النشر المقترحة + أفكار محتوى بحسب الهدف والمنصة المختارة</p>
     </header>
 
     <div class="card">
+      <h3 style="margin-bottom: 20px; color: var(--p);">⚙️ إعدادات الخطة</h3>
+      
       <div class="row">
-        <div>
-          <label for="platform">المنصة</label>
+        <div class="form-group">
+          <label for="platform">📱 المنصة</label>
           <select id="platform">
-            <option value="facebook">فيسبوك</option>
-            <option value="instagram">انستقرام</option>
-            <option value="tiktok">تيك توك</option>
-            <option value="twitter">تويتر</option>
-            <option value="linkedin">لينكد إن</option>
+            <option value="facebook">📘 فيسبوك</option>
+            <option value="instagram">📸 انستقرام</option>
+            <option value="tiktok">🎵 تيك توك</option>
+            <option value="twitter">🐦 تويتر (X)</option>
+            <option value="linkedin">💼 لينكد إن</option>
+            <option value="snapchat">👻 سناب شات</option>
+            <option value="youtube">📺 يوتيوب</option>
           </select>
         </div>
-        <div>
-          <label for="goal">الهدف</label>
+        
+        <div class="form-group">
+          <label for="goal">🎯 الهدف</label>
           <select id="goal">
-            <option value="awareness">وعي</option>
-            <option value="engagement">تفاعل</option>
-            <option value="traffic">زيارات</option>
-            <option value="conversion">تحويل</option>
+            <option value="awareness">🌟 زيادة الوعي</option>
+            <option value="engagement">❤️ زيادة التفاعل</option>
+            <option value="traffic">🔗 جلب زيارات</option>
+            <option value="conversion">💰 تحقيق مبيعات</option>
+            <option value="community">👥 بناء مجتمع</option>
           </select>
         </div>
-        <div>
-          <label for="perDay">عدد النشر يومياً</label>
+        
+        <div class="form-group">
+          <label for="perDay">📊 عدد المنشورات يومياً</label>
           <input id="perDay" type="number" min="1" max="5" value="2">
         </div>
+        
+        <div class="form-group">
+          <label for="industry">🏢 نوع العمل</label>
+          <select id="industry">
+            <option value="ecommerce">🛒 متجر إلكتروني</option>
+            <option value="restaurant">🍽️ مطعم</option>
+            <option value="beauty">💄 تجميل</option>
+            <option value="fashion">👗 موضة</option>
+            <option value="tech">💻 تقنية</option>
+            <option value="services">🔧 خدمات</option>
+            <option value="education">📚 تعليم</option>
+            <option value="health">🏥 صحة</option>
+            <option value="real-estate">🏠 عقارات</option>
+          </select>
+        </div>
       </div>
-      <button id="generate" style="margin-top:10px;" class="btn">توليد خطة أسبوعية</button>
-      <div id="plan"></div>
+      
+      <button id="generate" class="btn">
+        <i class="fas fa-magic" style="margin-left: 8px;"></i>
+        توليد خطة أسبوعية ذكية
+      </button>
+      
+      <div id="planResults">
+        <div class="success-message">
+          <i class="fas fa-check-circle"></i>
+          <span>تم إنشاء خطتك بنجاح! 🎉</span>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalPosts">14</div>
+            <div>منشور أسبوعياً</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="bestTime">10:00 ص</div>
+            <div>أفضل وقت</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="expectedReach">85%</div>
+            <div>وصول متوقع</div>
+          </div>
+        </div>
+        
+        <div id="planTable"></div>
+        
+        <div class="tips">
+          <h4>💡 نصائح مهمة لخطتك</h4>
+          <ul id="customTips"></ul>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- Floating Buttons -->
+  <a href="https://wa.me/201110760081?text=أريد%20استشارة%20عن%20مخطط%20المحتوى" 
+     style="position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); z-index: 1000; text-decoration: none; transition: all 0.3s ease;"
+     target="_blank">
+    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+  </a>
+  
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" 
+          style="position: fixed; bottom: 100px; right: 24px; width: 45px; height: 45px; background: #2563eb; color: white; border: none; border-radius: 50%; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); z-index: 999; cursor: pointer; transition: all 0.3s ease;"
+          id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script>
+    // Data definitions
     const bestTimes = {
-      facebook: ['9:00','12:00','18:00'],
-      instagram: ['10:00','13:00','20:00'],
-      tiktok: ['11:00','15:00','21:00'],
-      twitter: ['8:00','12:00','17:00'],
-      linkedin: ['8:30','12:30','18:30']
-    };
-
-    const ideas = {
-      awareness: ['قيمة العلامة','تعريف بالخدمة','قصة نجاح','لفت انتباه بصري'],
-      engagement: ['سؤال تفاعلي','تصويت','مسابقة صغيرة','سلايد نصائح'],
-      traffic: ['مقتطف مقال','عرض صفحة هبوط','تشويق فيديو','دعوة لقراءة'],
-      conversion: ['عرض محدود','كود خصم','شهادة عميل','دعوة مباشرة للشراء']
-    };
-
-    function buildTable(rows){
-      const days = ['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
-      let html = '<table><thead><tr><th>اليوم</th><th>الأوقات</th><th>الأفكار</th></tr></thead><tbody>';
-      for(const d of days){
-        const times = rows.map(r=>`<span class="tag">${r}</span>`).join('');
-        const picks = ideas[goal.value].slice(0, Math.min(rows.length, ideas[goal.value].length))
-          .map(x=>`<span class="tag">${x}</span>`).join('');
-        html += `<tr><td>${d}</td><td>${times}</td><td>${picks}</td></tr>`;
+      facebook: {
+        times: ['9:00 ص', '12:00 م', '6:00 م', '8:00 م'],
+        peak: '12:00 م',
+        reach: '82%'
+      },
+      instagram: {
+        times: ['10:00 ص', '1:00 م', '8:00 م', '9:00 م'],
+        peak: '8:00 م',
+        reach: '88%'
+      },
+      tiktok: {
+        times: ['11:00 ص', '3:00 م', '9:00 م', '10:00 م'],
+        peak: '9:00 م',
+        reach: '92%'
+      },
+      twitter: {
+        times: ['8:00 ص', '12:00 م', '5:00 م', '7:00 م'],
+        peak: '12:00 م',
+        reach: '75%'
+      },
+      linkedin: {
+        times: ['8:30 ص', '12:30 م', '6:30 م'],
+        peak: '12:30 م',
+        reach: '70%'
+      },
+      snapchat: {
+        times: ['2:00 م', '6:00 م', '9:00 م', '11:00 م'],
+        peak: '9:00 م',
+        reach: '85%'
+      },
+      youtube: {
+        times: ['7:00 م', '8:00 م', '9:00 م'],
+        peak: '8:00 م',
+        reach: '80%'
       }
-      html += '</tbody></table>';
-      return html;
+    };
+
+    const contentIdeas = {
+      awareness: {
+        general: ['قصة العلامة التجارية', 'قيم الشركة', 'فريق العمل', 'تاريخ الشركة', 'رؤية ومهمة'],
+        ecommerce: ['عرض المنتجات الجديدة', 'قصص النجاح', 'خلف الكواليس', 'تقييمات العملاء'],
+        restaurant: ['المكونات الطازجة', 'الشيف والفريق', 'أجواء المطعم', 'تاريخ الأطباق'],
+        beauty: ['نصائح جمالية', 'مكونات طبيعية', 'قبل وبعد', 'خبراء التجميل'],
+        fashion: ['اتجاهات الموضة', 'وراء الكواليس', 'تاريخ الأزياء', 'نصائح التنسيق']
+      },
+      engagement: {
+        general: ['أسئلة تفاعلية', 'استطلاعات رأي', 'مسابقات', 'تحديات', 'محتوى مستخدمين'],
+        ecommerce: ['مراجعة منتج', 'نصائح استخدام', 'مقارنة منتجات', 'أسئلة عن التفضيلات'],
+        restaurant: ['وصفة اليوم', 'تحدي الطبخ', 'أفضل طبق', 'استطلاع القائمة'],
+        beauty: ['تحدي المكياج', 'نصيحة اليوم', 'لوك اليوم', 'سؤال عن المنتج'],
+        fashion: ['تنسيق اليوم', 'أي إطلالة أفضل', 'نصائح الموضة', 'تحدي الأناقة']
+      },
+      traffic: {
+        general: ['رابط المدونة', 'صفحة المنتج', 'عرض خاص', 'فيديو تعليمي', 'دليل مفصل'],
+        ecommerce: ['منتج الأسبوع', 'عروض محدودة', 'دليل الشراء', 'مراجعة شاملة'],
+        restaurant: ['قائمة جديدة', 'حجز طاولة', 'عرض توصيل', 'قسائم خصم'],
+        beauty: ['دروس مكياج', 'روتين العناية', 'منتج مميز', 'استشارة مجانية'],
+        fashion: ['كولكشن جديد', 'دليل المقاسات', 'نصائق الشراء', 'عرض موسمي']
+      },
+      conversion: {
+        general: ['عرض محدود', 'خصم حصري', 'شهادة عميل', 'ضمان الجودة', 'دعوة مباشرة'],
+        ecommerce: ['تخفيضات فلاش', 'شحن مجاني', 'ضمان الاسترجاع', 'عرض حزمة'],
+        restaurant: ['وجبة مجانية', 'خصم 50%', 'عرض عائلي', 'توصيل مجاني'],
+        beauty: ['كورس مجاني', 'استشارة مجانية', 'خصم أول عميل', 'حزمة شاملة'],
+        fashion: ['تصفيات نهائية', 'قطعة مجانية', 'خصم الولاء', 'عرض موسم']
+      },
+      community: {
+        general: ['محتوى المتابعين', 'قصص نجاح', 'فعاليات تفاعلية', 'مشاركة المجتمع'],
+        ecommerce: ['صور العملاء', 'تقييمات صادقة', 'مجتمع المستخدمين', 'قصص الاستخدام'],
+        restaurant: ['زيارات العملاء', 'أطباق مميزة', 'مناسبات خاصة', 'ذكريات المطعم'],
+        beauty: ['تحويلات المكياج', 'نصائح المتابعات', 'قبل وبعد', 'تجارب حقيقية'],
+        fashion: ['إطلالات المتابعات', 'تنسيقات مبدعة', 'موضة الشارع', 'أناقة المجتمع']
+      }
+    };
+
+    const platformTips = {
+      facebook: [
+        'انشر الفيديوهات القصيرة في أوقات الذروة',
+        'استخدم الهاشتاجات المحلية',
+        'اهتم بالتعليقات والردود السريعة',
+        'شارك محتوى تفاعلي كالاستطلاعات'
+      ],
+      instagram: [
+        'اهتم بجودة الصور والفيديو',
+        'استخدم الستوريز بانتظام',
+        'الهاشتاجات مهمة جداً (10-15 هاشتاج)',
+        'انشر Reels للوصول الأوسع'
+      ],
+      tiktok: [
+        'المحتوى الفيروسي يحتاج توقيت مثالي',
+        'اتبع الترندات والتحديات',
+        'الفيديوهات القصيرة أفضل (15-30 ثانية)',
+        'التفاعل السريع مع التعليقات مهم'
+      ],
+      twitter: [
+        'التغريدات القصيرة أكثر تأثيراً',
+        'استخدم الهاشتاجات الترندية',
+        'الرد السريع يزيد المتابعة',
+        'شارك الأخبار والتحديثات'
+      ],
+      linkedin: [
+        'المحتوى المهني في ساعات العمل أفضل',
+        'شارك خبراتك وإنجازاتك',
+        'اكتب مقالات طويلة ومفيدة',
+        'تفاعل مع منشورات الآخرين'
+      ]
+    };
+
+    const days = [
+      'السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 
+      'الأربعاء', 'الخميس', 'الجمعة'
+    ];
+
+    function generatePlan() {
+      const platform = document.getElementById('platform').value;
+      const goal = document.getElementById('goal').value;
+      const postsPerDay = parseInt(document.getElementById('perDay').value) || 2;
+      const industry = document.getElementById('industry').value;
+      
+      const platformData = bestTimes[platform];
+      const times = platformData.times.slice(0, postsPerDay);
+      const contentPool = contentIdeas[goal][industry] || contentIdeas[goal].general;
+      
+      // Update stats
+      document.getElementById('totalPosts').textContent = postsPerDay * 7;
+      document.getElementById('bestTime').textContent = platformData.peak;
+      document.getElementById('expectedReach').textContent = platformData.reach;
+      
+      // Build table
+      let tableHtml = `
+        <table>
+          <thead>
+            <tr>
+              <th>📅 اليوم</th>
+              <th>⏰ أفضل الأوقات</th>
+              <th>💡 أفكار المحتوى</th>
+              <th>📊 نوع المنشور</th>
+            </tr>
+          </thead>
+          <tbody>`;
+      
+      days.forEach((day, index) => {
+        const dayTimes = times.map(time => `<span class="tag time-tag">${time}</span>`).join('');
+        const dayContent = contentPool.slice(index % contentPool.length, (index % contentPool.length) + 2)
+                                     .map(content => `<span class="tag content-tag">${content}</span>`).join('');
+        
+        const postTypes = getPostTypes(platform, goal);
+        const dayPostType = postTypes[index % postTypes.length];
+        
+        tableHtml += `
+          <tr>
+            <td><strong>${day}</strong></td>
+            <td>${dayTimes}</td>
+            <td>${dayContent}</td>
+            <td><span class="tag">${dayPostType}</span></td>
+          </tr>`;
+      });
+      
+      tableHtml += '</tbody></table>';
+      
+      document.getElementById('planTable').innerHTML = tableHtml;
+      
+      // Generate custom tips
+      generateCustomTips(platform, goal, industry);
+      
+      // Show results
+      document.getElementById('planResults').style.display = 'block';
+      
+      // Smooth scroll to results
+      setTimeout(() => {
+        document.getElementById('planResults').scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 300);
+    }
+    
+    function getPostTypes(platform, goal) {
+      const types = {
+        facebook: ['منشور عادي', 'فيديو', 'صورة', 'رابط', 'استطلاع', 'البث المباشر', 'قصة'],
+        instagram: ['صورة', 'كاروسيل', 'ريلز', 'ستوري', 'IGTV', 'البث المباشر'],
+        tiktok: ['فيديو قصير', 'تحدي', 'دويت', 'تعليق بفيديو', 'البث المباشر'],
+        twitter: ['تغريدة', 'خيط تغريدات', 'صورة مع نص', 'فيديو', 'استطلاع', 'ريتويت'],
+        linkedin: ['منشور نصي', 'مقال', 'فيديو', 'صورة مهنية', 'وثيقة', 'استطلاع'],
+        snapchat: ['سناب', 'ستوري', 'عدسة', 'فلتر', 'بيانات جغرافية'],
+        youtube: ['فيديو طويل', 'فيديو قصير', 'البث المباشر', 'مقطع قصير']
+      };
+      
+      return types[platform] || types.facebook;
+    }
+    
+    function generateCustomTips(platform, goal, industry) {
+      const baseTips = platformTips[platform] || [];
+      const goalTips = {
+        awareness: 'ركز على القيمة المضافة وليس البيع المباشر',
+        engagement: 'اطرح أسئلة واطلب آراء المتابعين',
+        traffic: 'استخدم عبارات تحفز على النقر (CTA قوية)',
+        conversion: 'اربط العاطفة بالفائدة العملية',
+        community: 'شارك محتوى متابعيك واذكرهم'
+      };
+      
+      const industryTips = {
+        ecommerce: 'اعرض المنتجات في بيئتها الطبيعية',
+        restaurant: 'صور الطعام تحتاج إضاءة ممتازة',
+        beauty: 'فيديوهات التطبيق أكثر تأثيراً من الصور',
+        fashion: 'اعرض القطع على أشخاص حقيقيين',
+        tech: 'اشرح الفوائد وليس فقط المميزات'
+      };
+      
+      const allTips = [
+        ...baseTips,
+        goalTips[goal],
+        industryTips[industry]
+      ].filter(Boolean);
+      
+      const tipsHtml = allTips.map(tip => `<li>${tip}</li>`).join('');
+      document.getElementById('customTips').innerHTML = tipsHtml;
     }
 
-    document.getElementById('generate').addEventListener('click', ()=>{
-      const plat = platform.value;
-      const n = Math.max(1, Math.min(5, parseInt(perDay.value||2)));
-      const times = bestTimes[plat].slice(0,n);
-      document.getElementById('plan').innerHTML = buildTable(times);
+    // Event listeners
+    document.getElementById('generate').addEventListener('click', generatePlan);
+    
+    // Back to top functionality
+    window.addEventListener('scroll', () => {
+      const backToTop = document.getElementById('backToTop');
+      if (window.pageYOffset > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    
+    // Form validation
+    document.getElementById('perDay').addEventListener('change', function() {
+      const value = parseInt(this.value);
+      if (value < 1) this.value = 1;
+      if (value > 5) this.value = 5;
+    });
+    
+    // Auto-generate on load with default values
+    window.addEventListener('load', () => {
+      setTimeout(generatePlan, 500);
     });
   </script>
 </body>
