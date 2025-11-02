@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚨 تنبيهات تحديثات منصات الإعلانات | أدوات الإعلانات العربية</title>
+  <meta name="description" content="لوحة تنبيهات تلقائية لأحدث تغييرات منصات الإعلانات: Google, Meta, TikTok, Snapchat, LinkedIn, X, YouTube">
+  
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-676ZKH3ECD', { page_title: 'Ads Updates Alerts', content_group1: 'Alerts' });
+  </script>
+  
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#ef4444">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root{--p:#ef4444;--s:#f59e0b;--bg:linear-gradient(135deg,#ef4444,#f59e0b);--white:#fff;--text:#0a2540;--muted:#64748b}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .header{color:#fff;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:20px;padding:24px;margin-bottom:18px;text-align:center}
+    .header h1{font-size:2rem;margin-bottom:6px}
+    .toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+    select,input{width:100%;padding:10px 12px;border:2px solid #e2e8f0;border-radius:12px;font-size:14px}
+    .btn{background:#111827;color:#fff;border:none;padding:10px 16px;border-radius:12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px}
+    .card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(10,37,64,.1);border-top:4px solid #ef4444}
+    .title{font-weight:800;margin:6px 0}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:#6b7280;margin-top:6px}
+    .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800}
+    .impact-high{background:#fee2e2;color:#b91c1c}
+    .impact-med{background:#fef3c7;color:#92400e}
+    .impact-low{background:#dcfce7;color:#166534}
+    .platform{background:#e0e7ff;color:#3730a3}
+    .category{background:#f3f4f6;color:#374151}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    .actions a{background:#667eea;color:#fff;text-decoration:none;padding:8px 12px;border-radius:10px;font-size:12px}
+    .note{background:rgba(255,255,255,.9);padding:12px;border-radius:12px;margin-top:10px;border:1px solid #e5e7eb;color:#334155}
+    .topbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    .pill{background:rgba(255,255,255,.85);padding:6px 10px;border-radius:999px;font-size:12px}
+    .footer{margin-top:20px;text-align:center;color:#e5e7eb}
+    @media(max-width:768px){.container{padding:16px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚨 تنبيهات تحديثات منصات الإعلانات</h1>
+      <p>أحدث التغييرات على Google, Meta, TikTok, Snapchat, LinkedIn, X, YouTube — مع تصنيف للأثر والأولوية</p>
+      <div class="topbar">
+        <span class="pill">آخر تحديث: <span id="lastUpdated">—</span></span>
+        <button class="btn" id="enableNotify">تفعيل إشعارات المتصفح</button>
+        <button class="btn" id="refreshBtn"><i class="fas fa-rotate"></i>&nbsp;تحديث الآن</button>
+        <a class="btn" href="./" style="text-decoration:none">العودة للرئيسية</a>
+      </div>
+      <div class="toolbar">
+        <select id="platformFilter">
+          <option value="all">كل المنصات</option>
+          <option>Google</option>
+          <option>Meta</option>
+          <option>TikTok</option>
+          <option>Snapchat</option>
+          <option>LinkedIn</option>
+          <option>X</option>
+          <option>YouTube</option>
+        </select>
+        <select id="impactFilter">
+          <option value="all">كل مستويات الأثر</option>
+          <option value="high">أثر عالي</option>
+          <option value="medium">أثر متوسط</option>
+          <option value="low">أثر منخفض</option>
+        </select>
+        <select id="categoryFilter">
+          <option value="all">كل التصنيفات</option>
+          <option>policy</option>
+          <option>targeting</option>
+          <option>bidding</option>
+          <option>measurement</option>
+          <option>creatives</option>
+          <option>objectives</option>
+          <option>api</option>
+        </select>
+        <input id="searchBox" placeholder="ابحث بعنوان/وسم/منصة..." />
+      </div>
+    </div>
+
+    <div id="alertsGrid" class="grid"></div>
+
+    <div class="footer">
+      <small>PWA Ready • إشعارات المتصفح • فلترة متقدمة • GA4 Events</small>
+    </div>
+  </div>
+
+  <script>
+    const ALERTS_URL = './alerts.json';
+
+    const els = {
+      grid: document.getElementById('alertsGrid'),
+      lastUpdated: document.getElementById('lastUpdated'),
+      platform: document.getElementById('platformFilter'),
+      impact: document.getElementById('impactFilter'),
+      category: document.getElementById('categoryFilter'),
+      search: document.getElementById('searchBox'),
+      refresh: document.getElementById('refreshBtn'),
+      enableNotify: document.getElementById('enableNotify')
+    };
+
+    function badgeImpact(impact){
+      if(impact==='high') return 'impact-high';
+      if(impact==='medium') return 'impact-med';
+      return 'impact-low';
+    }
+
+    function renderAlerts(items){
+      els.grid.innerHTML = items.map(item => `
+        <div class="card" data-id="${item.id}">
+          <div class="title">${item.title}</div>
+          <div class="meta">
+            <span class="badge platform">${item.platform}</span>
+            <span class="badge ${badgeImpact(item.impact)}">${item.impact}</span>
+            ${item.categories.map(c=>`<span class="badge category">${c}</span>`).join('')}
+            <span>${new Date(item.date).toLocaleString('ar-EG')}</span>
+          </div>
+          ${item.summary?`<div class="note">${item.summary}</div>`:''}
+          <div class="actions">
+            <a href="${item.url}" target="_blank">التفاصيل</a>
+            <a href="#" onclick="markRead('${item.id}');return false;">وضع علامة كمقروء</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterAlerts(all){
+      const p = els.platform.value;
+      const i = els.impact.value;
+      const c = els.category.value;
+      const q = els.search.value.trim().toLowerCase();
+      return all.filter(a =>
+        (p==='all' || a.platform===p) &&
+        (i==='all' || a.impact===i) &&
+        (c==='all' || a.categories.includes(c)) &&
+        (!q || (a.title+JSON.stringify(a.categories)+a.platform).toLowerCase().includes(q))
+      );
+    }
+
+    function markRead(id){
+      const key = 'readAlerts';
+      const set = new Set(JSON.parse(localStorage.getItem(key)||'[]'));
+      set.add(id);
+      localStorage.setItem(key, JSON.stringify([...set]));
+      gtag('event', 'alert_mark_read', {event_category:'Alerts', alert_id:id});
+      const card = document.querySelector(`[data-id="${id}"]`);
+      if(card) card.style.opacity = 0.6;
+    }
+
+    async function loadAlerts(){
+      try{
+        const res = await fetch(ALERTS_URL + `?t=${Date.now()}`);
+        const data = await res.json();
+        els.lastUpdated.textContent = new Date(data.last_updated).toLocaleString('ar-EG');
+        const filtered = filterAlerts(data.items || []);
+        renderAlerts(filtered);
+        gtag('event','alerts_loaded',{event_category:'Alerts', total:data.items?.length||0});
+        notifyIfNew(data.items||[]);
+      }catch(e){
+        els.grid.innerHTML = '<div class="card">تعذر تحميل التنبيهات حالياً. حاول لاحقاً.</div>';
+      }
+    }
+
+    function notifyIfNew(items){
+      if(!('Notification' in window)) return;
+      const key = 'lastAlertSeen';
+      const lastSeen = localStorage.getItem(key);
+      const newest = items[0];
+      if(newest && newest.id !== lastSeen){
+        // Only notify for high impact
+        if(newest.impact === 'high' && Notification.permission === 'granted'){
+          new Notification('تحديث مهم على '+newest.platform,{body:newest.title, icon:'favicon.svg'});
+        }
+        localStorage.setItem(key, newest.id);
+      }
+    }
+
+    function requestNotify(){
+      if(!('Notification' in window)) return alert('المتصفح لا يدعم الإشعارات');
+      Notification.requestPermission().then((perm)=>{
+        if(perm==='granted'){
+          gtag('event','notify_enabled',{event_category:'Alerts'});
+          alert('تم تفعيل الإشعارات! سيتم تنبيهك بالتغييرات المهمة.');
+        }
+      });
+    }
+
+    ['change','input'].forEach(evt=>{
+      els.platform.addEventListener(evt, ()=>loadAlerts());
+      els.impact.addEventListener(evt, ()=>loadAlerts());
+      els.category.addEventListener(evt, ()=>loadAlerts());
+      els.search.addEventListener(evt, ()=>loadAlerts());
+    });
+
+    els.refresh.addEventListener('click', loadAlerts);
+    els.enableNotify.addEventListener('click', requestNotify);
+
+    // Initial load
+    loadAlerts();
+
+    // Auto-refresh every 3 hours (10,800,000 ms)
+    setInterval(loadAlerts, 10800000);
+
+    // Page view event
+    gtag('event','page_view',{page_title:'Ads Updates Alerts', content_group1:'Alerts'});
+  </script>
+</body>
+</html>
