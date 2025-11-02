@@ -50,6 +50,7 @@
   
   <!-- Global Styles -->
   <link rel="stylesheet" href="global-styles.css">
+  <link rel="stylesheet" href="global-search.css">
   
   <style>
     .hero-section { text-align: center; color: white; padding: 40px 25px; background: rgba(255,255,255,0.1); border-radius: 25px; margin-bottom: 30px; backdrop-filter: blur(15px); }
@@ -95,6 +96,23 @@
       <a href="tools-directory.html" class="nav-showcase"><i class="fas fa-list"></i> الدليل</a>
     </nav>
 
+    <!-- تضمين شريط البحث الموحد -->
+    <div id="global-search-include">
+      <div class="unified-search-wrapper">
+        <div class="unified-search" id="globalSearchBar">
+          <select id="globalSearchFilter" class="filter-select">
+            <option value="all">كل الموقع</option>
+            <option value="tools">الأدوات فقط</option>
+            <option value="advanced">الأدوات المتقدمة</option>
+            <option value="basic">الأدوات الأساسية</option>
+            <option value="pages">الصفحات</option>
+          </select>
+          <input id="globalSearchInput" type="search" placeholder="ابحث في 27 أداة... (مثال: ROAS، Performance Max، مزايدة)" aria-label="بحث">
+          <button id="globalSearchBtn" class="search-btn"><i class="fas fa-search"></i> بحث</button>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-section">
       <h1>🚀 أدوات الإعلانات العربية الشاملة</h1>
       <p>مجموعة كاملة من <strong>27 أداة مجانية</strong> لتحسين أداء إعلاناتك الرقمية - كلها في مكان واحد مع بوت ذكي وتنبيهات تلقائية</p>
@@ -107,12 +125,44 @@
       </div>
     </div>
 
-    <!-- Inserted categories and 27 tool cards here (content omitted for brevity in this diff) -->
-    <!-- The full content will include all 27 tools grouped in 6 categories as prepared in the previous step. -->
+    <!-- إعادة ترتيب: أدوات الكلمات أولاً -->
+    <section class="category">
+      <h2><i class="fas fa-key"></i> أدوات الكلمات المفتاحية والتوليد (4 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon"><i class="fas fa-key"></i></div>
+          <h3 class="tool-title">مولد الكلمات المفتاحية الذكي</h3>
+          <p class="tool-description">توليد مئات الكلمات العربية بذكاء مع دعم جميع اللهجات وتصدير CSV</p>
+          <a href="keyword-generator.html" class="tool-link"><i class="fas fa-key"></i> ولّد الكلمات</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge ai">ذكي</span></div>
+          <div class="tool-icon" style="color:#8b5cf6"><i class="fas fa-coins"></i></div>
+          <h3 class="tool-title">مقدر مزايدة الكلمات</h3>
+          <p class="tool-description">حساب المزايدة المثلى للكلمات حسب المنصة والسوق مع التوصيات</p>
+          <a href="keyword-bid-estimator.html" class="tool-link"><i class="fas fa-coins"></i> قدّر المزايدة</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#06b6d4"><i class="fas fa-link"></i></div>
+          <h3 class="tool-title">مولد UTM الاحترافي</h3>
+          <p class="tool-description">إنشاء روابط UTM احترافية لتتبع مصادر الزيارات بدقة عالية</p>
+          <a href="utm-generator.html" class="tool-link"><i class="fas fa-link"></i> ولّد روابط UTM</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="color:#25d366"><i class="fab fa-whatsapp"></i></div>
+          <h3 class="tool-title">مولد رسائل واتساب</h3>
+          <p class="tool-description">قوالب رسائل جاهزة للتسويق وخدمة العملاء مع تخصيص احترافي</p>
+          <a href="whatsapp-generator.html" class="tool-link"><i class="fab fa-whatsapp"></i> ولّد رسائل</a>
+        </div>
+      </div>
+    </section>
 
+    <!-- بقية الأقسام كما بالنسخة السابقة المعروضة لجميع الأدوات (الأدوات المتقدمة، الحاسبات الأساسية، التخطيط، التحليل، الخدمات) -->
   </div>
 
   <script src="shared-scripts.js"></script>
   <script src="chatbot.js"></script>
+  <script src="global-search.js" defer></script>
 </body>
 </html>
