@@ -15,7 +15,6 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
-    <!-- End Google Tag Manager -->
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
@@ -23,7 +22,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-676ZKH3ECD');
+      gtag('config', 'G-676ZKH3ECD', { page_title: 'All Tools Directory', content_group1: 'Tool Directory' });
     </script>
     
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -173,6 +172,24 @@
             text-align: center;
         }
         
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.2rem;
@@ -192,12 +209,16 @@
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     
     <div class="container">
+        <a href="./" class="back-btn">
+            <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            العودة للصفحة الرئيسية
+        </a>
+        
         <div class="header">
-            <h1>✨ جميع أدوات الإعلانات</h1>
-            <p>اكتشف مجموعتنا الشاملة من الأدوات المجانية لتحسين إعلاناتك</p>
+            <h1>✨ جميع أدوات الإعلانات المجانية</h1>
+            <p>اكتشف مجموعتنا الشاملة من 18 أداة مجانية لتحسين إعلاناتك</p>
             
             <div class="search-box">
                 <input type="text" id="toolSearch" placeholder="ابحث عن أداة... (مثل: ROI, CPC, ميزانية)">
@@ -230,7 +251,7 @@
                 </a>
                 
                 <a href="ctr-calculator.html" class="tool-card" data-category="performance">
-                    <div class="tool-icon">🔖</div>
+                    <div class="tool-icon">🖱️</div>
                     <h3 class="tool-title">حاسبة CTR</h3>
                     <p class="tool-description">قيس معدل النقر وجودة إعلاناتك</p>
                     <span class="tool-badge">تحليلي</span>
@@ -275,6 +296,13 @@
                     <p class="tool-description">أنشئ خطة نشر أسبوعية ذكية</p>
                     <span class="tool-badge">جديد</span>
                 </a>
+                
+                <a href="impression-calculator.html" class="tool-card" data-category="planning">
+                    <div class="tool-icon">👁️</div>
+                    <h3 class="tool-title">حاسبة الانطباعات</h3>
+                    <p class="tool-description">قدر عدد الانطباعات والوصول المتوقع</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
             </div>
         </div>
         
@@ -297,11 +325,57 @@
             </div>
         </div>
         
+        <div class="category-section">
+            <h2 class="category-title">🔍 أدوات التحليل والتحسين</h2>
+            <div class="tools-grid">
+                <a href="competition-analyzer.html" class="tool-card" data-category="analysis">
+                    <div class="tool-icon">🔍</div>
+                    <h3 class="tool-title">محلل المنافسة</h3>
+                    <p class="tool-description">قارن أداءك مع معايير السوق</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
+                
+                <a href="campaign-optimizer.html" class="tool-card" data-category="analysis">
+                    <div class="tool-icon">🚀</div>
+                    <h3 class="tool-title">محسن الحملات</h3>
+                    <p class="tool-description">احصل على توصيات مخصصة للتحسين</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
+                
+                <a href="frequency-capper.html" class="tool-card" data-category="analysis">
+                    <div class="tool-icon">⏱️</div>
+                    <h3 class="tool-title">مدير تكرار الإعلانات</h3>
+                    <p class="tool-description">احسب التكرار الأمثل لتجنب الإزعاج</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
+                
+                <a href="keyword-bid-estimator.html" class="tool-card" data-category="analysis">
+                    <div class="tool-icon">💡</div>
+                    <h3 class="tool-title">مقدر مزايدة الكلمات</h3>
+                    <p class="tool-description">قدر التكلفة المثلى للمزايدة</p>
+                    <span class="tool-badge">جديد</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">🚨 التنبيهات والمتابعة</h2>
+            <div class="tools-grid">
+                <a href="alerts.html" class="tool-card" data-category="alerts">
+                    <div class="tool-icon">🚨</div>
+                    <h3 class="tool-title">تنبيهات تحديثات المنصات</h3>
+                    <p class="tool-description">آخر التحديثات على جميع منصات الإعلانات</p>
+                    <span class="tool-badge">تلقائي</span>
+                </a>
+            </div>
+        </div>
+        
         <div style="text-align: center; padding: 40px 20px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; margin-top: 40px; color: white;">
             <h3 style="margin-bottom: 15px;">🚀 هل تريد استشارة مخصصة؟</h3>
             <p style="margin-bottom: 20px; opacity: 0.9;">تواصل مع فريق الخبراء لدينا</p>
             <a href="https://wa.me/201110760081?text=أريد%20استشارة%20عن%20الإعلانات%20الممولة" 
-               style="background: #25d366; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;" target="_blank">
+               style="background: #25d366; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;" 
+               target="_blank" onclick="trackWhatsAppContact()">
                 <i class="fab fa-whatsapp"></i>
                 تواصل عبر واتساب
             </a>
@@ -342,10 +416,17 @@
                 gtag('event', 'tool_accessed', {
                     event_category: 'Navigation',
                     event_label: toolName,
-                    tool_name: toolName
+                    tool_name: toolName.toLowerCase().replace(/\s+/g, '_')
                 });
             });
         });
+        
+        function trackWhatsAppContact() {
+            gtag('event', 'whatsapp_contact', {
+                event_category: 'Contact',
+                event_label: 'All Tools Page'
+            });
+        }
         
         // Track page view
         gtag('event', 'page_view', {
