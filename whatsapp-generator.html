@@ -1,80 +1,141 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>مولد رسائل واتساب | أدوات الإعلانات العربية</title>
-  <meta name="description" content="أنشئ روابط رسائل واتساب جاهزة مع إمكانية تضمين UTM.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#667eea">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
-    .container{max-width:900px;margin:0 auto;padding:20px}
-    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
-    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
-    .form-group{margin-bottom:16px}
-    label{display:block;font-weight:700;color:var(--text);margin-bottom:6px}
-    input,textarea{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
-    textarea{min-height:120px}
-    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-    .btn{background:var(--bg);color:#fff;border:none;padding:12px 20px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
-    .output{background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:14px;margin-top:16px;word-break:break-all}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 مولد رسائل واتساب | أدوات الإعلانات العربية</title>
+    <meta name="description" content="أنشئ قوالب رسائل واتساب عربية احترافية جاهزة مع روابط مباشرة للتواصل">
+    
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-676ZKH3ECD', { page_title: 'WhatsApp Generator', content_group1: 'Generator Tools' });
+    </script>
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #25d366, #128c7e); min-height: 100vh; padding: 20px; direction: rtl; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 20px; margin-bottom: 25px; }
+        .card { background: white; border-radius: 20px; padding: 30px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .btn-primary { width: 100%; background: linear-gradient(135deg, #25d366, #128c7e); color: white; border: none; padding: 16px; border-radius: 50px; font-size: 18px; cursor: pointer; }
+        .result-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-top: 20px; }
+        .whatsapp-btn { background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; }
+    </style>
 </head>
 <body>
-  <script src="shared-nav.js"></script>
-  <div class="container">
-    <header class="header">
-      <h1>📱 مولد رسائل واتساب</h1>
-      <p>روابط جاهزة مع نص مُسبق + UTM اختياري</p>
-    </header>
-
-    <div class="card">
-      <div class="row">
-        <div class="form-group"><label for="phone">رقم الواتساب (برمز الدولة بدون +)</label><input id="phone" placeholder="201110760081"></div>
-        <div class="form-group"><label for="base">رابط صفحة الهبوط (اختياري)</label><input id="base" placeholder="https://example.com"></div>
-      </div>
-      <div class="form-group"><label for="text">نص الرسالة</label><textarea id="text" placeholder="أهلاً، أريد استشارة..."></textarea></div>
-      <details>
-        <summary>خيارات UTM (اختياري)</summary>
-        <div class="row" style="margin-top:10px">
-          <div class="form-group"><label for="source">utm_source</label><input id="source" placeholder="whatsapp"></div>
-          <div class="form-group"><label for="medium">utm_medium</label><input id="medium" placeholder="organic"></div>
-          <div class="form-group"><label for="campaign">utm_campaign</label><input id="campaign" placeholder="support_chat"></div>
-          <div class="form-group"><label for="content">utm_content</label><input id="content" placeholder="cta_button"></div>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💬 مولد رسائل واتساب</h1>
+            <p>قوالب عربية احترافية جاهزة</p>
         </div>
-      </details>
-      <button class="btn" id="build">توليد الرابط</button>
-      <div class="output" id="out"></div>
+        
+        <div class="card">
+            <div class="form-group">
+                <label>رقم الواتساب (مع رمز الدولة)</label>
+                <input id="phoneNumber" type="tel" placeholder="مثال: 966501234567" required>
+            </div>
+            
+            <div class="form-group">
+                <label>نوع الرسالة</label>
+                <select id="messageType" onchange="updateTemplate()">
+                    <option value="inquiry">استفسار عام</option>
+                    <option value="product">سؤال عن منتج</option>
+                    <option value="service">طلب خدمة</option>
+                    <option value="appointment">حجز موعد</option>
+                    <option value="support">دعم فني</option>
+                    <option value="quote">طلب عرض سعر</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>نص الرسالة</label>
+                <textarea id="messageText" placeholder="اكتب رسالتك هنا..."></textarea>
+            </div>
+            
+            <button class="btn-primary" onclick="generateWhatsAppLink()">إنشاء رابط واتساب</button>
+            
+            <div id="result" style="display: none;">
+                <div class="result-box">
+                    <strong>الرابط جاهز:</strong>
+                    <div id="whatsappUrl" style="word-break: break-all; margin: 10px 0; padding: 10px; background: white; border-radius: 8px;"></div>
+                    <a id="openWhatsApp" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp" style="margin-left: 5px;"></i>
+                        فتح في واتساب
+                    </a>
+                    <button class="copy-btn" onclick="copyWhatsAppLink()" style="background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 8px; margin-right: 10px;">📋 نسخ الرابط</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    function build(){
-      const phone = document.getElementById('phone').value.trim();
-      const base = document.getElementById('base').value.trim();
-      const text = document.getElementById('text').value.trim();
-      if(!phone){ alert('أدخل رقم الهاتف'); return; }
-      let msg = text;
-      if(base){
-        const p = new URLSearchParams();
-        const add=(k,v)=>{ if(v) p.set(k,v); };
-        add('utm_source', document.getElementById('source').value.trim());
-        add('utm_medium', document.getElementById('medium').value.trim());
-        add('utm_campaign', document.getElementById('campaign').value.trim());
-        add('utm_content', document.getElementById('content').value.trim());
-        const url = base + (p.toString()? (base.includes('?')?'&':'?')+p.toString(): '');
-        msg = (msg? msg+'\n' : '') + url;
-      }
-      const wa = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-      document.getElementById('out').textContent = wa;
-    }
-    document.getElementById('build').addEventListener('click', build);
-  </script>
+    <script>
+        const templates = {
+            inquiry: 'السلام عليكم\nأرغب في الاستفسار عن خدماتكم\nشكراً',
+            product: 'السلام عليكم\nأريد الاستفسار عن المنتج التالي:\n[اسم المنتج]\nشكراً',
+            service: 'السلام عليكم\nأرغب في الحصول على خدمة:\n[نوع الخدمة]\nيرجى التواصل معي\nشكراً',
+            appointment: 'السلام عليكم\nأريد حجز موعد للاستشارة\nما هي الأوقات المتاحة؟\nشكراً',
+            support: 'السلام عليكم\nأحتاج مساعدة في:\n[وصف المشكلة]\nشكراً',
+            quote: 'السلام عليكم\nأريد عرض سعر لـ:\n[تفاصيل المطلوب]\nشكراً'
+        };
+        
+        function updateTemplate() {
+            const type = document.getElementById('messageType').value;
+            document.getElementById('messageText').value = templates[type];
+        }
+        
+        function generateWhatsAppLink() {
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const message = document.getElementById('messageText').value.trim();
+            const messageType = document.getElementById('messageType').value;
+            
+            if (!phone || !message) {
+                alert('يرجى إدخال رقم الهاتف والرسالة');
+                return;
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+            
+            document.getElementById('whatsappUrl').textContent = whatsappUrl;
+            document.getElementById('openWhatsApp').href = whatsappUrl;
+            document.getElementById('result').style.display = 'block';
+            
+            gtag('event', 'whatsapp_link_generated', {
+                event_category: 'WhatsApp Generator',
+                tool_name: 'whatsapp_generator',
+                message_type: messageType
+            });
+        }
+        
+        function copyWhatsAppLink() {
+            const url = document.getElementById('whatsappUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('تم نسخ الرابط!');
+            });
+        }
+        
+        // Initialize with default template
+        window.addEventListener('load', () => {
+            updateTemplate();
+        });
+    </script>
 </body>
 </html>

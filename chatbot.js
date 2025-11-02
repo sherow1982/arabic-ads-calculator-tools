@@ -1,249 +1,162 @@
-// Arabic Multi-Dialect Marketing Assistant Chatbot
+// Arabic Marketing Chatbot with Multi-Dialect Support
+// مساعد الحاسبات العربي - يدعم جميع اللهجات العربية
+
 class ArabicMarketingBot {
     constructor() {
-        this.responses = {
-            // Greeting responses for different dialects
-            greetings: {
-                formal: 'أهلاً وسهلاً! 👋 كيف يمكنني مساعدتك في التسويق اليوم؟',
-                gulf: 'هلا وغلا! 👋 شلونك؟ أقدر أساعدك بأدوات التسويق!',
-                egyptian: 'أهلاً وسهلاً! 😊 عامل إيه؟ عايز أساعدك في إعلاناتك ازاي؟',
-                levantine: 'مرحبا! 👋 كيفك وشلونك؟ بدك مساعدة بالتسويق؟',
-                moroccan: 'أهلا بيك! 😊 كيفاش راك؟ بغيت معونة ف الإشهار؟'
-            },
-            
-            // Tool recommendations
-            tools: {
-                adGenerator: {
-                    title: '🎨 مولد الإعلانات بالذكاء الاصطناعي',
-                    url: './tools/ai-ad-generator.html',
-                    description: 'هيعمل لك إعلانات رائعة لجميع المنصات!',
-                    keywords: ['إعلان', 'اعلان', 'عايز إعلان', 'بدي إعلان', 'عاوز', 'بغيت']
-                },
-                keywords: {
-                    title: '🔑 مولد الكلمات المفتاحية',
-                    url: './tools/arabic-keywords.html',
-                    description: 'هيديك كلمات محلية وترندي!',
-                    keywords: ['كلمات', 'كلمة', 'بحث', 'seo', 'كيورد']
-                },
-                roi: {
-                    title: '💰 حاسبة العائد على الاستثمار',
-                    url: './tools/roi-calculator.html',
-                    description: 'اعرف لو حملتك مربحة ولا لأ!',
-                    keywords: ['roi', 'عائد', 'ربح', 'خسارة', 'فلوس', 'مال']
-                },
-                ramadan: {
-                    title: '🌙 مخطط الحملات الرمضانية',
-                    url: './tools/ramadan-planner.html',
-                    description: 'استعد لرمضان باستراتيجية محكمة!',
-                    keywords: ['رمضان', 'الشهر الكريم', 'إفطار', 'سحور']
-                },
-                hashtags: {
-                    title: '📱 مولد الهاشتاجات التريندية',
-                    url: './tools/trending-hashtags.html',
-                    description: 'هاشتاجات عربية رايجة حالياً!',
-                    keywords: ['هاشتاج', 'hashtag', '#', 'تاج', 'هاش']
-                },
-                speed: {
-                    title: '⚡ محلل سرعة صفحات الهبوط',
-                    url: './tools/landing-speed.html',
-                    description: 'علشان موقعك يبقى أسرع!',
-                    keywords: ['سرعة', 'بطء', 'تحميل', 'موقع']
-                },
-                competitor: {
-                    title: '🔍 محلل الإعلانات التنافسية',
-                    url: './tools/competitor-ads.html',
-                    description: 'اعرف إيه اللي بيعمله منافسينك!',
-                    keywords: ['منافس', 'منافسين', 'competitor', 'منافسه']
-                },
-                shipping: {
-                    title: '🚚 حاسبة الشحن المُحسنة',
-                    url: './tools/shipping-calculator.html',
-                    description: 'حسابات شحن دقيقة للخليج!',
-                    keywords: ['شحن', 'توصيل', 'shipping', 'توصيلة']
-                },
-                pricing: {
-                    title: '🏷️ مُحسن الأسعار التنافسية',
-                    url: './tools/price-optimizer.html',
-                    description: 'أحسن أسعار تنافسية!',
-                    keywords: ['أسعار', 'اسعار', 'تسعير', 'price', 'ثمن']
-                },
-                dashboard: {
-                    title: '📊 لوحة التحكم الشاملة',
-                    url: './tools/dashboard.html',
-                    description: 'شوف كل حملاتك في مكان واحد!',
-                    keywords: ['لوحة', 'dashboard', 'تحكم', 'إحصائيات']
-                },
-                personas: {
-                    title: '🧠 مولد شخصيات العملاء',
-                    url: './tools/buyer-personas.html', 
-                    description: 'اعرف عملائك بالتفصيل!',
-                    keywords: ['عملاء', 'جمهور', 'شخصيات', 'personas', 'عميل']
-                },
-                clv: {
-                    title: '📊 حاسبة قيمة العميل',
-                    url: './tools/clv-calculator.html',
-                    description: 'اعرف قيمة عملائك الحقيقية!',
-                    keywords: ['clv', 'قيمة العميل', 'عمر العميل']
-                }
-            },
-            
-            // Common responses for different dialects
-            dialectResponses: {
-                help_gulf: 'زين أقدر أساعدك! 😊',
-                help_egyptian: 'أكيد هساعدك فوراً! 🚀',
-                help_levantine: 'أكيد منعونك! بشو بدك مساعدة? 🤝',
-                help_moroccan: 'بطبيعة غنعاونك! أشنو بغيتي? 👍'
-            }
+        this.dialects = {
+            egyptian: ['عايز', 'عاوز', 'ايه', 'اللي', 'انت', 'دي', 'دا'],
+            gulf: ['ودي', 'وش', 'شلون', 'هاي', 'زين', 'يالله'],
+            levantine: ['بدي', 'شو', 'كيف', 'هيك', 'معك', 'هون'],
+            moroccan: ['بغيت', 'شنو', 'كيفاش', 'هادي', 'هادا', 'فين'],
+            standard: ['أريد', 'ماذا', 'كيف', 'هذه', 'هذا', 'أين']
         };
         
-        this.conversationHistory = this.loadConversationHistory();
-        this.lastDialectDetected = 'formal';
+        this.toolMappings = {
+            cpc: {
+                keywords: ['cpc', 'تكلفة النقرة', 'نقرة', 'كليك'],
+                url: 'cpc-calculator.html',
+                name: 'حاسبة CPC',
+                icon: '💰'
+            },
+            roi: {
+                keywords: ['roi', 'عائد', 'ربح', 'استثمار', 'خسارة'],
+                url: 'roi-calculator.html', 
+                name: 'حاسبة ROI',
+                icon: '📈'
+            },
+            cpa: {
+                keywords: ['cpa', 'تكلفة الاكتساب', 'عميل', 'اكتساب'],
+                url: 'cpa-calculator.html',
+                name: 'حاسبة CPA', 
+                icon: '🎯'
+            },
+            budget: {
+                keywords: ['ميزانية', 'budget', 'توزيع', 'فلوس', 'مصاري'],
+                url: 'budget-planner.html',
+                name: 'مخطط الميزانية',
+                icon: '📊'
+            },
+            utm: {
+                keywords: ['utm', 'تتبع', 'رابط', 'tracking'],
+                url: 'utm-generator.html',
+                name: 'مولد UTM',
+                icon: '🔗'
+            },
+            whatsapp: {
+                keywords: ['واتساب', 'whatsapp', 'رسائل', 'رسالة'],
+                url: 'whatsapp-generator.html',
+                name: 'مولد واتساب',
+                icon: '💬'
+            }
+        };
     }
     
-    detectDialect(message) {
-        const msg = message.toLowerCase();
+    detectDialect(text) {
+        const lowerText = text.toLowerCase();
         
-        // Gulf dialect indicators
-        if (msg.includes('هلا') || msg.includes('شلون') || msg.includes('وين') || msg.includes('عادي') || msg.includes('زين')) {
-            return 'gulf';
+        for (const [dialect, words] of Object.entries(this.dialects)) {
+            if (words.some(word => lowerText.includes(word))) {
+                return dialect;
+            }
         }
         
-        // Egyptian dialect indicators  
-        if (msg.includes('عايز') || msg.includes('عامل إيه') || msg.includes('ازاي') || msg.includes('ليه') || msg.includes('هيه')) {
-            return 'egyptian';
-        }
-        
-        // Levantine dialect indicators
-        if (msg.includes('بدك') || msg.includes('كيفك') || msg.includes('شلونك') || msg.includes('منيح') || msg.includes('بشو')) {
-            return 'levantine';
-        }
-        
-        // Moroccan dialect indicators
-        if (msg.includes('بغيت') || msg.includes('كيفاش') || msg.includes('راك') || msg.includes('بغيتي') || msg.includes('فين')) {
-            return 'moroccan';
-        }
-        
-        return this.lastDialectDetected || 'formal';
+        return 'standard';
     }
     
     generateResponse(userMessage) {
         const dialect = this.detectDialect(userMessage);
-        this.lastDialectDetected = dialect;
-        const msg = userMessage.toLowerCase();
+        const lowerMsg = userMessage.toLowerCase();
         
-        // Check for tool-specific queries
-        for (const [toolKey, tool] of Object.entries(this.responses.tools)) {
-            for (const keyword of tool.keywords) {
-                if (msg.includes(keyword)) {
-                    return this.formatToolResponse(tool, dialect);
-                }
+        // Check for tool-specific requests
+        for (const [tool, config] of Object.entries(this.toolMappings)) {
+            if (config.keywords.some(keyword => lowerMsg.includes(keyword))) {
+                return this.getToolResponse(tool, config, dialect);
             }
         }
         
-        // Greeting responses
-        if (msg.includes('سلام') || msg.includes('أهلا') || msg.includes('مرحب') || msg.includes('هاي') || msg.includes('هلا')) {
-            return this.responses.greetings[dialect] || this.responses.greetings.formal;
+        // Greetings
+        if (this.isGreeting(lowerMsg)) {
+            return this.getGreetingResponse(dialect);
         }
         
         // Help requests
-        if (msg.includes('مساعد') || msg.includes('ساعد') || msg.includes('help') || msg.includes('عايز') || msg.includes('بدي') || msg.includes('بغيت')) {
-            return this.generateHelpResponse(dialect);
+        if (this.isHelpRequest(lowerMsg)) {
+            return this.getHelpResponse(dialect);
         }
         
-        // Default response with tool suggestions
-        return this.generateDefaultResponse(dialect);
+        // Default response
+        return this.getDefaultResponse(dialect);
     }
     
-    formatToolResponse(tool, dialect) {
-        const dialectGreetings = {
-            gulf: 'زين! هذي من أفضل أدواتنا',
-            egyptian: 'ممتاز! هادي أحسن أداة للحاجة دي',
-            levantine: 'حلو! هاي إلها اللي بدك إياها',
-            moroccan: 'زوين! هادي أحسن حاجة عندنا',
-            formal: 'ممتاز! هذه من أفضل أدواتنا'
+    isGreeting(text) {
+        const greetings = ['سلام', 'أهلا', 'مرحب', 'هاي', 'هلا', 'اهلين'];
+        return greetings.some(greeting => text.includes(greeting));
+    }
+    
+    isHelpRequest(text) {
+        const helpWords = ['مساعد', 'ساعد', 'help', 'أدوات', 'شرح'];
+        return helpWords.some(word => text.includes(word));
+    }
+    
+    getToolResponse(tool, config, dialect) {
+        const responses = {
+            egyptian: `${config.icon} زي ما تحب! دي من أفضل أدواتنا`,
+            gulf: `${config.icon} زين! هذي أداة ممتازة`,
+            levantine: `${config.icon} تمام! هاي أداة كتير منيحة`,
+            moroccan: `${config.icon} واخا! هادي أداة زوينة`,
+            standard: `${config.icon} ممتاز! هذه أداة رائعة`
         };
         
-        const greeting = dialectGreetings[dialect] || dialectGreetings.formal;
-        
-        return `${greeting}<br><br>
-                <strong>${tool.title}</strong><br>
-                ${tool.description}<br><br>
-                <a href="${tool.url}" target="_blank" style="background: #2563eb; color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; display: inline-block;">
-                    جرب الآن →
-                </a>`;
+        return `${responses[dialect] || responses.standard}<br><br><a href="${config.url}" target="_blank" style="background:#667eea;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;">${config.name} →</a>`;
     }
     
-    generateHelpResponse(dialect) {
-        const helpIntros = {
-            gulf: 'زين والله! أقدر أساعدك بهالأدوات:',
-            egyptian: 'أكيد هساعدك! عندنا أحسن الأدوات:',
-            levantine: 'بطبيعة منعونك! عنا هاي الأدوات:',
-            moroccan: 'بطبيعة غنعاونك! هادي الأدوات ديالنا:',
-            formal: 'بكل سرور! هذه أهم أدواتنا:'
+    getGreetingResponse(dialect) {
+        const greetings = {
+            egyptian: 'أهلاً وسهلاً! 😊 عاملين إيه؟ عايز مساعدة في أي حاسبة؟',
+            gulf: 'هلا وغلا! 👋 شلونك؟ ودك مساعدة بأي أداة؟',
+            levantine: 'أهلاً فيك! 😊 كيفك؟ بدك مساعدة بشي أداة؟',
+            moroccan: 'أهلاً وسهلاً! 👋 كيداير؟ بغيتي مساعدة في شي أداة؟',
+            standard: 'أهلاً وسهلاً! 👋 كيف يمكنني مساعدتك في حاسبات الإعلانات؟'
         };
         
-        const intro = helpIntros[dialect] || helpIntros.formal;
-        
-        return `${intro}<br><br>
-                • <a href="./tools/ai-ad-generator.html" target="_blank">مولد الإعلانات الذكي</a><br>
-                • <a href="./tools/competitor-ads.html" target="_blank">محلل المنافسين</a><br>
-                • <a href="./tools/roi-calculator.html" target="_blank">حاسبة ROI</a><br>
-                • <a href="./tools/clv-calculator.html" target="_blank">حاسبة قيمة العميل</a><br>
-                • <a href="./tools/ramadan-planner.html" target="_blank">مخطط رمضان</a><br><br>
-                قول ايه اللي محتاجه بالضبط! 🎯`;
+        return greetings[dialect] || greetings.standard;
     }
     
-    generateDefaultResponse(dialect) {
-        const defaultIntros = {
-            gulf: 'هلا وغلا فيك! 😊',
-            egyptian: 'شكراً لسؤالك! 😊',
-            levantine: 'منيح سؤالك! 😊',
-            moroccan: 'مرحبا بيك! 😊',
-            formal: 'شكراً لك! 😊'
+    getHelpResponse(dialect) {
+        const responses = {
+            egyptian: '🤝 اكيد هساعدك! عندنا 12 أداة مجانية:\n\n📊 حاسبات: CPC, ROI, CPA, CTR\n📈 مخططات: الميزانية والمحتوى\n🔗 مولدات: UTM وواتساب\n\nقولني عايز إيه!',
+            gulf: '🤝 أكيد بساعدك! عندنا 12 أداة مجانية:\n\n📊 حاسبات: CPC, ROI, CPA\n📈 مخططات ذكية\n🔗 مولدات الروابط\n\nقول وش تبي!',
+            standard: '🤝 بالطبع! عندنا 12 أداة مجانية لتحسين إعلاناتك:\n\n📊 الحاسبات الأساسية\n📈 أدوات التخطيط\n🔗 مولدات الروابط\n\nما الذي تحتاجه؟'
         };
         
-        const intro = defaultIntros[dialect] || defaultIntros.formal;
-        
-        return `${intro}<br><br>
-                عندنا أكتر من 17 أداة مجانية:<br><br>
-                🎯 <a href="./tools/buyer-personas.html" target="_blank">شخصيات العملاء</a><br>
-                🚀 <a href="./tools/ai-ad-generator.html" target="_blank">مولد الإعلانات الذكي</a><br>
-                📊 <a href="./tools/dashboard.html" target="_blank">لوحة التحكم</a><br>
-                🌙 <a href="./tools/ramadan-planner.html" target="_blank">خطط رمضانية</a><br>
-                🔑 <a href="./tools/arabic-keywords.html" target="_blank">كلمات مفتاحية</a><br><br>
-                قولني ايه اللي محتاجه! 💪`;
+        return responses[dialect] || responses.standard;
     }
     
-    saveConversationHistory() {
-        localStorage.setItem('arabicMarketingBotHistory', JSON.stringify(this.conversationHistory));
-    }
-    
-    loadConversationHistory() {
-        const stored = localStorage.getItem('arabicMarketingBotHistory');
-        return stored ? JSON.parse(stored) : [];
-    }
-    
-    addToHistory(userMessage, botResponse, dialect) {
-        this.conversationHistory.push({
-            timestamp: Date.now(),
-            user: userMessage,
-            bot: botResponse,
-            dialect: dialect
-        });
+    getDefaultResponse(dialect) {
+        const responses = {
+            egyptian: 'مش فاهم السؤال كده 😅 بس عندنا أدوات كتير مفيدة!\n\n<a href="all-tools.html">شوف كل الأدوات →</a>',
+            gulf: 'ما فهمت السؤال زين 😅 بس عندنا أدوات وايد حلوة!\n\n<a href="all-tools.html">شوف كل الأدوات →</a>',
+            standard: 'لم أفهم السؤال تماماً 😅 لكن يمكنك تصفح جميع أدواتنا!\n\n<a href="all-tools.html">عرض كل الأدوات →</a>'
+        };
         
-        // Keep only last 10 conversations
-        if (this.conversationHistory.length > 10) {
-            this.conversationHistory = this.conversationHistory.slice(-10);
-        }
-        
-        this.saveConversationHistory();
+        return responses[dialect] || responses.standard;
     }
 }
 
-// Initialize bot
-const arabicBot = new ArabicMarketingBot();
-
-// Export for global use
+// Initialize global bot instance
 if (typeof window !== 'undefined') {
-    window.ArabicMarketingBot = arabicBot;
+    window.ArabicMarketingBot = new ArabicMarketingBot();
+    
+    // Auto-greet after 3 seconds if chatbot is opened
+    setTimeout(() => {
+        const chatWindow = document.getElementById('chatbotWindow') || document.getElementById('miniChatWindow');
+        if (chatWindow && chatWindow.style.display === 'block') {
+            // Auto-greeting logic here if needed
+        }
+    }, 3000);
+}
+
+// Export for Node.js if needed
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ArabicMarketingBot;
 }

@@ -1,102 +1,100 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>حاسبة هامش الربح | أدوات الإعلانات العربية</title>
-  <meta name="description" content="احسب هامش الربح مع أخذ تكلفة الإعلان لكل طلب في الاعتبار لتحديد التسعير الصحيح.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#667eea">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--p:#667eea;--s:#764ba2;--bg:linear-gradient(135deg,var(--p),var(--s));--white:#fff;--text:#0a2540;--muted:#64748b}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Cairo',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
-    .container{max-width:900px;margin:0 auto;padding:20px}
-    .card{background:var(--white);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(10,37,64,.12);margin-bottom:20px}
-    .header{text-align:center;color:#fff;padding:30px 20px;background:rgba(255,255,255,.1);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(10px)}
-    .form-group{margin-bottom:20px}
-    label{display:block;font-weight:700;color:var(--text);margin-bottom:8px}
-    input{width:100%;padding:14px 18px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px}
-    .btn{background:var(--bg);color:#fff;border:none;padding:16px 32px;border-radius:999px;font-size:18px;font-weight:700;cursor:pointer;width:100%;margin:20px 0}
-    .result{background:#f8fafc;border:2px solid #e2e8f0;border-radius:16px;padding:25px;text-align:center;margin-top:25px;display:none}
-    .result.show{display:block}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
-    .metric{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:15px}
-    .metric .v{font-size:24px;font-weight:800}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 حاسبة هامش الربح | أدوات الإعلانات العربية</title>
+    <meta name="description" content="احسب هامش الربح وحدد السعر الأمثل مع تكاليف الإعلان">
+    
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="nBc9gb3gANP03Zfry_67JNmbu8hnL2FwQDODRKUlnhA" />
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TWJSM8B7');</script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-676ZKH3ECD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-676ZKH3ECD', { page_title: 'Profit Margin Calculator', content_group1: 'Calculator Tools' });
+    </script>
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; padding: 20px; direction: rtl; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 20px; margin-bottom: 25px; }
+        .card { background: white; border-radius: 20px; padding: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .form-group input { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; }
+        .btn-primary { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 16px; border-radius: 50px; font-size: 18px; cursor: pointer; }
+        .result-card { background: #f8fafc; padding: 20px; text-align: center; margin-top: 20px; border-radius: 15px; }
+        .result-value { font-size: 2rem; font-weight: 800; color: #667eea; }
+    </style>
 </head>
 <body>
-  <script src="shared-nav.js"></script>
-  <div class="container">
-    <header class="header">
-      <h1>💰 حاسبة هامش الربح</h1>
-      <p>احسب هامش الربح مع إدخال تكلفة الإعلان لكل طلب لتحديد التسعير الصحيح</p>
-    </header>
-
-    <div class="card">
-      <form id="pmForm">
-        <div class="form-group">
-          <label for="price">سعر البيع (ريال)</label>
-          <input id="price" type="number" min="0" step="0.01" placeholder="مثال: 199" required>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWJSM8B7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📊 حاسبة هامش الربح</h1>
+            <p>حدد السعر الأمثل مع تكاليف الإعلان</p>
         </div>
-        <div class="form-group">
-          <label for="cost">تكلفة المنتج (ريال)</label>
-          <input id="cost" type="number" min="0" step="0.01" placeholder="مثال: 80" required>
+        
+        <div class="card">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>سعر البيع (ريال)</label>
+                    <input id="sellingPrice" type="number" placeholder="مثال: 100">
+                </div>
+                <div class="form-group">
+                    <label>تكلفة المنتج (ريال)</label>
+                    <input id="productCost" type="number" placeholder="مثال: 60">
+                </div>
+                <div class="form-group">
+                    <label>تكلفة الإعلان لكل منتج</label>
+                    <input id="adCost" type="number" placeholder="مثال: 15">
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="calculateMargin()">احسب هامش الربح</button>
+            
+            <div id="results" style="display: none;">
+                <div class="result-card">
+                    <div class="result-value" id="marginResult">0%</div>
+                    <div>هامش الربح</div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="adCostPerOrder">تكلفة الإعلان لكل طلب (ريال)</label>
-          <input id="adCostPerOrder" type="number" min="0" step="0.01" placeholder="مثال: 30" required>
-        </div>
-        <div class="form-group">
-          <label for="overhead">مصاريف تشغيلية لكل طلب (اختياري)</label>
-          <input id="overhead" type="number" min="0" step="0.01" placeholder="مثال: 10">
-        </div>
-        <button class="btn" type="submit">احسب الهامش</button>
-      </form>
-
-      <div id="result" class="result">
-        <div class="grid">
-          <div class="metric"><div class="v" id="net">-</div><div>الربح الصافي (ريال)</div></div>
-          <div class="metric"><div class="v" id="margin">-</div><div>هامش الربح %</div></div>
-          <div class="metric"><div class="v" id="breakeven">-</div><div>سعر التعادل (ريال)</div></div>
-        </div>
-      </div>
     </div>
 
-    <div class="card">
-      <h3>💡 تحسين الهامش</h3>
-      <ul>
-        <li>التفاوض على تكلفة المنتج أو الشحن لخفض التكاليف</li>
-        <li>تحسين معدل التحويل لخفض تكلفة الإعلان لكل طلب</li>
-        <li>تحسين متوسط قيمة الطلب عبر عروض/باقة/بيع إضافي</li>
-      </ul>
-    </div>
-  </div>
-
-  <script>
-    const pct = n=> (Number(n).toFixed(2)+'%');
-
-    pmForm.addEventListener('submit', e=>{
-      e.preventDefault();
-      const priceVal = parseFloat(price.value);
-      const costVal = parseFloat(cost.value);
-      const adVal = parseFloat(adCostPerOrder.value);
-      const oh = parseFloat(overhead.value) || 0;
-      if([priceVal,costVal,adVal].some(v=>isNaN(v))){ alert('أكمل الحقول'); return; }
-      const totalCost = costVal + adVal + oh;
-      const net = priceVal - totalCost;
-      const margin = (net/priceVal)*100;
-      // سعر التعادل = إجمالي التكلفة
-      const breakeven = totalCost;
-      document.getElementById('net').textContent = net.toFixed(2);
-      document.getElementById('margin').textContent = pct(margin);
-      document.getElementById('breakeven').textContent = breakeven.toFixed(2);
-      result.classList.add('show');
-      result.scrollIntoView({behavior:'smooth',block:'nearest'});
-    });
-  </script>
+    <script>
+        function calculateMargin() {
+            const selling = parseFloat(document.getElementById('sellingPrice').value);
+            const cost = parseFloat(document.getElementById('productCost').value);
+            const adCost = parseFloat(document.getElementById('adCost').value) || 0;
+            
+            if (!selling || !cost) {
+                alert('يرجى إدخال السعر والتكلفة');
+                return;
+            }
+            
+            const totalCost = cost + adCost;
+            const margin = ((selling - totalCost) / selling) * 100;
+            document.getElementById('marginResult').textContent = `${margin.toFixed(1)}%`;
+            document.getElementById('results').style.display = 'block';
+            
+            gtag('event', 'calculation_completed', {
+                event_category: 'Profit Margin Calculator',
+                tool_name: 'profit_margin_calculator',
+                margin_result: margin.toFixed(1)
+            });
+        }
+    </script>
 </body>
 </html>
