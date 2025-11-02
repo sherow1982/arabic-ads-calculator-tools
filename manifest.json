@@ -1,62 +1,25 @@
 {
-  "name": "أدوات الإعلانات العربية - 18 أداة مجانية",
-  "short_name": "حاسبات الإعلانات",
-  "description": "مجموعة شاملة من 18 أداة مجانية لتحسين أداء إعلاناتك الرقمية مع بوت ذكي وتنبيهات تلقائية",
+  "name": "أدوات الإعلانات العربية",
+  "short_name": "أدوات الإعلانات",
+  "description": "مجموعة شاملة من الأدوات المجانية لتحسين أداء إعلاناتك الرقمية مع بوت ذكي وتنبيهات تلقائية",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
-  "orientation": "portrait-primary",
-  "scope": "./",
+  "orientation": "portrait",
+  "categories": ["business", "productivity", "utilities"],
   "lang": "ar",
   "dir": "rtl",
-  "categories": ["business", "productivity", "finance"],
+  "scope": "./",
   "icons": [
-    {
-      "src": "favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ],
   "shortcuts": [
-    {
-      "name": "تنبيهات المنصات",
-      "short_name": "تنبيهات",
-      "description": "آخر تحديثات منصات الإعلانات",
-      "url": "./alerts.html",
-      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
-    },
-    {
-      "name": "حاسبة ROI",
-      "short_name": "ROI",
-      "description": "حساب عائد الاستثمار",
-      "url": "./roi-calculator.html",
-      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
-    },
-    {
-      "name": "مخطط الميزانية",
-      "short_name": "ميزانية",
-      "description": "توزيع الميزانية بذكاء",
-      "url": "./budget-planner.html",
-      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
-    },
-    {
-      "name": "محلل المنافسة",
-      "short_name": "منافسة",
-      "description": "تحليل أداء المنافسين",
-      "url": "./competition-analyzer.html",
-      "icons": [{"src": "favicon.svg", "sizes": "96x96"}]
-    }
-  ],
-  "features": [
-    "Cross Platform",
-    "Offline Support", 
-    "Push Notifications",
-    "Background Sync",
-    "Arabic RTL Support",
-    "Multi-Dialect Chatbot",
-    "Real-time Platform Alerts",
-    "18 Free Marketing Tools"
+    { "name": "حاسبة CPC", "short_name": "CPC", "description": "احسب تكلفة النقرة", "url": "./cpc-calculator.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] },
+    { "name": "حاسبة ROI", "short_name": "ROI", "description": "احسب عائد الاستثمار", "url": "./roi-calculator.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] },
+    { "name": "حاسبة ROAS", "short_name": "ROAS", "description": "احسب عائد الإنفاق", "url": "./roas-calculator.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] },
+    { "name": "مخطط الميزانية", "short_name": "الميزانية", "description": "وزع ميزانيتك بذكاء", "url": "./budget-planner.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] },
+    { "name": "مولد الكلمات", "short_name": "الكلمات", "description": "ولّد كلمات مفتاحية عربية", "url": "./keyword-generator.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] },
+    { "name": "جميع الأدوات", "short_name": "كل الأدوات", "description": "استعرض جميع الأدوات", "url": "./all-tools.html", "icons": [{ "src": "favicon.svg", "sizes": "96x96" }] }
   ]
 }
