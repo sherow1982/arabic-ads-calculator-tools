@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مُرشِّد الإعلانات الذكي - بالبلد والمجال</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/global-styles.css" />
+  <style>
+    .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+    .grid{display:grid;gap:16px}
+    @media(min-width:960px){.grid{grid-template-columns:1.2fr .8fr}}
+    .muted{color:#666;font-size:.92rem}
+    .kpi{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi div{background:#f6f7f9;border:1px solid #e7e9ee;border-radius:10px;padding:10px 12px}
+    .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:4px 10px;border-radius:999px;margin:2px}
+    .chips{display:flex;gap:6px;flex-wrap:wrap}
+    .danger{color:#b10}
+    .success{color:#0a5}
+    .warn{color:#b80}
+    .spinner{display:none}
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>🎯 مُرشِّد الإعلانات الذكي</h1>
+    <p class="muted">أدخل <b>الدولة</b> و<b>مجال عملك</b> لنولّد: كلمات مفتاحية عربية، المنصة الأنسب للإعلان، الميزانية المقترحة، وتوقعات الظهور/النقرات/التحويلات/المبيعات.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>الدولة</label>
+          <input id="country" list="countries" placeholder="مثال: مصر، السعودية، الإمارات" />
+          <datalist id="countries"></datalist>
+        </div>
+        <div>
+          <label>مجال العمل</label>
+          <input id="sector" list="sectors" placeholder="مثال: التجارة الإلكترونية، مطاعم، عقارات" />
+          <datalist id="sectors"></datalist>
+        </div>
+      </div>
+      <div class="grid">
+        <div>
+          <label>العملة</label>
+          <input id="currency" disabled />
+        </div>
+        <div>
+          <label>الميزانية الشهرية</label>
+          <input id="monthlyBudget" type="number" min="100" step="50" placeholder="أدخل ميزانيتك (اختياري)" />
+        </div>
+      </div>
+      <button id="analyzeBtn">تحليل وإصدار التوصيات</button> <span class="spinner" id="spinner">⏳</span>
+      <div class="muted">تنبيه: الأرقام تقريبية تعليمية/تقديرية وتعتمد على متوسطات سوقية عامة. يجب التحقق ببيانات منصتك الفعلية.</div>
+    </div>
+
+    <div id="results" style="display:none">
+      <div class="card">
+        <h2>✅ المنصة الأنسب وترتيب البدائل</h2>
+        <div id="platforms" class="chips"></div>
+        <p class="muted" id="platformNotes"></p>
+      </div>
+
+      <div class="card">
+        <h2>🔑 الكلمات المفتاحية العربية المقترحة</h2>
+        <div id="keywords" class="chips"></div>
+      </div>
+
+      <div class="card">
+        <h2>💰 الميزانية المقترحة</h2>
+        <div id="budgetAdvice" class="kpi"></div>
+        <p class="muted">تم حساب النطاقات بناءً على متوسطات كل بلد ومجال. اضبطها لاحقًا حسب أداء حملاتك.</p>
+      </div>
+
+      <div class="card">
+        <h2>📈 التوقعات (شهريًا)</h2>
+        <div class="kpi" id="forecasts"></div>
+        <p class="muted">الصيغ المستخدمة: الظهور = الميزانية/CPM × 1000، النقرات = الظهور × CTR، التحويلات = النقرات × CVR، المبيعات = التحويلات × معدل عمليات الشراء.</p>
+      </div>
+
+      <div class="card">
+        <h2>🧪 خطوات التشغيل المقترحة</h2>
+        <ol id="playbook"></ol>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load benchmarks JSON
+    async function loadBenchmarks(){
+      const res = await fetch('/data/ads-country-benchmarks.json');
+      return res.json();
+    }
+
+    function formatNumber(n){
+      return new Intl.NumberFormat('ar-EG').format(Math.round(n || 0));
+    }
+
+    function pick(arr, n=12){
+      if(!arr||!arr.length) return [];
+      const out = [];
+      const used = new Set();
+      for(let i=0;i<Math.min(n, arr.length);i++){
+        let idx = Math.floor(Math.random()*arr.length);
+        let guard=0;
+        while(used.has(idx) && guard<10){ idx = Math.floor(Math.random()*arr.length); guard++; }
+        used.add(idx); out.push(arr[idx]);
+      }
+      return out;
+    }
+
+    function computeForecasts(country, sector, monthlyBudget){
+      // choose platform with lowest CPM among recommended to maximize impressions if budget limited
+      const platforms = country.recommended_platforms;
+      const cpmOptions = country.avg_cpm || {};
+      const ctr = sector.avg_conversion_rate ? Math.max(0.008, sector.avg_conversion_rate/2) : 0.012; // proxy CTR
+      const cvr = sector.avg_conversion_rate || 0.02; // baseline CVR by sector
+      const purchaseRate = 0.7; // fraction of conversions that result in actual purchases (lead vs sale)
+
+      // Use weighted CPM based on typical mix (first platform weight 0.5, others 0.5/(n-1))
+      let weightedCPM = 0; let totalWeight=0;
+      platforms.forEach((p, i)=>{
+        const w = i===0?0.5:(0.5/(platforms.length-1));
+        const cpm = cpmOptions[p] || Object.values(cpmOptions)[0] || 2.0;
+        weightedCPM += w * cpm; totalWeight += w;
+      });
+      if(totalWeight>0) weightedCPM /= totalWeight; else weightedCPM = 2.0;
+
+      const impressions = (monthlyBudget / weightedCPM) * 1000;
+      const clicks = impressions * ctr;
+      const conversions = clicks * cvr;
+      const sales = conversions * purchaseRate;
+
+      return {weightedCPM, ctr, cvr, impressions, clicks, conversions, sales};
+    }
+
+    (async function init(){
+      const data = await loadBenchmarks();
+      const countriesMap = data.countries || {};
+      const sectorsMap = data.business_sectors || {};
+
+      // populate datalists
+      const cList = document.getElementById('countries');
+      Object.keys(countriesMap).forEach(k=>{
+        const o = document.createElement('option');
+        o.value = countriesMap[k].name || k; cList.appendChild(o);
+      });
+      const sList = document.getElementById('sectors');
+      Object.keys(sectorsMap).forEach(k=>{
+        const o = document.createElement('option');
+        o.value = sectorsMap[k].name || k; sList.appendChild(o);
+      });
+
+      const countryInput = document.getElementById('country');
+      const sectorInput = document.getElementById('sector');
+      const currencyInput = document.getElementById('currency');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const spinner = document.getElementById('spinner');
+
+      analyzeBtn.addEventListener('click', ()=>{
+        const cVal = countryInput.value.trim();
+        const sVal = sectorInput.value.trim();
+        const budgetVal = parseFloat(document.getElementById('monthlyBudget').value || '0');
+
+        const country = Object.values(countriesMap).find(c=> c.name===cVal || cVal===c.key || cVal===c.code) || null;
+        const sector = Object.values(sectorsMap).find(s=> s.name===sVal) || null;
+
+        if(!country || !sector){
+          alert('من فضلك اختر دولة ومجال من القوائم المقترحة');
+          return;
+        }
+
+        currencyInput.value = country.currency || '';
+
+        spinner.style.display='inline-block';
+        setTimeout(()=>{
+          renderResults(country, sector, budgetVal || suggestBudget(country));
+          spinner.style.display='none';
+        }, 150);
+      });
+
+      function suggestBudget(country){
+        const r = country.budget_ranges || {small:{min:2000,max:8000}};
+        return Math.round((r.small.min + r.small.max)/2);
+      }
+
+      function renderResults(country, sector, monthlyBudget){
+        document.getElementById('results').style.display='block';
+
+        // Platforms
+        const platformsEl = document.getElementById('platforms');
+        platformsEl.innerHTML='';
+        (country.recommended_platforms||[]).forEach((p,i)=>{
+          const span = document.createElement('span');
+          span.className='pill';
+          span.textContent = `${i+1} - ${p}`;
+          platformsEl.appendChild(span);
+        });
+        document.getElementById('platformNotes').textContent = `الأولوية حسب السوق في ${country.name}. المنصة الأولى مفضلة لبدء الاختبار.`;
+
+        // Keywords
+        const kwEl = document.getElementById('keywords');
+        kwEl.innerHTML='';
+        pick(sector.keywords, 20).forEach(k=>{
+          const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span);
+        });
+
+        // Budget
+        const bEl = document.getElementById('budgetAdvice');
+        bEl.innerHTML='';
+        const ranges = country.budget_ranges || {};
+        [['صغير',ranges.small],['متوسط',ranges.medium],['كبير',ranges.large]].forEach(([label,range])=>{
+          if(!range) return;
+          const div = document.createElement('div');
+          div.innerHTML = `<b>${label}</b><br>${formatNumber(range.min)} - ${formatNumber(range.max)} ${country.currency}`;
+          bEl.appendChild(div);
+        });
+
+        // Forecasts
+        const f = computeForecasts(country, sector, monthlyBudget);
+        const fEl = document.getElementById('forecasts');
+        fEl.innerHTML='';
+        const items=[
+          ['الميزانية', `${formatNumber(monthlyBudget)} ${country.currency}`],
+          ['CPM مرجح', `$${f.weightedCPM.toFixed(2)}`],
+          ['CTR تقديري', `${(f.ctr*100).toFixed(1)}%`],
+          ['CVR تقديري', `${(f.cvr*100).toFixed(1)}%`],
+          ['الظهور', formatNumber(f.impressions)],
+          ['النقرات', formatNumber(f.clicks)],
+          ['التحويلات', formatNumber(f.conversions)],
+          ['المبيعات الفعلية', formatNumber(f.sales)]
+        ];
+        items.forEach(([k,v])=>{ const d=document.createElement('div'); d.innerHTML = `<b>${k}</b><br>${v}`; fEl.appendChild(d); });
+
+        // Playbook
+        const play = document.getElementById('playbook');
+        play.innerHTML='';
+        [
+          'ابدأ بحملة اختبار 7-10 أيام على المنصة الأولى بميزانية 60% والباقي على المنصتين 2 و3.',
+          'ابنِ 3 شرائح جماهيرية: اهتمام/مشابه/إعادة استهداف، مع 2-3 إبداعات لكل شريحة.',
+          'راقب CPM/CTR/CVR يوميًا. أوقف ما هو أسوأ 30% أداء ودوّر الميزانية للأفضل.',
+          'اختبر صفحات الهبوط ورسائل العرض. استهدف زيادة معدل التحويل 20-30%.',
+          'بعد 2-3 دورات اختبار، ثبّت مزيج القنوات وابدأ توسيع الميزانية تدريجيًا.'
+        ].forEach(step=>{ const li=document.createElement('li'); li.textContent=step; play.appendChild(li); });
+      }
+    })();
+  </script>
+</body>
+</html>
