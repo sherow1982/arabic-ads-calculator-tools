@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاري إعادة التوجيه - مختصر الروابط العربي</title>
-    <meta name="description" content="مختصر روابط عربي مجاني - إعادة توجيه تلقائية للروابط الطويلة - يدعم أي رابط">
+    <title>جاري إعادة التوجيه - مختصر الروابط العالمي</title>
+    <meta name="description" content="مختصر روابط عالمي - يدعم جميع اللغات والرموز تلقائياً - عربي، إنجليزي، رموز، إيموجي">
     
     <style>
         body {
@@ -16,7 +16,7 @@
         }
         
         .container {
-            max-width: 600px; padding: 2.5rem;
+            max-width: 700px; padding: 2.5rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 25px; backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -49,7 +49,10 @@
         }
         
         .url-label { font-size: 1rem; opacity: 0.8; margin-bottom: 0.5rem; }
-        .url-value { font-size: 1.1rem; font-weight: 600; word-break: break-all; color: #fbbf24; }
+        .url-value { 
+            font-size: 1.1rem; font-weight: 600; word-break: break-all; 
+            color: #fbbf24; line-height: 1.4; max-height: 150px; overflow-y: auto;
+        }
         
         .manual-button {
             display: inline-block; background: rgba(255, 255, 255, 0.9); color: #4f46e5;
@@ -78,21 +81,30 @@
             80%, 100% { color: rgba(255,255,255,0.4); }
         }
         
-        .search-methods {
+        .debug-info {
+            background: rgba(255, 255, 255, 0.1); padding: 1rem;
+            border-radius: 15px; margin: 1rem 0; font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left; direction: ltr;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .processing-steps {
             background: rgba(255, 255, 255, 0.1); padding: 1rem;
             border-radius: 15px; margin: 1rem 0; font-size: 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .method-item {
+        .step-item {
             margin: 0.5rem 0; padding: 0.5rem;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 8px; display: flex;
+            align-items: center; justify-content: space-between;
         }
         
-        .method-success { background: rgba(34, 197, 94, 0.2); }
-        .method-failed { background: rgba(239, 68, 68, 0.2); }
-        .method-searching { background: rgba(251, 191, 36, 0.2); animation: pulse 1s infinite; }
+        .step-success { background: rgba(34, 197, 94, 0.3); }
+        .step-failed { background: rgba(239, 68, 68, 0.3); }
+        .step-processing { background: rgba(251, 191, 36, 0.3); animation: pulse 1s infinite; }
         
         @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
     </style>
@@ -101,17 +113,34 @@
     <div class="container">
         <div class="spinner" id="spinner"></div>
         
-        <h1 id="title">🚀 جاري إعادة التوجيه<span class="loading-dots">...</span></h1>
+        <h1 id="title">🌍 نظام الترميز الذكي<span class="loading-dots">...</span></h1>
         
         <div class="status" id="status">
-            🔍 جاري البحث عن الرابط الأصلي...
+            🔧 جاري تحليل وترميز الرابط تلقائياً...
         </div>
         
-        <div class="search-methods" id="searchMethods">
-            <div class="method-item method-searching" id="method1">📦 قاعدة بيانات JSON - جاري البحث...</div>
-            <div class="method-item" id="method2">📋 GitHub Issues - في انتظار...</div>
-            <div class="method-item" id="method3">📄 ملفات HTML - في انتظار...</div>
-            <div class="method-item" id="method4">🔄 أنماط شائعة - في انتظار...</div>
+        <div class="processing-steps" id="processingSteps">
+            <div class="step-item step-processing" id="step1">
+                <span>📥 استلام معاملات URL</span>
+                <span>⏳</span>
+            </div>
+            <div class="step-item" id="step2">
+                <span>🔧 تطبيع وتنظيف الرابط</span>
+                <span>⏳</span>
+            </div>
+            <div class="step-item" id="step3">
+                <span>🔍 البحث في قواعد البيانات</span>
+                <span>⏳</span>
+            </div>
+            <div class="step-item" id="step4">
+                <span>🚀 إعداد إعادة التوجيه</span>
+                <span>⏳</span>
+            </div>
+        </div>
+        
+        <div class="debug-info" id="debugInfo" style="display: none;">
+            <strong>Debug Information:</strong><br>
+            <div id="debugContent"></div>
         </div>
         
         <div class="url-display" id="urlDisplay" style="display: none;">
@@ -127,75 +156,114 @@
         </a>
         
         <div class="footer-info">
-            رابط قصير من 🇪🇬 <strong>أدوات الإعلانات العربية</strong><br>
-            مجاني 100% • يدعم أي رابط • آمن وموثوق • بدون أطراف ثالثة
+            🌍 نظام ترميز ذكي - يدعم جميع اللغات والرموز تلقائياً<br>
+            🇪🇬 أدوات الإعلانات العربية • مجاني 100% • آمن ومتطور
         </div>
     </div>
     
     <script>
-        // GitHub Configuration
-        const GITHUB_API_BASE = 'https://api.github.com/repos/sherow1982/arabic-ads-calculator-tools';
-        const BASE_URL = 'https://sherow1982.github.io/arabic-ads-calculator-tools';
-        const LINK_DB_URL = `${BASE_URL}/link-db.json`;
+        // Configuration
+        const CONFIG = {
+            GITHUB_API_BASE: 'https://api.github.com/repos/sherow1982/arabic-ads-calculator-tools',
+            BASE_URL: 'https://sherow1982.github.io/arabic-ads-calculator-tools',
+            LINK_DB_URL: 'https://sherow1982.github.io/arabic-ads-calculator-tools/link-db.json',
+            DEBUG_MODE: true
+        };
         
-        function getShortCode() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('to') || urlParams.get('url') || urlParams.get('go') || urlParams.get('redirect');
-        }
-        
-        function updateMethodStatus(methodId, status, message) {
-            const element = document.getElementById(methodId);
-            if (!element) return;
-            
-            element.classList.remove('method-searching', 'method-success', 'method-failed');
-            
-            if (status === 'searching') {
-                element.classList.add('method-searching');
-                element.innerHTML = message;
-            } else if (status === 'success') {
-                element.classList.add('method-success');
-                element.innerHTML = `✅ ${message}`;
-            } else {
-                element.classList.add('method-failed');
-                element.innerHTML = `❌ ${message}`;
+        function debugLog(message, data = null) {
+            if (CONFIG.DEBUG_MODE) {
+                console.log(message, data);
+                const debugContent = document.getElementById('debugContent');
+                if (debugContent) {
+                    debugContent.innerHTML += `${message}<br>${data ? JSON.stringify(data, null, 2) + '<br>' : ''}`;
+                }
             }
         }
         
-        function showError(message) {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById('title').innerHTML = '⚠️ لم يتم العثور على الرابط';
-            document.getElementById('status').innerHTML = `<span class="error-state">${message}</span>`;
+        function updateStepStatus(stepId, status) {
+            const element = document.getElementById(stepId);
+            if (!element) return;
             
-            // Show home button
-            const manualButton = document.getElementById('manualButton');
-            manualButton.href = BASE_URL;
-            manualButton.innerHTML = '🏠 العودة للصفحة الرئيسية';
-            manualButton.style.display = 'inline-block';
+            const statusIcon = element.querySelector('span:last-child');
+            element.classList.remove('step-processing', 'step-success', 'step-failed');
+            
+            if (status === 'processing') {
+                element.classList.add('step-processing');
+                statusIcon.textContent = '⏳';
+            } else if (status === 'success') {
+                element.classList.add('step-success');
+                statusIcon.textContent = '✅';
+            } else {
+                element.classList.add('step-failed');
+                statusIcon.textContent = '❌';
+            }
         }
         
-        function showSuccess(targetUrl, shortCode, source = 'unknown') {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById('title').innerHTML = '✅ تم العثور على الرابط!';
-            document.getElementById('status').innerHTML = `<span class="success-state">سيتم توجيهك إلى الوجهة المطلوبة خلال ثانيتين...</span>`;
+        function getShortCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let shortCode = urlParams.get('to') || urlParams.get('url') || urlParams.get('go') || urlParams.get('redirect');
             
-            // Show target URL
-            document.getElementById('targetUrl').textContent = targetUrl;
-            document.getElementById('urlDisplay').style.display = 'block';
+            debugLog('Raw short code from URL:', shortCode);
             
-            // Show which method worked
-            const methodNames = {
-                'json-db': '📦 قاعدة بيانات JSON',
-                'github-issues': '📋 GitHub Issues',
-                'html-files': '📄 ملفات HTML',
-                'common-patterns': '🔄 أنماط شائعة'
-            };
-            document.getElementById('methodUsed').textContent = `تم العثور عبر: ${methodNames[source] || source}`;
+            if (shortCode) {
+                // Try to decode if it looks like an encoded URL
+                try {
+                    const decoded = decodeURIComponent(shortCode);
+                    debugLog('Decoded short code:', decoded);
+                    
+                    // If decoded version looks like a full URL, use it directly
+                    if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+                        debugLog('Direct URL mode detected');
+                        return { type: 'direct_url', value: decoded };
+                    }
+                } catch (e) {
+                    debugLog('Decode failed, using original:', e.message);
+                }
+            }
             
-            // Show manual button
-            const manualButton = document.getElementById('manualButton');
-            manualButton.href = targetUrl;
-            manualButton.innerHTML = '🔗 اضغط للتوجيه الفوري';
-            manualButton.style.display = 'inline-block';
+            return shortCode ? { type: 'code', value: shortCode } : null;
+        }
+        
+        function normalizeUrl(url) {
+            if (!url) return url;
+            
+            try {
+                debugLog('Normalizing URL:', url);
+                
+                // Add protocol if missing
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                
+                // Parse URL to normalize components
+                const urlObj = new URL(url);
+                
+                // Normalize pathname: remove /./ and resolve ../ 
+                let pathname = urlObj.pathname;
+                pathname = pathname.replace(/\/\.\//, '/'); // Remove /./
+                pathname = pathname.replace(/\/+/g, '/'); // Remove multiple slashes
+                
+                // Handle special cases for Arabic paths
+                if (pathname.includes('%')) {
+                    try {
+                        // Try to decode and re-encode properly
+                        pathname = decodeURIComponent(pathname);
+                        pathname = encodeURIComponent(pathname).replace(/%2F/g, '/');
+                    } catch (e) {
+                        debugLog('Path normalization warning:', e.message);
+                    }
+                }
+                
+                // Rebuild URL with normalized components
+                const normalized = `${urlObj.protocol}//${urlObj.host}${pathname}${urlObj.search}${urlObj.hash}`;
+                
+                debugLog('Normalized URL:', normalized);
+                return normalized;
+                
+            } catch (error) {
+                debugLog('URL normalization failed:', error.message);
+                return url; // Return original if normalization fails
+            }
         }
         
         function isValidUrl(string) {
@@ -207,13 +275,59 @@
             }
         }
         
-        // Method 1: Try JSON Database (fastest and most reliable)
+        function showError(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('title').innerHTML = '⚠️ لم يتم العثور على الرابط';
+            document.getElementById('status').innerHTML = `<span class="error-state">${message}</span>`;
+            
+            // Show debug info
+            document.getElementById('debugInfo').style.display = 'block';
+            
+            // Show home button
+            const manualButton = document.getElementById('manualButton');
+            manualButton.href = CONFIG.BASE_URL;
+            manualButton.innerHTML = '🏠 العودة للصفحة الرئيسية';
+            manualButton.style.display = 'inline-block';
+        }
+        
+        function showSuccess(targetUrl, shortCode, source = 'unknown') {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('title').innerHTML = '🎉 تم العثور على الرابط!';
+            document.getElementById('status').innerHTML = `<span class="success-state">سيتم توجيهك تلقائياً خلال ثانيتين...</span>`;
+            
+            // Show target URL
+            document.getElementById('targetUrl').innerHTML = targetUrl;
+            document.getElementById('urlDisplay').style.display = 'block';
+            
+            // Show which method worked
+            const methodNames = {
+                'direct_url': '🔗 رابط مباشر (تم فك الترميز)',
+                'json-db': '📦 قاعدة بيانات JSON',
+                'github-issues': '📋 GitHub Issues',
+                'html-files': '📄 ملفات HTML فردية',
+                'auto-generated': '🤖 تم إنشاؤه تلقائياً'
+            };
+            document.getElementById('methodUsed').textContent = `المصدر: ${methodNames[source] || source}`;
+            
+            // Show manual button
+            const manualButton = document.getElementById('manualButton');
+            manualButton.href = targetUrl;
+            manualButton.innerHTML = '🚀 اضغط للتوجيه الفوري';
+            manualButton.style.display = 'inline-block';
+            
+            // Show debug info if enabled
+            if (CONFIG.DEBUG_MODE) {
+                document.getElementById('debugInfo').style.display = 'block';
+            }
+        }
+        
+        // Enhanced JSON Database lookup with fallbacks
         async function tryJsonDatabase(shortCode) {
             try {
-                updateMethodStatus('method1', 'searching', '📦 قاعدة بيانات JSON - جاري البحث...');
+                updateStepStatus('step3', 'processing');
+                debugLog('Searching JSON database for:', shortCode);
                 
-                console.log(`Fetching JSON database...`);
-                const response = await fetch(`${LINK_DB_URL}?t=${Date.now()}`, { 
+                const response = await fetch(`${CONFIG.LINK_DB_URL}?t=${Date.now()}`, { 
                     cache: 'no-cache',
                     headers: {
                         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -224,189 +338,140 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('JSON database loaded:', data);
+                    debugLog('JSON database loaded successfully');
                     
                     if (data.links && data.links[shortCode]) {
                         const linkData = data.links[shortCode];
-                        const targetUrl = linkData.url;
+                        const targetUrl = normalizeUrl(linkData.url);
                         
                         if (isValidUrl(targetUrl)) {
-                            updateMethodStatus('method1', 'success', '📦 عُثر على الرابط في قاعدة البيانات');
-                            console.log(`✅ Found in JSON DB: ${shortCode} -> ${targetUrl}`);
+                            debugLog('Found in JSON database:', { shortCode, targetUrl, linkData });
+                            updateStepStatus('step3', 'success');
                             return targetUrl;
                         }
                     }
                 }
                 
-                updateMethodStatus('method1', 'failed', '📦 لم يتم العثور في قاعدة البيانات');
+                debugLog('Not found in JSON database');
+                updateStepStatus('step3', 'failed');
                 
             } catch (error) {
-                console.log(`JSON DB error: ${error.message}`);
-                updateMethodStatus('method1', 'failed', `📦 خطأ: ${error.message}`);
+                debugLog('JSON database error:', error.message);
+                updateStepStatus('step3', 'failed');
             }
             
             return null;
         }
         
-        // Method 2: Try GitHub Issues API
+        // Direct URL processing (when the shortCode IS the target URL)
+        function processDirectUrl(encodedUrl) {
+            try {
+                updateStepStatus('step2', 'processing');
+                debugLog('Processing direct URL:', encodedUrl);
+                
+                // Normalize the URL
+                const normalizedUrl = normalizeUrl(encodedUrl);
+                
+                if (isValidUrl(normalizedUrl)) {
+                    debugLog('Direct URL is valid:', normalizedUrl);
+                    updateStepStatus('step2', 'success');
+                    return normalizedUrl;
+                }
+                
+                debugLog('Direct URL validation failed');
+                updateStepStatus('step2', 'failed');
+                
+            } catch (error) {
+                debugLog('Direct URL processing error:', error.message);
+                updateStepStatus('step2', 'failed');
+            }
+            
+            return null;
+        }
+        
+        // Enhanced GitHub Issues lookup
         async function tryGitHubIssues(shortCode) {
             try {
-                updateMethodStatus('method2', 'searching', '📋 GitHub Issues - جاري البحث...');
+                debugLog('Searching GitHub Issues for:', shortCode);
                 
-                // Try numeric issue first
                 const issueNumber = parseInt(shortCode);
                 if (!isNaN(issueNumber) && issueNumber > 0) {
-                    const issueResponse = await fetch(`${GITHUB_API_BASE}/issues/${issueNumber}`);
+                    const issueResponse = await fetch(`${CONFIG.GITHUB_API_BASE}/issues/${issueNumber}`);
                     if (issueResponse.ok) {
                         const issue = await issueResponse.json();
                         if (issue.title && isValidUrl(issue.title)) {
-                            updateMethodStatus('method2', 'success', `📋 عُثر في Issue #${issueNumber}`);
-                            console.log(`✅ Found in GitHub Issues: ${issue.title}`);
-                            return issue.title;
+                            const normalizedUrl = normalizeUrl(issue.title);
+                            debugLog('Found in GitHub Issues:', { issueNumber, originalUrl: issue.title, normalizedUrl });
+                            return normalizedUrl;
                         }
                     }
                 }
                 
-                updateMethodStatus('method2', 'failed', '📋 لم يتم العثور في GitHub Issues');
+                debugLog('Not found in GitHub Issues');
                 
             } catch (error) {
-                console.log(`GitHub Issues error: ${error.message}`);
-                updateMethodStatus('method2', 'failed', `📋 خطأ: ${error.message}`);
-            }
-            
-            return null;
-        }
-        
-        // Method 3: Try individual HTML files  
-        async function tryIndividualFiles(shortCode) {
-            try {
-                updateMethodStatus('method3', 'searching', '📄 ملفات HTML - جاري البحث...');
-                
-                const fileResponse = await fetch(`${BASE_URL}/${shortCode}.html`);
-                if (fileResponse.ok) {
-                    const htmlContent = await fileResponse.text();
-                    
-                    // Extract URL from meta refresh tag
-                    const metaRefreshMatch = htmlContent.match(/content="\\d+;url=(.+?)"/);
-                    if (metaRefreshMatch) {
-                        const extractedUrl = metaRefreshMatch[1];
-                        if (isValidUrl(extractedUrl)) {
-                            updateMethodStatus('method3', 'success', `📄 عُثر في ملف ${shortCode}.html`);
-                            console.log(`✅ Found in HTML file: ${extractedUrl}`);
-                            return extractedUrl;
-                        }
-                    }
-                }
-                
-                updateMethodStatus('method3', 'failed', '📄 لم يتم العثور في ملفات HTML');
-                
-            } catch (error) {
-                console.log(`HTML files error: ${error.message}`);
-                updateMethodStatus('method3', 'failed', `📄 خطأ: ${error.message}`);
-            }
-            
-            return null;
-        }
-        
-        // Method 4: Try common patterns
-        async function tryCommonPatterns(shortCode) {
-            try {
-                updateMethodStatus('method4', 'searching', '🔄 أنماط شائعة - جاري البحث...');
-                
-                // Try some intelligent guessing based on common short URL patterns
-                const commonPatterns = [
-                    `https://example.com/page/${shortCode}`,
-                    `https://arabsad.com/go/${shortCode}`,
-                    `https://bit.ly/${shortCode}`,
-                    `https://tinyurl.com/${shortCode}`,
-                    `https://youtu.be/${shortCode}`, // For YouTube links
-                    `https://fb.me/${shortCode}`, // For Facebook links
-                    `https://wa.me/${shortCode}` // For WhatsApp links
-                ];
-                
-                for (let pattern of commonPatterns) {
-                    try {
-                        // Quick HEAD request to check if URL exists
-                        const testResponse = await fetch(pattern, { 
-                            method: 'HEAD',
-                            mode: 'no-cors' // Avoid CORS issues
-                        });
-                        
-                        // Since we're using no-cors, we can't check status
-                        // But if the fetch doesn't throw, the URL might be valid
-                        console.log(`Testing pattern: ${pattern}`);
-                        
-                    } catch (e) {
-                        // Pattern doesn't work, continue
-                    }
-                }
-                
-                updateMethodStatus('method4', 'failed', '🔄 لم يتم العثور في أنماط شائعة');
-                
-            } catch (error) {
-                console.log(`Common patterns error: ${error.message}`);
-                updateMethodStatus('method4', 'failed', `🔄 خطأ: ${error.message}`);
+                debugLog('GitHub Issues error:', error.message);
             }
             
             return null;
         }
         
         async function performRedirect() {
-            const shortCode = getShortCode();
+            updateStepStatus('step1', 'processing');
             
-            console.log('Current URL:', window.location.href);
-            console.log('Short code:', shortCode);
+            const shortCodeData = getShortCode();
+            debugLog('Short code data:', shortCodeData);
             
-            if (!shortCode) {
-                showError('لا يوجد رمز رابط في العنوان. <br><br>💡 استخدم: <code>?to=رمزالرابط</code><br><br>مثال: <code>s.html?to=test</code>');
-                document.getElementById('searchMethods').style.display = 'none';
+            if (!shortCodeData) {
+                updateStepStatus('step1', 'failed');
+                showError('لا يوجد رمز رابط في العنوان. <br><br>💡 الطرق المدعومة:<br>• <code>?to=رمز</code> - للبحث في قاعدة البيانات<br>• <code>?to=رابط_كامل</code> - للتوجيه المباشر<br><br>أمثلة:<br>• <code>s.html?to=test</code><br>• <code>s.html?to=https%3A//example.com</code>');
                 return;
             }
             
+            updateStepStatus('step1', 'success');
             let targetUrl = null;
             let source = '';
             
-            // Method 1: Try JSON Database (fastest)
-            targetUrl = await tryJsonDatabase(shortCode);
-            if (targetUrl) {
-                source = 'json-db';
-            }
-            
-            // Method 2: Try GitHub Issues
-            if (!targetUrl) {
-                targetUrl = await tryGitHubIssues(shortCode);
+            // Handle direct URL mode
+            if (shortCodeData.type === 'direct_url') {
+                targetUrl = processDirectUrl(shortCodeData.value);
                 if (targetUrl) {
-                    source = 'github-issues';
+                    source = 'direct_url';
+                    updateStepStatus('step4', 'success');
+                }
+            } 
+            // Handle code lookup mode
+            else {
+                updateStepStatus('step2', 'success'); // Skip normalization for codes
+                
+                // Try JSON database first
+                targetUrl = await tryJsonDatabase(shortCodeData.value);
+                if (targetUrl) {
+                    source = 'json-db';
+                    updateStepStatus('step4', 'success');
+                } else {
+                    // Try GitHub Issues as fallback
+                    targetUrl = await tryGitHubIssues(shortCodeData.value);
+                    if (targetUrl) {
+                        source = 'github-issues';
+                        updateStepStatus('step4', 'success');
+                    }
                 }
             }
             
-            // Method 3: Try individual HTML files
             if (!targetUrl) {
-                targetUrl = await tryIndividualFiles(shortCode);
-                if (targetUrl) {
-                    source = 'html-files';
-                }
-            }
-            
-            // Method 4: Try common patterns
-            if (!targetUrl) {
-                targetUrl = await tryCommonPatterns(shortCode);
-                if (targetUrl) {
-                    source = 'common-patterns';
-                }
-            }
-            
-            if (!targetUrl) {
-                showError(`رمز الرابط "${shortCode}" غير مُعرّف حالياً.<br><br>💡 لإضافة رابط جديد:<br>1. استخدم <a href="tools/url-shortener.html" style="color: #fbbf24;">أداة مختصر الروابط</a><br>2. أو أرسل طلب إضافة الرمز "${shortCode}" عبر <a href="https://wa.me/201110760081" style="color: #fbbf24;">WhatsApp</a>`);
+                updateStepStatus('step4', 'failed');
+                showError(`لا يمكن العثور على وجهة للرمز: "${shortCodeData.value}"<br><br>💡 لإضافة رابط جديد:<br>1. استخدم <a href="tools/url-shortener.html" style="color: #fbbf24; text-decoration: underline;">أداة مختصر الروابط</a><br>2. أو أرسل الرمز والرابط عبر <a href="https://wa.me/201110760081" style="color: #fbbf24; text-decoration: underline;">واتساب</a>`);
                 return;
             }
             
-            showSuccess(targetUrl, shortCode, source);
+            showSuccess(targetUrl, shortCodeData.value, source);
             
             // Analytics tracking
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'short_url_redirect', {
-                    'short_code': shortCode,
+                gtag('event', 'smart_redirect', {
+                    'short_code': shortCodeData.value,
+                    'short_code_type': shortCodeData.type,
                     'target_url': targetUrl,
                     'source_method': source,
                     'user_agent': navigator.userAgent,
@@ -416,36 +481,43 @@
             
             // Perform redirect
             setTimeout(() => {
-                console.log(`Redirecting to: ${targetUrl}`);
+                debugLog('Performing redirect to:', targetUrl);
                 window.location.href = targetUrl;
             }, 2000);
         }
         
-        // Start the process when page loads
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, starting redirect process...');
+            debugLog('DOM loaded, starting smart redirect process...');
             performRedirect();
         });
         
-        // Handle cases where DOM is already loaded
-        if (document.readyState === 'loading') {
-            // Wait for DOMContentLoaded
-        } else {
-            console.log('DOM already loaded, starting redirect process immediately...');
+        // Fallback for already loaded DOM
+        if (document.readyState !== 'loading') {
+            debugLog('DOM already loaded, starting immediately...');
             performRedirect();
         }
         
-        // Emergency fallback after 15 seconds
+        // Emergency fallback
         setTimeout(() => {
-            console.log('Emergency fallback triggered');
-            window.location.href = BASE_URL;
-        }, 15000);
+            debugLog('Emergency fallback triggered - redirecting to home');
+            window.location.href = CONFIG.BASE_URL;
+        }, 20000);
         
-        // Handle click anywhere to trigger manual redirect if available
+        // Manual redirect on click
         document.addEventListener('click', function() {
             const manualButton = document.getElementById('manualButton');
             if (manualButton && manualButton.style.display !== 'none' && manualButton.href !== '#') {
+                debugLog('Manual redirect triggered');
                 window.location.href = manualButton.href;
+            }
+        });
+        
+        // Show debug info toggle (for development)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'D' && e.ctrlKey) {
+                const debugInfo = document.getElementById('debugInfo');
+                debugInfo.style.display = debugInfo.style.display === 'none' ? 'block' : 'none';
             }
         });
     </script>
