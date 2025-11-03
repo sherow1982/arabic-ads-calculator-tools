@@ -1,0 +1,41 @@
+{
+  "export_formats": {
+    "google_ads_editor": {
+      "headers": ["Campaign", "Ad Group", "Keyword", "Match Type", "Max CPC", "Final URL", "Status"],
+      "structure": "campaign_per_sector"
+    },
+    "facebook_business": {
+      "headers": ["Campaign Name", "Ad Set Name", "Interest", "Behavior", "Demographics", "Budget", "Bid Strategy"],
+      "structure": "adset_per_intent"
+    },
+    "tiktok_ads": {
+      "headers": ["Campaign", "Ad Group", "Interest Category", "Age Range", "Gender", "Budget", "Optimization Goal"],
+      "structure": "campaign_per_objective"
+    }
+  },
+  "advanced_xlsx_structure": {
+    "sheet_1_campaign_summary": {
+      "columns": ["المعلومة", "القيمة", "ملاحظات", "تاريخ آخر تحديث"],
+      "includes": ["معلومات أساسية", "ملخص الميزانية", "المنصات المختارة", "الأهداف المتوقعة"]
+    },
+    "sheet_2_keywords_master": {
+      "columns": ["الكلمة", "نوع المطابقة", "مجموعة النية", "المصدر", "التخصص/الدور", "الأولوية", "CPC المتوقع", "حجم البحث التقديري"],
+      "sorting": "by_intent_priority"
+    },
+    "sheet_3_negative_keywords": {
+      "columns": ["الكلمة السلبية", "سبب الاستبعاد", "المنصة المناسبة", "مستوى الأولوية"],
+      "categories": ["عامة", "خاصة بالمجال", "موسمية"]
+    },
+    "sheet_4_budget_allocation": {
+      "columns": ["المنصة", "نوع الإعلان", "الميزانية المخصصة", "CPM المتوقع", "الظهور المتوقع", "النقرات المتوقعة", "التحويلات المتوقعة", "ROAS المتوقع"],
+      "includes_forecasts": true
+    },
+    "sheet_5_ad_strategy": {
+      "columns": ["المنصة", "نوع الإعلان المقترح", "سبب الاختيار", "الجمهور المستهدف", "KPIs الرئيسية", "أفضل أوقات النشر", "التحدي المتوقع", "نصائح التحسين"]
+    },
+    "sheet_6_profile_data": {
+      "columns": ["العنصر", "النوع", "الوصف", "الاستخدام المقترح"],
+      "includes": ["بروفايل المجال الكامل", "المرادفات والتخصصات", "الخدمات والأدوار"]
+    }
+  }
+}

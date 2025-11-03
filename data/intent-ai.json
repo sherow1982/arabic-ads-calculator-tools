@@ -1,0 +1,56 @@
+{
+  "intent_patterns": {
+    "service_seeking": {
+      "keywords": ["اسعار", "تكلفة", "افضل", "قريب مني", "حجز", "طلب", "رقم", "موعد"],
+      "templates": ["{quality} {field} {location}", "اسعار {service}", "حجز {service} {timing}", "رقم {field} موثوق"]
+    },
+    "employment_seeking": {
+      "keywords": ["وظائف", "توظيف", "عمل", "مطلوب", "فرص", "كارير", "cv", "سيرة"],
+      "templates": ["وظائف {field}", "مطلوب {specialization}", "فرص عمل {field}", "توظيف {field} {location}"]
+    },
+    "business_seeking": {
+      "keywords": ["مدير", "خبير", "استشاري", "محترف", "مستقل", "فريلانسر", "وكالة", "شركة متخصصة"],
+      "templates": ["مدير {field} محترف", "{field} مستقل", "وكالة {field}", "خبير {specialization}"]
+    },
+    "learning_seeking": {
+      "keywords": ["تعليم", "دورة", "تدريب", "كورس", "شرح", "تعلم", "دبلوم"],
+      "templates": ["دورة {field}", "تعليم {specialization}", "تدريب {field} اونلاين"]
+    },
+    "tools_equipment": {
+      "keywords": ["ادوات", "معدات", "اجهزة", "مستلزمات", "للبيع", "شراء"],
+      "templates": ["ادوات {field}", "معدات {specialization}", "مستلزمات {field} للبيع"]
+    }
+  },
+  "marketing_intent": {
+    "ميديا باير": {
+      "primary_intent": "business_seeking",
+      "smart_keywords": [
+        "مدير حملات اعلانية محترف",
+        "ميديا باير مستقل لادارة Google Ads",
+        "خبير Facebook Ads وInstagram",
+        "مختص TikTok Ads وحملات الفيديو",
+        "مدير حملات YouTube وSnapchat",
+        "استشاري تحسين ROAS والعائد",
+        "محلل بيانات الحملات الاعلانية",
+        "مطور استراتيجيات الاستهداف",
+        "خبير A/B Testing للاعلانات",
+        "مدير حملات Lead Generation"
+      ]
+    },
+    "اعلانات ممولة": {
+      "primary_intent": "service_seeking",
+      "smart_keywords": [
+        "ادارة حملات اعلانية ممولة",
+        "خدمات Google Ads احترافية",
+        "ادارة Facebook وInstagram Ads",
+        "حملات TikTok للشركات",
+        "خدمات YouTube Ads",
+        "تحسين ROAS للحملات",
+        "استهداف جمهور دقيق",
+        "تصميم اعلانات احترافية",
+        "تتبع وتحليل الحملات",
+        "استراتيجيات الاعلان المدفوع"
+      ]
+    }
+  }
+}
