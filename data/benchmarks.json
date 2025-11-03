@@ -1,0 +1,16 @@
+{
+  "countries": {
+    "السعودية": {"currency":"SAR", "platforms":["Google Ads","Facebook","Instagram","Snapchat","TikTok"], "cpm":{"Facebook":1.8,"Google Ads":2.2,"Instagram":2.0,"Snapchat":3.1,"TikTok":2.5}},
+    "الإمارات": {"currency":"AED", "platforms":["Google Ads","Facebook","Instagram","LinkedIn","YouTube"], "cpm":{"Facebook":2.1,"Google Ads":2.8,"Instagram":2.3,"LinkedIn":4.2,"YouTube":1.9}},
+    "الكويت": {"currency":"KWD", "platforms":["Google Ads","Facebook","Instagram","Snapchat"], "cpm":{"Facebook":1.5,"Google Ads":1.9,"Instagram":1.7,"Snapchat":2.8}},
+    "قطر": {"currency":"QAR", "platforms":["Google Ads","Facebook","Instagram","YouTube"], "cpm":{"Facebook":2.3,"Google Ads":3.1,"Instagram":2.6,"YouTube":2.0}},
+    "البحرين": {"currency":"BHD", "platforms":["Google Ads","Facebook","Instagram"], "cpm":{"Facebook":1.4,"Google Ads":1.8,"Instagram":1.6}},
+    "عُمان": {"currency":"OMR", "platforms":["Google Ads","Facebook","Instagram"], "cpm":{"Facebook":1.6,"Google Ads":2.0,"Instagram":1.8}},
+    "مصر": {"currency":"EGP", "platforms":["Facebook","Instagram","Google Ads","TikTok","YouTube"], "cpm":{"Facebook":0.4,"Google Ads":0.6,"Instagram":0.5,"TikTok":0.7,"YouTube":0.3}},
+    "الأردن": {"currency":"JOD", "platforms":["Facebook","Instagram","Google Ads"], "cpm":{"Facebook":1.2,"Google Ads":1.6,"Instagram":1.4}},
+    "لبنان": {"currency":"LBP", "platforms":["Facebook","Instagram","Google Ads"], "cpm":{"Facebook":0.8,"Google Ads":1.1,"Instagram":0.9}},
+    "المغرب": {"currency":"MAD", "platforms":["Facebook","Instagram","Google Ads"], "cpm":{"Facebook":0.6,"Google Ads":0.9,"Instagram":0.7}},
+    "تونس": {"currency":"TND", "platforms":["Facebook","Instagram","Google Ads"], "cpm":{"Facebook":0.5,"Google Ads":0.8,"Instagram":0.6}},
+    "الجزائر": {"currency":"DZD", "platforms":["Facebook","Instagram","Google Ads"], "cpm":{"Facebook":0.3,"Google Ads":0.5,"Instagram":0.4}}
+  }
+}
