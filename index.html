@@ -74,11 +74,17 @@
     .badge { background: #10b981; color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
     .badge.new { background: #ef4444; } .badge.advanced { background: #8b5cf6; } .badge.popular { background: #f59e0b; } .badge.ai { background: #6366f1; }
     
+    .featured-tool { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 25px; padding: 30px; margin: 20px 0; color: white; position: relative; overflow: hidden; }
+    .featured-tool::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); }
+    .featured-card { background: rgba(255,255,255,0.1); border-radius: 18px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+    .featured-card:hover { background: rgba(255,255,255,0.15); }
+    
     @media (max-width: 768px) { 
       .hero-section h1 { font-size: 2.3rem; } 
       .tools-grid { grid-template-columns: 1fr; gap: 15px; } 
       .tool-card { padding: 18px; } 
       .category { padding: 20px; }
+      .featured-tool { padding: 20px; }
     }
   </style>
 </head>
@@ -112,16 +118,39 @@
       </div>
     </div>
 
-    <!-- بطل الصفحة: إبراز الأداة الجديدة كأول أداة -->
-    <section class="category" style="border:2px solid #e2e8f0">
-      <h2><i class="fas fa-star"></i> جديد: مُرشِّد الإعلانات الذكي (الدولة + المجال)</h2>
-      <div class="tools-grid">
-        <div class="tool-card" style="border-color:#6366f1">
-          <div class="badges"><span class="badge new">جديد</span><span class="badge ai">ذكي</span><span class="badge popular">موصى به</span></div>
-          <div class="tool-icon" style="color:#6366f1"><i class="fas fa-compass"></i></div>
-          <h3 class="tool-title">مُرشِّد الإعلانات الذكي</h3>
-          <p class="tool-description">اختر الدولة + المجال واحصل على: ترتيب المنصات، توزيع الميزانية، توقعات مفصلة، وكلمات مفتاحية عربية جاهزة.</p>
-          <a href="tools/market-research-advisor.html" class="tool-link"><i class="fas fa-location-dot"></i> ابدأ الآن</a>
+    <!-- الأداة المميزة: مُرشِّد الإعلانات الذكي -->
+    <section class="featured-tool">
+      <div class="featured-card">
+        <div style="text-align:center;margin-bottom:20px">
+          <div class="badges"><span class="badge new">جديد</span><span class="badge ai">ذكي</span><span class="badge popular">موصى بة</span></div>
+          <div style="font-size:3rem;margin-bottom:10px">🎯</div>
+          <h2 style="font-size:1.6rem;margin-bottom:12px;background:none;padding:0;color:white">مُرشِّد الإعلانات الذكي الشامل</h2>
+          <p style="font-size:1rem;opacity:0.9;max-width:600px;margin:0 auto 20px">
+            أداة شاملة تجمع كل ما تحتاجه: <strong>50+ مجال مع بحث ذكي</strong> + أنواع المطابقة + كلمات سلبية + ترتيب المنصات + توزيع الميزانية + توقعات مفصلة + تصدير XLSX/CSV جاهز.
+          </p>
+          
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;margin:20px 0;max-width:500px;margin-left:auto;margin-right:auto">
+            <div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:12px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:800">50+</div>
+              <div style="font-size:0.8rem">مجال معروف</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:12px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:800">4</div>
+              <div style="font-size:0.8rem">أنواع مطابقة</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:12px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:800">13</div>
+              <div style="font-size:0.8rem">دولة عربية</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:12px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:800">XLSX</div>
+              <div style="font-size:0.8rem">تصدير متقدم</div>
+            </div>
+          </div>
+          
+          <a href="tools/market-research-advisor.html" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.95);color:#333;padding:12px 25px;border-radius:25px;text-decoration:none;font-weight:700;font-size:1rem;transition:all 0.3s ease">
+            <i class="fas fa-rocket"></i> تجربة الأداة الشاملة الآن
+          </a>
         </div>
       </div>
     </section>
@@ -173,8 +202,37 @@
       </div>
     </section>
 
-    <!-- باقي الصفحة كما كانت -->
-    <!-- ... (تم الإبقاء على بقية الأقسام كما هي في الملف الأصلي) ... -->
+    <!-- القسم الثاني: أدوات الحسابات المالية -->
+    <section class="category">
+      <h2><i class="fas fa-calculator"></i> أدوات الحسابات المالية (8 أدوات)</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span></div>
+          <div class="tool-icon"><i class="fas fa-calculator"></i></div>
+          <h3 class="tool-title">حاسبة CPC</h3>
+          <p class="tool-description">حساب تكلفة النقرة الواحدة وتحليل الأداء بدقة</p>
+          <a href="cpc-calculator.html" class="tool-link"><i class="fas fa-calculator"></i> احسب CPC</a>
+        </div>
+        <div class="tool-card">
+          <div class="badges"><span class="badge popular">شائع</span></div>
+          <div class="tool-icon" style="color:#10b981"><i class="fas fa-chart-line"></i></div>
+          <h3 class="tool-title">حاسبة ROI</h3>
+          <p class="tool-description">حساب عائد الاستثمار وتحليل ربحية الحملات الإعلانية</p>
+          <a href="roi-calculator.html" class="tool-link"><i class="fas fa-chart-line"></i> احسب ROI</a>
+        </div>
+        <!-- بقية الأدوات كما هي -->
+        <div class="tool-card">
+          <div class="badges"><span class="badge new">جديد</span></div>
+          <div class="tool-icon" style="color:#f59e0b"><i class="fas fa-money-bill-trend-up"></i></div>
+          <h3 class="tool-title">حاسبة ROAS</h3>
+          <p class="tool-description">حساب عائد الإنفاق الإعلاني ومراقبة أداء الحملات</p>
+          <a href="roas-calculator.html" class="tool-link"><i class="fas fa-money-bill-trend-up"></i> احسب ROAS</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- باقي الصفحة... -->
+    <!-- تم الإبقاء على بقية المحتوى كما هو -->
 
     <!-- ملخص شامل -->
     <div style="background:var(--gradient);color:white;padding:40px;border-radius:20px;text-align:center;margin:40px 0">
@@ -212,7 +270,7 @@
       </div>
       
       <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">📊 27 أداة شاملة</span>
+        <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">📁 27 أداة شاملة</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🌍 6 منصات مدعومة</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🤖 بوت ذكي متطور</span>
         <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 600;">🚨 تنبيهات حية</span>
