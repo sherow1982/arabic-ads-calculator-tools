@@ -20,12 +20,14 @@
     .row .col{flex:1 1 260px}
     .small{font-size:.85rem}
     .error{background:#ffe8e6;color:#b10;border:1px solid #f3b1aa;padding:10px 12px;border-radius:10px;margin:10px 0;display:none}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .btn{background:var(--gradient);color:#fff;border:none;border-radius:20px;padding:8px 14px;cursor:pointer}
   </style>
 </head>
 <body>
   <div class="container" id="app">
     <h1>🎯 مُرشِّد الإعلانات الذكي (نسخة محسّنة)</h1>
-    <p class="muted">اكتب <b>مجال عملك</b> بحرية، واختر <b>الدولة</b>، وسنولّد تلقائيًا <b>30 كلمة بحث</b> عربية شائعة، مع مزيج قنوات وتوزيع ميزانية وتوقعات تفصيلية.</p>
+    <p class="muted">اكتب <b>مجال عملك</b> بحرية، واختر <b>الدولة</b>، وسنولّد تلقائيًا <b>30 كلمة بحث</b> عربية شائعة، مع مزيج قنوات وتوزيع ميزانية وتوقعات تفصيلية. الآن مع <b>تصدير XLSX</b>.</p>
 
     <div id="err" class="error">تعذر تحميل بيانات الدول. رجاء تحديث الصفحة (Ctrl+F5). إن استمر، تواصل معنا.</div>
 
@@ -79,7 +81,11 @@
         </div>
       </div>
       <button id="run" disabled>توليد الخطة والكلمات</button>
-      <p class="small warn">تنبيه: الكلمات المتولدة تعتمد على قواميس وصيغ شائعة عامة. لأرقام دقيقة استخدم أدوات كلمات مدفوعة أو GKP.</p>
+      <div class="actions">
+        <button id="copyTop30" class="btn" disabled>نسخ أفضل 30</button>
+        <button id="exportXlsx" class="btn" disabled>تنزيل XLSX</button>
+      </div>
+      <p class="small warn">تنبيه: الكلمات المتولدة تعتمد على صيغ شائعة. لأحجام بحث دقيقة استخدم أدوات بيانات رسمية.</p>
     </div>
 
     <div id="out" style="display:none">
@@ -111,10 +117,13 @@
     </div>
   </div>
 
+  <!-- SheetJS and exporter -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/xlsx-exporter.js"></script>
+
   <script>
     function normalize(s){ return (s||'').toLowerCase().replace(/[\u064B-\u0652]/g,'').trim(); }
 
-    // مُولّد كلمات بسيط يعتمد على قواعد لغوية شائعة وصيغ تركيب عربي
     const SEED_SYNONYMS = {
       'اسنان':['اسنان','اسنانك','اسنانى','اسناننا','ضرس','ضروس','تبييض','ابتسامة','تقويم','حشو','خلع','زرع'],
       'موضه':['موضة','ازياء','لبس','ملابس','تيشرت','بلوزة','فستان','بنطلون','طرح','حجاب','عباية','عبايات','اكسسوارات'],
@@ -128,59 +137,31 @@
     function generateKeywords(freeText){
       const base = normalize(freeText);
       const words = new Set();
-
-      // تقسيم المدخلات واستخراج الجذور البسيطة
       const tokens = base.split(/\s+/).filter(Boolean);
       const roots = tokens.map(t=> t.replace(/[ةه]/g,'ه').replace(/[آأإا]/g,'ا'));
-
-      // صيغ تركيب عامة
       const intents = ['شراء','حجز','طلب','سعر','اسعار','تكلفة','قريب','بالقرب','افضل','ارخص','جديد','خصم','عروض','اونلاين'];
-
-      roots.forEach(r=>{
-        intents.forEach(i=> words.add(`${r} ${i}`));
-        GENERIC_TAIL.forEach(t=> words.add(`${r} ${t}`));
-      });
-
-      // مطابقات مرادفات بسيطة حسب المجال
-      Object.keys(SEED_SYNONYMS).forEach(seed=>{
-        if(base.includes(seed)){
-          SEED_SYNONYMS[seed].forEach(s=>{
-            intents.forEach(i=> words.add(`${s} ${i}`));
-          });
-        }
-      });
-
-      // إزالة التكرار وقصّ 30
+      roots.forEach(r=>{ intents.forEach(i=> words.add(`${r} ${i}`)); GENERIC_TAIL.forEach(t=> words.add(`${r} ${t}`)); });
+      Object.keys(SEED_SYNONYMS).forEach(seed=>{ if(base.includes(seed)){ SEED_SYNONYMS[seed].forEach(s=>{ intents.forEach(i=> words.add(`${s} ${i}`)); }); } });
       const out = Array.from(words).filter(w=> w.length>=3).slice(0,30);
-      // إن كانت أقل من 30 نضيف ذيول عامة على أول جذر
-      while(out.length<30 && roots[0]){
-        out.push(`${roots[0]} ${GENERIC_TAIL[out.length % GENERIC_TAIL.length]}`);
-      }
+      while(out.length<30 && roots[0]){ out.push(`${roots[0]} ${GENERIC_TAIL[out.length % GENERIC_TAIL.length]}`); }
       return out;
     }
 
     const GOAL_WEIGHTS={ awareness:{display:0.5,video:0.3,social:0.2}, traffic:{search:0.45,social:0.35,video:0.2}, leads:{search:0.5,social:0.35,linkedin:0.15}, sales:{search:0.45,social:0.4,video:0.15} };
     function normalizeWeights(m){ const s=Object.values(m).reduce((a,b)=>a+b,0)||1; const o={}; for(const k in m){o[k]=m[k]/s;} return o; }
     function platformFamily(p){ const t=p.toLowerCase(); if(t.includes('google')) return 'search'; if(t.includes('linkedin')) return 'linkedin'; if(t.includes('youtube')||t.includes('tiktok')||t.includes('snapchat')) return 'video'; return 'social'; }
-    function adjustByPriority(w,pr){ return normalizeWeights(w); }
-    function seasonalMultiplier(s,season){ return 1; }
-    function estimateCTR(s){ return 0.012; }
-    function estimateCVR(s){ return 0.02; }
 
-    async function load(){
-      try{ const res=await fetch('../data/ads-country-benchmarks.json',{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status); return await res.json(); }
-      catch(e){ document.getElementById('err').style.display='block'; throw e; }
-    }
-
+    async function load(){ try{ const res=await fetch('../data/ads-country-benchmarks.json',{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status); return await res.json(); } catch(e){ document.getElementById('err').style.display='block'; throw e; } }
     function fmt(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
 
     (async function init(){
       const data=await load();
       const countries=data.countries||{};
       const cList=document.getElementById('countries'); Object.keys(countries).forEach(k=>{ const o=document.createElement('option'); o.value=countries[k].name||k; cList.appendChild(o); });
-      document.getElementById('country').disabled=false; document.getElementById('run').disabled=false;
+      const runBtn=document.getElementById('run'); const copyBtn=document.getElementById('copyTop30'); const xlsxBtn=document.getElementById('exportXlsx');
+      document.getElementById('country').disabled=false; runBtn.disabled=false; copyBtn.disabled=false; xlsxBtn.disabled=false;
 
-      document.getElementById('run').addEventListener('click', ()=>{
+      runBtn.addEventListener('click', ()=>{
         const cVal=document.getElementById('country').value.trim();
         const sectorFree=document.getElementById('sectorFree').value.trim();
         if(!cVal||!sectorFree){ alert('من فضلك اختر دولة واكتب مجال العمل'); return; }
@@ -188,12 +169,16 @@
         if(!country){ alert('اختر دولة من القائمة'); return; }
         document.getElementById('currency').value=country.currency||'';
 
-        // توليد كلمات
         const kws = generateKeywords(sectorFree);
-        const kwEl=document.getElementById('keywords'); kwEl.innerHTML='';
-        kws.forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
+        const kwEl=document.getElementById('keywords'); kwEl.innerHTML=''; kws.forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
 
-        // بقية الحسابات كما هي مبسطة
+        copyBtn.onclick = ()=>{ navigator.clipboard.writeText(kws.join('\n')).then(()=> alert('تم نسخ أفضل 30 كلمة')); };
+        xlsxBtn.onclick = ()=>{
+          const rows = [['الكلمة','النية/ملاحظة'], ...kws.map(k=> [k,''])];
+          if(window.__XLSX_EXPORT__) window.__XLSX_EXPORT__.downloadXlsx('arabic-keywords.xlsx', rows);
+          else alert('مكون XLSX غير مُحمّل');
+        };
+
         const goal=document.getElementById('goal').value; const days=parseInt(document.getElementById('days').value||'30',10); const totalBudget=parseFloat(document.getElementById('budget').value||'0'); const season=document.getElementById('season').value;
         const r=country.budget_ranges||{small:{min:2000,max:8000}}; const monthly= totalBudget>0? totalBudget : Math.round((r.small.min+r.small.max)/2); const campaignBudget=Math.max(200, Math.round((monthly/30)*days));
         let w=normalizeWeights(GOAL_WEIGHTS[goal]); const rec=country.recommended_platforms||[]; const cpm=country.avg_cpm||{}; const top=[...rec].sort((a,b)=>(cpm[a]||99)-(cpm[b]||99)).slice(0,3); const mix=[]; for(const p of top){ mix.push({platform:p,family:platformFamily(p),cpm:cpm[p]||2}); }
