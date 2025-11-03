@@ -1,214 +1,1007 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌍 مختصر الروابط العالمي - أوضاع: تقصير • تجميل • كلاهما</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    .mode-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:10px 0}
-    .mode-tabs .btn{border-radius:999px}
-    .pill{background:#0ea5e9;color:#fff;border-radius:999px;padding:.4rem .8rem;font-weight:600}
-    textarea{direction:ltr;font-family:monospace}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + باك لينك تلقائي</title>
+    <meta name="description" content="أداة شاملة لتقصير وتجميل الروابط العربية والإنجليزية + إنشاء باك لينكات قوية على 10 مواقع DA عالي تلقائياً">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --info-gradient: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --danger-gradient: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+            --glass: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --border-radius: 15px;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .mode-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-tab {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-tab:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .mode-tab.active {
+            background: white;
+            color: #667eea;
+            border-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            direction: ltr;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-control:focus {
+            background: white;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            transform: scale(1.02);
+        }
+
+        .btn {
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-success {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.6);
+        }
+
+        .btn-info {
+            background: var(--info-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .btn-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+        }
+
+        .btn-warning {
+            background: var(--warning-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+        }
+
+        .btn-danger {
+            background: var(--danger-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(252, 70, 107, 0.4);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(252, 70, 107, 0.6);
+        }
+
+        .btn-outline-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            color: #fff;
+        }
+
+        .results-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .table {
+            background: transparent;
+        }
+
+        .table th {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .table td {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+
+        .url-text {
+            font-family: 'Courier New', monospace;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+            word-break: break-all;
+            font-size: 0.85rem;
+        }
+
+        .copy-btn {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            backdrop-filter: blur(10px);
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .loading-animation {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-banner {
+            background: var(--success-gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 1rem 0;
+            box-shadow: 0 4px 20px rgba(17, 153, 142, 0.3);
+            display: none;
+        }
+
+        .backlink-report {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #333;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .glass-card { padding: 1.5rem; }
+            .mode-tabs { gap: 0.3rem; }
+            .mode-tab { padding: 0.6rem 1rem; font-size: 0.9rem; }
+            .stats-container { gap: 0.5rem; }
+            .stat-item { padding: 0.6rem 0.8rem; min-width: 80px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h1 class="h5 m-0">🌍 مختصر الروابط العالمي</h1>
-      <span class="pill">أوضاع: تقصير • تجميل • كلاهما</span>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="btn btn-light btn-sm" onclick="toggleLanguage()" id="langBtn">
+            <i class="fas fa-globe"></i> EN
+        </button>
     </div>
 
-    <div class="mode-tabs mb-2">
-      <button id="tabShort" class="btn btn-primary btn-sm"><i class="fa-solid fa-scissors me-1"></i>تقصير الروابط</button>
-      <button id="tabPretty" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-wand-magic-sparkles me-1"></i>تجميل الروابط</button>
-      <button id="tabBoth" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-star me-1"></i>التقصير + التجميل</button>
-      <button id="btnCleanUrls" class="btn btn-outline-warning btn-sm ms-auto"><i class="fas fa-broom me-1"></i>تنظيف الروابط (لا يغيّر الدومين)</button>
-      <button id="backlinkBtn" class="btn btn-danger btn-sm"><i class="fas fa-bolt me-1"></i>باك لينك DA عالي (بدون تسجيل دخول)</button>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="mainTitle">🌍 مختصر الروابط العالمي</h1>
+            <p id="mainSubtitle">تقصير + تجميل + باك لينك تلقائي | يدعم جميع اللغات والرموز</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="glass-card">
+            <!-- Mode Tabs -->
+            <div class="mode-tabs">
+                <div class="mode-tab active" data-mode="shorten" id="tabShorten">
+                    <i class="fas fa-scissors me-2"></i>
+                    <span id="textShorten">تقصير الروابط</span>
+                </div>
+                <div class="mode-tab" data-mode="beautify" id="tabBeautify">
+                    <i class="fas fa-wand-magic-sparkles me-2"></i>
+                    <span id="textBeautify">تجميل الروابط</span>
+                </div>
+                <div class="mode-tab" data-mode="both" id="tabBoth">
+                    <i class="fas fa-star me-2"></i>
+                    <span id="textBoth">التقصير + التجميل معاً</span>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-container" id="statsContainer">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCount">0</span>
+                    <span class="stat-label" id="totalLabel">إجمالي</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="validCount" style="color: #38ef7d;">0</span>
+                    <span class="stat-label" id="validLabel">صالحة</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="duplicateCount" style="color: #ffc107;">0</span>
+                    <span class="stat-label" id="duplicateLabel">مكررة</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="invalidCount" style="color: #fc466b;">0</span>
+                    <span class="stat-label" id="invalidLabel">غير صالحة</span>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <div class="mb-3">
+                <label for="urlInput" class="form-label text-white fw-bold">
+                    <i class="fas fa-paste me-2"></i>
+                    <span id="inputLabel">الصق الروابط هنا (حتى 1000 رابط)</span>
+                </label>
+                <textarea 
+                    class="form-control" 
+                    id="urlInput" 
+                    rows="8" 
+                    placeholder="https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية&#10;https://example.com/products/special-offer?utm_source=facebook&#10;https://mystore.com/🚀✨🎉-emoji-url"
+                ></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2 flex-wrap justify-content-center">
+                <button class="btn btn-primary btn-lg" onclick="processUrls()" id="processBtn">
+                    <i class="fas fa-magic me-2"></i>
+                    <span id="processBtnText">🤖 معالجة ذكية تلقائية</span>
+                </button>
+                
+                <button class="btn btn-outline-warning" onclick="cleanUrls()" id="cleanBtn">
+                    <i class="fas fa-broom me-2"></i>
+                    <span id="cleanBtnText">تنظيف الروابط</span>
+                </button>
+                
+                <button class="btn btn-danger" onclick="createBacklinks()" id="backlinkBtn" disabled>
+                    <i class="fas fa-bolt me-2"></i>
+                    <span id="backlinkBtnText">باك لينك DA عالي</span>
+                </button>
+            </div>
+
+            <!-- Loading Animation -->
+            <div class="loading-animation" id="loadingSection">
+                <div class="spinner"></div>
+                <h5 id="loadingTitle">جاري المعالجة الذكية...</h5>
+                <p id="loadingDesc">تحليل الروابط وإنشاء الأكواد القصيرة والجميلة</p>
+            </div>
+
+            <!-- Success Banner -->
+            <div class="success-banner" id="successBanner">
+                <h4><i class="fas fa-check-circle me-2"></i><span id="successTitle">تم! الروابط جاهزة</span></h4>
+                <p class="mb-0" id="successMessage">تم إنشاء روابط قصيرة وجميلة جاهزة للاستخدام الفوري</p>
+            </div>
+
+            <!-- Backlink Report -->
+            <div class="backlink-report" id="backlinkReport">
+                <h5><i class="fas fa-chart-line me-2"></i>تقرير الباك لينكات</h5>
+                <div id="backlinkResults"></div>
+                <button class="btn btn-outline-dark btn-sm mt-2" onclick="downloadBacklinkReport()">
+                    <i class="fas fa-download me-2"></i>تحميل تقرير الباك لينكات XLSX
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="results-card" id="resultsCard" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="m-0">
+                    <i class="fas fa-list-check me-2 text-primary"></i>
+                    <span id="resultsTitle">النتائج</span>
+                </h4>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success btn-sm" onclick="copyAllShort()" id="copyShortBtn" style="display: none;">
+                        <i class="fas fa-scissors me-1"></i><span id="copyShortText">نسخ القصيرة</span>
+                    </button>
+                    <button class="btn btn-info btn-sm" onclick="copyAllPretty()" id="copyPrettyBtn" style="display: none;">
+                        <i class="fas fa-magic me-1"></i><span id="copyPrettyText">نسخ الجميلة</span>
+                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="downloadXLSX()" id="downloadBtn">
+                        <i class="fas fa-download me-1"></i>XLSX
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 35%" id="colOriginal">الرابط الأصلي</th>
+                            <th style="width: 30%" id="colShort">الرابط القصير</th>
+                            <th style="width: 30%" id="colPretty">الرابط الجميل</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTable"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="alert alert-info py-2" id="info">الصق حتى 1000 رابط - الوضع الحالي: تقصير</div>
-
-    <label class="form-label fw-bold">الروابط (كل رابط في سطر):</label>
-    <textarea id="urlInput" class="form-control" rows="8" placeholder="https://example.com/./product.html?name=منتج-عربي"></textarea>
-
-    <div class="d-flex gap-2 my-3">
-      <button id="action" class="btn btn-primary"><i class="fa-solid fa-play me-1"></i>تنفيذ</button>
-      <button id="copyShort" class="btn btn-success d-none"><i class="fa-solid fa-copy me-1"></i>نسخ القصيرة</button>
-      <button id="copyPretty" class="btn btn-info text-white d-none"><i class="fa-solid fa-copy me-1"></i>نسخ الجميلة</button>
-      <button id="downloadXlsx" class="btn btn-warning d-none"><i class="fa-solid fa-download me-1"></i>XLSX</button>
+    <!-- Floating Language Toggle for Mobile -->
+    <div class="floating-action d-md-none">
+        <button class="btn btn-light btn-sm" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i>
+        </button>
     </div>
 
-    <div id="results" class="card p-3 d-none">
-      <div class="table-responsive">
-        <table class="table align-middle">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>الأصلي</th>
-              <th>القصير</th>
-              <th>الجميل</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+    <script>
+        // Language System
+        const translations = {
+            ar: {
+                mainTitle: "🌍 مختصر الروابط العالمي",
+                mainSubtitle: "تقصير + تجميل + باك لينك تلقائي | يدعم جميع اللغات والرموز",
+                textShorten: "تقصير الروابط",
+                textBeautify: "تجميل الروابط", 
+                textBoth: "التقصير + التجميل معاً",
+                inputLabel: "الصق الروابط هنا (حتى 1000 رابط)",
+                processBtnText: "🤖 معالجة ذكية تلقائية",
+                cleanBtnText: "تنظيف الروابط",
+                backlinkBtnText: "باك لينك DA عالي",
+                successTitle: "تم! الروابط جاهزة",
+                successMessage: "تم إنشاء روابط قصيرة وجميلة جاهزة للاستخدام الفوري",
+                copyShortText: "نسخ القصيرة",
+                copyPrettyText: "نسخ الجميلة"
+            },
+            en: {
+                mainTitle: "🌍 Global URL Shortener",
+                mainSubtitle: "Shorten + Beautify + Auto Backlinks | Supports all languages",
+                textShorten: "Shorten URLs",
+                textBeautify: "Beautify URLs",
+                textBoth: "Shorten + Beautify Both",
+                inputLabel: "Paste URLs here (up to 1000 links)",
+                processBtnText: "🤖 Smart Auto Processing", 
+                cleanBtnText: "Clean URLs",
+                backlinkBtnText: "High DA Backlinks",
+                successTitle: "Done! URLs Ready",
+                successMessage: "Created short and pretty URLs ready for immediate use",
+                copyShortText: "Copy Short",
+                copyPrettyText: "Copy Pretty"
+            }
+        };
 
-  <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script>
-    // تحميل منظف الروابط وعدم تغيير الدومين
-    (function(){
-      const s=document.createElement('script');
-      s.src='https://sherow1982.github.io/arabic-ads-calculator-tools/tools/modules/url-cleaner.js';
-      s.defer=true;document.head.appendChild(s);
-    })();
+        let currentLang = 'ar';
+        let currentMode = 'shorten';
+        let processedResults = [];
+        let backlinkResults = [];
 
-    // مواقع باك لينك بدون تسجيل دخول (موجودة من النسخة السابقة)
-    const NO_LOGIN_SITES = [
-      { name:'Digg', url:'https://digg.com/submit', da:94 },
-      { name:'AllTop', url:'https://alltop.com/submit', da:85 },
-      { name:'Mix', url:'https://mix.com/add', da:92 },
-      { name:'Pocket', url:'https://getpocket.com/save', da:89 },
-      { name:'Instapaper', url:'https://www.instapaper.com/save', da:85 },
-      { name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/', da:79 },
-      { name:'All-in-one Tools Backlink', url:'https://allinonetools.net/backlink-maker/', da:70 },
-      { name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker', da:80 },
-      { name:'SearchEngineReports Backlinks', url:'https://searchenginereports.net/backlink-maker', da:76 },
-      { name:'Turbo SEO Backlinks', url:'https://www.turboseotools.com/backlink-maker', da:72 }
-    ];
+        // مواقع الباك لينك بدون تسجيل دخول
+        const NO_LOGIN_BACKLINK_SITES = [
+            { name: 'Digg', url: 'https://digg.com/submit', da: 94 },
+            { name: 'AllTop', url: 'https://alltop.com/submit', da: 85 },
+            { name: 'Mix', url: 'https://mix.com/add', da: 92 },
+            { name: 'Pocket', url: 'https://getpocket.com/save', da: 89 },
+            { name: 'Instapaper', url: 'https://www.instapaper.com/save', da: 85 },
+            { name: 'SEO Review Tools', url: 'https://www.seoreviewtools.com/seo-checker/', da: 79 },
+            { name: 'PrePostSEO Backlinks', url: 'https://www.prepostseo.com/backlinks-maker', da: 80 },
+            { name: 'SearchEngineReports', url: 'https://searchenginereports.net/backlink-maker', da: 76 },
+            { name: 'Turbo SEO Tools', url: 'https://www.turboseotools.com/backlink-maker', da: 72 },
+            { name: 'GT SEO Tools', url: 'https://gtseotools.com/backlink-maker', da: 75 }
+        ];
 
-    // وظائف أساسية
-    const BASE = 'https://sherow1982.github.io/arabic-ads-calculator-tools';
-    const SHORT_BASE = BASE + '/s.html?to=';
-
-    let mode = 'short'; // short | pretty | both
-
-    const info = document.getElementById('info');
-    const tabShort = document.getElementById('tabShort');
-    const tabPretty= document.getElementById('tabPretty');
-    const tabBoth  = document.getElementById('tabBoth');
-    const actionBtn= document.getElementById('action');
-    const copyShort= document.getElementById('copyShort');
-    const copyPretty=document.getElementById('copyPretty');
-    const downloadXlsx=document.getElementById('downloadXlsx');
-
-    function setMode(m){
-      mode=m;
-      tabShort.className = 'btn btn-' + (m==='short'?'':'outline-') + 'primary btn-sm';
-      tabPretty.className= 'btn btn-' + (m==='pretty'?'':'outline-') + 'primary btn-sm';
-      tabBoth.className  = 'btn btn-' + (m==='both'?'':'outline-') + 'primary btn-sm';
-      info.textContent = m==='short'? 'الصق حتى 1000 رابط - الوضع الحالي: تقصير'
-        : m==='pretty'? 'الوضع الحالي: تجميل - سننشئ سلاج عربي/إنجليزي نظيف'
-        : 'الوضع الحالي: التقصير + التجميل معاً';
-    }
-
-    tabShort.onclick = ()=> setMode('short');
-    tabPretty.onclick= ()=> setMode('pretty');
-    tabBoth.onclick  = ()=> setMode('both');
-
-    function normalizeUrl(url){
-      url=url.trim();
-      if(!/^https?:\/\//.test(url)) url='https://'+url;
-      try{
-        const u = new URL(url);
-        const path = u.pathname.replace(/\/\.\//g,'/').replace(/\/+/, '/');
-        return `${u.protocol}//${u.host}${path}${u.search}${u.hash}`;
-      }catch{ return url; }
-    }
-
-    function slugify(input){
-      if(!input) return '';
-      let s=input.trim();
-      try{ s=decodeURIComponent(s); }catch(_){ }
-      try{
-        const u=new URL(s);
-        const qp=new URLSearchParams(u.search);
-        const name = qp.get('name')||qp.get('title')||qp.get('q')||'';
-        if(name) s=name;
-      }catch(_){ }
-      s=s.replace(/[\u0000-\u001F\u007F]/g,'')
-        .replace(/\s+/g,'-')
-        .replace(/[^\u0600-\u06FFa-zA-Z0-9\-]+/g,'-')
-        .replace(/-+/g,'-')
-        .replace(/^-|-$/g,'')
-        .toLowerCase();
-      return s.substring(0,80);
-    }
-
-    function genShort(i){ return SHORT_BASE + 'k' + i; }
-
-    function process(){
-      const lines = document.getElementById('urlInput').value.split('\n').filter(l=>l.trim());
-      const tbody = document.getElementById('tbody');
-      tbody.innerHTML='';
-      const outShort=[]; const outPretty=[];
-
-      lines.forEach((line, idx)=>{
-        const original = normalizeUrl(line);
-        const shortUrl = genShort(idx+1);
-        const slug = slugify(original);
-        const pretty = BASE + '/' + slug; // شكل جميل فقط للعرض
-
-        const showShort = (mode==='short' || mode==='both');
-        const showPretty= (mode==='pretty'|| mode==='both');
-
-        const tr=document.createElement('tr');
-        tr.innerHTML = `
-          <td>${idx+1}</td>
-          <td style="font-family:monospace" dir="ltr">${original}</td>
-          <td>${ showShort? `<a href="${shortUrl}" target="_blank">${shortUrl}</a>` : '-' }</td>
-          <td>${ showPretty? `<span dir="ltr">${pretty}</span> <small class="text-muted">/${slug}</small>` : '-' }</td>
-        `;
-        tbody.appendChild(tr);
-        if(showShort) outShort.push(shortUrl);
-        if(showPretty) outPretty.push(pretty);
-      });
-
-      document.getElementById('results').classList.remove('d-none');
-      copyShort.classList.toggle('d-none', !(mode==='short'||mode==='both'));
-      copyPretty.classList.toggle('d-none', !(mode==='pretty'||mode==='both'));
-      downloadXlsx.classList.remove('d-none');
-
-      copyShort.onclick = ()=> navigator.clipboard.writeText(outShort.join('\n'));
-      copyPretty.onclick= ()=> navigator.clipboard.writeText(outPretty.join('\n'));
-
-      // تصدير XLSX
-      downloadXlsx.onclick = ()=>{
-        const rows = Array.from(tbody.children).map(tr=>{
-          const tds = tr.querySelectorAll('td');
-          return {
-            '#': tds[0].textContent.trim(),
-            'الأصلي': tds[1].textContent.trim(),
-            'القصير': tds[2].textContent.replace(/\s+/g,' ').trim(),
-            'الجميل': tds[3].textContent.replace(/\s+/g,' ').trim(),
-          };
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupModeHandlers();
+            updateStats();
+            document.getElementById('urlInput').addEventListener('input', updateStats);
+            
+            // Load saved language preference
+            const savedLang = localStorage.getItem('urlShortenerLang');
+            if (savedLang && savedLang !== currentLang) {
+                toggleLanguage();
+            }
         });
-        const ws = XLSX.utils.json_to_sheet(rows);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'النتائج');
-        XLSX.writeFile(wb, 'smart-urls.xlsx');
-      };
-    }
 
-    document.getElementById('action').onclick = process;
+        // Mode Management
+        function setupModeHandlers() {
+            document.querySelectorAll('.mode-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const mode = this.dataset.mode;
+                    switchMode(mode);
+                });
+            });
+        }
 
-    // باك لينك بدون تسجيل دخول (فتح تبويبات)
-    document.getElementById('backlinkBtn').onclick = ()=>{
-      const first = document.getElementById('urlInput').value.split('\n').map(s=>s.trim()).filter(Boolean)[0];
-      if(!first){ alert('ضع روابط أولاً'); return; }
-      NO_LOGIN_SITES.forEach(s=>{
-        let u=s.url;
-        if(s.name==='Digg') u+=`?url=${encodeURIComponent(first)}`;
-        if(s.name==='Mix'||s.name==='Pocket'||s.name==='Instapaper') u+=`?url=${encodeURIComponent(first)}`;
-        window.open(u,'_blank');
-      });
-    };
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            document.querySelectorAll('.mode-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.mode === mode);
+            });
+            
+            updateModeDescription();
+        }
 
-    // تفعيل الوضع الافتراضي
-    setMode('short');
-  </script>
+        function updateModeDescription() {
+            const info = currentMode === 'shorten' 
+                ? (currentLang === 'ar' ? 'الوضع الحالي: تقصير - سنُنشئ أكواد k1, k2, k3...' : 'Current mode: Shorten - Will create k1, k2, k3...')
+                : currentMode === 'beautify' 
+                ? (currentLang === 'ar' ? 'الوضع الحالي: تجميل - سنُنشئ سلاج عربي/إنجليزي نظيف' : 'Current mode: Beautify - Will create clean Arabic/English slugs')
+                : (currentLang === 'ar' ? 'الوضع الحالي: التقصير + التجميل معاً' : 'Current mode: Both shortening and beautifying');
+            
+            // Update info display (add if needed)
+        }
+
+        // Language Toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all text elements
+            Object.keys(translations[currentLang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+            
+            document.getElementById('langBtn').innerHTML = 
+                `<i class="fas fa-globe"></i> ${currentLang === 'ar' ? 'EN' : 'عر'}`;
+            
+            localStorage.setItem('urlShortenerLang', currentLang);
+        }
+
+        // URL Processing Functions
+        function normalizeUrl(url) {
+            if (!url) return url;
+            try {
+                url = url.trim().replace(/[\\u0000-\\u001F\\u007F-\\u009F]/g, '');
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                const urlObj = new URL(url);
+                let pathname = urlObj.pathname.replace(/\\/\\.\\/\\//g, '/').replace(/\\/+/g, '/');
+                return `${urlObj.protocol}//${urlObj.hostname}${urlObj.port ? ':' + urlObj.port : ''}${pathname}${urlObj.search}${urlObj.hash}`;
+            } catch (error) {
+                return url;
+            }
+        }
+
+        function createPrettySlug(url) {
+            try {
+                const urlObj = new URL(url);
+                const params = new URLSearchParams(urlObj.search);
+                
+                let text = params.get('name') || params.get('title') || params.get('q') || 
+                          urlObj.pathname.split('/').filter(p => p && p.length > 2).pop() || 'item';
+                
+                text = decodeURIComponent(text)
+                    .replace(/[\\u0000-\\u001F\\u007F]/g, '')
+                    .replace(/[^\\u0600-\\u06FFa-zA-Z0-9\\s\\-]/g, '-')
+                    .replace(/\\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '')
+                    .substring(0, 60);
+                
+                return text || 'item';
+            } catch {
+                return 'item-' + Date.now().toString(36).substr(-5);
+            }
+        }
+
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === 'http:' || url.protocol === 'https:';
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function updateStats() {
+            const input = document.getElementById('urlInput').value;
+            const lines = input.split('\\n').filter(line => line.trim() !== '');
+            
+            let validCount = 0, invalidCount = 0, duplicateCount = 0;
+            const seen = new Set();
+            
+            lines.forEach(line => {
+                const url = line.trim();
+                if (url === '') return;
+                
+                const normalizedUrl = normalizeUrl(url);
+                if (seen.has(normalizedUrl)) {
+                    duplicateCount++;
+                } else {
+                    seen.add(normalizedUrl);
+                    if (isValidUrl(normalizedUrl)) {
+                        validCount++;
+                    } else {
+                        invalidCount++;
+                    }
+                }
+            });
+            
+            document.getElementById('totalCount').textContent = lines.length;
+            document.getElementById('validCount').textContent = validCount;
+            document.getElementById('duplicateCount').textContent = duplicateCount;
+            document.getElementById('invalidCount').textContent = invalidCount;
+        }
+
+        // Main Processing Function
+        async function processUrls() {
+            const input = document.getElementById('urlInput').value;
+            const lines = input.split('\\n').filter(line => line.trim() !== '');
+            
+            if (lines.length === 0) {
+                alert(currentLang === 'ar' ? 'يرجى إدخال روابط للمعالجة' : 'Please enter URLs to process');
+                return;
+            }
+
+            // Show loading
+            showLoading();
+            processedResults = [];
+            
+            const seenUrls = new Set();
+            let validIndex = 1;
+
+            for (let i = 0; i < lines.length; i++) {
+                const originalUrl = lines[i].trim();
+                if (originalUrl === '') continue;
+                
+                const normalizedUrl = normalizeUrl(originalUrl);
+                
+                if (seenUrls.has(normalizedUrl) || !isValidUrl(normalizedUrl)) {
+                    continue;
+                }
+                seenUrls.add(normalizedUrl);
+                
+                const shortCode = `k${validIndex}`;
+                const shortUrl = `https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=${encodeURIComponent(normalizedUrl)}`;
+                const prettySlug = createPrettySlug(normalizedUrl);
+                const prettyUrl = normalizedUrl; // نفس الدومين كما طلبت
+                
+                const result = {
+                    original: originalUrl,
+                    normalized: normalizedUrl,
+                    shortCode: shortCode,
+                    shortUrl: shortUrl,
+                    prettySlug: prettySlug,
+                    prettyUrl: prettyUrl,
+                    displayIndex: validIndex
+                };
+                
+                processedResults.push(result);
+                validIndex++;
+                
+                // Simulate processing delay
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            hideLoading();
+            displayResults();
+            document.getElementById('backlinkBtn').disabled = false;
+            
+            // Show success banner
+            document.getElementById('successBanner').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successBanner').style.display = 'none';
+            }, 5000);
+        }
+
+        // Display Results
+        function displayResults() {
+            const tbody = document.getElementById('resultsTable');
+            tbody.innerHTML = '';
+            
+            processedResults.forEach(result => {
+                const row = document.createElement('tr');
+                row.className = 'fade-in';
+                
+                const showShort = (currentMode === 'shorten' || currentMode === 'both');
+                const showPretty = (currentMode === 'beautify' || currentMode === 'both');
+                
+                row.innerHTML = `
+                    <td class="text-center fw-bold">${result.displayIndex}</td>
+                    <td>
+                        <div class="url-text">${result.original.length > 50 ? result.original.substring(0, 47) + '...' : result.original}</div>
+                    </td>
+                    <td>
+                        ${showShort ? `
+                            <div class="url-text text-primary">${result.shortCode}</div>
+                            <button class="copy-btn btn btn-outline-primary btn-sm mt-1" onclick="copyUrl('${result.shortUrl}')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        ` : '<span class="text-muted">-</span>'}
+                    </td>
+                    <td>
+                        ${showPretty ? `
+                            <div class="url-text text-success">/${result.prettySlug}</div>
+                            <button class="copy-btn btn btn-outline-success btn-sm mt-1" onclick="copyUrl('${result.prettyUrl}')">
+                                <i class="fas fa-magic"></i>
+                            </button>
+                        ` : '<span class="text-muted">-</span>'}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            // Show/hide copy buttons based on mode
+            document.getElementById('copyShortBtn').style.display = showShort ? 'inline-block' : 'none';
+            document.getElementById('copyPrettyBtn').style.display = showPretty ? 'inline-block' : 'none';
+            
+            document.getElementById('resultsCard').style.display = 'block';
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Utility Functions
+        function showLoading() {
+            document.getElementById('loadingSection').style.display = 'block';
+            document.getElementById('processBtn').disabled = true;
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSection').style.display = 'none';
+            document.getElementById('processBtn').disabled = false;
+        }
+
+        function copyUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = event.target.closest('button');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.classList.remove('btn-success');
+                }, 2000);
+            });
+        }
+
+        function copyAllShort() {
+            const shortUrls = processedResults.map(r => r.shortUrl);
+            navigator.clipboard.writeText(shortUrls.join('\\n')).then(() => {
+                showCopyFeedback('copyShortBtn');
+            });
+        }
+
+        function copyAllPretty() {
+            const prettyUrls = processedResults.map(r => r.prettyUrl);
+            navigator.clipboard.writeText(prettyUrls.join('\\n')).then(() => {
+                showCopyFeedback('copyPrettyBtn');
+            });
+        }
+
+        function showCopyFeedback(btnId) {
+            const btn = document.getElementById(btnId);
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-1"></i>تم النسخ!';
+            setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+        }
+
+        // Clean URLs Function
+        function cleanUrls() {
+            const textarea = document.getElementById('urlInput');
+            const lines = textarea.value.split('\\n').map(line => line.trim()).filter(Boolean);
+            const cleanedLines = lines.map(normalizeUrl);
+            textarea.value = cleanedLines.join('\\n');
+            updateStats();
+            
+            // Show feedback
+            const btn = document.getElementById('cleanBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-2"></i>تم التنظيف!';
+            setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+        }
+
+        // Backlink Creation
+        async function createBacklinks() {
+            if (processedResults.length === 0) {
+                alert(currentLang === 'ar' ? 'قم بمعالجة الروابط أولاً' : 'Process URLs first');
+                return;
+            }
+
+            const btn = document.getElementById('backlinkBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري النشر...';
+
+            backlinkResults = [];
+            const firstUrl = processedResults[0].prettyUrl; // استخدام الرابط الجميل لنفس الدومين
+
+            // Open backlink submission tabs
+            NO_LOGIN_BACKLINK_SITES.forEach((site, index) => {
+                setTimeout(() => {
+                    let submitUrl = site.url;
+                    
+                    // Add URL parameter for supported sites
+                    if (site.name === 'Digg' || site.name === 'Mix' || 
+                        site.name === 'Pocket' || site.name === 'Instapaper') {
+                        submitUrl += `?url=${encodeURIComponent(firstUrl)}`;
+                    }
+                    
+                    window.open(submitUrl, `_blank_${site.name.replace(/\\s+/g, '')}`);
+                    
+                    backlinkResults.push({
+                        site: site.name,
+                        url: firstUrl,
+                        da: site.da,
+                        status: 'opened',
+                        timestamp: new Date().toISOString()
+                    });
+                }, index * 500); // Stagger tab opening
+            });
+
+            // Show backlink report
+            setTimeout(() => {
+                showBacklinkReport();
+                btn.innerHTML = '<i class="fas fa-check me-2"></i>تم فتح 10 مواقع!';
+                btn.classList.remove('btn-danger');
+                btn.classList.add('btn-outline-success');
+            }, NO_LOGIN_BACKLINK_SITES.length * 500 + 1000);
+        }
+
+        function showBacklinkReport() {
+            const report = document.getElementById('backlinkReport');
+            const results = document.getElementById('backlinkResults');
+            
+            results.innerHTML = `
+                <div class="row text-center mb-3">
+                    <div class="col-md-4">
+                        <div class="fw-bold fs-3 text-success">${backlinkResults.length}</div>
+                        <small>مواقع تم فتحها</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fw-bold fs-3 text-primary">DA 72-94</div>
+                        <small>نطاق الأوثورتي</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fw-bold fs-3 text-info">${new Date().toLocaleTimeString('ar-EG')}</div>
+                        <small>وقت النشر</small>
+                    </div>
+                </div>
+                
+                <h6>🔗 المواقع المفتوحة:</h6>
+                <div class="row">
+                    ${backlinkResults.map(r => `
+                        <div class="col-md-6 mb-2">
+                            <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                                <small><strong>${r.site}</strong></small>
+                                <span class="badge bg-primary">DA ${r.da}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            report.style.display = 'block';
+        }
+
+        function downloadBacklinkReport() {
+            const data = backlinkResults.map((result, index) => ({
+                'الرقم': index + 1,
+                'اسم الموقع': result.site,
+                'الدومين أوثورتي (DA)': result.da,
+                'الرابط المنشور': result.url,
+                'الحالة': 'تم الفتح ✅',
+                'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG'),
+                'ملاحظات': 'فُتح في تبويب جديد للتأكيد'
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'تقرير الباك لينكات');
+            
+            XLSX.writeFile(wb, `backlink-report-${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+        // XLSX Export
+        function downloadXLSX() {
+            if (processedResults.length === 0) {
+                alert(currentLang === 'ar' ? 'لا توجد نتائج' : 'No results');
+                return;
+            }
+            
+            const data = processedResults.map((result, index) => {
+                const showShort = (currentMode === 'shorten' || currentMode === 'both');
+                const showPretty = (currentMode === 'beautify' || currentMode === 'both');
+                
+                return {
+                    'رقم / #': result.displayIndex,
+                    'الرابط الأصلي / Original URL': result.original,
+                    'الرابط القصير / Short URL': showShort ? result.shortUrl : '-',
+                    'الرابط الجميل / Pretty URL': showPretty ? result.prettyUrl : '-',
+                    'الاسم الجميل / Pretty Slug': showPretty ? result.prettySlug : '-',
+                    'الوضع المستخدم / Mode': currentMode === 'shorten' ? 'تقصير' : 
+                                                currentMode === 'beautify' ? 'تجميل' : 'كلاهما',
+                    'تاريخ الإنشاء / Created': new Date().toLocaleString('ar-EG')
+                };
+            });
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, currentLang === 'ar' ? 'الروابط الذكية' : 'Smart URLs');
+            
+            // Add backlink sheet if exists
+            if (backlinkResults.length > 0) {
+                const backlinkData = backlinkResults.map((result, index) => ({
+                    'الرقم': index + 1,
+                    'اسم الموقع': result.site,
+                    'DA': result.da,
+                    'الرابط المنشور': result.url,
+                    'الحالة': 'تم الفتح ✅',
+                    'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG')
+                }));
+                
+                const backlinkWs = XLSX.utils.json_to_sheet(backlinkData);
+                XLSX.utils.book_append_sheet(wb, backlinkWs, 'تقرير الباك لينكات');
+            }
+            
+            const filename = `global-smart-urls-${currentMode}-${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(wb, filename);
+        }
+
+        // Initialize mode
+        switchMode('shorten');
+    </script>
 </body>
 </html>
