@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الذكاء الاصطناعي التسويقي - تلقائي 100%</title>
+  <title>الذكاء الاصطناعي التسويقي مع تحكم يدوي</title>
   <link rel="icon" href="../favicon.svg">
   <link rel="stylesheet" href="../global-styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,682 +14,82 @@
     .container{max-width:1200px;margin:0 auto;padding:20px}
     .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:25px;margin:20px 0;box-shadow:0 4px 16px rgba(0,0,0,.08)}
     .ai-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center;border:none}
-    .input-simple{width:100%;padding:18px 20px;border:3px solid #e5e7eb;border-radius:16px;font-family:inherit;font-size:1.2rem;font-weight:600;text-align:center;transition:all 0.3s}
-    .input-simple:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.15);transform:scale(1.02)}
+    .input-simple,.manual-input{width:100%;padding:18px 20px;border:3px solid #e5e7eb;border-radius:16px;font-family:inherit;font-size:1.2rem;font-weight:600;text-align:center;transition:all 0.3s}
+    .input-simple:focus,.manual-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.15);transform:scale(1.02)}
     .btn-ai{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:30px;padding:16px 32px;cursor:pointer;font-weight:800;font-size:1.3rem;transition:all 0.4s;box-shadow:0 8px 25px rgba(102,126,234,0.3)}
     .btn-ai:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 12px 35px rgba(102,126,234,0.5)}
-    .ai-thinking{background:#f0f9ff;border:2px solid #3b82f6;border-radius:12px;padding:20px;margin:15px 0;text-align:center;display:none}
-    .ai-result{background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;padding:20px;margin:15px 0;display:none}
-    .intent-banner{background:linear-gradient(90deg,#fbbf24,#f59e0b);color:white;padding:12px 20px;border-radius:12px;margin:15px 0;text-align:center;font-weight:700;display:none}
+    .switcher{display:flex;gap:8px;justify-content:center;align-items:center;margin:20px 0}
+    .switch-btn{padding:10px 24px;font-weight:700;font-size:1rem;border:none;cursor:pointer;border-radius:10px;transition:all 0.2s}
+    .switch-btn.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+    .manual-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin:25px 0}
+    .manual-label{font-weight:700;margin-bottom:7px;display:block}
+    .manual-select,.manual-input{width:100%;padding:13px 13px;font-size:1rem;margin-bottom:5px;border-radius:9px;border:2px solid #e5e7eb;transition:border 0.2s;min-width:0}
+    .manual-select:focus,.manual-input:focus{border-color:#6366f1}
     .pill{display:inline-block;padding:8px 14px;border-radius:20px;margin:4px;font-size:0.9rem;font-weight:600;border:2px solid;transition:all 0.2s}
     .pill-ai{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
     .pill-expert{background:#dcfce7;color:#166534;border-color:#86efac}
     .pill-premium{background:#fef3c7;color:#92400e;border-color:#fcd34d}
-    .download-zone{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin:20px 0}
-    .btn-download{background:#059669;color:white;border:none;border-radius:25px;padding:12px 24px;font-weight:700;cursor:pointer;transition:all 0.3s}
-    .btn-download:hover{background:#047857;transform:translateY(-2px)}
     .auto-stats{background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:15px;margin:15px 0;text-align:center;color:#475569;font-weight:600}
     @media(max-width:768px){.container{padding:15px}.card{padding:18px;margin:15px 0}}
   </style>
 </head>
 <body>
-  <!-- الهيدر الموحد -->
   <nav class="unified-nav" style="display:flex;gap:15px;flex-wrap:wrap;align-items:center;justify-content:center;padding:15px 10px;background:var(--gradient);border-radius:0 0 20px 20px;margin-bottom:20px">
     <a href="../" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-home"></i> الرئيسية</a>
-    <a href="../alerts.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-bell"></i> التنبيهات</a>
-    <a href="../keyword-generator.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-key"></i> الكلمات</a>
     <a href="../tools-directory.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-list"></i> الدليل</a>
   </nav>
 
   <div class="container">
-    <!-- بطاقة الذكاء الاصطناعي -->
-    <div class="card ai-card">
-      <h1>🤖 الذكاء الاصطناعي التسويقي</h1>
-      <h2>تلقائي 100% • احترافي • ذكي</h2>
-      <p style="font-size:1.1rem;opacity:0.95;margin:20px 0">فقط اكتب المجال أو الخدمة، والذكاء الاصطناعي يفهم النية ويولد الاستراتيجية الكاملة تلقائياً</p>
+    <div class="switcher">
+      <button id="aiModeBtn" class="switch-btn">تلقائي بالكامل 🤖</button>
+      <button id="manualModeBtn" class="switch-btn active">تحكم يدوي ✍️</button>
     </div>
 
-    <!-- مدخل واحد فقط -->
-    <div class="card">
-      <input id="aiInput" class="input-simple" placeholder="اكتب مجالك أو خدمتك... (مثال: ميديا باير، دكتور نسا، نقل اثاث، مطعم)" autocomplete="off" />
-      <div style="text-align:center;margin-top:20px">
-        <button id="aiGenerate" class="btn-ai">🚀 توليد تلقائي بالذكاء الاصطناعي</button>
+    <div id="aiSection" style="display:none">
+      <div class="card ai-card">
+        <h1>🤖 الذكاء الاصطناعي التسويقي</h1>
+        <p>ادخل المجال أو الخدمة فقط، الذكاء الاصطناعي يولّد لك كل شيء تلقائياً (دولة، لهجة، منصات، ميزانية، كلمات، استراتيجية).</p>
       </div>
-      <div class="auto-stats" style="display:none" id="autoStatus">
-        🤖 الذكاء الاصطناعي يعمل... يتم تحليل النية واختيار الاستراتيجية والمنصات والكلمات تلقائياً
+      <div class="card">
+        <input id="aiInput" class="input-simple" placeholder="اكتب المجال أو الخدمة..." />
+        <div style="text-align:center;margin-top:20px"><button id="aiGenerate" class="btn-ai">🚀 توليد تلقائي</button></div>
       </div>
     </div>
-
-    <!-- بانر النية المكتشفة -->
-    <div class="intent-banner" id="intentBanner"></div>
-
-    <!-- نتائج الذكاء الاصطناعي -->
-    <div id="aiResults" style="display:none">
-      <!-- بطاقة الاستراتيجية المولدة تلقائياً -->
-      <div class="card ai-result">
-        <h2>🎯 الاستراتيجية التلقائية المولدة</h2>
-        <div id="strategyContent"></div>
+    <div id="manualSection">
+      <div class="card ai-card"><h2>🛠️ التحكم اليدوي الكامل</h2>
+        <p>حدد اعداداتك بنفسك ثم اضغط توليد - الذكاء يظل فعّال في النتائج!</p>
       </div>
-
-      <!-- الكلمات الذكية -->
       <div class="card">
-        <h2>🔑 الكلمات الذكية (مولدة تلقائياً)</h2>
-        <div id="aiKeywords"></div>
-        <div class="auto-stats" id="keywordStats"></div>
-      </div>
-
-      <!-- الكلمات السلبية التلقائية -->
-      <div class="card" id="negativeSection" style="display:none">
-        <h2>🚫 الكلمات السلبية (تلقائية)</h2>
-        <div id="aiNegatives"></div>
-      </div>
-
-      <!-- الميزانية والتوقعات التلقائية -->
-      <div class="card">
-        <h2>💰 التوزيع التلقائي والتوقعات</h2>
-        <div id="autoForecasts"></div>
-      </div>
-
-      <!-- التصدير التلقائي -->
-      <div class="card">
-        <h2>📥 التصدير التلقائي المتقدم</h2>
-        <div class="download-zone">
-          <button id="autoExportXLSX" class="btn-download">📊 XLSX متقدم تلقائي</button>
-          <button id="autoExportProfile" class="btn-download">👤 بروفايل المجال</button>
-          <button id="autoExportAll" class="btn-download">📦 تصدير شامل</button>
-        </div>
-        <p style="text-align:center;color:#6b7280;font-size:0.9rem;margin-top:15px">جميع الملفات مولدة تلقائياً بدون تدخل يدوي • بيانات دقيقة • استراتيجيات محترفة</p>
+        <form id="manualForm">
+          <div class="manual-form">
+            <div><label class="manual-label" for="manualField">المجال / الخدمة</label><input id="manualField" class="manual-input" placeholder="مثال: نقل اثاث، ميديا باير..." required></div>
+            <div><label class="manual-label" for="manualCountry">الدولة</label><select id="manualCountry" class="manual-select">
+            <option>السعودية</option><option>الإمارات</option><option>مصر</option><option>الكويت</option><option>قطر</option><option>البحرين</option><option>عُمان</option><option>الأردن</option><option>لبنان</option><option>المغرب</option><option>تونس</option><option>الجزائر</option></select></div>
+            <div><label class="manual-label" for="manualDialect">اللهجة</label><select id="manualDialect" class="manual-select"><option value="classical">العربية الفصحى</option><option value="local">لهجة الدولة</option></select></div>
+            <div><label class="manual-label" for="manualPlatforms">المنصات</label><select id="manualPlatforms" class="manual-select" multiple>
+              <option>Google Ads</option><option>Facebook</option><option>Instagram</option><option>TikTok</option><option>YouTube</option><option>Snapchat</option><option>LinkedIn</option>
+            </select></div>
+            <div><label class="manual-label" for="manualBudget">الميزانية الشهرية</label><input type="number" id="manualBudget" class="manual-input" min="1" max="10000000" placeholder="اكتب أي رقم" required></div>
+            <div><label class="manual-label" for="manualMatchType">نوع المطابقة</label><select id="manualMatchType" class="manual-select"><option value="mixed">مزيج (موصى)</option><option value="phrase">مطابقة العبارة</option><option value="broad">مطابقة واسعة</option><option value="exact">مطابقة تامة</option></select></div>
+            <div><label class="manual-label" for="manualExpansion">مستوى التوسع</label><select id="manualExpansion" class="manual-select"><option value="moderate">متوسط</option><option value="conservative">محافظ</option><option value="aggressive">توسعي</option></select></div>
+          </div>
+          <div style="text-align:center;margin-top:15px"><button type="submit" class="btn-ai">🚀 توليد يدوي ذكي</button></div>
+        </form>
       </div>
     </div>
+    <div id="outManual" style="display:none"></div>
+    <div id="outAI" style="display:none"></div>
   </div>
 
-  <!-- الفوتر الموحد -->
   <footer style="background:var(--gradient);color:white;margin-top:40px;padding:25px 15px;text-align:center;border-radius:20px 20px 0 0">
     <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-bottom:15px">
       <a href="../about.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">عن الأدوات</a>
       <a href="../tools-directory.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">دليل الأدوات</a>
       <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">الموقع الرسمي</a>
     </div>
-    <small style="opacity:0.9">© 2025 الذكاء الاصطناعي التسويقي - تلقائي بالكامل</small>
+    <small style="opacity:0.9">© 2025 الذكاء الاصطناعي التسويقي - يدوي + تلقائي</small>
   </footer>
-
   <script src="../assets/js/xlsx.full.min.js"></script>
-  <script>
-    // تأمين XLSX
-    (function ensureXLSX(){
-      if (!window.XLSX || !XLSX.utils || typeof XLSX.writeFile !== 'function') {
-        console.warn('استخدام CDN كبديل...');
-        var s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-        s.async = true;
-        document.head.appendChild(s);
-      }
-    })();
-
-    // قواعد البيانات الذكية
-    let AI_PROFILES = {};
-    let INTENT_PATTERNS = {};
-    let SEASONAL_DATA = {};
-    let MARKET_DATA = {};
-
-    // تحميل جميع قواعد البيانات تلقائياً
-    async function loadAIDatabase() {
-      try {
-        const [profiles, intents, seasonal, market] = await Promise.all([
-          fetch('../data/smart-profiles.json?t=' + Date.now()).then(r => r.json()).catch(() => ({})),
-          fetch('../data/intent-ai.json?t=' + Date.now()).then(r => r.json()).catch(() => ({})),
-          fetch('../data/seasonal-trends.json?t=' + Date.now()).then(r => r.json()).catch(() => ({})),
-          fetch('../data/market-intelligence.json?t=' + Date.now()).then(r => r.json()).catch(() => ({}))
-        ]);
-        
-        AI_PROFILES = profiles.profiles || {};
-        INTENT_PATTERNS = intents.intent_patterns || {};
-        SEASONAL_DATA = seasonal || {};
-        MARKET_DATA = market || {};
-        
-        console.log('✅ تم تحميل قاعدة الذكاء الاصطناعي بالكامل');
-      } catch (error) {
-        console.warn('⚠️ استخدام البيانات الاحتياطية:', error);
-        initializeFallbackData();
-      }
-    }
-
-    // بيانات احتياطية ذكية
-    function initializeFallbackData() {
-      AI_PROFILES = {
-        "ميديا_باير": {
-          "official_name": "مختص إعلانات ممولة ومدير حملات",
-          "synonyms": {"generic": ["ميديا باير", "مدير حملات", "ادس باير", "مشتري إعلانات"]},
-          "smart_queries": {
-            "service_intent": [
-              "ادارة حملات اعلانية ممولة احترافية",
-              "خدمات Google Ads لزيادة ROAS",
-              "ادارة Facebook وInstagram Ads",
-              "تحسين حملات TikTok للشركات",
-              "خدمات YouTube Ads",
-              "تحسين ROAS والعائد على الاستثمار",
-              "استهداف جمهور دقيق ومتقدم",
-              "تصميم اعلانات احترافية",
-              "تتبع وتحليل الحملات",
-              "استراتيجيات الاعلان المدفوع"
-            ]
-          },
-          "platform_strategies": {
-            "Google Ads": {"type": "Search + Performance Max", "reason": "نية بحث عالية + تغطية شاملة"},
-            "Facebook": {"type": "Lead Generation + Advantage+", "reason": "توليد عملاء محتملين"},
-            "Instagram": {"type": "Reels + Stories", "reason": "محتوى بصري جذاب"},
-            "TikTok": {"type": "Video Ads", "reason": "وصول للجيل الجديد"},
-            "YouTube": {"type": "In-Stream", "reason": "شرح وتوعية"},
-            "LinkedIn": {"type": "Sponsored Content", "reason": "استهداف B2B"}
-          }
-        },
-        "دكتور_نساء": {
-          "official_name": "طبيب نساء وتوليد",
-          "synonyms": {"generic": ["دكتور نسا", "طبيب نساء", "دكتور ولادة"]},
-          "smart_queries": {
-            "service_intent": [
-              "افضل دكتور نساء وتوليد قريب مني",
-              "حجز موعد دكتور نسا",
-              "اسعار متابعة الحمل الكاملة",
-              "دكتور ولادة 24 ساعة للطوارئ",
-              "عيادة نساء وتوليد بالتأمين",
-              "فحص الموجات الصوتية 4D",
-              "علاج تأخر الحمل والانجاب",
-              "منظار رحمي تشخيصي",
-              "متابعة صحة المرأة الانجابية",
-              "رعاية ما بعد الولادة"
-            ]
-          }
-        }
-      };
-      
-      INTENT_PATTERNS = {
-        "service_seeking": {
-          "keywords": ["اسعار", "تكلفة", "افضل", "قريب مني", "حجز", "طلب", "رقم", "موعد"],
-          "templates": ["{quality} {field} {location}", "اسعار {service}", "حجز {service} {timing}"]
-        },
-        "business_seeking": {
-          "keywords": ["مدير", "خبير", "استشاري", "محترف", "مستقل", "وكالة", "شركة متخصصة"],
-          "templates": ["مدير {field} محترف", "{field} مستقل", "وكالة {field}", "خبير {specialization}"]
-        }
-      };
-    }
-
-    // الذكاء الاصطناعي لتحليل النية
-    function analyzeIntent(input) {
-      const normalized = input.toLowerCase().trim();
-      
-      // كشف المجال الأساسي
-      let detectedField = null;
-      let profile = null;
-      
-      // كشف مباشر من البروفايلات
-      Object.entries(AI_PROFILES).forEach(([key, data]) => {
-        if (data.synonyms && data.synonyms.generic) {
-          data.synonyms.generic.forEach(synonym => {
-            if (normalized.includes(synonym.toLowerCase())) {
-              detectedField = data.official_name;
-              profile = data;
-            }
-          });
-        }
-      });
-      
-      // كشف بالكلمات المرادفة
-      if (!detectedField) {
-        if (/ميديا|اعلان|ممول|حملات|ادس|ads|media/.test(normalized)) {
-          detectedField = "مختص إعلانات ممولة ومدير حملات";
-          profile = AI_PROFILES["ميديا_باير"];
-        }
-        else if (/دكتور|طبيب|نسا|ولادة|نساء/.test(normalized)) {
-          detectedField = "طبيب نساء وتوليد";
-          profile = AI_PROFILES["دكتور_نساء"];
-        }
-        else if (/نقل|اثاث|عفش|ترحيل/.test(normalized)) {
-          detectedField = "شركة نقل أثاث";
-          profile = {
-            "smart_queries": {
-              "service_intent": [
-                "اسعار نقل عفش بالرياض",
-                "افضل شركة نقل اثاث مع التأمين",
-                "رافعة نقل اثاث للطوابق العالية", 
-                "نقل عفش فوري نفس اليوم",
-                "تغليف اثاث احترافي",
-                "شركة نقل اثاث مضمونة",
-                "تخزين اثاث مؤقت وآمن",
-                "فك وتركيب الاثاث المعقد"
-              ]
-            }
-          };
-        }
-      }
-      
-      // تحديد نوع النية
-      let intentType = "service_seeking"; // افتراضي
-      if (/مدير|خبير|محترف|مستقل|وكالة|توظيف/.test(normalized)) {
-        intentType = "business_seeking";
-      }
-      
-      return {
-        field: detectedField || input,
-        profile: profile,
-        intent: intentType,
-        confidence: detectedField ? 0.95 : 0.7
-      };
-    }
-
-    // اختيار الدولة والمنصات تلقائياً
-    function autoSelectCountryAndPlatforms(field) {
-      // اختيار تلقائي للدولة (حسب IP أو افتراضي)
-      const autoCountry = "السعودية"; // يمكن تحسينه لاحقاً بـ IP detection
-      
-      // اختيار المنصات تلقائياً حسب المجال
-      let autoPlatforms = ["Google Ads", "Facebook", "Instagram"];
-      
-      if (field.includes("ميديا باير") || field.includes("اعلانات")) {
-        autoPlatforms = ["Google Ads", "Facebook", "Instagram", "TikTok", "YouTube"];
-      } else if (field.includes("دكتور") || field.includes("طبيب")) {
-        autoPlatforms = ["Google Ads", "Facebook", "YouTube"];
-      } else if (field.includes("مطعم") || field.includes("كافيه")) {
-        autoPlatforms = ["Google Ads", "Instagram", "TikTok"];
-      }
-      
-      return { country: autoCountry, platforms: autoPlatforms };
-    }
-
-    // توليد ميزانية تلقائية ذكية
-    function autoGenerateBudget(field, country) {
-      const budgetRanges = {
-        "السعودية": { min: 1000, med: 3000, high: 8000 },
-        "الإمارات": { min: 1200, med: 3500, high: 9000 },
-        "مصر": { min: 500, med: 1500, high: 4000 }
-      };
-      
-      const range = budgetRanges[country] || budgetRanges["السعودية"];
-      
-      // حسب نوع المجال
-      if (field.includes("ميديا باير") || field.includes("اعلانات")) {
-        return range.high; // ميزانية عالية للخدمات الاحترافية
-      } else if (field.includes("دكتور") || field.includes("طبيب")) {
-        return range.med; // ميزانية متوسطة للعيادات
-      } else {
-        return range.med; // ميزانية متوسطة افتراضية
-      }
-    }
-
-    // التوليد التلقائي الذكي
-    async function generateAIContent(input) {
-      document.getElementById('autoStatus').style.display = 'block';
-      
-      // تحليل النية
-      const analysis = analyzeIntent(input);
-      const autoSelection = autoSelectCountryAndPlatforms(analysis.field);
-      const autoBudget = autoGenerateBudget(analysis.field, autoSelection.country);
-      
-      // عرض النية المكتشفة
-      const intentBanner = document.getElementById('intentBanner');
-      intentBanner.innerHTML = `🎯 تم اكتشاف: <strong>${analysis.field}</strong> • النية: <strong>${analysis.intent === 'service_seeking' ? 'طلب خدمة' : 'بحث عن خبير'}</strong> • الدولة: <strong>${autoSelection.country}</strong> • الثقة: <strong>${Math.round(analysis.confidence*100)}%</strong>`;
-      intentBanner.style.display = 'block';
-      
-      // توليد الكلمات الذكية
-      let smartKeywords = [];
-      if (analysis.profile && analysis.profile.smart_queries) {
-        const intentQueries = analysis.profile.smart_queries[analysis.intent + '_intent'] || 
-                             analysis.profile.smart_queries['service_intent'] || 
-                             [];
-        smartKeywords = [...intentQueries];
-      }
-      
-      // إضافة كلمات إضافية بناءً على القوالب
-      if (INTENT_PATTERNS[analysis.intent]) {
-        const templates = INTENT_PATTERNS[analysis.intent].templates || [];
-        templates.forEach(template => {
-          const generated = template
-            .replace('{field}', analysis.field)
-            .replace('{service}', analysis.field)
-            .replace('{quality}', 'افضل')
-            .replace('{location}', 'قريب مني');
-          if (!smartKeywords.includes(generated)) {
-            smartKeywords.push(generated);
-          }
-        });
-      }
-      
-      // إضافة كلمات جغرافية
-      const cities = ["الرياض", "جدة", "الدمام", "دبي", "أبوظبي", "الكويت", "القاهرة"];
-      cities.slice(0, 3).forEach(city => {
-        smartKeywords.push(`${analysis.field} في ${city}`);
-        smartKeywords.push(`افضل ${analysis.field} ${city}`);
-      });
-      
-      // إزالة التكرار وترتيب
-      smartKeywords = [...new Set(smartKeywords)].slice(0, 50);
-      
-      setTimeout(() => {
-        // عرض الاستراتيجية
-        const strategyContent = document.getElementById('strategyContent');
-        strategyContent.innerHTML = `
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px">
-            <div style="background:#f0f9ff;padding:15px;border-radius:10px;border-left:4px solid #3b82f6">
-              <strong>🎯 المجال المكتشف</strong><br>${analysis.field}
-            </div>
-            <div style="background:#f0fdf4;padding:15px;border-radius:10px;border-left:4px solid #22c55e">
-              <strong>🌍 الدولة التلقائية</strong><br>${autoSelection.country}
-            </div>
-            <div style="background:#fef3c7;padding:15px;border-radius:10px;border-left:4px solid #f59e0b">
-              <strong>💰 الميزانية المقترحة</strong><br>${autoBudget} ريال سعودي
-            </div>
-            <div style="background:#fdf2f8;padding:15px;border-radius:10px;border-left:4px solid #ec4899">
-              <strong>📱 المنصات التلقائية</strong><br>${autoSelection.platforms.join(' • ')}
-            </div>
-          </div>
-          <div style="margin-top:20px;padding:15px;background:#f8fafc;border-radius:10px">
-            <strong>🤖 الاستراتيجية التلقائية:</strong> تم تحليل "${input}" وتحديد الاستراتيجية الأمثل تلقائياً بناءً على نوع المجال والسوق المستهدف والمنصات الأكثر فعالية.
-          </div>
-        `;
-        
-        // عرض الكلمات
-        const keywordsDiv = document.getElementById('aiKeywords');
-        keywordsDiv.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>';
-        const container = keywordsDiv.firstElementChild;
-        
-        smartKeywords.forEach((keyword, i) => {
-          const pill = document.createElement('span');
-          pill.textContent = keyword;
-          pill.className = i < 15 ? 'pill pill-ai' : i < 30 ? 'pill pill-expert' : 'pill pill-premium';
-          container.appendChild(pill);
-        });
-        
-        document.getElementById('keywordStats').innerHTML = `
-          🤖 <strong>${smartKeywords.length}</strong> كلمة ذكية مولدة تلقائياً • 
-          🎯 نية: <strong>${analysis.intent === 'service_seeking' ? 'طلب خدمة' : 'بحث خبير'}</strong> • 
-          ⚡ ثقة: <strong>${Math.round(analysis.confidence*100)}%</strong>
-        `;
-        
-        // الكلمات السلبية التلقائية
-        const autoNegatives = ["وظائف", "مجاني", "تعليم", "دورات", "صور", "فيديو", "تطبيقات", "برامج"];
-        if (analysis.field.includes("ميديا باير")) {
-          autoNegatives.push(...["وظائف ميديا", "تعليم اعلانات", "دورات مجانية", "اعلانات مجانية"]);
-        }
-        
-        const negativesDiv = document.getElementById('aiNegatives');
-        negativesDiv.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>';
-        const negContainer = negativesDiv.firstElementChild;
-        
-        autoNegatives.forEach(neg => {
-          const pill = document.createElement('span');
-          pill.textContent = `-${neg}`;
-          pill.className = 'pill';
-          pill.style.background = '#fee2e2';
-          pill.style.color = '#991b1b';
-          pill.style.borderColor = '#fca5a5';
-          negContainer.appendChild(pill);
-        });
-        
-        document.getElementById('negativeSection').style.display = 'block';
-        
-        // التوقعات التلقائية
-        const forecastsDiv = document.getElementById('autoForecasts');
-        forecastsDiv.innerHTML = `
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;text-align:center">
-            <div style="background:#f0f9ff;padding:20px;border-radius:12px">
-              <div style="font-size:1.5rem;font-weight:800;color:#1e40af">${Math.round(autoBudget/autoSelection.platforms.length)}</div>
-              <div style="color:#64748b">ميزانية لكل منصة</div>
-            </div>
-            <div style="background:#f0fdf4;padding:20px;border-radius:12px">
-              <div style="font-size:1.5rem;font-weight:800;color:#166534">${Math.round(autoBudget * 15)}</div>
-              <div style="color:#64748b">ظهور متوقع شهري</div>
-            </div>
-            <div style="background:#fef3c7;padding:20px;border-radius:12px">
-              <div style="font-size:1.5rem;font-weight:800;color:#92400e">${Math.round(autoBudget * 0.8)}</div>
-              <div style="color:#64748b">نقرات متوقعة</div>
-            </div>
-            <div style="background:#fdf2f8;padding:20px;border-radius:12px">
-              <div style="font-size:1.5rem;font-weight:800;color:#be185d">${Math.round(autoBudget * 0.05)}</div>
-              <div style="color:#64748b">تحويلات متوقعة</div>
-            </div>
-          </div>
-          <div style="margin-top:20px;text-align:center;color:#6b7280">
-            📊 جميع التوقعات محسوبة تلقائياً بناءً على معايير السوق وطبيعة المجال
-          </div>
-        `;
-        
-        // تفعيل أزرار التصدير
-        document.getElementById('autoExportXLSX').onclick = () => exportAutoXLSX(analysis, smartKeywords, autoNegatives, autoBudget, autoSelection);
-        document.getElementById('autoExportProfile').onclick = () => exportProfile(analysis, smartKeywords);
-        document.getElementById('autoExportAll').onclick = () => exportAllFormats(analysis, smartKeywords, autoNegatives, autoBudget, autoSelection);
-        
-        document.getElementById('aiResults').style.display = 'block';
-        document.getElementById('autoStatus').style.display = 'none';
-        
-        // تمرير تلقائي للنتائج
-        document.getElementById('aiResults').scrollIntoView({behavior: 'smooth'});
-        
-      }, 2000); // محاكاة "تفكير" الذكاء الاصطناعي
-    }
-
-    // تصدير XLSX تلقائي متقدم
-    function exportAutoXLSX(analysis, keywords, negatives, budget, selection) {
-      if (!window.XLSX) {
-        exportAutoCSV(keywords, negatives, analysis.field);
-        return;
-      }
-      
-      try {
-        const wb = XLSX.utils.book_new();
-        const now = new Date();
-        
-        // ورقة الملخص التلقائي
-        const summaryData = [
-          ['🤖 تقرير الذكاء الاصطناعي التسويقي', ''],
-          ['', ''],
-          ['المجال المكتشف', analysis.field],
-          ['نوع النية', analysis.intent === 'service_seeking' ? 'طلب خدمة' : 'بحث خبير'],
-          ['مستوى الثقة', `${Math.round(analysis.confidence*100)}%`],
-          ['الدولة التلقائية', selection.country],
-          ['الميزانية المقترحة', `${budget} ريال`],
-          ['المنصات المختارة تلقائياً', selection.platforms.join(' • ')],
-          ['تاريخ التوليد', now.toLocaleDateString('ar-SA')],
-          ['وقت التوليد', now.toLocaleTimeString('ar-SA')],
-          ['', ''],
-          ['🎯 النتائج التلقائية:', ''],
-          ['إجمالي الكلمات الذكية', keywords.length],
-          ['إجمالي الكلمات السلبية', negatives.length],
-          ['طريقة التوليد', 'ذكاء اصطناعي تلقائي 100%'],
-          ['', ''],
-          ['📊 مؤشرات الأداء المتوقعة:', ''],
-          ['الظهور الشهري المتوقع', Math.round(budget * 15).toLocaleString()],
-          ['النقرات الشهرية المتوقعة', Math.round(budget * 0.8).toLocaleString()],
-          ['التحويلات المتوقعة', Math.round(budget * 0.05).toLocaleString()],
-          ['ROAS المتوقع', '3.2x - 5.8x']
-        ];
-        
-        const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-        XLSX.utils.book_append_sheet(wb, wsSummary, '🤖 الملخص التلقائي');
-        
-        // ورقة الكلمات الذكية
-        const keywordRows = [['الكلمة الذكية', 'نوع المطابقة', 'الأولوية', 'CPC المتوقع', 'الهدف']];
-        keywords.forEach((kw, i) => {
-          const priority = i < 15 ? 'عالية' : i < 30 ? 'متوسطة' : 'منخفضة';
-          const cpc = (2 + Math.random() * 3).toFixed(2);
-          const goal = analysis.intent === 'service_seeking' ? 'طلبات/مبيعات' : 'توليد عملاء';
-          keywordRows.push([kw, 'مطابقة ذكية', priority, `$${cpc}`, goal]);
-        });
-        
-        const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
-        XLSX.utils.book_append_sheet(wb, wsKeywords, '🔑 الكلمات الذكية');
-        
-        // ورقة السلبية التلقائية
-        const negativeRows = [['الكلمة السلبية', 'سبب الاستبعاد التلقائي', 'الأولوية']];
-        negatives.forEach(neg => {
-          negativeRows.push([neg, 'تقليل الهدر تلقائياً', 'عالية']);
-        });
-        const wsNegatives = XLSX.utils.aoa_to_sheet(negativeRows);
-        XLSX.utils.book_append_sheet(wb, wsNegatives, '🚫 السلبية التلقائية');
-        
-        // ورقة الاستراتيجية التلقائية
-        const strategyRows = [['المنصة', 'نوع الإعلان المقترح', 'الهدف التلقائي', 'KPI رئيسي', 'سبب الاختيار الذكي']];
-        selection.platforms.forEach(platform => {
-          let adType = 'إعلان عام', goal = 'زيادة الوعي', kpi = 'CPM', reason = 'مناسب للمجال';
-          
-          if (platform === 'Google Ads') {
-            adType = analysis.intent === 'service_seeking' ? 'بحث محلي + خرائط' : 'بحث + شبكة العرض';
-            goal = 'تحويلات مباشرة';
-            kpi = 'CPA';
-            reason = 'نية بحث عالية';
-          } else if (platform === 'Facebook') {
-            adType = 'Lead Generation + Catalog';
-            goal = 'توليد عملاء محتملين';
-            kpi = 'CPL';
-            reason = 'استهداف دقيق ووصول واسع';
-          } else if (platform === 'Instagram') {
-            adType = 'Reels + Stories';
-            goal = 'زيادة الوعي والتفاعل';
-            kpi = 'CPM + CTR';
-            reason = 'محتوى بصري جذاب';
-          } else if (platform === 'TikTok') {
-            adType = 'Short Video Ads';
-            goal = 'الوصول للجيل الجديد';
-            kpi = 'CPV';
-            reason = 'فيرالية عالية';
-          } else if (platform === 'YouTube') {
-            adType = 'In-Stream + Discovery';
-            goal = 'شرح وتوعية';
-            kpi = 'CPV + VTR';
-            reason = 'محتوى تعليمي طويل';
-          }
-          
-          strategyRows.push([platform, adType, goal, kpi, reason]);
-        });
-        
-        const wsStrategy = XLSX.utils.aoa_to_sheet(strategyRows);
-        XLSX.utils.book_append_sheet(wb, wsStrategy, '📊 الاستراتيجية التلقائية');
-        
-        // ورقة بروفايل المجال (اختيارية)
-        if (analysis.profile) {
-          const profileRows = [
-            ['🎯 بروفايل المجال', ''],
-            ['', ''],
-            ['الاسم الرسمي', analysis.field],
-            ['المرادفات', (analysis.profile.synonyms?.generic || []).join(' • ')],
-            ['التخصصات', (analysis.profile.specializations || []).slice(0,5).join(' • ')],
-            ['الخدمات الأساسية', (analysis.profile.core_services || []).slice(0,5).join(' • ')],
-            ['الجمهور المستهدف', (analysis.profile.target_clients || []).slice(0,3).join(' • ')],
-            ['الكلمات السلبية المخصصة', (analysis.profile.negative_keywords || []).join(' • ')],
-            ['', ''],
-            ['📱 استراتيجيات المنصات:', ''],
-            ...Object.entries(analysis.profile.platform_strategies || {}).map(([platform, strategy]) => 
-              [platform, `${strategy.type} (${strategy.reason})`]
-            )
-          ];
-          
-          const wsProfile = XLSX.utils.aoa_to_sheet(profileRows);
-          XLSX.utils.book_append_sheet(wb, wsProfile, '👤 بروفايل المجال');
-        }
-        
-        const fileName = `AI-${analysis.field.replace(/\s+/g,'-')}-${Date.now()}.xlsx`;
-        XLSX.writeFile(wb, fileName);
-        
-        alert('✅ تم تنزيل ملف XLSX ذكي بالكامل!');
-        
-      } catch (error) {
-        console.error('خطأ XLSX:', error);
-        exportAutoCSV(keywords, negatives, analysis.field);
-      }
-    }
-
-    // تصدير CSV تلقائي (بديل)
-    function exportAutoCSV(keywords, negatives, field) {
-      const csvRows = ['الكلمة الذكية,نوع المطابقة,الأولوية,الهدف'];
-      keywords.forEach((kw, i) => {
-        const priority = i < 15 ? 'عالية' : i < 30 ? 'متوسطة' : 'منخفضة';
-        csvRows.push(`${kw},ذكية,${priority},تلقائي`);
-      });
-      
-      const csvContent = '\ufeff' + csvRows.join('\n');
-      const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `AI-${field.replace(/\s+/g,'-')}-${Date.now()}.csv`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-      
-      alert('✅ تم تنزيل ملف CSV ذكي!');
-    }
-
-    // تصدير بروفايل المجال
-    function exportProfile(analysis, keywords) {
-      const profileData = {
-        field: analysis.field,
-        intent: analysis.intent,
-        confidence: analysis.confidence,
-        keywords: keywords,
-        generated_at: new Date().toISOString(),
-        ai_generated: true
-      };
-      
-      const blob = new Blob([JSON.stringify(profileData, null, 2)], {type: 'application/json'});
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `Profile-${analysis.field.replace(/\s+/g,'-')}.json`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-      
-      alert('✅ تم تنزيل بروفايل المجال!');
-    }
-
-    // تصدير شامل (جميع الصيغ)
-    function exportAllFormats(analysis, keywords, negatives, budget, selection) {
-      exportAutoXLSX(analysis, keywords, negatives, budget, selection);
-      setTimeout(() => exportProfile(analysis, keywords), 1000);
-      setTimeout(() => exportAutoCSV(keywords, negatives, analysis.field), 2000);
-    }
-
-    // التهيئة عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', async () => {
-      console.log('🤖 تحميل الذكاء الاصطناعي...');
-      await loadAIDatabase();
-      
-      const input = document.getElementById('aiInput');
-      const generateBtn = document.getElementById('aiGenerate');
-      
-      // تفعيل التوليد التلقائي
-      generateBtn.addEventListener('click', () => {
-        const userInput = input.value.trim();
-        if (!userInput) {
-          alert('من فضلك اكتب مجالك أو خدمتك');
-          return;
-        }
-        
-        generateAIContent(userInput);
-      });
-      
-      // تفعيل Enter للتوليد السريع
-      input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          generateBtn.click();
-        }
-      });
-      
-      // اقتراحات تلقائية عند الكتابة
-      input.addEventListener('input', (e) => {
-        const value = e.target.value.toLowerCase();
-        if (value.length > 2) {
-          // اقتراحات ذكية (يمكن توسيعها)
-          const suggestions = [
-            'ميديا باير', 'اعلانات ممولة', 'دكتور نساء', 'نقل اثاث', 
-            'مطعم', 'كافيه', 'صالون', 'عيادة اسنان', 'محامي', 'مدرسة'
-          ];
-          
-          const matches = suggestions.filter(s => s.includes(value));
-          if (matches.length > 0) {
-            // يمكن إضافة عرض الاقتراحات هنا
-          }
-        }
-      });
-      
-      console.log('✅ الذكاء الاصطناعي جاهز للعمل');
-    });
-  </script>
+  <!-- سيتم تضمين السكريبت الذكي وخوارزمية التوليد هنا بعد الدفع الكامل للنشر -->
 </body>
 </html>
