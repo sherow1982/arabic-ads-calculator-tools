@@ -1,7 +1,7 @@
-// Improve backlink module: detect 404 and record status; use fallbacks for Digg submission
+// Extend backlink list to 25 no-login sites with batching and delays
 (function(){
   const SITES = [
-    {name:'Digg', url:'https://digg.com/submit', param:'url', fallback:'https://www.digg.com/submit'},
+    {name:'Digg', url:'https://www.digg.com/submit', param:'url'},
     {name:'Mix', url:'https://mix.com/add', param:'url'},
     {name:'Pocket', url:'https://getpocket.com/save', param:'url'},
     {name:'Instapaper', url:'https://www.instapaper.com/save', param:'url'},
@@ -10,37 +10,35 @@
     {name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker'},
     {name:'SearchEngineReports', url:'https://searchenginereports.net/backlink-maker'},
     {name:'Turbo SEO Tools', url:'https://www.turboseotools.com/backlink-maker'},
-    {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker'}
+    {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker'},
+    {name:'SiteChecker Backlinks', url:'https://sitechecker.pro/backlinks-generator/'},
+    {name:'Simplified SEO Tools', url:'https://simplifiedseotools.com/backlink-maker'},
+    {name:'W3era Backlink Tool', url:'https://www.w3era.com/seo-tools/backlink-maker/'},
+    {name:'Digital Web Services Backlink', url:'https://www.digital-web-services.com/marketing-seo-tools/backlink-maker'},
+    {name:'AllInOneTools Backlink', url:'https://allinonetools.net/backlink-maker/'},
+    {name:'SEOWagon Backlink', url:'https://seowagon.com/backlink-maker'},
+    {name:'Turbo SEO Backlink (alt)', url:'https://turboseotools.com/backlink-maker'},
+    {name:'GT SEO Backlink (alt)', url:'https://www.gtseotools.com/backlink-maker'},
+    {name:'Duplichecker Backlink', url:'https://www.duplichecker.com/backlink-maker.php'},
+    {name:'PrePostSEO URL Opener', url:'https://www.prepostseo.com/url-opener'},
+    {name:'SmallSEOTools Ping', url:'https://smallseotools.com/website-ping/'} ,
+    {name:'Ping.eu', url:'https://ping.eu/web-ping/'},
+    {name:'H-supertools Pinger', url:'https://h-supertools.com/seo-tools/pinger/'},
+    {name:'iTools Ping', url:'https://www.itools.com/tool/ping'}
   ];
 
-  async function tryOpen(u){
-    try{
-      const w = window.open(u, '_blank');
-      return {ok: !!w, url: u, note: !!w? 'opened' : 'popup_blocked'};
-    }catch(e){
-      return {ok:false, url:u, note: 'exception'};
-    }
-  }
+  function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
   async function run(targetUrl){
     const results=[];
+    const batchSize=12; const delay=400; // per your preference
     for(let i=0;i<SITES.length;i++){
       const s=SITES[i];
       let u=s.url;
-      if(s.param){ const sep = u.includes('?')?'&':'?'; u += `${sep}${s.param}=${encodeURIComponent(targetUrl)}`; }
-      // Digg new UI often 404 on /submit -> try fallback domain
-      if(s.name==='Digg'){
-        const r = await tryOpen(u);
-        results.push({site:s.name, ...r});
-        if(!r.ok && s.fallback){
-          const sep = s.fallback.includes('?')?'&':'?';
-          const u2 = `${s.fallback}${s.param? `${sep}${s.param}=`+encodeURIComponent(targetUrl):''}`;
-          const r2 = await tryOpen(u2); results.push({site:s.name+' (fallback)', ...r2});
-        }
-      } else {
-        const r = await tryOpen(u); results.push({site:s.name, ...r});
-      }
-      await new Promise(res=>setTimeout(res, 350));
+      if(s.param){ const sep=u.includes('?')?'&':'?'; u+=`${sep}${s.param}=${encodeURIComponent(targetUrl)}`; }
+      let ok=false; try{ const w=window.open(u,'_blank'); ok=!!w; }catch(_){ ok=false; }
+      results.push({site:s.name,url:u,ok});
+      if((i+1)%batchSize===0) await sleep(1200); else await sleep(delay);
     }
     return results;
   }
