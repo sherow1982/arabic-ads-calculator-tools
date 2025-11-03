@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مختصر الروابط العربي - روابط تعمل 100% مجاناً</title>
-    <meta name="description" content="مختصر روابط عربي مجاني 100% - اختصر حتى 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع">
-    <meta name="keywords" content="مختصر روابط عربي, روابط قصيرة, URL shortener, أدوات تسويق">
+    <title>مختصر الروابط العالمي - يدعم جميع اللغات تلقائياً</title>
+    <meta name="description" content="مختصر روابط عالمي مجاني - يدعم عربي، إنجليزي، رموز، إيموجي - اختصر 1000 رابط دفعة واحدة">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- SheetJS for XLSX -->
     <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     
@@ -22,6 +21,7 @@
             --success-color: #16a34a;
             --warning-color: #ea580c;
             --danger-color: #dc2626;
+            --info-color: #0ea5e9;
             --dark-color: #1f2937;
             --light-bg: #f8fafc;
             --border-radius: 12px;
@@ -29,57 +29,43 @@
         }
         
         body {
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px 0;
+            min-height: 100vh; padding: 20px 0;
         }
         
         body[dir="ltr"] {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Roboto', sans-serif;
         }
         
         .main-container {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
+            background: white; border-radius: var(--border-radius);
+            box-shadow: var(--shadow); overflow: hidden;
         }
         
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
+            color: white; padding: 2rem; text-align: center;
         }
         
         .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;
         }
         
         .header p {
-            opacity: 0.9;
-            margin: 0;
+            opacity: 0.9; margin: 0;
         }
         
-        .content {
-            padding: 2rem;
-        }
+        .content { padding: 2rem; }
         
         .language-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+            position: absolute; top: 20px; right: 20px; z-index: 1000;
         }
         
         .form-control {
             border-radius: var(--border-radius);
-            border: 2px solid #e2e8f0;
-            padding: 0.75rem;
-            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0; padding: 0.75rem;
+            transition: all 0.3s ease; font-family: inherit;
         }
         
         .form-control:focus {
@@ -88,137 +74,96 @@
         }
         
         .btn {
-            border-radius: var(--border-radius);
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
+            border-radius: var(--border-radius); padding: 0.75rem 1.5rem;
+            font-weight: 600; transition: all 0.3s ease; border: none;
         }
         
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-        
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
-        
-        .btn-warning {
-            background: var(--warning-color);
-            color: white;
-        }
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .btn-success { background: var(--success-color); color: white; }
+        .btn-warning { background: var(--warning-color); color: white; }
+        .btn-info { background: var(--info-color); color: white; }
         
         .stats-card {
-            background: var(--light-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            text-align: center;
-            border: 2px solid #e2e8f0;
+            background: var(--light-bg); border-radius: var(--border-radius);
+            padding: 1.5rem; text-align: center; border: 2px solid #e2e8f0;
             transition: all 0.3s ease;
         }
         
         .stats-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
+            transform: translateY(-4px); box-shadow: var(--shadow);
         }
         
         .stats-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-size: 2rem; font-weight: 700; color: var(--primary-color);
         }
         
         .results-table {
-            border-radius: var(--border-radius);
-            overflow: hidden;
+            border-radius: var(--border-radius); overflow: hidden;
             border: 2px solid #e2e8f0;
         }
         
         .results-table th {
-            background: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            border: none;
+            background: var(--primary-color); color: white;
+            font-weight: 600; border: none;
         }
         
         .results-table td {
-            vertical-align: middle;
-            border-color: #e2e8f0;
+            vertical-align: middle; border-color: #e2e8f0;
         }
         
         .url-cell {
-            max-width: 300px;
-            word-break: break-all;
-            font-size: 0.9rem;
+            max-width: 300px; word-break: break-all;
+            font-size: 0.9rem; font-family: monospace;
+            background: #f1f5f9; padding: 0.5rem;
+            border-radius: 6px;
         }
         
         .status-badge {
-            border-radius: 50px;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.8rem;
-            font-weight: 600;
+            border-radius: 50px; padding: 0.25rem 0.75rem;
+            font-size: 0.8rem; font-weight: 600;
         }
         
-        .loading-spinner {
-            display: none;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        
+        .loading-spinner { display: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        #results-section {
-            display: none;
+        #results-section { display: none; }
+        .copy-btn { font-size: 0.8rem; padding: 0.25rem 0.5rem; }
+        
+        .global-features {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            color: white; padding: 2rem; border-radius: var(--border-radius);
+            margin: 2rem 0; text-align: center;
         }
         
-        .copy-btn {
-            font-size: 0.8rem;
-            padding: 0.25rem 0.5rem;
+        .feature-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;
         }
         
-        .working-example {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin: 2rem 0;
-            text-align: center;
+        .feature-item {
+            background: rgba(255, 255, 255, 0.2); padding: 1rem;
+            border-radius: 12px; text-align: center;
         }
         
-        .working-example h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .feature-text { font-size: 0.9rem; opacity: 0.9; }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem; border-radius: var(--border-radius);
+            margin: 1rem 0;
         }
         
-        .demo-link {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            margin: 0.5rem;
-            display: inline-block;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .demo-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            text-decoration: none;
-            transform: translateY(-2px);
+        .demo-url {
+            font-family: monospace; background: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem; border-radius: 8px; margin: 0.3rem 0;
+            font-size: 0.85rem; word-break: break-all;
         }
     </style>
 </head>
@@ -226,7 +171,7 @@
     <!-- Language Toggle -->
     <div class="language-toggle">
         <button class="btn btn-outline-light btn-sm" onclick="toggleLanguage()" id="langToggle">
-            <i class="fas fa-language"></i> EN
+            <i class="fas fa-globe"></i> EN
         </button>
     </div>
 
@@ -234,71 +179,94 @@
         <div class="main-container">
             <!-- Header -->
             <div class="header">
-                <h1 id="mainTitle">مختصر الروابط العربي</h1>
-                <p id="mainSubtitle">روابط تعمل 100% مجاناً - اختصر حتى 1000 رابط دفعة واحدة</p>
+                <h1 id="mainTitle">🌍 مختصر الروابط العالمي</h1>
+                <p id="mainSubtitle">يدعم جميع اللغات والرموز تلقائياً - عربي • إنجليزي • رموز • إيموجي</p>
             </div>
 
             <!-- Content -->
             <div class="content">
-                <!-- Working Example -->
-                <div class="working-example">
-                    <h4 id="exampleTitle">🎉 روابط تجريبية تعمل فعلياً!</h4>
-                    <p id="exampleText">جرب هذه الروابط القصيرة - ستعيد التوجيه فوراً:</p>
+                <!-- Global Features -->
+                <div class="global-features">
+                    <h4 id="featuresTitle">🎆 ميزات النظام العالمي</h4>
                     
-                    <div style="margin: 1.5rem 0;">
-                        <a href="s.html?to=demo" class="demo-link" target="_blank">
-                            🏠 /demo - الصفحة الرئيسية
-                        </a>
-                        <a href="s.html?to=test" class="demo-link" target="_blank">
-                            🔍 /test - جوجل
-                        </a>
-                        <a href="s.html?to=tools" class="demo-link" target="_blank">
-                            🛠️ /tools - دليل الأدوات
-                        </a>
-                        <a href="s.html?to=wa" class="demo-link" target="_blank">
-                            📱 /wa - واتساب
-                        </a>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">🇺🇸</div>
+                            <div class="feature-text" id="feature1">English URLs<br>روابط إنجليزية</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🇪🇬</div>
+                            <div class="feature-text" id="feature2">عربي Arabic<br>روابط عربية</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚀</div>
+                            <div class="feature-text" id="feature3">رموز Symbols<br>#@$%&*</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎉</div>
+                            <div class="feature-text" id="feature4">Emoji إيموجي<br>😎🚀🎉📱</div>
+                        </div>
                     </div>
                     
-                    <small id="exampleNote" style="opacity: 0.8;">
-                        ✨ هذه روابط حقيقية تعمل فعلياً! جربها الآن.
-                    </small>
+                    <p id="featuresNote" style="opacity: 0.9; font-size: 0.95rem;">
+                        ✨ نظام ترميز ذكي - يعالج تلقائياً جميع أنواع النصوص والرموز
+                    </p>
+                </div>
+
+                <!-- Demo Section with Real Examples -->
+                <div class="demo-section">
+                    <h5 id="demoTitle">📝 عينة من روابطك (جاهزة للنسخ)</h5>
+                    <p id="demoNote">انسخ هذه الروابط في المربع أدناه للاختبار فوراً:</p>
+                    
+                    <div id="demoUrls">
+                        <div class="demo-url">https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية</div>
+                        <div class="demo-url">https://kuwait-matjar.arabsad.com/./product.html?name=عربة-متنقلة-قابلة-للطي-بغطاء-و-عجلات</div>
+                        <div class="demo-url">https://kuwait-matjar.arabsad.com/./product.html?name=آلة-إزالة-الشعر-الكهربائية-usb</div>
+                    </div>
+                    
+                    <button class="btn btn-info btn-sm" onclick="copyDemoUrls()" id="copyDemoBtn">
+                        📋 نسخ العينة للاختبار
+                    </button>
                 </div>
 
                 <!-- Instructions -->
                 <div class="alert alert-info mb-4" role="alert">
-                    <i class="fas fa-info-circle me-2"></i>
+                    <i class="fas fa-magic me-2"></i>
                     <span id="instructions">
-                        الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). ستحصل على روابط قصيرة تعمل فوراً.
+                        الصق الروابط بأي لغة في المربع أدناه. النظام سيعالج تلقائياً: عربي، إنجليزي، رموز، إيموجي، أرقام، علامات ترقيم.
                     </span>
                 </div>
 
                 <!-- Input Section -->
                 <div class="mb-4">
                     <label for="urlInput" class="form-label fw-bold" id="inputLabel">
-                        <i class="fas fa-link me-2"></i>الصق الروابط هنا (كل رابط في سطر منفصل)
+                        <i class="fas fa-paste me-2"></i>الصق الروابط هنا (بأي لغة)
                     </label>
                     <textarea 
                         class="form-control" 
                         id="urlInput" 
-                        rows="10" 
-                        placeholder="https://example1.com/very-long-marketing-url-with-parameters
-https://example2.com/another-long-promotional-link
-https://example3.com/yet-another-very-long-url"
+                        rows="12" 
+                        placeholder="https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية
+https://mystore.com/products/special-offer-2024?utm_source=facebook
+https://example.com/path/with-symbols#section_1
+https://site.com/🚀✨🎉-emoji-url
+https://store.com/products/中国-chinese-text"
+                        style="font-family: 'Courier New', monospace; line-height: 1.4;"
+                        dir="ltr"
                     ></textarea>
                     
-                    <!-- Stats -->
+                    <!-- Real-time Stats -->
                     <div class="row mt-3">
                         <div class="col-md-3 mb-2">
                             <div class="stats-card">
                                 <div class="stats-number" id="totalCount">0</div>
-                                <small id="totalLabel">إجمالي الروابط</small>
+                                <small id="totalLabel">إجمالي</small>
                             </div>
                         </div>
                         <div class="col-md-3 mb-2">
                             <div class="stats-card">
                                 <div class="stats-number text-success" id="validCount">0</div>
-                                <small id="validLabel">روابط صالحة</small>
+                                <small id="validLabel">صالحة</small>
                             </div>
                         </div>
                         <div class="col-md-3 mb-2">
@@ -320,27 +288,37 @@ https://example3.com/yet-another-very-long-url"
                 <div class="text-center mb-4">
                     <button class="btn btn-primary btn-lg me-2" onclick="processUrls()" id="processBtn">
                         <i class="fas fa-magic me-2"></i>
-                        <span id="processBtnText">إنشاء روابط قصيرة</span>
+                        <span id="processBtnText">🤖 معالجة ذكية تلقائية</span>
                         <div class="spinner-border spinner-border-sm ms-2 loading-spinner" role="status"></div>
+                    </button>
+                    <button class="btn btn-outline-secondary me-2" onclick="copyDemoUrls()" id="demoBtn">
+                        <i class="fas fa-clipboard me-2"></i>
+                        <span id="demoBtnText">نسخ عينة للاختبار</span>
                     </button>
                     <button class="btn btn-outline-secondary" onclick="clearAll()" id="clearBtn">
                         <i class="fas fa-trash me-2"></i>
-                        <span id="clearBtnText">مسح الكل</span>
+                        <span id="clearBtnText">مسح</span>
                     </button>
                 </div>
 
                 <!-- Results Section -->
                 <div id="results-section" class="fade-in">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 id="resultsTitle"><i class="fas fa-list me-2"></i>الروابط القصيرة الجاهزة</h4>
+                        <h4 id="resultsTitle">
+                            <i class="fas fa-list-check me-2"></i>روابط قصيرة جاهزة للاستخدام
+                        </h4>
                         <div>
-                            <button class="btn btn-success me-2" onclick="copyAll()" id="copyAllBtn">
+                            <button class="btn btn-success me-2" onclick="copyAllShortUrls()" id="copyAllBtn">
                                 <i class="fas fa-copy me-2"></i>
-                                <span id="copyAllText">نسخ الكل</span>
+                                <span id="copyAllText">نسخ القصيرة</span>
+                            </button>
+                            <button class="btn btn-info me-2" onclick="copyOriginalUrls()" id="copyOriginalBtn">
+                                <i class="fas fa-link me-2"></i>
+                                <span id="copyOriginalText">نسخ الأصلية</span>
                             </button>
                             <button class="btn btn-warning" onclick="downloadXLSX()" id="downloadBtn">
                                 <i class="fas fa-download me-2"></i>
-                                <span id="downloadText">تحميل XLSX</span>
+                                <span id="downloadText">XLSX</span>
                             </button>
                         </div>
                     </div>
@@ -349,10 +327,11 @@ https://example3.com/yet-another-very-long-url"
                         <table class="table table-striped results-table">
                             <thead>
                                 <tr>
+                                    <th id="indexHeader">#</th>
                                     <th id="originalHeader">الرابط الأصلي</th>
                                     <th id="shortHeader">الرابط القصير</th>
                                     <th id="statusHeader">الحالة</th>
-                                    <th id="actionHeader">إجراءات</th>
+                                    <th id="actionHeader">نسخ</th>
                                 </tr>
                             </thead>
                             <tbody id="results-tbody">
@@ -369,67 +348,79 @@ https://example3.com/yet-another-very-long-url"
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Language data
+        // Language translations
         const translations = {
             ar: {
-                mainTitle: "مختصر الروابط العربي",
-                mainSubtitle: "روابط تعمل 100% مجاناً - اختصر حتى 1000 رابط دفعة واحدة",
-                instructions: "الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). ستحصل على روابط قصيرة تعمل فوراً.",
-                inputLabel: "الصق الروابط هنا (كل رابط في سطر منفصل)",
-                totalLabel: "إجمالي الروابط",
-                validLabel: "روابط صالحة",
+                mainTitle: "🌍 مختصر الروابط العالمي",
+                mainSubtitle: "يدعم جميع اللغات والرموز تلقائياً - عربي • إنجليزي • رموز • إيموجي",
+                featuresTitle: "🎆 ميزات النظام العالمي",
+                featuresNote: "✨ نظام ترميز ذكي - يعالج تلقائياً جميع أنواع النصوص والرموز",
+                demoTitle: "📝 عينة من روابطك (جاهزة للنسخ)",
+                demoNote: "انسخ هذه الروابط في المربع أدناه للاختبار فوراً:",
+                copyDemoBtn: "📋 نسخ العينة للاختبار",
+                instructions: "الصق الروابط بأي لغة في المربع أدناه. النظام سيعالج تلقائياً: عربي، إنجليزي، رموز، إيموجي، أرقام، علامات ترقيم.",
+                inputLabel: "الصق الروابط هنا (بأي لغة)",
+                totalLabel: "إجمالي",
+                validLabel: "صالحة",
                 duplicateLabel: "مكررة",
                 invalidLabel: "غير صالحة",
-                processBtnText: "إنشاء روابط قصيرة",
-                clearBtnText: "مسح الكل",
-                resultsTitle: "الروابط القصيرة الجاهزة",
-                copyAllText: "نسخ الكل",
-                downloadText: "تحميل XLSX",
+                processBtnText: "🤖 معالجة ذكية تلقائية",
+                demoBtnText: "نسخ عينة للاختبار",
+                clearBtnText: "مسح",
+                resultsTitle: "روابط قصيرة جاهزة للاستخدام",
+                copyAllText: "نسخ القصيرة",
+                copyOriginalText: "نسخ الأصلية",
+                downloadText: "XLSX",
+                indexHeader: "#",
                 originalHeader: "الرابط الأصلي",
                 shortHeader: "الرابط القصير",
                 statusHeader: "الحالة",
-                actionHeader: "إجراءات",
-                copyBtn: "نسخ",
-                processing: "جاري المعالجة...",
-                success: "جاهز",
-                invalid: "غير صالح",
-                duplicate: "مكرر",
-                copied: "تم النسخ!",
-                allCopied: "تم نسخ جميع الروابط!",
-                noResults: "لا توجد نتائج للتصدير",
-                exampleTitle: "🎉 روابط تجريبية تعمل فعلياً!",
-                exampleText: "جرب هذه الروابط القصيرة - ستعيد التوجيه فوراً:",
-                exampleNote: "✨ هذه روابط حقيقية تعمل فعلياً! جربها الآن."
+                actionHeader: "نسخ",
+                copyBtn: "📋",
+                processing: "جاري المعالجة الذكية...",
+                success: "جاهز ✅",
+                invalid: "غير صالح ❌",
+                duplicate: "مكرر ⚠️",
+                copied: "تم!",
+                allCopied: "نُسخت جميعاً!",
+                noResults: "لا توجد نتائج",
+                demoCopied: "تم نسخ العينة!"
             },
             en: {
-                mainTitle: "Arabic URL Shortener",
-                mainSubtitle: "100% Working Links Free - Shorten up to 1000 URLs at once",
-                instructions: "Paste long URLs in the box below (one URL per line). You'll get working short links instantly.",
-                inputLabel: "Paste URLs here (one URL per line)",
-                totalLabel: "Total URLs",
-                validLabel: "Valid URLs",
+                mainTitle: "🌍 Global URL Shortener",
+                mainSubtitle: "Supports all languages and symbols automatically - Arabic • English • Symbols • Emoji",
+                featuresTitle: "🎆 Global System Features",
+                featuresNote: "✨ Smart encoding system - handles all text types and symbols automatically",
+                demoTitle: "📝 Sample URLs (Ready to Copy)",
+                demoNote: "Copy these URLs into the box below for instant testing:",
+                copyDemoBtn: "📋 Copy Sample for Testing",
+                instructions: "Paste URLs in any language below. System will automatically handle: Arabic, English, symbols, emoji, numbers, special characters.",
+                inputLabel: "Paste URLs here (any language)",
+                totalLabel: "Total",
+                validLabel: "Valid",
                 duplicateLabel: "Duplicates",
                 invalidLabel: "Invalid",
-                processBtnText: "Create Short Links",
-                clearBtnText: "Clear All",
+                processBtnText: "🤖 Smart Auto Processing",
+                demoBtnText: "Copy Sample for Test",
+                clearBtnText: "Clear",
                 resultsTitle: "Ready Short Links",
-                copyAllText: "Copy All",
-                downloadText: "Download XLSX",
+                copyAllText: "Copy Short URLs",
+                copyOriginalText: "Copy Original URLs",
+                downloadText: "XLSX",
+                indexHeader: "#",
                 originalHeader: "Original URL",
                 shortHeader: "Short URL",
                 statusHeader: "Status",
-                actionHeader: "Actions",
-                copyBtn: "Copy",
-                processing: "Processing...",
-                success: "Ready",
-                invalid: "Invalid",
-                duplicate: "Duplicate",
-                copied: "Copied!",
-                allCopied: "All URLs copied!",
-                noResults: "No results to export",
-                exampleTitle: "🎉 Working Demo Links!",
-                exampleText: "Try these short links - they redirect immediately:",
-                exampleNote: "✨ These are real working links! Try them now."
+                actionHeader: "Copy",
+                copyBtn: "📋",
+                processing: "Smart processing...",
+                success: "Ready ✅",
+                invalid: "Invalid ❌",
+                duplicate: "Duplicate ⚠️",
+                copied: "Done!",
+                allCopied: "All copied!",
+                noResults: "No results",
+                demoCopied: "Sample copied!"
             }
         };
         
@@ -440,6 +431,12 @@ https://example3.com/yet-another-very-long-url"
         document.addEventListener('DOMContentLoaded', function() {
             updateStats();
             document.getElementById('urlInput').addEventListener('input', updateStats);
+            
+            // Load saved language preference
+            const savedLang = localStorage.getItem('urlShortenerLang');
+            if (savedLang && savedLang !== currentLang) {
+                toggleLanguage();
+            }
         });
         
         // Language toggle
@@ -457,10 +454,90 @@ https://example3.com/yet-another-very-long-url"
             });
             
             // Update button text
-            document.getElementById('langToggle').innerHTML = `<i class="fas fa-language"></i> ${currentLang === 'ar' ? 'EN' : 'AR'}`;
+            document.getElementById('langToggle').innerHTML = `<i class="fas fa-globe"></i> ${currentLang === 'ar' ? 'EN' : 'عر'}`;  
+            
+            // Save language preference
+            localStorage.setItem('urlShortenerLang', currentLang);
         }
         
-        // Update statistics
+        // Advanced URL validation and normalization
+        function normalizeUrl(url) {
+            if (!url) return url;
+            
+            try {
+                // Clean whitespace and control characters
+                url = url.trim().replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                
+                // Add protocol if missing
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                
+                // Parse and normalize
+                const urlObj = new URL(url);
+                
+                // Clean pathname: remove /./ and multiple slashes
+                let pathname = urlObj.pathname.replace(/\/\.\/+/g, '/').replace(/\/+/g, '/');
+                
+                // Rebuild normalized URL
+                return `${urlObj.protocol}//${urlObj.hostname}${urlObj.port ? ':' + urlObj.port : ''}${pathname}${urlObj.search}${urlObj.hash}`;
+                
+            } catch (error) {
+                console.log('URL normalization failed:', error.message, 'for URL:', url);
+                return url;
+            }
+        }
+        
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === 'http:' || url.protocol === 'https:';
+            } catch (_) {
+                return false;
+            }
+        }
+        
+        // Smart encoding for international URLs
+        function smartEncodeUrl(url) {
+            try {
+                // Normalize first
+                const normalized = normalizeUrl(url);
+                
+                // Parse URL components
+                const urlObj = new URL(normalized);
+                
+                // Encode only the parts that need encoding, preserve structure
+                const encodedSearch = urlObj.search ? '?' + urlObj.search.substring(1).split('&')
+                    .map(param => {
+                        const [key, value] = param.split('=');
+                        return `${encodeURIComponent(key)}=${encodeURIComponent(value || '')}`;
+                    }).join('&') : '';
+                
+                // Reconstruct with smart encoding
+                return `${urlObj.protocol}//${urlObj.host}${urlObj.pathname}${encodedSearch}${urlObj.hash}`;
+                
+            } catch (error) {
+                console.log('Smart encoding failed:', error.message);
+                return encodeURIComponent(url);
+            }
+        }
+        
+        function generateShortUrl(originalUrl, index) {
+            const baseUrl = 'https://sherow1982.github.io/arabic-ads-calculator-tools/s.html';
+            
+            // Try to use direct URL encoding for maximum compatibility
+            const encodedOriginal = encodeURIComponent(originalUrl);
+            
+            // If encoded URL is reasonably short, use direct mode
+            if (encodedOriginal.length < 2000) {
+                return `${baseUrl}?to=${encodedOriginal}`;
+            }
+            
+            // Otherwise use index-based approach
+            return `${baseUrl}?to=${index}`;
+        }
+        
+        // Update statistics with enhanced validation
         function updateStats() {
             const input = document.getElementById('urlInput').value;
             const lines = input.split('\n').filter(line => line.trim() !== '');
@@ -474,11 +551,13 @@ https://example3.com/yet-another-very-long-url"
                 const url = line.trim();
                 if (url === '') return;
                 
-                if (seen.has(url)) {
+                const normalizedUrl = normalizeUrl(url);
+                
+                if (seen.has(normalizedUrl)) {
                     duplicateCount++;
                 } else {
-                    seen.add(url);
-                    if (isValidUrl(url)) {
+                    seen.add(normalizedUrl);
+                    if (isValidUrl(normalizedUrl)) {
                         validCount++;
                     } else {
                         invalidCount++;
@@ -492,60 +571,7 @@ https://example3.com/yet-another-very-long-url"
             document.getElementById('invalidCount').textContent = invalidCount;
         }
         
-        // Validate URL
-        function isValidUrl(string) {
-            try {
-                new URL(string);
-                return true;
-            } catch (_) {
-                return false;
-            }
-        }
-        
-        // Generate unique short code
-        function generateShortCode(index, originalUrl) {
-            // Use timestamp + index for uniqueness
-            const timestamp = Date.now().toString(36);
-            const indexStr = (index + 1).toString();
-            
-            // Try different approaches for generating codes
-            const approaches = [
-                indexStr, // Simple index: 1, 2, 3...
-                timestamp + indexStr, // Timestamp + index
-                btoa(originalUrl).substring(0, 6), // Base64 of URL (first 6 chars)
-                Math.random().toString(36).substring(2, 8) // Random string
-            ];
-            
-            return approaches[0]; // Use simple index for now
-        }
-        
-        // Generate short URL
-        function generateShortUrl(shortCode) {
-            return `https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=${shortCode}`;
-        }
-        
-        // Store URL mapping via GitHub API (for dynamic URLs)
-        async function storeUrlMapping(shortCode, originalUrl) {
-            try {
-                // Create a GitHub Issue to store the mapping
-                const issueData = {
-                    title: originalUrl,
-                    body: `URL Shortener Mapping\n\nshortcode:${shortCode}\nurl:${originalUrl}\ncreated:${new Date().toISOString()}\n\n🔗 Short URL: ${generateShortUrl(shortCode)}\n🎯 Target: ${originalUrl}\n\nThis issue was created automatically by the URL Shortener tool.`,
-                    labels: ['url-shortener', 'auto-generated']
-                };
-                
-                // Note: This would require authentication to create issues
-                // For now, we'll simulate the process
-                console.log('Would create GitHub Issue:', issueData);
-                
-                return true;
-            } catch (error) {
-                console.error('Failed to store URL mapping:', error);
-                return false;
-            }
-        }
-        
-        // Process URLs
+        // Process URLs with smart encoding
         async function processUrls() {
             const input = document.getElementById('urlInput').value;
             const lines = input.split('\n').filter(line => line.trim() !== '');
@@ -573,74 +599,76 @@ https://example3.com/yet-another-very-long-url"
             const tbody = document.getElementById('results-tbody');
             tbody.innerHTML = '';
             
-            const seen = new Set();
+            const seenUrls = new Set();
+            let validIndex = 1;
             
-            // Process each URL
+            // Process each URL with smart encoding
             for (let i = 0; i < lines.length; i++) {
                 const originalUrl = lines[i].trim();
                 if (originalUrl === '') continue;
                 
+                const normalizedUrl = normalizeUrl(originalUrl);
                 let status, shortUrl, shortCode;
                 
-                if (seen.has(originalUrl)) {
+                if (seenUrls.has(normalizedUrl)) {
                     status = 'duplicate';
                     shortUrl = '';
                     shortCode = '';
-                } else if (!isValidUrl(originalUrl)) {
+                } else if (!isValidUrl(normalizedUrl)) {
                     status = 'invalid';
                     shortUrl = '';
                     shortCode = '';
                 } else {
-                    seen.add(originalUrl);
+                    seenUrls.add(normalizedUrl);
                     
-                    // Generate unique short code
-                    shortCode = generateShortCode(i, originalUrl);
-                    shortUrl = generateShortUrl(shortCode);
+                    // Generate short URL with smart encoding
+                    shortCode = validIndex.toString();
+                    shortUrl = generateShortUrl(normalizedUrl, validIndex);
                     
-                    // Store mapping (simulated for now)
-                    await storeUrlMapping(shortCode, originalUrl);
-                    
+                    validIndex++;
                     status = 'success';
                 }
                 
                 const result = {
                     original: originalUrl,
+                    normalized: normalizedUrl,
                     short: shortUrl,
                     shortCode: shortCode,
                     status: status,
-                    index: i + 1
+                    displayIndex: i + 1
                 };
                 
                 processedResults.push(result);
                 addResultRow(result);
                 
-                // Add delay for smooth UI
-                if (i % 5 === 0) {
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                // Smooth UI updates
+                if (i % 3 === 0) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
             
             // Hide loading and show results
             processBtn.disabled = false;
             spinner.style.display = 'none';
-            btnText.textContent = translations[currentLang].processBtnText;
+            btnText.innerHTML = translations[currentLang].processBtnText;
             
             document.getElementById('results-section').style.display = 'block';
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
             
-            // Show success message
+            // Success notification
+            const successCount = processedResults.filter(r => r.status === 'success').length;
             const successMsg = currentLang === 'ar' 
-                ? `🎉 تم إنشاء ${processedResults.filter(r => r.status === 'success').length} رابط قصير بنجاح!`
-                : `🎉 Successfully created ${processedResults.filter(r => r.status === 'success').length} short links!`;
+                ? `🎉 تم إنشاء ${successCount} رابط قصير بنجاح!`
+                : `🎉 Successfully created ${successCount} short links!`;
             
             setTimeout(() => {
                 alert(successMsg + '\n\n' + (currentLang === 'ar' 
-                    ? 'ملاحظة: الروابط ستعمل فوراً لأنها تستخدم نظام معاملات URL الذكي.' 
-                    : 'Note: Links work instantly using smart URL parameter system.'));
+                    ? '✨ جميع الروابط تعمل تلقائياً - بأي لغة ورموز!' 
+                    : '✨ All links work instantly - with any language and symbols!'));
             }, 500);
         }
         
-        // Add result row to table
+        // Enhanced result row with better encoding display
         function addResultRow(result) {
             const tbody = document.getElementById('results-tbody');
             const row = document.createElement('tr');
@@ -653,17 +681,23 @@ https://example3.com/yet-another-very-long-url"
                 'invalid': 'bg-secondary text-white'
             }[result.status] || 'bg-secondary text-white';
             
+            // Truncate very long URLs for display
+            const displayOriginal = result.original.length > 80 
+                ? result.original.substring(0, 77) + '...' 
+                : result.original;
+            
             row.innerHTML = `
-                <td class="url-cell">${result.original}</td>
+                <td><strong>${result.displayIndex}</strong></td>
+                <td class="url-cell" title="${result.original}">${displayOriginal}</td>
                 <td class="url-cell">
-                    ${result.short ? `<a href="${result.short}" target="_blank" rel="noopener">${result.short}</a>` : '-'}
+                    ${result.short ? `<a href="${result.short}" target="_blank" rel="noopener" style="color: #2563eb; font-weight: 600;">رابط قصير #${result.shortCode}</a>` : '-'}
                 </td>
                 <td>
                     <span class="status-badge ${statusClass}">${statusText}</span>
                 </td>
                 <td>
-                    ${result.short ? `<button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyUrl('${result.short}')">
-                        <i class="fas fa-copy"></i> ${translations[currentLang].copyBtn}
+                    ${result.short ? `<button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyUrl('${result.short}')" title="نسخ الرابط القصير">
+                        ${translations[currentLang].copyBtn}
                     </button>` : '-'}
                 </td>
             `;
@@ -671,12 +705,12 @@ https://example3.com/yet-another-very-long-url"
             tbody.appendChild(row);
         }
         
-        // Copy single URL
+        // Copy functions with enhanced feedback
         function copyUrl(url) {
             navigator.clipboard.writeText(url).then(() => {
                 const btn = event.target.closest('button');
                 const originalText = btn.innerHTML;
-                btn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].copied}`;
+                btn.innerHTML = translations[currentLang].copied;
                 btn.classList.add('btn-success');
                 btn.classList.remove('btn-outline-primary');
                 
@@ -688,58 +722,99 @@ https://example3.com/yet-another-very-long-url"
             });
         }
         
-        // Copy all successful URLs
-        function copyAll() {
+        function copyAllShortUrls() {
             const successfulResults = processedResults.filter(r => r.status === 'success');
-            
             if (successfulResults.length === 0) {
-                alert(currentLang === 'ar' ? 'لا توجد روابط جاهزة للنسخ' : 'No ready URLs to copy');
+                alert(currentLang === 'ar' ? 'لا توجد روابط جاهزة' : 'No ready URLs');
                 return;
             }
             
             const textToCopy = successfulResults.map(r => r.short).join('\n');
-            
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const btn = document.getElementById('copyAllBtn');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = `<i class="fas fa-check me-2"></i>${translations[currentLang].allCopied}`;
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 3000);
+                setTimeout(() => { btn.innerHTML = originalText; }, 3000);
             });
         }
         
-        // Download XLSX
+        function copyOriginalUrls() {
+            const successfulResults = processedResults.filter(r => r.status === 'success');
+            if (successfulResults.length === 0) {
+                alert(currentLang === 'ar' ? 'لا توجد روابط جاهزة' : 'No ready URLs');
+                return;
+            }
+            
+            const textToCopy = successfulResults.map(r => r.original).join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copyOriginalBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i class="fas fa-check me-2"></i>نُسخت!`;
+                setTimeout(() => { btn.innerHTML = originalText; }, 3000);
+            });
+        }
+        
+        function copyDemoUrls() {
+            const demoUrls = [
+                'https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية',
+                'https://kuwait-matjar.arabsad.com/./product.html?name=عربة-متنقلة-قابلة-للطي-بغطاء-و-عجلات',
+                'https://kuwait-matjar.arabsad.com/./product.html?name=آلة-إزالة-الشعر-الكهربائية-usb',
+                'https://kuwait-matjar.arabsad.com/./product.html?name=خلاط-كهربائي-2-لتر',
+                'https://kuwait-matjar.arabsad.com/./product.html?name=منظم-ظهر-لمقعد-السيارة'
+            ].join('\n');
+            
+            document.getElementById('urlInput').value = demoUrls;
+            updateStats();
+            
+            const btn = document.getElementById('demoBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-check me-2"></i>${translations[currentLang].demoCopied}`;
+            setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+        }
+        
+        // Enhanced XLSX export with encoding information
         function downloadXLSX() {
             if (processedResults.length === 0) {
                 alert(translations[currentLang].noResults);
                 return;
             }
             
-            const data = processedResults.map((result, index) => ({
-                'رقم / #': index + 1,
-                'الرابط الأصلي / Original URL': result.original,
-                'الرابط القصير / Short URL': result.short || '',
-                'الرمز / Code': result.shortCode || '',
-                'الحالة / Status': translations[currentLang][result.status] || result.status,
-                'تاريخ الإنشاء / Created': new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US'),
-                'طريقة الاستخدام / Usage': result.short ? `انسخ هذا الرابط واستخدمه في حملاتك` : 'غير متاح'
-            }));
+            const data = processedResults.map((result, index) => {
+                const shortUrl = result.short ? result.short.substring(result.short.indexOf('s.html')) : '';
+                
+                return {
+                    'رقم / #': result.displayIndex,
+                    'الرابط الأصلي / Original URL': result.original,
+                    'الرابط القصير / Short URL': result.short || '',
+                    'الرابط الكامل / Full Short URL': result.short || '',
+                    'الرمز / Code': result.shortCode || '',
+                    'الحالة / Status': translations[currentLang][result.status] || result.status,
+                    'معلومات الترميز / Encoding Info': result.normalized !== result.original ? 'تم التطبيع' : 'عادي',
+                    'تاريخ الإنشاء / Created': new Date().toLocaleString(currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                };
+            });
             
             const ws = XLSX.utils.json_to_sheet(data);
             
-            // Add instructions sheet
+            // Instructions sheet with encoding details
             const instructions = [
-                { 'التعليمات / Instructions': 'كيفية استخدام الروابط القصيرة' },
-                { 'التعليمات / Instructions': '1. انسخ الرابط القصير من العمود "الرابط القصير"' },
-                { 'التعليمات / Instructions': '2. الصقه في حملاتك الإعلانية أو منشوراتك' },
-                { 'التعليمات / Instructions': '3. الرابط سيعيد التوجيه تلقائياً للرابط الأصلي' },
-                { 'التعليمات / Instructions': '4. جميع الروابط تعمل فوراً بدون إعدادات إضافية' },
+                { 'التعليمات / Instructions': '🌍 مختصر الروابط العالمي - يدعم جميع اللغات' },
                 { 'التعليمات / Instructions': '' },
-                { 'التعليمات / Instructions': 'مثال:' },
-                { 'التعليمات / Instructions': 'https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=1' },
-                { 'التعليمات / Instructions': 'سيعيد التوجيه للرابط الأصلي المُحدد للرمز "1"' },
+                { 'التعليمات / Instructions': '✅ ما يدعمه النظام:' },
+                { 'التعليمات / Instructions': '• روابط عربية ببارامترات عربية' },
+                { 'التعليمات / Instructions': '• روابط إنجليزية برموز خاصة' },
+                { 'التعليمات / Instructions': '• روابط بإيموجي ورموز Unicode' },
+                { 'التعليمات / Instructions': '• معالجة تلقائية للمسارات الغير قياسية' },
+                { 'التعليمات / Instructions': '• ترميز UTF-8 آمن لجميع المنصات' },
+                { 'التعليمات / Instructions': '' },
+                { 'التعليمات / Instructions': '🚀 طريقة الاستخدام:' },
+                { 'التعليمات / Instructions': '1. انسخ الرابط القصير من عمود "الرابط القصير"' },
+                { 'التعليمات / Instructions': '2. استخدمه في حملاتك الإعلانية' },
+                { 'التعليمات / Instructions': '3. الرابط سيعيد التوجيه تلقائياً للرابط الأصلي' },
+                { 'التعليمات / Instructions': '4. متوافق مع جميع المنصات: FB, Google, Snap, TikTok' },
+                { 'التعليمات / Instructions': '' },
+                { 'التعليمات / Instructions': 'مثال عملي:' },
+                { 'التعليمات / Instructions': 'https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=1' }
             ];
             
             const instructionsWs = XLSX.utils.json_to_sheet(instructions);
@@ -748,32 +823,18 @@ https://example3.com/yet-another-very-long-url"
             XLSX.utils.book_append_sheet(wb, ws, currentLang === 'ar' ? 'الروابط القصيرة' : 'Short URLs');
             XLSX.utils.book_append_sheet(wb, instructionsWs, currentLang === 'ar' ? 'التعليمات' : 'Instructions');
             
-            const filename = `short-urls-${new Date().toISOString().split('T')[0]}.xlsx`;
+            const filename = `global-short-urls-${new Date().toISOString().split('T')[0]}.xlsx`;
             XLSX.writeFile(wb, filename);
         }
         
-        // Clear all
         function clearAll() {
-            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح جميع البيانات؟' : 'Are you sure you want to clear all data?')) {
+            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح جميع البيانات؟' : 'Clear all data?')) {
                 document.getElementById('urlInput').value = '';
                 document.getElementById('results-section').style.display = 'none';
                 processedResults = [];
                 updateStats();
             }
         }
-        
-        // Load saved language preference
-        const savedLang = localStorage.getItem('urlShortenerLang');
-        if (savedLang && savedLang !== currentLang) {
-            toggleLanguage();
-        }
-        
-        // Save language preference
-        const originalToggleLanguage = toggleLanguage;
-        toggleLanguage = function() {
-            originalToggleLanguage();
-            localStorage.setItem('urlShortenerLang', currentLang);
-        };
     </script>
 </body>
 </html>
