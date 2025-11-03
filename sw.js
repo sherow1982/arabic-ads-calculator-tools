@@ -1,7 +1,9 @@
-const CACHE_NAME = 'arabic-ads-tools-v2.1';
+const CACHE_NAME = 'arabic-ads-tools-v2.2';
 const urlsToCache = [
   './',
   './index.html',
+  './tools/market-research-advisor.html',
+  './data/ad-strategy.json',
   './cpc-calculator.html',
   './roi-calculator.html', 
   './cpa-calculator.html',
@@ -20,6 +22,7 @@ const urlsToCache = [
   './chatbot.js',
   './manifest.json',
   './favicon.svg',
+  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
   'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
@@ -29,7 +32,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('تم فتح الذاكرة المؤقتة');
+        console.log('تم فتح الذاكرة المؤقتة مع أداة الإعلانات الذكية');
         return cache.addAll(urlsToCache);
       })
   );
@@ -54,22 +57,81 @@ self.addEventListener('activate', function(event) {
   // بدء التحقق من التنبيهات دورياً
   self.clients.claim();
   startAlertsCheck();
+  notifyClientsOfUpdate();
 });
 
-// التعامل مع الطلبات
+// التعامل مع الطلبات مع تحديث ذكي للبيانات
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
-        // إرجاع من الذاكرة إن وُجد، وإلا جلب من الشبكة
+        // إذا وُجد في الكاش، أرجعه مع فحص التحديث في الخلفية
         if (response) {
+          // للملفات الحساسة (البيانات وأداة الإعلانات)، فحص التحديث في الخلفية
+          if (event.request.url.includes('/data/') || 
+              event.request.url.includes('market-research-advisor.html') ||
+              event.request.url.includes('alerts.json')) {
+            // تحديث صامت في الخلفية
+            fetch(event.request)
+              .then(fetchResponse => {
+                if (fetchResponse && fetchResponse.status === 200) {
+                  caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, fetchResponse.clone());
+                    // إخبار الصفحات بوجود تحديث
+                    broadcastUpdate(event.request.url);
+                  });
+                }
+              })
+              .catch(() => {}); // فشل صامت
+          }
           return response;
         }
-        return fetch(event.request);
-      }
-    )
+        
+        // ليس في الكاش - جلب من الشبكة
+        return fetch(event.request)
+          .then(function(response) {
+            // تحقق من صحة الاستجابة
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            
+            // نسخ الاستجابة للكاش
+            var responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                cache.put(event.request, responseToCache);
+              });
+            
+            return response;
+          });
+      })
   );
 });
+
+// إخبار الصفحات بالتحديثات
+function broadcastUpdate(url) {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'DATA_UPDATED',
+        url: url,
+        timestamp: new Date().toISOString()
+      });
+    });
+  });
+}
+
+// إشعار العملاء بوجود تحديث
+function notifyClientsOfUpdate() {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'SW_UPDATED',
+        message: 'تم تحديث الأدوات - أعد تحميل الصفحة للحصول على آخر نسخة'
+      });
+    });
+  });
+}
 
 // استقبال الرسائل من الصفحات الرئيسية
 self.addEventListener('message', function(event) {
@@ -81,7 +143,31 @@ self.addEventListener('message', function(event) {
   if (event.data && event.data.type === 'CHECK_ALERTS') {
     checkForNewAlerts();
   }
+  
+  // إرسال معلومات آخر تحديث
+  if (event.data && event.data.type === 'GET_LAST_UPDATE') {
+    getLastCommitDate().then(date => {
+      event.ports[0].postMessage({
+        type: 'LAST_UPDATE_DATE',
+        date: date
+      });
+    });
+  }
 });
+
+// جلب تاريخ آخر تحديث من GitHub API
+async function getLastCommitDate() {
+  try {
+    const response = await fetch('https://api.github.com/repos/sherow1982/arabic-ads-calculator-tools/commits/main');
+    if (response.ok) {
+      const data = await response.json();
+      return data.commit.author.date;
+    }
+  } catch (error) {
+    console.log('فشل في جلب تاريخ التحديث:', error);
+  }
+  return new Date().toISOString(); // تاريخ افتراضي
+}
 
 // بدء التحقق الدوري من التنبيهات
 function startAlertsCheck() {
