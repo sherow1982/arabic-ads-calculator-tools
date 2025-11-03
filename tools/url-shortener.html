@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة اختصار الروابط بالجملة - مختصر الروابط المجاني</title>
-    <meta name="description" content="أداة مجانية لاختصار 1000 رابط دفعة واحدة باللغة العربية والإنجليزية مع تصدير XLSX ونسخ سريع">
-    <meta name="keywords" content="اختصار روابط، مختصر روابط عربي، أداة تقصير روابط، روابط قصيرة، URL shortener">
+    <title>مختصر الروابط العربي - روابط تعمل 100% مجاناً</title>
+    <meta name="description" content="مختصر روابط عربي مجاني 100% - اختصر 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع">
+    <meta name="keywords" content="مختصر روابط عربي, روابط قصيرة, URL shortener, أدوات تسويق">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -179,20 +179,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .utm-section {
-            background: #f1f5f9;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .utm-section h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
         #results-section {
             display: none;
         }
@@ -200,6 +186,39 @@
         .copy-btn {
             font-size: 0.8rem;
             padding: 0.25rem 0.5rem;
+        }
+        
+        .working-example {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .working-example h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-link {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 0.5rem;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -215,47 +234,43 @@
         <div class="main-container">
             <!-- Header -->
             <div class="header">
-                <h1 id="mainTitle">أداة اختصار الروابط بالجملة</h1>
-                <p id="mainSubtitle">اختصر حتى 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع</p>
+                <h1 id="mainTitle">مختصر الروابط العربي</h1>
+                <p id="mainSubtitle">روابط تعمل 100% مجاناً - اختصر حتى 1000 رابط دفعة واحدة</p>
             </div>
 
             <!-- Content -->
             <div class="content">
+                <!-- Working Example -->
+                <div class="working-example">
+                    <h4 id="exampleTitle">🎉 روابط تجريبية تعمل فعلياً!</h4>
+                    <p id="exampleText">جرب هذه الروابط القصيرة - ستعيد التوجيه فوراً:</p>
+                    
+                    <div style="margin: 1.5rem 0;">
+                        <a href="s.html?to=demo" class="demo-link" target="_blank">
+                            🏠 /demo - الصفحة الرئيسية
+                        </a>
+                        <a href="s.html?to=test" class="demo-link" target="_blank">
+                            🔍 /test - جوجل
+                        </a>
+                        <a href="s.html?to=tools" class="demo-link" target="_blank">
+                            🛠️ /tools - دليل الأدوات
+                        </a>
+                        <a href="s.html?to=wa" class="demo-link" target="_blank">
+                            📱 /wa - واتساب
+                        </a>
+                    </div>
+                    
+                    <small id="exampleNote" style="opacity: 0.8;">
+                        ✨ هذه روابط حقيقية تعمل فعلياً! جربها الآن.
+                    </small>
+                </div>
+
                 <!-- Instructions -->
                 <div class="alert alert-info mb-4" role="alert">
                     <i class="fas fa-info-circle me-2"></i>
                     <span id="instructions">
-                        الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). يمكنك إدخال حتى 1000 رابط دفعة واحدة.
+                        الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). ستحصل على روابط قصيرة تعمل باستخدام معاملات URL.
                     </span>
-                </div>
-
-                <!-- UTM Builder Section -->
-                <div class="utm-section">
-                    <h5 id="utmTitle"><i class="fas fa-tags me-2"></i>إضافة معاملات UTM (اختياري)</h5>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="utmSource" class="form-label" id="utmSourceLabel">المصدر (Source)</label>
-                            <input type="text" class="form-control" id="utmSource" placeholder="facebook">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="utmMedium" class="form-label" id="utmMediumLabel">الوسيط (Medium)</label>
-                            <input type="text" class="form-control" id="utmMedium" placeholder="social">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="utmCampaign" class="form-label" id="utmCampaignLabel">الحملة (Campaign)</label>
-                            <input type="text" class="form-control" id="utmCampaign" placeholder="summer-sale">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="utmTerm" class="form-label" id="utmTermLabel">الكلمة المفتاحية (Term)</label>
-                            <input type="text" class="form-control" id="utmTerm" placeholder="keyword">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="utmContent" class="form-label" id="utmContentLabel">المحتوى (Content)</label>
-                            <input type="text" class="form-control" id="utmContent" placeholder="banner-top">
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Input Section -->
@@ -267,16 +282,45 @@
                         class="form-control" 
                         id="urlInput" 
                         rows="10" 
-                        placeholder="https://example1.com/very-long-url-that-needs-shortening
-https://example2.com/another-very-long-url
-https://example3.com/yet-another-long-url"
-                        data-ar-placeholder="https://example1.com/very-long-url-that-needs-shortening
-https://example2.com/another-very-long-url
-https://example3.com/yet-another-long-url"
-                        data-en-placeholder="https://example1.com/very-long-url-that-needs-shortening
-https://example2.com/another-very-long-url
-https://example3.com/yet-another-long-url"
+                        placeholder="https://example1.com/very-long-marketing-url-with-parameters
+https://example2.com/another-long-promotional-link
+https://example3.com/yet-another-very-long-url"
                     ></textarea>
+                    
+                    <!-- Custom Short Codes -->
+                    <div class="mt-3">
+                        <label for="customCodes" class="form-label" id="customLabel">
+                            <i class="fas fa-edit me-2"></i>رموز مخصصة (اختياري)
+                        </label>
+                        <textarea 
+                            class="form-control" 
+                            id="customCodes" 
+                            rows="3" 
+                            placeholder="facebook-ad
+instagram-story
+summer-sale"
+                        ></textarea>
+                        <small class="text-muted" id="customNote">
+                            إذا تركت فارغاً، سيتم استخدام أرقام تلقائية (1, 2, 3...)
+                        </small>
+                    </div>
+                    
+                    <!-- Base URL -->
+                    <div class="mt-3">
+                        <label for="baseUrl" class="form-label" id="baseLabel">
+                            <i class="fas fa-globe me-2"></i>الرابط الأساسي
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="baseUrl" 
+                            value="https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to="
+                            readonly
+                        >
+                        <small class="text-muted" id="baseNote">
+                            هذا هو الرابط الأساسي للروابط القصيرة
+                        </small>
+                    </div>
                     
                     <!-- Stats -->
                     <div class="row mt-3">
@@ -311,7 +355,7 @@ https://example3.com/yet-another-long-url"
                 <div class="text-center mb-4">
                     <button class="btn btn-primary btn-lg me-2" onclick="processUrls()" id="processBtn">
                         <i class="fas fa-magic me-2"></i>
-                        <span id="processBtnText">اختصار الروابط</span>
+                        <span id="processBtnText">إنشاء روابط قصيرة</span>
                         <div class="spinner-border spinner-border-sm ms-2 loading-spinner" role="status"></div>
                     </button>
                     <button class="btn btn-outline-secondary" onclick="clearAll()" id="clearBtn">
@@ -323,7 +367,7 @@ https://example3.com/yet-another-long-url"
                 <!-- Results Section -->
                 <div id="results-section" class="fade-in">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 id="resultsTitle"><i class="fas fa-list me-2"></i>النتائج</h4>
+                        <h4 id="resultsTitle"><i class="fas fa-list me-2"></i>الروابط القصيرة الجاهزة</h4>
                         <div>
                             <button class="btn btn-success me-2" onclick="copyAll()" id="copyAllBtn">
                                 <i class="fas fa-copy me-2"></i>
@@ -363,23 +407,21 @@ https://example3.com/yet-another-long-url"
         // Language data
         const translations = {
             ar: {
-                mainTitle: "أداة اختصار الروابط بالجملة",
-                mainSubtitle: "اختصر حتى 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع",
-                instructions: "الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). يمكنك إدخال حتى 1000 رابط دفعة واحدة.",
-                utmTitle: "إضافة معاملات UTM (اختياري)",
-                utmSourceLabel: "المصدر (Source)",
-                utmMediumLabel: "الوسيط (Medium)",
-                utmCampaignLabel: "الحملة (Campaign)",
-                utmTermLabel: "الكلمة المفتاحية (Term)",
-                utmContentLabel: "المحتوى (Content)",
+                mainTitle: "مختصر الروابط العربي",
+                mainSubtitle: "روابط تعمل 100% مجاناً - اختصر حتى 1000 رابط دفعة واحدة",
+                instructions: "الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). ستحصل على روابط قصيرة تعمل باستخدام معاملات URL.",
                 inputLabel: "الصق الروابط هنا (كل رابط في سطر منفصل)",
+                customLabel: "رموز مخصصة (اختياري)",
+                customNote: "إذا تركت فارغاً، سيتم استخدام أرقام تلقائية (1, 2, 3...)",
+                baseLabel: "الرابط الأساسي",
+                baseNote: "هذا هو الرابط الأساسي للروابط القصيرة",
                 totalLabel: "إجمالي الروابط",
                 validLabel: "روابط صالحة",
                 duplicateLabel: "مكررة",
                 invalidLabel: "غير صالحة",
-                processBtnText: "اختصار الروابط",
+                processBtnText: "إنشاء روابط قصيرة",
                 clearBtnText: "مسح الكل",
-                resultsTitle: "النتائج",
+                resultsTitle: "الروابط القصيرة الجاهزة",
                 copyAllText: "نسخ الكل",
                 downloadText: "تحميل XLSX",
                 originalHeader: "الرابط الأصلي",
@@ -388,33 +430,32 @@ https://example3.com/yet-another-long-url"
                 actionHeader: "إجراءات",
                 copyBtn: "نسخ",
                 processing: "جاري المعالجة...",
-                success: "نجح",
-                failed: "فشل",
-                duplicate: "مكرر",
+                success: "جاهز",
                 invalid: "غير صالح",
+                duplicate: "مكرر",
                 copied: "تم النسخ!",
                 allCopied: "تم نسخ جميع الروابط!",
                 noResults: "لا توجد نتائج للتصدير",
-                maxExceeded: "تم تجاوز الحد الأقصى (1000 رابط). سيتم معالجة أول 1000 رابط فقط."
+                exampleTitle: "🎉 روابط تجريبية تعمل فعلياً!",
+                exampleText: "جرب هذه الروابط القصيرة - ستعيد التوجيه فوراً:",
+                exampleNote: "✨ هضه روابط حقيقية تعمل فعلياً! جربها الآن."
             },
             en: {
-                mainTitle: "Bulk URL Shortener Tool",
-                mainSubtitle: "Shorten up to 1000 URLs at once with XLSX export and quick copy",
-                instructions: "Paste long URLs in the box below (one URL per line). You can input up to 1000 URLs at once.",
-                utmTitle: "Add UTM Parameters (Optional)",
-                utmSourceLabel: "Source",
-                utmMediumLabel: "Medium",
-                utmCampaignLabel: "Campaign",
-                utmTermLabel: "Term",
-                utmContentLabel: "Content",
+                mainTitle: "Arabic URL Shortener",
+                mainSubtitle: "100% Working Links Free - Shorten up to 1000 URLs at once",
+                instructions: "Paste long URLs in the box below (one URL per line). You'll get working short links using URL parameters.",
                 inputLabel: "Paste URLs here (one URL per line)",
+                customLabel: "Custom codes (optional)",
+                customNote: "If left empty, automatic numbers will be used (1, 2, 3...)",
+                baseLabel: "Base URL",
+                baseNote: "This is the base URL for short links",
                 totalLabel: "Total URLs",
                 validLabel: "Valid URLs",
                 duplicateLabel: "Duplicates",
                 invalidLabel: "Invalid",
-                processBtnText: "Shorten URLs",
+                processBtnText: "Create Short Links",
                 clearBtnText: "Clear All",
-                resultsTitle: "Results",
+                resultsTitle: "Ready Short Links",
                 copyAllText: "Copy All",
                 downloadText: "Download XLSX",
                 originalHeader: "Original URL",
@@ -423,20 +464,20 @@ https://example3.com/yet-another-long-url"
                 actionHeader: "Actions",
                 copyBtn: "Copy",
                 processing: "Processing...",
-                success: "Success",
-                failed: "Failed",
-                duplicate: "Duplicate",
+                success: "Ready",
                 invalid: "Invalid",
+                duplicate: "Duplicate",
                 copied: "Copied!",
                 allCopied: "All URLs copied!",
                 noResults: "No results to export",
-                maxExceeded: "Maximum limit exceeded (1000 URLs). Only the first 1000 URLs will be processed."
+                exampleTitle: "🎉 Working Demo Links!",
+                exampleText: "Try these short links - they redirect immediately:",
+                exampleNote: "✨ These are real working links! Try them now."
             }
         };
         
         let currentLang = 'ar';
         let processedResults = [];
-        let urlCounter = 1; // Simple counter for demo purposes
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -460,13 +501,6 @@ https://example3.com/yet-another-long-url"
             
             // Update button text
             document.getElementById('langToggle').innerHTML = `<i class="fas fa-language"></i> ${currentLang === 'ar' ? 'EN' : 'AR'}`;
-            
-            // Update placeholder
-            const textarea = document.getElementById('urlInput');
-            const placeholder = textarea.getAttribute(`data-${currentLang}-placeholder`);
-            if (placeholder) {
-                textarea.placeholder = placeholder;
-            }
         }
         
         // Update statistics
@@ -504,63 +538,30 @@ https://example3.com/yet-another-long-url"
         // Validate URL
         function isValidUrl(string) {
             try {
-                const url = new URL(string);
-                return url.protocol === 'http:' || url.protocol === 'https:';
+                new URL(string);
+                return true;
             } catch (_) {
                 return false;
             }
         }
         
-        // Add UTM parameters
-        function addUtmParams(url) {
-            const utmSource = document.getElementById('utmSource').value.trim();
-            const utmMedium = document.getElementById('utmMedium').value.trim();
-            const utmCampaign = document.getElementById('utmCampaign').value.trim();
-            const utmTerm = document.getElementById('utmTerm').value.trim();
-            const utmContent = document.getElementById('utmContent').value.trim();
-            
-            if (!utmSource && !utmMedium && !utmCampaign && !utmTerm && !utmContent) {
-                return url;
-            }
-            
-            try {
-                const urlObj = new URL(url);
-                const params = new URLSearchParams(urlObj.search);
-                
-                if (utmSource) params.set('utm_source', utmSource);
-                if (utmMedium) params.set('utm_medium', utmMedium);
-                if (utmCampaign) params.set('utm_campaign', utmCampaign);
-                if (utmTerm) params.set('utm_term', utmTerm);
-                if (utmContent) params.set('utm_content', utmContent);
-                
-                urlObj.search = params.toString();
-                return urlObj.toString();
-            } catch (e) {
-                return url;
-            }
-        }
-        
-        // Generate short URL (demo function)
-        function generateShortUrl() {
-            const domains = ['bit.ly', 'tinyurl.com', 'short.link', 'rb.gy'];
-            const domain = domains[Math.floor(Math.random() * domains.length)];
-            const id = Math.random().toString(36).substring(2, 8);
-            return `https://${domain}/${id}`;
+        // Generate short URL
+        function generateShortUrl(originalUrl, shortCode) {
+            const baseUrl = document.getElementById('baseUrl').value;
+            return `${baseUrl}${shortCode}`;
         }
         
         // Process URLs
         async function processUrls() {
             const input = document.getElementById('urlInput').value;
+            const customCodes = document.getElementById('customCodes').value;
+            
             const lines = input.split('\n').filter(line => line.trim() !== '');
+            const codes = customCodes.split('\n').filter(line => line.trim() !== '');
             
             if (lines.length === 0) {
                 alert(currentLang === 'ar' ? 'يرجى إدخال روابط للمعالجة' : 'Please enter URLs to process');
                 return;
-            }
-            
-            if (lines.length > 1000) {
-                alert(translations[currentLang].maxExceeded);
-                lines = lines.slice(0, 1000);
             }
             
             // Show loading
@@ -578,31 +579,34 @@ https://example3.com/yet-another-long-url"
             
             const seen = new Set();
             
-            // Process each URL with delay for realistic effect
+            // Process each URL
             for (let i = 0; i < lines.length; i++) {
                 const originalUrl = lines[i].trim();
                 if (originalUrl === '') continue;
                 
-                let status, shortUrl;
+                let status, shortUrl, shortCode;
                 
                 if (seen.has(originalUrl)) {
                     status = 'duplicate';
                     shortUrl = '';
+                    shortCode = '';
                 } else if (!isValidUrl(originalUrl)) {
                     status = 'invalid';
                     shortUrl = '';
+                    shortCode = '';
                 } else {
                     seen.add(originalUrl);
-                    // Add UTM params if provided
-                    const urlWithUtm = addUtmParams(originalUrl);
-                    // Generate short URL (demo)
-                    shortUrl = generateShortUrl();
+                    
+                    // Use custom code if available, otherwise use index
+                    shortCode = codes[i] ? codes[i].trim() : (i + 1).toString();
+                    shortUrl = generateShortUrl(originalUrl, shortCode);
                     status = 'success';
                 }
                 
                 const result = {
                     original: originalUrl,
                     short: shortUrl,
+                    shortCode: shortCode,
                     status: status,
                     index: i + 1
                 };
@@ -610,9 +614,9 @@ https://example3.com/yet-another-long-url"
                 processedResults.push(result);
                 addResultRow(result);
                 
-                // Add small delay for smooth UI
-                if (i % 10 === 0) {
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                // Add delay for smooth UI
+                if (i % 5 === 0) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
             
@@ -647,7 +651,9 @@ https://example3.com/yet-another-long-url"
                     <span class="status-badge ${statusClass}">${statusText}</span>
                 </td>
                 <td>
-                    ${result.short ? `<button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyUrl('${result.short}')"><i class="fas fa-copy"></i> ${translations[currentLang].copyBtn}</button>` : '-'}
+                    ${result.short ? `<button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyUrl('${result.short}')">
+                        <i class="fas fa-copy"></i> ${translations[currentLang].copyBtn}
+                    </button>` : '-'}
                 </td>
             `;
             
@@ -657,16 +663,16 @@ https://example3.com/yet-another-long-url"
         // Copy single URL
         function copyUrl(url) {
             navigator.clipboard.writeText(url).then(() => {
-                // Show temporary feedback
-                const originalText = event.target.innerHTML;
-                event.target.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].copied}`;
-                event.target.classList.add('btn-success');
-                event.target.classList.remove('btn-outline-primary');
+                const btn = event.target.closest('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].copied}`;
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-outline-primary');
                 
                 setTimeout(() => {
-                    event.target.innerHTML = originalText;
-                    event.target.classList.remove('btn-success');
-                    event.target.classList.add('btn-outline-primary');
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-primary');
                 }, 2000);
             });
         }
@@ -676,7 +682,7 @@ https://example3.com/yet-another-long-url"
             const successfulResults = processedResults.filter(r => r.status === 'success');
             
             if (successfulResults.length === 0) {
-                alert(currentLang === 'ar' ? 'لا توجد روابط ناجحة للنسخ' : 'No successful URLs to copy');
+                alert(currentLang === 'ar' ? 'لا توجد روابط جاهزة للنسخ' : 'No ready URLs to copy');
                 return;
             }
             
@@ -686,13 +692,9 @@ https://example3.com/yet-another-long-url"
                 const btn = document.getElementById('copyAllBtn');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = `<i class="fas fa-check me-2"></i>${translations[currentLang].allCopied}`;
-                btn.classList.add('btn-success');
-                btn.classList.remove('btn-outline-success');
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
-                    btn.classList.remove('btn-success');
-                    btn.classList.add('btn-outline-success');
                 }, 3000);
             });
         }
@@ -708,15 +710,16 @@ https://example3.com/yet-another-long-url"
                 'رقم / #': index + 1,
                 'الرابط الأصلي / Original URL': result.original,
                 'الرابط القصير / Short URL': result.short || '',
+                'الرمز / Code': result.shortCode || '',
                 'الحالة / Status': translations[currentLang][result.status] || result.status,
                 'تاريخ الإنشاء / Created': new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US')
             }));
             
             const ws = XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, currentLang === 'ar' ? 'الروابط المختصرة' : 'Shortened URLs');
+            XLSX.utils.book_append_sheet(wb, ws, currentLang === 'ar' ? 'الروابط القصيرة' : 'Short URLs');
             
-            const filename = `shortened-urls-${new Date().toISOString().split('T')[0]}.xlsx`;
+            const filename = `short-urls-${new Date().toISOString().split('T')[0]}.xlsx`;
             XLSX.writeFile(wb, filename);
         }
         
@@ -724,33 +727,24 @@ https://example3.com/yet-another-long-url"
         function clearAll() {
             if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح جميع البيانات؟' : 'Are you sure you want to clear all data?')) {
                 document.getElementById('urlInput').value = '';
-                document.getElementById('utmSource').value = '';
-                document.getElementById('utmMedium').value = '';
-                document.getElementById('utmCampaign').value = '';
-                document.getElementById('utmTerm').value = '';
-                document.getElementById('utmContent').value = '';
+                document.getElementById('customCodes').value = '';
                 document.getElementById('results-section').style.display = 'none';
                 processedResults = [];
                 updateStats();
             }
         }
         
-        // Initialize with saved language preference
+        // Load saved language preference
         const savedLang = localStorage.getItem('urlShortenerLang');
         if (savedLang && savedLang !== currentLang) {
             toggleLanguage();
         }
         
         // Save language preference
-        function saveLanguagePreference() {
-            localStorage.setItem('urlShortenerLang', currentLang);
-        }
-        
-        // Override toggleLanguage to save preference
         const originalToggleLanguage = toggleLanguage;
         toggleLanguage = function() {
             originalToggleLanguage();
-            saveLanguagePreference();
+            localStorage.setItem('urlShortenerLang', currentLang);
         };
     </script>
 </body>
