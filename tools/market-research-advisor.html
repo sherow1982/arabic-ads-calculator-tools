@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>مُرشِّد الإعلانات الذكي - النسخة المحسّنة</title>
-  <link rel="icon" href="/favicon.svg">
-  <link rel="stylesheet" href="/global-styles.css" />
+  <link rel="icon" href="../favicon.svg">
+  <link rel="stylesheet" href="../global-styles.css" />
   <style>
     .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 12px rgba(0,0,0,.04)}
     .grid{display:grid;gap:16px}
@@ -21,6 +21,7 @@
     .row{display:flex;gap:12px;flex-wrap:wrap}
     .row .col{flex:1 1 260px}
     .small{font-size:.85rem}
+    .error{background:#ffe8e6;color:#b10;border:1px solid #f3b1aa;padding:10px 12px;border-radius:10px;margin:10px 0;display:none}
   </style>
 </head>
 <body>
@@ -28,16 +29,18 @@
     <h1>🎯 مُرشِّد الإعلانات الذكي (نسخة محسّنة)</h1>
     <p class="muted">أدخل الدولة والمجال، وحدّد <b>هدف الحملة</b> و<b>مدة التشغيل</b> و<b>الميزانية</b> لنولّد خطة دقيقة: كلمات مفتاحية عربية، مزيج قنوات، توزيع ميزانية، وتوقعات تفصيلية.</p>
 
+    <div id="err" class="error">تعذر تحميل بيانات الدول/القطاعات. رجاء تحديث الصفحة (Ctrl+F5). إن استمر، تواصل معنا.</div>
+
     <div class="card">
       <div class="row">
         <div class="col">
           <label>الدولة</label>
-          <input id="country" list="countries" placeholder="مثال: مصر، السعودية" />
+          <input id="country" list="countries" placeholder="مثال: مصر، السعودية" disabled />
           <datalist id="countries"></datalist>
         </div>
         <div class="col">
           <label>مجال العمل</label>
-          <input id="sector" list="sectors" placeholder="مثال: التجارة الإلكترونية، مطاعم، عقارات" />
+          <input id="sector" list="sectors" placeholder="مثال: التجارة الإلكترونية، مطاعم، عقارات" disabled />
           <datalist id="sectors"></datalist>
         </div>
         <div class="col">
@@ -90,7 +93,7 @@
           </select>
         </div>
       </div>
-      <button id="run">توليد الخطة</button>
+      <button id="run" disabled>توليد الخطة</button>
       <p class="small warn">تنبيه: كل الأرقام تقديرية تعليمية حتى ربط الأداة بواجهات بيانات رسمية.</p>
     </div>
 
@@ -126,176 +129,63 @@
   </div>
 
   <script>
-    const GOAL_WEIGHTS = {
-      awareness: { display: 0.5, video: 0.3, social: 0.2 },
-      traffic:   { search: 0.45, social: 0.35, video: 0.2 },
-      leads:     { search: 0.5, social: 0.35, linkedin: 0.15 },
-      sales:     { search: 0.45, social: 0.4, video: 0.15 }
-    };
+    const GOAL_WEIGHTS = { awareness:{display:0.5,video:0.3,social:0.2}, traffic:{search:0.45,social:0.35,video:0.2}, leads:{search:0.5,social:0.35,linkedin:0.15}, sales:{search:0.45,social:0.4,video:0.15} };
+    function normalizeWeights(m){ const s=Object.values(m).reduce((a,b)=>a+b,0)||1; const o={}; for(const k in m){o[k]=m[k]/s;} return o; }
+    function platformFamily(p){ const t=p.toLowerCase(); if(t.includes('google')) return 'search'; if(t.includes('linkedin')) return 'linkedin'; if(t.includes('youtube')||t.includes('tiktok')||t.includes('snapchat')) return 'video'; return 'social'; }
+    function adjustByPriority(w,pr){ if(pr==='auto') return w; const b=0.2; const o={...w}; if(pr==='google') o.search=(o.search||0)+b; if(pr==='linkedin') o.linkedin=(o.linkedin||0)+b; if(pr==='youtube') o.video=(o.video||0)+b; if(pr==='tiktok'||pr==='snapchat'||pr==='meta') o.social=(o.social||0)+b; return normalizeWeights(o); }
+    function seasonalMultiplier(s,season){ if(!season||season==='none') return 1; return (s.seasonal_multipliers||{})[season]||1; }
+    function estimateCTR(s){ return Math.max(0.008,(s.avg_conversion_rate||0.02)/2); }
+    function estimateCVR(s){ return s.avg_conversion_rate||0.02; }
 
-    function normalizeWeights(m){
-      const s = Object.values(m).reduce((a,b)=>a+b,0)||1; const out={};
-      for(const k in m){ out[k]=m[k]/s; } return out;
-    }
-
-    function platformFamily(p){
-      const t = p.toLowerCase();
-      if(t.includes('google')) return 'search';
-      if(t.includes('linkedin')) return 'linkedin';
-      if(t.includes('youtube')) return 'video';
-      if(t.includes('tiktok')||t.includes('snapchat')) return 'video';
-      return 'social';
-    }
-
-    function adjustByPriority(weights, priority){
-      if(priority==='auto') return weights;
-      const boost = 0.2;
-      const out = {...weights};
-      if(priority==='google') out.search = (out.search||0)+boost;
-      if(priority==='linkedin') out.linkedin = (out.linkedin||0)+boost;
-      if(priority==='youtube') out.video = (out.video||0)+boost;
-      if(priority==='tiktok' || priority==='snapchat' || priority==='meta') out.social = (out.social||0)+boost;
-      return normalizeWeights(out);
-    }
-
-    function seasonalMultiplier(sector, season){
-      if(!season || season==='none') return 1.0;
-      const m = (sector.seasonal_multipliers||{})[season] || 1.0;
-      return m;
-    }
-
-    function estimateCTR(sector){
-      // تقدير CTR كنصف معدل التحويل القطاعي كحد أدنى 0.8%
-      return Math.max(0.008, (sector.avg_conversion_rate||0.02)/2);
-    }
-
-    function estimateCVR(sector){
-      return sector.avg_conversion_rate || 0.02;
-    }
-
-    function computeChannelMix(country, sector, goal, priority){
-      let weights = normalizeWeights(GOAL_WEIGHTS[goal]||GOAL_WEIGHTS.sales);
-      weights = adjustByPriority(weights, priority);
-
-      const recommended = country.recommended_platforms||[];
-      // اختر أفضل 3 منصات من الموصى بها بناءً على CPM الأقل للقنوات الاجتماعية/الفيديو ووجود Google/LinkedIn للبحث/البي تو بي
-      const cpm = country.avg_cpm||{};
-      const sorted = [...recommended].sort((a,b)=> (cpm[a]||99)-(cpm[b]||99));
-      const top = sorted.slice(0,3);
-
-      // وزّع وزن القنوات على المنصات الأقرب
-      const mix = [];
-      for(const p of top){ mix.push({platform:p, family:platformFamily(p), cpm:cpm[p]||2}); }
-      return {weights, mix};
-    }
-
-    function allocateBudget(total, weights, mix){
-      // حوّل أوزان القنوات إلى أوزان منصات حسب قرب العائلة
-      let famWeight = {};
-      for(const {platform,family} of mix){ famWeight[family] = (famWeight[family]||0) + 1; }
-      for(const k in famWeight){ famWeight[k] = famWeight[k]/mix.length; }
-
-      const alloc = [];
-      for(const {platform,family} of mix){
-        const w = (weights[family]||0) * (famWeight[family]||0);
-        const amount = total * (w||0.001); // حد أدنى صغير لمنع الصفر
-        alloc.push({platform, amount});
-      }
-      // إعادة موازنة حتى يساوي المجموع الميزانية تمامًا
-      const sum = alloc.reduce((a,b)=>a+b.amount,0)||1;
-      return alloc.map(x=> ({platform:x.platform, amount: total * (x.amount/sum)}));
-    }
-
-    function forecastForPlatform(amount, platform, country, sector, season){
-      const cpm = (country.avg_cpm||{})[platform] || 2.0;
-      const mult = seasonalMultiplier(sector, season);
-      const ctr = estimateCTR(sector) * mult;
-      const cvr = estimateCVR(sector) * (mult>1? Math.min(mult,1.4):Math.max(mult,0.7));
-      const purchaseRate = 0.7;
-      const impressions = (amount / cpm) * 1000;
-      const clicks = impressions * ctr;
-      const conversions = clicks * cvr;
-      const sales = conversions * purchaseRate;
-      return {cpm, ctr, cvr, impressions, clicks, conversions, sales};
-    }
-
-    function format(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
+    // فهرس أسماء بديلة للدول للتطابق المرن
+    function normalize(str){ return (str||'').toLowerCase().replace(/[\s\u064B-\u0652]/g,''); }
 
     async function load(){
-      const res = await fetch('/data/ads-country-benchmarks.json');
-      return res.json();
+      try{
+        // استخدام مسار نسبي يعمل من داخل مجلد tools
+        const res = await fetch('../data/ads-country-benchmarks.json', {cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        return await res.json();
+      }catch(e){
+        document.getElementById('err').style.display='block';
+        throw e;
+      }
     }
+
+    function enableInputs(){ document.getElementById('country').disabled=false; document.getElementById('sector').disabled=false; document.getElementById('run').disabled=false; }
+
+    function computeChannelMix(country, sector, goal, priority){ let w=normalizeWeights(GOAL_WEIGHTS[goal]||GOAL_WEIGHTS.sales); w=adjustByPriority(w,priority); const rec=country.recommended_platforms||[]; const cpm=country.avg_cpm||{}; const top=[...rec].sort((a,b)=>(cpm[a]||99)-(cpm[b]||99)).slice(0,3); const mix=[]; for(const p of top){ mix.push({platform:p,family:platformFamily(p),cpm:cpm[p]||2}); } return {weights:w,mix}; }
+    function allocateBudget(total, weights, mix){ let famWeight={}; for(const {family} of mix){ famWeight[family]=(famWeight[family]||0)+1; } for(const k in famWeight){ famWeight[k]=famWeight[k]/mix.length; } const alloc=[]; for(const {platform,family} of mix){ const w=(weights[family]||0)*(famWeight[family]||0); const amount=total*(w||0.001); alloc.push({platform,amount}); } const sum=alloc.reduce((a,b)=>a+b.amount,0)||1; return alloc.map(x=>({platform:x.platform,amount: total*(x.amount/sum)})); }
+    function forecastForPlatform(amount, platform, country, sector, season){ const cpm=(country.avg_cpm||{})[platform]||2; const mult=seasonalMultiplier(sector,season); const ctr=estimateCTR(sector)*mult; const cvr=estimateCVR(sector)*(mult>1?Math.min(mult,1.4):Math.max(mult,0.7)); const purchaseRate=0.7; const impressions=(amount/cpm)*1000; const clicks=impressions*ctr; const conversions=clicks*cvr; const sales=conversions*purchaseRate; return {cpm,ctr,cvr,impressions,clicks,conversions,sales}; }
+    function fmt(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
 
     (async function init(){
       const data = await load();
       const countries = data.countries||{}; const sectors = data.business_sectors||{};
-      const cList = document.getElementById('countries');
-      Object.keys(countries).forEach(k=>{ const o=document.createElement('option'); o.value=countries[k].name||k; cList.appendChild(o); });
-      const sList = document.getElementById('sectors');
-      Object.keys(sectors).forEach(k=>{ const o=document.createElement('option'); o.value=sectors[k].name||k; sList.appendChild(o); });
+      const cList=document.getElementById('countries'); Object.keys(countries).forEach(k=>{ const o=document.createElement('option'); o.value=countries[k].name||k; cList.appendChild(o); });
+      const sList=document.getElementById('sectors'); Object.keys(sectors).forEach(k=>{ const o=document.createElement('option'); o.value=sectors[k].name||k; sList.appendChild(o); });
 
-      const run = document.getElementById('run');
-      run.addEventListener('click', ()=>{
-        const cVal = document.getElementById('country').value.trim();
-        const sVal = document.getElementById('sector').value.trim();
-        const goal = document.getElementById('goal').value;
-        const days = parseInt(document.getElementById('days').value||'30',10);
-        const totalBudget = parseFloat(document.getElementById('budget').value||'0');
-        const priority = document.getElementById('priority').value;
-        const season = document.getElementById('season').value;
+      enableInputs();
 
-        const country = Object.values(countries).find(c=> c.name===cVal) || null;
-        const sector = Object.values(sectors).find(s=> s.name===sVal) || null;
-        if(!country || !sector){ alert('اختر دولة ومجال من القوائم المقترحة'); return; }
+      document.getElementById('run').addEventListener('click', ()=>{
+        const cVal=document.getElementById('country').value.trim();
+        const sVal=document.getElementById('sector').value.trim();
+        const goal=document.getElementById('goal').value; const days=parseInt(document.getElementById('days').value||'30',10); const totalBudget=parseFloat(document.getElementById('budget').value||'0'); const priority=document.getElementById('priority').value; const season=document.getElementById('season').value;
+
+        // مطابقة مرنة
+        const nc=normalize(cVal); const country = Object.values(countries).find(c=> normalize(c.name)===nc || normalize(c.alt)||''===nc) || Object.values(countries).find(c=> normalize(c.name).includes(nc));
+        const ns=normalize(sVal); const sector = Object.values(sectors).find(s=> normalize(s.name)===ns) || Object.values(sectors).find(s=> normalize(s.name).includes(ns));
+        if(!country || !sector){ alert('اختر دولة ومجال من القوائم بعد تحميل البيانات (جرب تحديث الصفحة)'); return; }
 
         document.getElementById('currency').value = country.currency||'';
+        const r=country.budget_ranges||{small:{min:2000,max:8000}}; const monthly= totalBudget>0? totalBudget : Math.round((r.small.min+r.small.max)/2); const campaignBudget=Math.max(200, Math.round((monthly/30)*days));
 
-        // تقدير ميزانية افتراضية إذا لم تُدخل قيمة
-        const r = country.budget_ranges||{small:{min:2000,max:8000}};
-        const monthly = totalBudget>0? totalBudget : Math.round((r.small.min + r.small.max)/2);
-        const campaignBudget = Math.max(200, Math.round((monthly/30)*days));
-
-        const {weights, mix} = computeChannelMix(country, sector, goal, priority);
-        const allocation = allocateBudget(campaignBudget, weights, mix);
-
-        // عرض المزيج
-        const mixEl = document.getElementById('mix'); mixEl.innerHTML='';
-        mix.forEach((m,i)=>{ const span=document.createElement('span'); span.className='pill'; span.textContent = `${i+1} - ${m.platform}`; mixEl.appendChild(span); });
-        document.getElementById('mixNote').textContent = `تم اختيار المنصات بترجيح الهدف (${goal}) وCPM في ${country.name}.`;
-
-        // عرض التوزيع
-        const allocEl = document.getElementById('allocation'); allocEl.innerHTML='';
-        allocation.forEach(a=>{ const d=document.createElement('div'); d.innerHTML = `<b>${a.platform}</b><br>${format(a.amount)} ${country.currency}`; allocEl.appendChild(d); });
-
-        // التوقعات
-        const fEl = document.getElementById('forecasts'); fEl.innerHTML='';
-        let totals = {impressions:0, clicks:0, conversions:0, sales:0};
-        allocation.forEach(a=>{
-          const f = forecastForPlatform(a.amount, a.platform, country, sector, season);
-          totals.impressions += f.impressions; totals.clicks += f.clicks; totals.conversions += f.conversions; totals.sales += f.sales;
-          const div = document.createElement('div');
-          div.innerHTML = `<b>${a.platform}</b><br>CPM $${f.cpm.toFixed(2)} | CTR ${(f.ctr*100).toFixed(1)}% | CVR ${(f.cvr*100).toFixed(1)}%<br>الظهور ${format(f.impressions)} | النقرات ${format(f.clicks)} | التحويلات ${format(f.conversions)} | المبيعات ${format(f.sales)}`;
-          fEl.appendChild(div);
-        });
-        const totalDiv = document.createElement('div');
-        totalDiv.innerHTML = `<b>الإجمالي (${format(campaignBudget)} ${country.currency})</b><br>الظهور ${format(totals.impressions)} | النقرات ${format(totals.clicks)} | التحويلات ${format(totals.conversions)} | المبيعات ${format(totals.sales)}`;
-        fEl.appendChild(totalDiv);
-
-        // كلمات مفتاحية
-        const kwEl = document.getElementById('keywords'); kwEl.innerHTML='';
-        (sectors[sVal]?.keywords || sector.keywords || []).slice(0,24).forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
-
-        // Playbook
-        const play = document.getElementById('playbook'); play.innerHTML='';
-        const steps = [
-          'قسّم الميزانية وفق التوزيع المقترح، مع اختبار 2–3 إبداعات لكل شريحة.',
-          'ابنِ جماهير: اهتمام/مشابه/إعادة استهداف. ابدأ بتواتر 1.5–2/أسبوع.',
-          'راقب CPM/CTR/CVR يوميًا. أوقف الأسوأ 20–30% وحوّل الميزانية للأفضل.',
-          'اختبر صفحة الهبوط/الرسائل لرفع CVR بنسبة 20–30%.',
-          'ثبّت مزيج القنوات الرابح ووسّع الميزانية تدريجيًا (10–20% أسبوعيًا).'
-        ];
-        steps.forEach(s=>{ const li=document.createElement('li'); li.textContent=s; play.appendChild(li); });
-
+        const {weights,mix}=computeChannelMix(country,sector,goal,priority); const allocation=allocateBudget(campaignBudget,weights,mix);
+        document.getElementById('mix').innerHTML=''; mix.forEach((m,i)=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=`${i+1} - ${m.platform}`; document.getElementById('mix').appendChild(span); }); document.getElementById('mixNote').textContent=`تم اختيار المنصات بترجيح الهدف (${goal}) وCPM في ${country.name}.`;
+        const allocEl=document.getElementById('allocation'); allocEl.innerHTML=''; allocation.forEach(a=>{ const d=document.createElement('div'); d.innerHTML=`<b>${a.platform}</b><br>${fmt(a.amount)} ${country.currency}`; allocEl.appendChild(d); });
+        const fEl=document.getElementById('forecasts'); fEl.innerHTML=''; let totals={impressions:0,clicks:0,conversions:0,sales:0}; allocation.forEach(a=>{ const f=forecastForPlatform(a.amount,a.platform,country,sector,season); totals.impressions+=f.impressions; totals.clicks+=f.clicks; totals.conversions+=f.conversions; totals.sales+=f.sales; const div=document.createElement('div'); div.innerHTML=`<b>${a.platform}</b><br>CPM $${f.cpm.toFixed(2)} | CTR ${(f.ctr*100).toFixed(1)}% | CVR ${(f.cvr*100).toFixed(1)}%<br>الظهور ${fmt(f.impressions)} | النقرات ${fmt(f.clicks)} | التحويلات ${fmt(f.conversions)} | المبيعات ${fmt(f.sales)}`; fEl.appendChild(div); }); const totalDiv=document.createElement('div'); totalDiv.innerHTML=`<b>الإجمالي (${fmt(campaignBudget)} ${country.currency})</b><br>الظهور ${fmt(totals.impressions)} | النقرات ${fmt(totals.clicks)} | التحويلات ${fmt(totals.conversions)} | المبيعات ${fmt(totals.sales)}`; fEl.appendChild(totalDiv);
+        const kwEl=document.getElementById('keywords'); kwEl.innerHTML=''; (sector.keywords||[]).slice(0,24).forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
+        const play=document.getElementById('playbook'); play.innerHTML=''; ['قسّم الميزانية وفق التوزيع المقترح، مع اختبار 2–3 إبداعات لكل شريحة.','ابنِ جماهير: اهتمام/مشابه/إعادة استهداف. ابدأ بتواتر 1.5–2/أسبوع.','راقب CPM/CTR/CVR يوميًا. أوقف الأسوأ 20–30% وحوّل الميزانية للأفضل.','اختبر صفحة الهبوط/الرسائل لرفع CVR بنسبة 20–30%.','ثبّت مزيج القنوات الرابح ووسّع الميزانية تدريجيًا (10–20% أسبوعيًا).'].forEach(s=>{ const li=document.createElement('li'); li.textContent=s; play.appendChild(li); });
         document.getElementById('out').style.display='block';
       });
     })();
