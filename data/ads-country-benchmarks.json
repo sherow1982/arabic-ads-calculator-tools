@@ -1,6 +1,16 @@
 {
   "version": 1,
   "last_updated": "2025-11-03",
-  "countries": {},
-  "business_sectors": {}
+  "countries": {
+    "Egypt": {"name":"مصر","currency":"EGP","recommended_platforms":["Facebook","Instagram","Google Ads","TikTok"],"avg_cpm":{"Facebook":0.62,"Instagram":0.69,"Google Display":0.45,"TikTok":0.35,"Snapchat":0.40,"LinkedIn":3.5},"budget_ranges":{"small":{"min":2000,"max":8000},"medium":{"min":8000,"max":25000},"large":{"min":25000,"max":100000}}},
+    "Saudi Arabia": {"name":"السعودية","currency":"SAR","recommended_platforms":["Snapchat","Instagram","TikTok","Google Ads","Facebook"],"avg_cpm":{"Facebook":3.2,"Instagram":4.1,"Google Display":2.8,"TikTok":1.8,"Snapchat":2.4,"LinkedIn":12.0},"budget_ranges":{"small":{"min":5000,"max":20000},"medium":{"min":20000,"max":75000},"large":{"min":75000,"max":300000}}},
+    "UAE": {"name":"الإمارات","currency":"AED","recommended_platforms":["Instagram","LinkedIn","Google Ads","Facebook","Snapchat"],"avg_cpm":{"Facebook":8.98,"Instagram":9.5,"Google Display":6.2,"TikTok":3.8,"Snapchat":4.2,"LinkedIn":18.5},"budget_ranges":{"small":{"min":8000,"max":30000},"medium":{"min":30000,"max":100000},"large":{"min":100000,"max":500000}}}
+  },
+  "business_sectors": {
+    "E-commerce": {"name":"التجارة الإلكترونية","keywords":["متجر إلكتروني","تسوق أونلاين","شراء","منتجات","عروض","تخفيضات","توصيل","دفع إلكتروني"],"avg_conversion_rate":0.025},
+    "Food & Restaurant": {"name":"المطاعم والأغذية","keywords":["مطعم","طعام","توصيل","وجبات","إفطار","غداء","عشاء","حلويات","مشروبات"],"avg_conversion_rate":0.035},
+    "Real Estate": {"name":"العقارات","keywords":["عقار","شقة","فيلا","بيت","إيجار","بيع","استثمار عقاري","أراضي"],"avg_conversion_rate":0.015},
+    "Healthcare": {"name":"الرعاية الصحية","keywords":["طبيب","عيادة","مستشفى","علاج","دواء","صيدلية","فحص طبي","أسنان"],"avg_conversion_rate":0.04}
+  },
+  "disclaimer": "هذه أرقام مرجعية تقريبية للتجربة التعليمية وليست بديلاً عن بيانات المنصات الفعلية أو تقديرات Google/TikTok/Meta الرسمية."
 }
