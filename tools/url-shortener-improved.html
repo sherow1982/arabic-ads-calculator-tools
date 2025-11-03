@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختصر الروابط المحسّن - روابط تعمل 100%</title>
+    <meta name="description" content="مختصر روابط محسّن ينشئ ملفات HTML فردية لضمان عمل الروابط على GitHub Pages">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for XLSX -->
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- JSZip for creating ZIP files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #16a34a;
+            --warning-color: #ea580c;
+            --danger-color: #dc2626;
+            --dark-color: #1f2937;
+            --light-bg: #f8fafc;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #059669;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .form-control {
+            border-radius: var(--border-radius);
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        .btn {
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .results-section {
+            display: none;
+            background: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .html-code-area {
+            background: #1f2937;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+        
+        .file-list {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+        }
+        
+        .file-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="btn btn-outline-light btn-sm" onclick="toggleLanguage()" id="langToggle">
+            <i class="fas fa-language"></i> EN
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header">
+                <h1 id="mainTitle">مختصر الروابط المحسّن</h1>
+                <p id="mainSubtitle">ينشئ ملفات HTML فردية لضمان عمل الروابط على GitHub Pages</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Success Alert -->
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong id="fixTitle">تم إصلاح مشكلة الروابط!</strong><br>
+                    <span id="fixDescription">هذه النسخة المحسّنة تنشئ ملفات HTML فردية لضمان عمل الروابط بنسبة 100%</span>
+                </div>
+
+                <!-- Instructions -->
+                <div class="alert alert-info mb-4" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span id="instructions">
+                        الصق الروابط أدناه واضغط "إنشاء ملفات HTML" لتحصل على ملفات جاهزة للرفع على GitHub.
+                    </span>
+                </div>
+
+                <!-- Input Section -->
+                <div class="mb-4">
+                    <label for="urlInput" class="form-label fw-bold" id="inputLabel">
+                        <i class="fas fa-link me-2"></i>الصق الروابط هنا (كل رابط في سطر منفصل)
+                    </label>
+                    <textarea 
+                        class="form-control" 
+                        id="urlInput" 
+                        rows="8" 
+                        placeholder="https://example1.com/very-long-url-1
+https://example2.com/very-long-url-2
+https://example3.com/very-long-url-3"
+                    ></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center mb-4">
+                    <button class="btn btn-primary btn-lg me-2" onclick="generateFiles()" id="generateBtn">
+                        <i class="fas fa-code me-2"></i>
+                        <span id="generateBtnText">إنشاء ملفات HTML</span>
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="clearAll()" id="clearBtn">
+                        <i class="fas fa-trash me-2"></i>
+                        <span id="clearBtnText">مسح الكل</span>
+                    </button>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="results-section">
+                    <h4 id="resultsTitle"><i class="fas fa-file-code me-2"></i>ملفات HTML الجاهزة</h4>
+                    
+                    <div class="mb-3">
+                        <button class="btn btn-success me-2" onclick="downloadAllFiles()" id="downloadAllBtn">
+                            <i class="fas fa-download me-2"></i>
+                            <span id="downloadAllText">تحميل جميع الملفات (ZIP)</span>
+                        </button>
+                        <button class="btn btn-warning" onclick="downloadInstructions()" id="instructionsBtn">
+                            <i class="fas fa-book me-2"></i>
+                            <span id="instructionsText">تعليمات الرفع</span>
+                        </button>
+                    </div>
+                    
+                    <div class="file-list" id="fileList">
+                        <!-- Files will be listed here -->
+                    </div>
+                    
+                    <div>
+                        <h5 id="instructionsHeader">خطوات الرفع:</h5>
+                        <ol id="uploadSteps">
+                            <li>حمّل ملف ZIP أعلاه</li>
+                            <li>استخرج الملفات في مجلد</li>
+                            <li>ادخل إلى مستودع GitHub الخاص بك</li>
+                            <li>ارفع جميع ملفات HTML إلى الجذر الرئيسي</li>
+                            <li>انتظر 2-3 دقائق لتفعيل GitHub Pages</li>
+                            <li>اختبر الروابط القصيرة!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Language translations
+        const translations = {
+            ar: {
+                mainTitle: "مختصر الروابط المحسّن",
+                mainSubtitle: "ينشئ ملفات HTML فردية لضمان عمل الروابط على GitHub Pages",
+                instructions: "الصق الروابط أدناه واضغط \"إنشاء ملفات HTML\" لتحصل على ملفات جاهزة للرفع على GitHub.",
+                inputLabel: "الصق الروابط هنا (كل رابط في سطر منفصل)",
+                generateBtnText: "إنشاء ملفات HTML",
+                clearBtnText: "مسح الكل",
+                resultsTitle: "ملفات HTML الجاهزة",
+                downloadAllText: "تحميل جميع الملفات (ZIP)",
+                instructionsText: "تعليمات الرفع",
+                instructionsHeader: "خطوات الرفع:",
+                fixTitle: "تم إصلاح مشكلة الروابط!",
+                fixDescription: "هذه النسخة المحسّنة تنشئ ملفات HTML فردية لضمان عمل الروابط بنسبة 100%"
+            },
+            en: {
+                mainTitle: "Improved URL Shortener",
+                mainSubtitle: "Generates individual HTML files to ensure links work 100% on GitHub Pages",
+                instructions: "Paste URLs below and click 'Generate HTML Files' to get ready-to-upload files for GitHub.",
+                inputLabel: "Paste URLs here (one URL per line)",
+                generateBtnText: "Generate HTML Files",
+                clearBtnText: "Clear All",
+                resultsTitle: "Ready HTML Files",
+                downloadAllText: "Download All Files (ZIP)",
+                instructionsText: "Upload Instructions",
+                instructionsHeader: "Upload Steps:",
+                fixTitle: "Links Issue Fixed!",
+                fixDescription: "This improved version creates individual HTML files to ensure 100% working links"
+            }
+        };
+        
+        let currentLang = 'ar';
+        let generatedFiles = [];
+        let fileCounter = 1;
+        
+        // Language toggle function
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all text elements
+            Object.keys(translations[currentLang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+            
+            // Update button text
+            document.getElementById('langToggle').innerHTML = `<i class="fas fa-language"></i> ${currentLang === 'ar' ? 'EN' : 'AR'}`;
+        }
+        
+        // Validate URL
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+        
+        // Generate HTML content for each short URL
+        function generateHtmlContent(originalUrl, shortCode) {
+            return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="1;url=${originalUrl}">
+    <title>جاري إعادة التوجيه...</title>
+    <link rel="canonical" href="${originalUrl}">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0; padding: 0; display: flex;
+            justify-content: center; align-items: center;
+            min-height: 100vh; color: white; text-align: center;
+        }
+        .container { max-width: 500px; padding: 2rem; }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; border-top: 4px solid white;
+            width: 40px; height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .url-preview {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem; border-radius: 10px;
+            margin: 1rem 0; word-break: break-all; font-size: 0.9rem;
+        }
+        .manual-link {
+            display: inline-block; background: rgba(255, 255, 255, 0.2);
+            color: white; padding: 0.8rem 1.5rem; border-radius: 25px;
+            text-decoration: none; margin-top: 1rem; font-weight: 600;
+        }
+        .manual-link:hover { background: rgba(255, 255, 255, 0.3); color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h2>🚀 جاري إعادة التوجيه...</h2>
+        <div class="url-preview">
+            <strong>الوجهة:</strong><br>${originalUrl}
+        </div>
+        <a href="${originalUrl}" class="manual-link">
+            🔗 اضغط هنا إذا لم يتم التوجيه
+        </a>
+        <div style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.7;">
+            رابط قصير #${shortCode} من 🇦🇭 أدوات الإعلانات العربية
+        </div>
+    </div>
+    <script>
+        // Fallback redirect
+        setTimeout(() => { window.location.href = '${originalUrl}'; }, 2000);
+        // Analytics tracking
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'short_url_redirect', {
+                'short_code': '${shortCode}',
+                'original_url': '${originalUrl}'
+            });
+        }
+    </script>
+</body>
+</html>`;
+        }
+        
+        // Generate files
+        function generateFiles() {
+            const input = document.getElementById('urlInput').value;
+            const lines = input.split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length === 0) {
+                alert(currentLang === 'ar' ? 'يرجى إدخال روابط للمعالجة' : 'Please enter URLs to process');
+                return;
+            }
+            
+            generatedFiles = [];
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            lines.forEach((url, index) => {
+                const cleanUrl = url.trim();
+                if (!cleanUrl || !isValidUrl(cleanUrl)) return;
+                
+                const shortCode = fileCounter + index;
+                const filename = `${shortCode}.html`;
+                const htmlContent = generateHtmlContent(cleanUrl, shortCode);
+                
+                generatedFiles.push({
+                    filename: filename,
+                    content: htmlContent,
+                    originalUrl: cleanUrl,
+                    shortCode: shortCode
+                });
+                
+                // Add to file list
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div>
+                        <strong>${filename}</strong><br>
+                        <small>${cleanUrl}</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="downloadSingleFile(${index})">
+                        <i class="fas fa-download"></i> تحميل
+                    </button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+            
+            fileCounter += lines.length;
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Download single file
+        function downloadSingleFile(index) {
+            const file = generatedFiles[index];
+            const blob = new Blob([file.content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Download all files as ZIP
+        function downloadAllFiles() {
+            if (generatedFiles.length === 0) {
+                alert(currentLang === 'ar' ? 'لا توجد ملفات للتحميل' : 'No files to download');
+                return;
+            }
+            
+            const zip = new JSZip();
+            
+            generatedFiles.forEach(file => {
+                zip.file(file.filename, file.content);
+            });
+            
+            // Add README file
+            const readmeContent = `# روابط قصيرة جاهزة للرفع\n\n## الملفات المُنشأة:\n\n${generatedFiles.map(f => `- ${f.filename} → ${f.originalUrl}`).join('\n')}\n\n## خطوات الرفع:\n\n1. ارفع جميع ملفات HTML إلى الجذر الرئيسي لمستودع GitHub\n2. انتظر 2-3 دقائق لتفعيل GitHub Pages\n3. اختبر الروابط: https://yourusername.github.io/yourrepo/1\n\nمثال: https://sherow1982.github.io/arabic-ads-calculator-tools/3\n\n---\nأدوات الإعلانات العربية - مجاني 100%`;
+            
+            zip.file('README.md', readmeContent);
+            
+            zip.generateAsync({ type: 'blob' }).then(function(content) {
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `short-urls-${new Date().toISOString().split('T')[0]}.zip`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        // Download instructions
+        function downloadInstructions() {
+            const instructions = `# تعليمات رفع الروابط القصيرة\n\n## الخطوات:\n\n### 1. تحميل الملفات\n- حمّل ملف ZIP من الأداة\n- استخرج جميع ملفات HTML\n\n### 2. رفع على GitHub\n- ادخل إلى مستودع GitHub الخاص بك\n- اضغط "Add files" > "Upload files"\n- ارفع جميع ملفات HTML إلى الجذر الرئيسي\n- اضغط "Commit changes"\n\n### 3. تفعيل GitHub Pages\n- ادخل إلى Settings > Pages\n- اختر Source: "Deploy from branch"\n- اختر Branch: "main" / Root\n- اضغط "Save"\n\n### 4. الانتظار والاختبار\n- انتظر 2-3 دقائق لتفعيل GitHub Pages\n- اختبر الروابط: https://yourusername.github.io/yourrepo/1\n\n## مثال عملي:\n\nرابط قصير: https://sherow1982.github.io/arabic-ads-calculator-tools/3\nيعيد التوجيه إلى: https://example.com/test-long-url-for-shortening-demo\n\n---\nأدوات الإعلانات العربية - مجاني 100%`;
+            
+            const blob = new Blob([instructions], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'upload-instructions.md';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Clear all
+        function clearAll() {
+            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح جميع البيانات؟' : 'Are you sure you want to clear all data?')) {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('results-section').style.display = 'none';
+                generatedFiles = [];
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved language preference
+            const savedLang = localStorage.getItem('urlShortenerLang');
+            if (savedLang && savedLang !== currentLang) {
+                toggleLanguage();
+            }
+        });
+        
+        // Save language preference when changed
+        const originalToggleLanguage = toggleLanguage;
+        toggleLanguage = function() {
+            originalToggleLanguage();
+            localStorage.setItem('urlShortenerLang', currentLang);
+        };
+    </script>
+</body>
+</html>
