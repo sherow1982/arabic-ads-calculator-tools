@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "created": "2025-11-03T08:04:00Z",
+    "description": "قاعدة بيانات الروابط القصيرة لمختصر الروابط العربي",
+    "total_links": 6,
+    "last_updated": "2025-11-03T08:04:00Z"
+  },
+  "links": {
+    "1": {
+      "url": "https://example.com/test-long-url-for-shortening-demo",
+      "title": "رابط تجريبي للاختبار",
+      "created": "2025-11-03T07:45:00Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "2": {
+      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
+      "title": "الصفحة الرئيسية للأدوات",
+      "created": "2025-11-03T08:00:00Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "3": {
+      "url": "https://example.com/test-long-url-for-shortening-demo",
+      "title": "رابط تجريبي من GitHub Issue",
+      "created": "2025-11-03T07:45:57Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "demo": {
+      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
+      "title": "عرض توضيحي للأدوات",
+      "created": "2025-11-03T08:00:00Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "test": {
+      "url": "https://www.google.com",
+      "title": "رابط اختبار لجوجل",
+      "created": "2025-11-03T08:00:00Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "tools": {
+      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/tools-directory.html",
+      "title": "دليل جميع الأدوات",
+      "created": "2025-11-03T08:01:00Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "fb": {
+      "url": "https://facebook.com/arabads.me",
+      "title": "صفحة فيسبوك إعلانات العرب",
+      "created": "2025-11-03T08:01:30Z",
+      "clicks": 0,
+      "status": "active"
+    },
+    "wa": {
+      "url": "https://wa.me/201110760081",
+      "title": "واتساب الدعم الفني",
+      "created": "2025-11-03T08:01:45Z",
+      "clicks": 0,
+      "status": "active"
+    }
+  },
+  "settings": {
+    "default_redirect": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
+    "enable_analytics": true,
+    "max_redirects_per_minute": 1000,
+    "allowed_domains": ["*"],
+    "auto_cleanup_inactive": false
+  }
+}
