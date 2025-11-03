@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة رابط قصير جديد - مختصر الروابط العربي</title>
+    
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            margin: 0; padding: 2rem; min-height: 100vh; color: white;
+        }
+        
+        .container {
+            max-width: 600px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px; padding: 2rem;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-control {
+            width: 100%; padding: 0.75rem; border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px; background: rgba(255, 255, 255, 0.9);
+            color: #333; font-size: 1rem;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.9); color: #059669;
+            border: none; padding: 0.75rem 1.5rem; border-radius: 25px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: white; transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-success { background: #10b981; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        
+        .result-box {
+            background: rgba(255, 255, 255, 0.1); padding: 1.5rem;
+            border-radius: 15px; margin-top: 2rem; display: none;
+        }
+        
+        .current-links {
+            background: rgba(255, 255, 255, 0.05); padding: 1rem;
+            border-radius: 10px; margin-top: 1rem; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 2rem;">
+            🔗 إضافة رابط قصير جديد
+        </h1>
+        
+        <form onsubmit="addNewLink(event)">
+            <div class="form-group">
+                <label class="form-label">🔍 الرمز القصير:</label>
+                <input type="text" id="shortCode" class="form-control" 
+                       placeholder="مثال: summer-sale, fb-ad, blog1" required>
+                <small style="opacity: 0.8; font-size: 0.8rem;">
+                    رقم أو نص قصير (بدون مسافات أو رموز خاصة)
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">🎯 الرابط النهائي:</label>
+                <input type="url" id="targetUrl" class="form-control" 
+                       placeholder="https://example.com/your-destination" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">📝 عنوان وصفي (اختياري):</label>
+                <input type="text" id="title" class="form-control" 
+                       placeholder="وصف مختصر للرابط">
+            </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-success">
+                    ➕ إضافة رابط جديد
+                </button>
+                <button type="button" onclick="clearForm()" class="btn">
+                    مسح النموذج
+                </button>
+            </div>
+        </form>
+        
+        <div class="result-box" id="resultBox">
+            <h3 style="color: #4ade80;">✅ تم إضافة الرابط بنجاح!</h3>
+            <div id="resultContent"></div>
+            <button class="btn" onclick="testLink()" id="testBtn">
+                🚀 اختبر الرابط الآن
+            </button>
+        </div>
+        
+        <div class="current-links">
+            <h4>📁 الروابط الحالية:</h4>
+            <div id="currentLinks">جاري التحميل...</div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="tools/url-shortener.html" class="btn">
+                ← العودة لمختصر الروابط
+            </a>
+            <a href="s.html?to=demo" class="btn" target="_blank">
+                🏠 الصفحة الرئيسية
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        let currentDatabase = {};
+        
+        // Load current links on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentLinks();
+        });
+        
+        async function loadCurrentLinks() {
+            try {
+                const response = await fetch('link-db.json?t=' + Date.now());
+                if (response.ok) {
+                    currentDatabase = await response.json();
+                    displayCurrentLinks();
+                }
+            } catch (error) {
+                document.getElementById('currentLinks').innerHTML = 'خطأ في تحميل الروابط الحالية';
+            }
+        }
+        
+        function displayCurrentLinks() {
+            const container = document.getElementById('currentLinks');
+            const links = currentDatabase.links || {};
+            
+            if (Object.keys(links).length === 0) {
+                container.innerHTML = 'لا توجد روابط حالية';
+                return;
+            }
+            
+            let html = '<table style="width: 100%; font-size: 0.85rem;">';
+            html += '<tr style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0;">';
+            html += '<th>الرمز</th><th>العنوان</th><th>الرابط</th></tr>';
+            
+            Object.entries(links).forEach(([code, data]) => {
+                const shortUrl = `s.html?to=${code}`;
+                html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.3rem 0;">`;
+                html += `<td style="padding: 0.3rem;"><code>${code}</code></td>`;
+                html += `<td style="padding: 0.3rem;">${data.title || 'غير محدد'}</td>`;
+                html += `<td style="padding: 0.3rem;"><a href="${shortUrl}" target="_blank" style="color: #fbbf24;">${shortUrl}</a></td>`;
+                html += '</tr>';
+            });
+            
+            html += '</table>';
+            container.innerHTML = html;
+        }
+        
+        function addNewLink(event) {
+            event.preventDefault();
+            
+            const shortCode = document.getElementById('shortCode').value.trim();
+            const targetUrl = document.getElementById('targetUrl').value.trim();
+            const title = document.getElementById('title').value.trim() || 'رابط جديد';
+            
+            if (!shortCode || !targetUrl) {
+                alert('يرجى ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            // Validate URL
+            try {
+                new URL(targetUrl);
+            } catch (e) {
+                alert('يرجى إدخال رابط صحيح');
+                return;
+            }
+            
+            // Check if code already exists
+            if (currentDatabase.links && currentDatabase.links[shortCode]) {
+                if (!confirm(`الرمز "${shortCode}" موجود بالفعل. هل تريد استبداله؟`)) {
+                    return;
+                }
+            }
+            
+            // Simulate adding to database (in real implementation, this would update the JSON file)
+            const newLinkData = {
+                url: targetUrl,
+                title: title,
+                created: new Date().toISOString(),
+                clicks: 0,
+                status: 'active',
+                category: 'user-added'
+            };
+            
+            // Update local database
+            if (!currentDatabase.links) currentDatabase.links = {};
+            currentDatabase.links[shortCode] = newLinkData;
+            currentDatabase.meta.total_links = Object.keys(currentDatabase.links).length;
+            currentDatabase.meta.last_updated = new Date().toISOString();
+            
+            // Generate JSON for manual update
+            const updatedJson = JSON.stringify(currentDatabase, null, 2);
+            
+            // Show result
+            const shortUrl = `s.html?to=${shortCode}`;
+            const fullShortUrl = `https://sherow1982.github.io/arabic-ads-calculator-tools/${shortUrl}`;
+            
+            document.getElementById('resultContent').innerHTML = `
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>الرمز:</strong> ${shortCode}<br>
+                    <strong>الرابط القصير:</strong> <br>
+                    <a href="${shortUrl}" target="_blank" style="color: #fbbf24; word-break: break-all;">${fullShortUrl}</a><br>
+                    <strong>الوجهة:</strong> <br>
+                    <a href="${targetUrl}" target="_blank" style="color: #93c5fd; word-break: break-all;">${targetUrl}</a>
+                </div>
+                
+                <div style="background: rgba(251, 191, 36, 0.2); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>⚠️ ملاحظة مهمة:</strong><br>
+                    لجعل الرابط يعمل فعلياً، يجب تحديث ملف <code>link-db.json</code> يدوياً.<br>
+                    <small>انسخ الكود JSON أدناه واستبدل محتوى الملف.</small>
+                </div>
+                
+                <textarea style="width: 100%; height: 200px; font-family: monospace; font-size: 0.8rem; 
+                                background: #1f2937; color: #f8fafc; border-radius: 8px; padding: 1rem;"
+                          readonly onclick="this.select()">${updatedJson}</textarea>
+            `;
+            
+            document.getElementById('testBtn').onclick = () => window.open(shortUrl, '_blank');
+            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+            
+            // Refresh current links display
+            displayCurrentLinks();
+            
+            // Clear form
+            document.getElementById('shortCode').value = '';
+            document.getElementById('targetUrl').value = '';
+            document.getElementById('title').value = '';
+        }
+        
+        function clearForm() {
+            document.getElementById('shortCode').value = '';
+            document.getElementById('targetUrl').value = '';
+            document.getElementById('title').value = '';
+            document.getElementById('resultBox').style.display = 'none';
+        }
+        
+        function testLink() {
+            const shortCode = document.getElementById('shortCode').value.trim();
+            if (shortCode) {
+                window.open(`s.html?to=${shortCode}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
