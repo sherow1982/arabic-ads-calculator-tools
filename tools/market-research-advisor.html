@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مُرشِّد الإعلانات الذكي - يعمل الآن</title>
+  <title>مُرشِّد الإعلانات الذكي - نسخة احترافية متقدمة</title>
   <link rel="icon" href="../favicon.svg">
   <link rel="stylesheet" href="../global-styles.css" />
   <style>
@@ -14,23 +14,29 @@
     .kpi{display:flex;gap:12px;flex-wrap:wrap}
     .kpi div{background:#f6f7f9;border:1px solid #e7e9ee;border-radius:10px;padding:10px 12px}
     .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:4px 10px;border-radius:999px;margin:2px}
+    .pill-broad{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+    .pill-phrase{background:#d1ecf1;color:#0c5460;border:1px solid #bee5eb}
+    .pill-exact{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
     .chips{display:flex;gap:6px;flex-wrap:wrap}
     .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
     .btn{background:#4CAF50;color:#fff;border:none;border-radius:20px;padding:8px 14px;cursor:pointer}
+    .btn-secondary{background:#6c757d}
     .platforms{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .platforms label{display:flex;align-items:center;gap:6px;background:#f6f7f9;border:1px solid #e7e9ee;border-radius:999px;padding:6px 10px;cursor:pointer}
-    .intent-group{margin:8px 0;padding:8px;background:#f9f9f9;border-radius:8px}
-    .intent-title{font-weight:bold;color:#555;margin-bottom:4px}
+    .intent-group{margin:8px 0;padding:12px;background:#f9f9f9;border-radius:8px;border-left:4px solid #007bff}
+    .intent-title{font-weight:bold;color:#007bff;margin-bottom:6px;font-size:0.95rem}
     .success{background:#e8f5e8;color:#2d5a2d;border:1px solid #b8d8b8;padding:10px 12px;border-radius:10px;margin:10px 0;display:none}
     .small{font-size:.85rem}
+    .advanced{background:#f8f9fa;border:1px solid #dee2e6;border-radius:8px;padding:12px;margin:10px 0}
+    .match-info{background:#e7f3ff;padding:8px;border-radius:6px;margin:5px 0;font-size:0.9rem}
   </style>
 </head>
 <body>
   <div class="container" id="app">
-    <h1>🎯 مُرشِّد الإعلانات الذكي - يعمل الآن</h1>
-    <p class="muted">أداة توليد كلمات بحث عربية احترافية مع مجموعات نية وتصدير XLSX. اكتب مجال عملك واختر الدولة للحصول على 50+ كلمة مرتبطة مباشرة.</p>
+    <h1>🎯 مُرشِّد الإعلانات الذكي - نسخة احترافية متقدمة</h1>
+    <p class="muted">أداة توليد كلمات بحث عربية احترافية مع <b>أنواع المطابقة</b> ومجموعات النية وتصدير XLSX متقدم. مصممة خصيصاً للـ Media Buyers المحترفين.</p>
 
-    <div class="success" id="successMsg">✅ تم توليد الكلمات والخطة بنجاح! يمكنك الآن نسخ الكلمات أو تنزيل ملف XLSX.</div>
+    <div class="success" id="successMsg">✅ تم توليد الكلمات والخطة بنجاح! يمكنك الآن نسخ الكلمات أو تنزيل ملف XLSX متقدم.</div>
 
     <div class="card">
       <div class="row">
@@ -57,6 +63,37 @@
         </div>
       </div>
 
+      <div class="advanced">
+        <h3>⚙️ إعدادات المطابقة المتقدمة</h3>
+        <div class="row">
+          <div class="col">
+            <label>نوع المطابقة الافتراضي</label>
+            <select id="matchType">
+              <option value="broad">مطابقة واسعة (Broad Match)</option>
+              <option value="phrase" selected>مطابقة العبارة (Phrase Match)</option>
+              <option value="exact">مطابقة تامة (Exact Match)</option>
+              <option value="mixed">مزيج (موصى)</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>تضمين كلمات سلبية</label>
+            <input type="checkbox" id="includeNegatives" checked /> نعم (موصى بقوة)
+          </div>
+          <div class="col">
+            <label>مستوى التوسع</label>
+            <select id="expansionLevel">
+              <option value="conservative">محافظ (20-30 كلمة)</option>
+              <option value="moderate" selected>متوسط (40-60 كلمة)</option>
+              <option value="aggressive">توسعي (80+ كلمة)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="match-info">
+          <strong>معلومة:</strong> المطابقة الواسعة تجلب حركة أكثر لكن أقل دقة. المطابقة التامة أكثر دقة لكن حركة أقل. المزيج هو الأمثل للبدء.
+        </div>
+      </div>
+
       <div class="row">
         <div class="col" style="flex:1 1 100%">
           <label>اختر المنصات</label>
@@ -64,19 +101,27 @@
         </div>
       </div>
 
-      <button id="run">توليد كلمات المجال + الخطة الإعلانية</button>
+      <button id="run">🚀 توليد الكلمات المتقدمة + الخطة الاحترافية</button>
       <div class="actions">
         <button id="copyAll" class="btn">نسخ جميع الكلمات</button>
-        <button id="exportXlsx" class="btn">تنزيل XLSX</button>
+        <button id="copyNegatives" class="btn btn-secondary">نسخ الكلمات السلبية</button>
+        <button id="exportXlsx" class="btn">تنزيل XLSX متقدم</button>
+        <button id="exportGoogleAds" class="btn btn-secondary">تصدير Google Ads</button>
         <button id="demo" class="btn">مثال سريع</button>
       </div>
     </div>
 
     <div id="out" style="display:none">
       <div class="card">
-        <h2>🔑 كلمات البحث العربية</h2>
+        <h2>🔑 كلمات البحث العربية مع أنواع المطابقة</h2>
         <div id="keywords"></div>
         <p class="muted small" id="keywordStats"></p>
+      </div>
+
+      <div class="card" id="negativesCard" style="display:none">
+        <h2>🚫 الكلمات السلبية المقترحة</h2>
+        <div id="negativeKeywords" class="chips"></div>
+        <p class="muted small">كلمات لاستبعادها من حملاتك لتقليل الهدر وتحسين الجودة</p>
       </div>
 
       <div class="card">
@@ -94,11 +139,15 @@
         <h2>📈 التوقعات</h2>
         <div id="forecasts" class="kpi"></div>
       </div>
+
+      <div class="card">
+        <h2>📋 خطة التنفيذ السريع</h2>
+        <ol id="playbook"></ol>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="js/xlsx-exporter.js"></script>
   <script>
     const COUNTRY_DATA = {
       'السعودية': {currency:'SAR', cpm:{Facebook:1.8,'Google Ads':2.2,Instagram:2.0,Snapchat:3.1,TikTok:2.5}},
@@ -110,56 +159,91 @@
       'مصر': {currency:'EGP', cpm:{Facebook:0.4,'Google Ads':0.6,Instagram:0.5,TikTok:0.7,YouTube:0.3}}
     };
 
-    const KEYWORDS = {
+    const SECTOR_DATA = {
       'نقل': {
-        'السعر والتكلفة': ['نقل أثاث سعر','نقل أثاث اسعار','نقل عفش تكلفة','شحن أثاث ارخص','ترحيل أثاث اسعار'],
-        'الموقع والقرب': ['نقل أثاث قريب','نقل عفش بالقرب','شحن أثاث قريب','ترحيل أثاث محلي'],
-        'الحجز والطلب': ['حجز نقل أثاث','طلب نقل عفش','نقل أثاث رقم','شحن أثاث هاتف','ترحيل أثاث حجز'],
-        'الخدمات المتخصصة': ['فك وتركيب أثاث','تغليف أثاث','نقل أثاث منزلي','نقل أثاث مكتبي','رافعة أثاث'],
-        'العروض والجودة': ['نقل أثاث افضل','نقل عفش عروض','شحن أثاث خصم','نقل أثاث اونلاين','ترحيل أثاث جديد']
+        keywords: {
+          'السعر والتكلفة': ['نقل أثاث سعر','نقل أثاث اسعار','نقل عفش تكلفة','شحن أثاث ارخص','ترحيل أثاث اسعار','نقل موبيليا سعر'],
+          'الموقع والقرب': ['نقل أثاث قريب','نقل عفش بالقرب','شحن أثاث محلي','ترحيل أثاث قريب'],
+          'الحجز والطلب': ['حجز نقل أثاث','طلب نقل عفش','نقل أثاث رقم','شحن أثاث هاتف','ترحيل أثاث حجز'],
+          'الخدمات المتخصصة': ['فك وتركيب أثاث','تغليف أثاث','نقل أثاث منزلي','نقل أثاث مكتبي','رافعة أثاث','تخزين أثاث'],
+          'العروض والجودة': ['نقل أثاث افضل','نقل عفش عروض','شحن أثاث خصم','نقل أثاث اونلاين','ترحيل أثاث جديد']
+        },
+        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','ايكيا','محلات','شراء','بيع أثاث','أثاث مستعمل']
       },
       'نظافة': {
-        'السعر والتكلفة': ['شركة نظافة سعر','تنظيف منازل اسعار','شركة نظافة تكلفة','تنظيف شقق ارخص'],
-        'الموقع والقرب': ['شركة نظافة قريبة','تنظيف منازل قريب','شركة نظافة بالقرب'],
-        'الحجز والطلب': ['حجز شركة نظافة','طلب تنظيف منازل','شركة نظافة رقم','تنظيف شقق هاتف'],
-        'الخدمات المتخصصة': ['تنظيف سجاد','تنظيف كنب','تعقيم منازل','غسيل موكيت','تنظيف واجهات'],
-        'العروض والجودة': ['شركة نظافة افضل','تنظيف منازل عروض','شركة نظافة خصم','تنظيف شقق اونلاين']
+        keywords: {
+          'السعر والتكلفة': ['شركة نظافة سعر','تنظيف منازل اسعار','شركة نظافة تكلفة','تنظيف شقق ارخص'],
+          'الموقع والقرب': ['شركة نظافة قريبة','تنظيف منازل قريب','شركة نظافة بالقرب'],
+          'الحجز والطلب': ['حجز شركة نظافة','طلب تنظيف منازل','شركة نظافة رقم','تنظيف شقق هاتف'],
+          'الخدمات المتخصصة': ['تنظيف سجاد','تنظيف كنب','تعقيم منازل','غسيل موكيت','تنظيف واجهات','تنظيف خزانات'],
+          'العروض والجودة': ['شركة نظافة افضل','تنظيف منازل عروض','شركة نظافة خصم','تنظيف شقق اونلاين']
+        },
+        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','عاملات','خادمات','منظفات منزلية']
       },
       'صرف': {
-        'السعر والتكلفة': ['شركة صرف صحي سعر','تسليك مجاري اسعار','شفط بيارات تكلفة','صرف صحي ارخص'],
-        'الموقع والقرب': ['شركة صرف صحي قريبة','تسليك مجاري قريب','شفط بيارات بالقرب'],
-        'الحجز والطوارئ': ['حجز شركة صرف صحي','طوارئ صرف صحي','صرف صحي 24 ساعة','تسليك مجاري طوارئ'],
-        'الخدمات المتخصصة': ['تسليك مجاري','شفط بيارات','كشف تسربات','تنظيف بيارات','صيانة صرف صحي'],
-        'العروض والجودة': ['شركة صرف صحي افضل','تسليك مجاري عروض','صرف صحي خصم']
+        keywords: {
+          'السعر والتكلفة': ['شركة صرف صحي سعر','تسليك مجاري اسعار','شفط بيارات تكلفة','صرف صحي ارخص'],
+          'الموقع والقرب': ['شركة صرف صحي قريبة','تسليك مجاري قريب','شفط بيارات بالقرب'],
+          'الحجز والطوارئ': ['حجز شركة صرف صحي','طوارئ صرف صحي','صرف صحي 24 ساعة','تسليك مجاري طوارئ'],
+          'الخدمات المتخصصة': ['تسليك مجاري','شفط بيارات','كشف تسربات','تنظيف بيارات','صيانة صرف صحي'],
+          'العروض والجودة': ['شركة صرف صحي افضل','تسليك مجاري عروض','صرف صحي خصم']
+        },
+        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','أدوات','معدات للبيع','مقاولين']
       }
     };
 
+    const PLATFORMS = ['Google Ads','Facebook','Instagram','TikTok','Snapchat','YouTube','LinkedIn'];
+    
     function detectSector(text){
       const n = text.toLowerCase();
-      if(/نقل|عفش|اثاث|شحن|ترحيل/.test(n)) return 'نقل';
+      if(/نقل|عفش|اثاث|شحن|ترحيل|موبيليا/.test(n)) return 'نقل';
       if(/نظافة|تنظيف|تعقيم|غسيل/.test(n)) return 'نظافة';
       if(/صرف|مجاري|تسليك|شفط|بيار/.test(n)) return 'صرف';
       return null;
     }
 
-    function generateKeywords(text){
-      const sector = detectSector(text);
-      if(sector && KEYWORDS[sector]){
-        return KEYWORDS[sector];
+    function formatKeywordWithMatch(keyword, matchType){
+      switch(matchType){
+        case 'broad': return keyword;
+        case 'phrase': return `"${keyword}"`;
+        case 'exact': return `[${keyword}]`;
+        default: return keyword;
       }
-      
-      const word = text.trim().split(' ')[0] || text;
-      return {
-        [`كلمات ${word}`]: [
-          `${word} سعر`, `${word} اسعار`, `${word} قريب`, 
-          `${word} حجز`, `${word} طلب`, `${word} رقم`, 
-          `${word} ارخص`, `${word} افضل`
-        ]
-      };
     }
 
-    const PLATFORMS = ['Google Ads','Facebook','Instagram','TikTok','Snapchat','YouTube','LinkedIn'];
-    
+    function generateAdvancedKeywords(text, matchType, expansionLevel){
+      const sector = detectSector(text);
+      let baseKeywords = {};
+      
+      if(sector && SECTOR_DATA[sector]){
+        baseKeywords = {...SECTOR_DATA[sector].keywords};
+      } else {
+        const word = text.trim().split(' ')[0] || text;
+        baseKeywords = {
+          [`كلمات ${word}`]: [
+            `${word} سعر`, `${word} اسعار`, `${word} قريب`, 
+            `${word} حجز`, `${word} طلب`, `${word} رقم`, 
+            `${word} ارخص`, `${word} افضل`
+          ]
+        };
+      }
+
+      // توسيع حسب المستوى
+      if(expansionLevel === 'aggressive'){
+        Object.keys(baseKeywords).forEach(group => {
+          const extras = [];
+          baseKeywords[group].forEach(kw => {
+            extras.push(`${kw} الرياض`);
+            extras.push(`${kw} جدة`);
+            extras.push(`${kw} الدمام`);
+          });
+          baseKeywords[group] = [...baseKeywords[group], ...extras.slice(0,10)];
+        });
+      }
+
+      return baseKeywords;
+    }
+
     function fmt(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
 
     document.addEventListener('DOMContentLoaded', ()=>{
@@ -175,6 +259,8 @@
         document.getElementById('country').value = 'السعودية';
         document.getElementById('sectorFree').value = 'نقل أثاث';
         document.getElementById('budget').value = '5000';
+        document.getElementById('matchType').value = 'mixed';
+        document.getElementById('expansionLevel').value = 'moderate';
         document.getElementById('successMsg').style.display = 'block';
         setTimeout(()=> document.getElementById('successMsg').style.display = 'none', 3000);
       });
@@ -183,6 +269,9 @@
         const country = document.getElementById('country').value;
         const sector = document.getElementById('sectorFree').value.trim();
         const budget = parseFloat(document.getElementById('budget').value || '5000');
+        const matchType = document.getElementById('matchType').value;
+        const includeNegatives = document.getElementById('includeNegatives').checked;
+        const expansionLevel = document.getElementById('expansionLevel').value;
         
         if(!country || !sector){
           alert('من فضلك اختر دولة واكتب مجال العمل');
@@ -190,9 +279,9 @@
         }
         
         const countryData = COUNTRY_DATA[country] || {currency:'SAR', cpm:{}};
-        const keywordGroups = generateKeywords(sector);
+        const keywordGroups = generateAdvancedKeywords(sector, matchType, expansionLevel);
         
-        // عرض الكلمات
+        // عرض الكلمات مع أنواع المطابقة
         const kwEl = document.getElementById('keywords');
         kwEl.innerHTML = '';
         let allKeywords = [];
@@ -200,48 +289,138 @@
         Object.entries(keywordGroups).forEach(([groupName, keywords]) => {
           const groupDiv = document.createElement('div');
           groupDiv.className = 'intent-group';
-          groupDiv.innerHTML = `<div class="intent-title">${groupName}</div>`;
+          groupDiv.innerHTML = `<div class="intent-title">${groupName} (${keywords.length} كلمة)</div>`;
           
           const chipsDiv = document.createElement('div');
           chipsDiv.className = 'chips';
-          keywords.forEach(k => {
+          
+          keywords.forEach((k, i) => {
             const span = document.createElement('span');
-            span.className = 'pill';
-            span.textContent = k;
+            
+            // تطبيق أنواع المطابقة
+            let displayKeyword, actualKeyword, className;
+            if(matchType === 'mixed'){
+              if(i % 3 === 0){ displayKeyword = k; actualKeyword = k; className = 'pill pill-broad'; }
+              else if(i % 3 === 1){ displayKeyword = `"${k}"`; actualKeyword = `"${k}"`; className = 'pill pill-phrase'; }
+              else { displayKeyword = `[${k}]`; actualKeyword = `[${k}]`; className = 'pill pill-exact'; }
+            } else {
+              actualKeyword = formatKeywordWithMatch(k, matchType);
+              displayKeyword = actualKeyword;
+              className = matchType === 'broad' ? 'pill pill-broad' : 
+                         matchType === 'phrase' ? 'pill pill-phrase' : 'pill pill-exact';
+            }
+            
+            span.className = className;
+            span.textContent = displayKeyword;
             chipsDiv.appendChild(span);
-            allKeywords.push(k);
+            allKeywords.push(actualKeyword);
           });
           
           groupDiv.appendChild(chipsDiv);
           kwEl.appendChild(groupDiv);
         });
 
-        document.getElementById('keywordStats').textContent = 
-          `تم توليد ${allKeywords.length} كلمة في ${Object.keys(keywordGroups).length} مجموعات نية`;
+        // الكلمات السلبية
+        let negativeKeywords = [];
+        if(includeNegatives){
+          const sectorKey = detectSector(sector);
+          if(sectorKey && SECTOR_DATA[sectorKey] && SECTOR_DATA[sectorKey].negatives){
+            negativeKeywords = SECTOR_DATA[sectorKey].negatives;
+            const negCard = document.getElementById('negativesCard');
+            const negEl = document.getElementById('negativeKeywords');
+            negCard.style.display = 'block';
+            negEl.innerHTML = '';
+            negativeKeywords.forEach(k => {
+              const span = document.createElement('span');
+              span.className = 'pill';
+              span.style.background = '#f8d7da';
+              span.style.color = '#721c24';
+              span.textContent = `-${k}`;
+              negEl.appendChild(span);
+            });
+          }
+        }
 
-        // أزرار التصدير
+        document.getElementById('keywordStats').textContent = 
+          `تم توليد ${allKeywords.length} كلمة في ${Object.keys(keywordGroups).length} مجموعات نية${includeNegatives ? ` + ${negativeKeywords.length} كلمة سلبية` : ''}`;
+
+        // أزرار التصدير المتقدمة
         document.getElementById('copyAll').onclick = ()=>{
           navigator.clipboard.writeText(allKeywords.join('\n')).then(()=> 
             alert(`تم نسخ ${allKeywords.length} كلمة`));
         };
         
-        document.getElementById('exportXlsx').onclick = ()=>{
-          const rows = [['الكلمة','مجموعة النية','ملاحظة']];
-          Object.entries(keywordGroups).forEach(([group, keywords]) => {
-            keywords.forEach(k => rows.push([k, group, '']));
-          });
-          
-          if(window.XLSX){
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.aoa_to_sheet(rows);
-            XLSX.utils.book_append_sheet(wb, ws, 'Keywords');
-            XLSX.writeFile(wb, 'arabic-keywords.xlsx');
+        document.getElementById('copyNegatives').onclick = ()=>{
+          if(negativeKeywords.length){
+            navigator.clipboard.writeText(negativeKeywords.map(k => `-${k}`).join('\n')).then(()=> 
+              alert(`تم نسخ ${negativeKeywords.length} كلمة سلبية`));
           } else {
-            alert('مكون XLSX غير محمّل');
+            alert('لا توجد كلمات سلبية متاحة');
           }
         };
+        
+        document.getElementById('exportXlsx').onclick = ()=>{
+          if(!window.XLSX) { alert('مكون XLSX غير محمّل'); return; }
+          
+          const wb = XLSX.utils.book_new();
+          
+          // ورقة الكلمات الرئيسية
+          const keywordRows = [['الكلمة','نوع المطابقة','مجموعة النية','ملاحظة']];
+          Object.entries(keywordGroups).forEach(([group, keywords]) => {
+            keywords.forEach(k => {
+              const matchTypeText = k.startsWith('[') ? 'مطابقة تامة' :
+                                  k.startsWith('"') ? 'مطابقة عبارة' : 'مطابقة واسعة';
+              keywordRows.push([k, matchTypeText, group, '']);
+            });
+          });
+          const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
+          XLSX.utils.book_append_sheet(wb, wsKeywords, 'الكلمات الرئيسية');
+          
+          // ورقة الكلمات السلبية
+          if(negativeKeywords.length){
+            const negRows = [['الكلمة السلبية','السبب']];
+            negativeKeywords.forEach(k => negRows.push([`-${k}`, 'تقليل الهدر']));
+            const wsNegatives = XLSX.utils.aoa_to_sheet(negRows);
+            XLSX.utils.book_append_sheet(wb, wsNegatives, 'الكلمات السلبية');
+          }
+          
+          // ورقة الخطة الإعلانية
+          const planRows = [['المنصة','الميزانية','CPM المتوقع','الظهور المتوقع','النقرات المتوقعة']];
+          const activePlatforms = PLATFORMS.filter(p=> document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked);
+          const budgetPerPlatform = activePlatforms.length ? budget / activePlatforms.length : budget;
+          
+          activePlatforms.forEach(p => {
+            const cpm = countryData.cpm[p] || 2;
+            const impressions = (budgetPerPlatform/cpm)*1000;
+            const clicks = impressions*0.015;
+            planRows.push([p, budgetPerPlatform, `$${cpm}`, Math.round(impressions), Math.round(clicks)]);
+          });
+          const wsPlan = XLSX.utils.aoa_to_sheet(planRows);
+          XLSX.utils.book_append_sheet(wb, wsPlan, 'الخطة الإعلانية');
+          
+          XLSX.writeFile(wb, 'arabic-ads-plan-advanced.xlsx');
+        };
+        
+        document.getElementById('exportGoogleAds').onclick = ()=>{
+          // تصدير بصيغة Google Ads Editor
+          const csvRows = ['Campaign,Ad Group,Keyword,Match Type'];
+          Object.entries(keywordGroups).forEach(([group, keywords]) => {
+            keywords.forEach(k => {
+              const matchTypeText = k.startsWith('[') ? 'Exact' :
+                                  k.startsWith('"') ? 'Phrase' : 'Broad';
+              csvRows.push(`${sector} Campaign,${group},${k.replace(/[\[\]"]/g, '')},${matchTypeText}`);
+            });
+          });
+          
+          const csvContent = csvRows.join('\n');
+          const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'google-ads-import.csv';
+          link.click();
+        };
 
-        // المنصات
+        // المنصات والحسابات
         const activePlatforms = PLATFORMS.filter(p=> 
           document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked);
         
@@ -255,7 +434,7 @@
         });
         
         document.getElementById('mixNote').textContent = 
-          `تم اختيار ${activePlatforms.length} منصة`;
+          `تم اختيار ${activePlatforms.length} منصة للحملة`;
 
         // توزيع الميزانية
         const allocEl = document.getElementById('allocation');
@@ -293,6 +472,21 @@
         const totalDiv = document.createElement('div');
         totalDiv.innerHTML = `<b>الإجمالي (${fmt(budget)} ${countryData.currency})</b><br>ظهور ${fmt(totals.impressions)} | نقرات ${fmt(totals.clicks)} | تحويلات ${fmt(totals.conversions)} | مبيعات ${fmt(totals.sales)}`;
         fEl.appendChild(totalDiv);
+
+        // خطة التنفيذ
+        const playbook = document.getElementById('playbook');
+        playbook.innerHTML = '';
+        [
+          `إنشاء ${Object.keys(keywordGroups).length} مجموعات إعلانية حسب النية`,
+          `استخدام أنواع المطابقة: ${matchType === 'mixed' ? '70% عبارة + 20% واسعة + 10% تامة' : matchType}`,
+          `إضافة ${negativeKeywords.length} كلمة سلبية لتقليل الهدر`,
+          `بدء بـ${activePlatforms.length} منصات مع تركيز 60% على الأداء الأفضل`,
+          `مراقبة CTR يومياً وتحريك الميزانية للمنصة الأعلى ROAS`
+        ].forEach(s=>{
+          const li = document.createElement('li');
+          li.textContent = s;
+          playbook.appendChild(li);
+        });
 
         document.getElementById('out').style.display = 'block';
         document.getElementById('successMsg').style.display = 'block';
