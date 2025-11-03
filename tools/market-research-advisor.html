@@ -8,53 +8,61 @@
   <link rel="stylesheet" href="../global-styles.css" />
   <style>
     .container{max-width:1200px;margin:0 auto;padding:20px}
-    .nav-tabs{display:flex;gap:8px;background:#f8f9fa;border-radius:12px;padding:8px;margin-bottom:20px;overflow-x:auto}
-    .nav-tab{padding:8px 16px;border-radius:8px;background:transparent;border:none;cursor:pointer;white-space:nowrap;transition:all 0.3s}
+    .nav-tabs{display:flex;gap:8px;background:#f8f9fa;border-radius:12px;padding:8px;margin-bottom:20px;overflow-x:auto;flex-wrap:wrap}
+    .nav-tab{padding:10px 16px;border-radius:8px;background:transparent;border:none;cursor:pointer;white-space:nowrap;transition:all 0.3s;font-weight:600}
     .nav-tab:hover,.nav-tab.active{background:var(--gradient);color:white}
     .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:20px;margin:15px 0;box-shadow:0 2px 12px rgba(0,0,0,.04)}
     .row{display:flex;gap:15px;flex-wrap:wrap}
     .col{flex:1 1 280px}
     .kpi{display:flex;gap:15px;flex-wrap:wrap}
-    .kpi div{background:#f6f7f9;border:1px solid #e7e9ee;border-radius:10px;padding:12px 15px;flex:1 1 180px}
-    .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:6px 12px;border-radius:999px;margin:3px}
-    .pill-phrase{background:#d1ecf1;color:#0c5460}
-    .pill-exact{background:#d4edda;color:#155724}
-    .pill-broad{background:#fff3cd;color:#856404}
+    .kpi div{background:#f6f7f9;border:1px solid #e7e9ee;border-radius:10px;padding:12px 15px;flex:1 1 180px;text-align:center}
+    .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:6px 12px;border-radius:999px;margin:3px;font-size:0.9rem}
+    .pill-phrase{background:#d1ecf1;color:#0c5460;border-color:#bee5eb}
+    .pill-exact{background:#d4edda;color:#155724;border-color:#c3e6cb}
+    .pill-broad{background:#fff3cd;color:#856404;border-color:#ffeaa7}
+    .pill-negative{background:#f8d7da;color:#721c24;border-color:#f5c6cb}
     .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{background:var(--gradient);color:#fff;border:none;border-radius:22px;padding:10px 18px;cursor:pointer;font-weight:600;margin:5px}
+    .btn{background:var(--gradient);color:#fff;border:none;border-radius:22px;padding:10px 18px;cursor:pointer;font-weight:600;margin:5px;transition:all 0.3s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,0.3)}
     .btn-secondary{background:#6c757d}
     .btn-success{background:#28a745}
     .btn-warning{background:#ffc107;color:#333}
     .platforms{margin:15px 0}
     .platforms .platform-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .platforms label{display:flex;align-items:center;gap:6px;background:#f6f7f9;border:1px solid #e7e9ee;border-radius:999px;padding:8px 12px;cursor:pointer;margin:3px}
-    .platform-suggestions{background:#e7f3ff;border:1px solid #b3d9ff;border-radius:10px;padding:12px;margin:10px 0}
-    .intent-group{margin:10px 0;padding:15px;background:#f9f9f9;border-radius:10px;border-left:4px solid #007bff}
-    .intent-title{font-weight:bold;color:#007bff;margin-bottom:8px}
-    .success{background:#e8f5e8;color:#2d5a2d;border:1px solid #b8d8b8;padding:12px;border-radius:10px;margin:15px 0;display:none}
+    .platforms label{display:flex;align-items:center;gap:6px;background:#f6f7f9;border:1px solid #e7e9ee;border-radius:999px;padding:8px 12px;cursor:pointer;margin:3px;transition:all 0.3s}
+    .platforms label:hover{background:#e9ecef}
+    .platform-suggestions{background:#e7f3ff;border:1px solid #b3d9ff;border-radius:10px;padding:15px;margin:10px 0}
+    .intent-group{margin:12px 0;padding:15px;background:#f9f9f9;border-radius:10px;border-left:4px solid #007bff}
+    .intent-title{font-weight:bold;color:#007bff;margin-bottom:8px;font-size:1rem}
+    .success{background:#e8f5e8;color:#2d5a2d;border:1px solid #b8d8b8;padding:15px;border-radius:10px;margin:15px 0;display:none;text-align:center;font-weight:600}
     .muted{color:#666;font-size:0.9rem}
     .small{font-size:0.85rem}
     .search-box{position:relative}
-    .sector-suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:200px;overflow-y:auto;z-index:1000;display:none}
-    .sector-item{padding:10px 15px;cursor:pointer;border-bottom:1px solid #f0f0f0}
+    .sector-suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:200px;overflow-y:auto;z-index:1000;display:none;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+    .sector-item{padding:10px 15px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s}
     .sector-item:hover{background:#f5f5f5}
+    .sector-item:last-child{border-bottom:none}
+    input,select{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-family:inherit;font-size:1rem}
+    label{display:block;margin-bottom:5px;font-weight:600;color:#333}
+    .quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+    @media(max-width:768px){.row{flex-direction:column}.nav-tabs{justify-content:center}.kpi{flex-direction:column}.platforms .platform-row{justify-content:center}}
   </style>
 </head>
 <body>
   <div class="container">
     <!-- أزرار التنقل العلوية -->
     <div class="nav-tabs">
-      <button class="nav-tab active" onclick="scrollToSection('top')">🔝 البداية</button>
-      <button class="nav-tab" onclick="scrollToSection('keywords')">🔑 الكلمات</button>
-      <button class="nav-tab" onclick="scrollToSection('negatives')">🚫 السلبية</button>
-      <button class="nav-tab" onclick="scrollToSection('platforms')">📱 المنصات</button>
-      <button class="nav-tab" onclick="scrollToSection('budget')">💰 الميزانية</button>
-      <button class="nav-tab" onclick="scrollToSection('forecasts')">📈 التوقعات</button>
-      <button class="nav-tab" onclick="scrollToSection('export')">📥 التصدير</button>
+      <button class="nav-tab active" onclick="scrollToSection('top');">🏁 البداية</button>
+      <button class="nav-tab" onclick="scrollToSection('keywords');">🔑 الكلمات</button>
+      <button class="nav-tab" onclick="scrollToSection('negatives');">🚫 السلبية</button>
+      <button class="nav-tab" onclick="scrollToSection('platforms');">📱 المنصات</button>
+      <button class="nav-tab" onclick="scrollToSection('budget');">💰 الميزانية</button>
+      <button class="nav-tab" onclick="scrollToSection('forecasts');">📈 التوقعات</button>
+      <button class="nav-tab" onclick="scrollToSection('export');">📥 التصدير</button>
     </div>
 
     <div id="top">
-      <h1>🎯 مُرشِّد الإعلانات الذكي - النسخة النهائية المطلقة</h1>
+      <h1>🎯 مُرشِّد الإعلانات الذكي - النسخة النهائية</h1>
       <p class="muted">أداة شاملة لتوليد كلمات بحث عربية احترافية مع 50+ مجال، بحث ذكي، أنواع المطابقة، كلمات سلبية، ومنصات مقترحة حسب الدولة. تصدير XLSX/CSV مع ملخص الحملة. مجاني 100% وبدون طرف ثالث.</p>
 
       <div class="success" id="successMsg">✅ تم توليد الكلمات والخطة بنجاح! يمكنك الآن النسخ أو التصدير.</div>
@@ -119,16 +127,18 @@
         <div id="platforms" class="platforms">
           <label>اختر المنصات يدوياً</label>
           <div id="platformSuggestions" class="platform-suggestions" style="display:none">
-            <strong>منصات مقترحة:</strong>
-            <button id="selectRecommended" class="btn btn-success">اختيار المقترح</button>
-            <button id="selectTop2" class="btn btn-warning">أفضل منصتين</button>
-            <button id="selectAll" class="btn btn-secondary">أقصى وصول</button>
-            <button id="clearAll" class="btn btn-secondary">إلغاء الكل</button>
+            <strong>🎯 منصات مقترحة لهذه الدولة:</strong>
+            <div class="quick-actions">
+              <button id="selectRecommended" class="btn btn-success">✅ اختيار المقترح</button>
+              <button id="selectTop2" class="btn btn-warning">🥇 أفضل منصتين</button>
+              <button id="selectAll" class="btn btn-secondary">📈 أقصى وصول</button>
+              <button id="clearAll" class="btn btn-secondary">❌ إلغاء الكل</button>
+            </div>
           </div>
           <div id="platformToggles" class="platform-row"></div>
         </div>
 
-        <button id="run" class="btn" style="font-size:1.1rem;padding:12px 25px">🚀 توليد الكلمات المتقدمة + الخطة الاحترافية</button>
+        <button id="run" class="btn" style="font-size:1.2rem;padding:15px 30px;width:100%;margin-top:10px">🚀 توليد الكلمات المتقدمة + الخطة الاحترافية</button>
       </div>
     </div>
 
@@ -157,13 +167,13 @@
 
       <div id="export" class="card">
         <h2>📥 تصدير الملفات</h2>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button id="copyAll" class="btn">نسخ جميع الكلمات</button>
-          <button id="copyNegatives" class="btn btn-secondary">نسخ الكلمات السلبية</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <button id="copyAll" class="btn">📋 نسخ جميع الكلمات</button>
+          <button id="copyNegatives" class="btn btn-secondary">🚫 نسخ الكلمات السلبية</button>
           <button id="exportXlsx" class="btn">📊 تنزيل XLSX متقدم</button>
-          <button id="exportGoogleAds" class="btn btn-secondary">📋 تصدير Google Ads CSV</button>
+          <button id="exportGoogleAds" class="btn btn-secondary">📄 تصدير Google Ads CSV</button>
         </div>
-        <p class="muted small">الملفات تُحفظ بصيغة .xlsx و .csv أصلية، بدون علامات اقتباس، مع ملخص الحملة</p>
+        <p class="muted small" style="text-align:center;margin-top:10px">الملفات تُحفظ بصيغة .xlsx و .csv أصلية، بدون علامات اقتباس، مع ملخص الحملة التلقائي</p>
       </div>
     </div>
   </div>
@@ -177,7 +187,7 @@
       'قطر': {currency:'QAR', recommended:['Google Ads','Facebook','Instagram'], cpm:{'Google Ads':3.1,Facebook:2.3,Instagram:2.6,YouTube:2.0}},
       'البحرين': {currency:'BHD', recommended:['Google Ads','Facebook','Instagram'], cpm:{'Google Ads':1.8,Facebook:1.4,Instagram:1.6}},
       'عُمان': {currency:'OMR', recommended:['Google Ads','Facebook','Instagram'], cpm:{'Google Ads':2.0,Facebook:1.6,Instagram:1.8}},
-      'مصر': {currency:'EGP', recommended:['Facebook','Instagram','Google Ads'], cpm:{Facebook:0.4,'Google Ads':0.6,Instagram:0.5,TikTok:0.7,YouTube:0.3}},
+      'مصر': {currency:'EGP', recommended:['Facebook','Instagram','TikTok'], cpm:{Facebook:0.4,'Google Ads':0.6,Instagram:0.5,TikTok:0.7,YouTube:0.3}},
       'الأردن': {currency:'JOD', recommended:['Facebook','Instagram','Google Ads'], cpm:{Facebook:1.2,'Google Ads':1.6,Instagram:1.4}},
       'لبنان': {currency:'LBP', recommended:['Facebook','Instagram','Google Ads'], cpm:{Facebook:0.8,'Google Ads':1.1,Instagram:0.9}},
       'المغرب': {currency:'MAD', recommended:['Facebook','Instagram','Google Ads'], cpm:{Facebook:0.6,'Google Ads':0.9,Instagram:0.7}},
@@ -218,12 +228,53 @@
       }
     };
 
+    const ALL_SECTORS_LIST = ['نقل أثاث','شركة نظافة','شركة صرف صحي','عيادة أسنان','مطعم','تأجير سيارات','عقارات','صالون حلاقة','صالون نساء','مركز تجميل','نادي رياضي','مدرب شخصي','وكالة سفر','فندق','شركة أمن','مقاولات','معمار','دهان','تنسيق حدائق','مشاتل','مدرسة خاصة','دورات تدريبية','تعليم لغات','جامعة','متجر إلكتروني','ملابس','إلكترونيات','مجوهرات','عطور','صيدلية','مختبر طبي','كافيه','حلواني','توصيل طعام','معرض سيارات','صيانة سيارات','غسيل سيارات','كاميرات مراقبة','محامي','محاسب','خدمات مصرفية','تأجير سيارات سياحي','معدات رياضية'];
     const PLATFORMS = ['Google Ads','Facebook','Instagram','TikTok','Snapchat','YouTube','LinkedIn'];
     
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({behavior: 'smooth'});
       document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
       event.target.classList.add('active');
+    }
+
+    function setupSectorSearch(){
+      const input = document.getElementById('sectorFree');
+      const suggestions = document.getElementById('sectorSuggestions');
+      
+      input.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase();
+        if(value.length < 2){
+          suggestions.style.display = 'none';
+          return;
+        }
+        
+        const matches = ALL_SECTORS_LIST.filter(sector => 
+          sector.toLowerCase().includes(value)
+        );
+        
+        if(matches.length > 0){
+          suggestions.innerHTML = '';
+          matches.slice(0,8).forEach(sector => {
+            const item = document.createElement('div');
+            item.className = 'sector-item';
+            item.textContent = sector;
+            item.addEventListener('click', () => {
+              input.value = sector;
+              suggestions.style.display = 'none';
+            });
+            suggestions.appendChild(item);
+          });
+          suggestions.style.display = 'block';
+        } else {
+          suggestions.style.display = 'none';
+        }
+      });
+      
+      document.addEventListener('click', (e) => {
+        if(!input.contains(e.target) && !suggestions.contains(e.target)){
+          suggestions.style.display = 'none';
+        }
+      });
     }
 
     function detectSector(text){
@@ -257,14 +308,25 @@
       return {
         [`كلمات ${mainWord} - السعر`]: [`${mainWord} سعر`,`${mainWord} اسعار`,`${mainWord} تكلفة`,`${mainWord} ارخص`],
         [`كلمات ${mainWord} - الموقع`]: [`${mainWord} قريب`,`${mainWord} بالقرب`,`احسن ${mainWord}`],
-        [`كلمات ${mainWord} - الطلب`]: [`${mainWord} حجز`,`${mainWord} طلب`,`${mainWord} رقم`,`${mainWord} هاتف`]
+        [`كلمات ${mainWord} - الطلب`]: [`${mainWord} حجز`,`${mainWord} طلب`,`${mainWord} رقم`,`${mainWord} هاتف`],
+        [`كلمات ${mainWord} - الخدمة`]: [`خدمات ${mainWord}`,`${mainWord} اونلاين`,`${mainWord} عروض`,`${mainWord} جديد`]
       };
+    }
+
+    function getSectorNegatives(sectorText){
+      const sector = detectSector(sectorText);
+      if(sector && SECTORS[sector] && SECTORS[sector].negatives){
+        return SECTORS[sector].negatives;
+      }
+      return ['وظائف','توظيف','مجاني','تعليم','دورات','صور','فيديو','معلومات'];
     }
 
     function fmt(n) { return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
     function timestamp() { return new Date().toISOString().slice(0,16).replace('T','-').replace(/:/g,''); }
 
     document.addEventListener('DOMContentLoaded', ()=>{
+      setupSectorSearch();
+      
       const toggles = document.getElementById('platformToggles');
       PLATFORMS.forEach(p=>{
         const id = 'pl_' + p.replace(/\s+/g,'_');
@@ -374,21 +436,16 @@
         // الكلمات السلبية
         let negativeKeywords = [];
         if(includeNegatives) {
-          const sectorKey = detectSector(sector);
-          if(sectorKey && SECTORS[sectorKey] && SECTORS[sectorKey].negatives) {
-            negativeKeywords = SECTORS[sectorKey].negatives;
-            document.getElementById('negatives').style.display = 'block';
-            const negEl = document.getElementById('negativeKeywords');
-            negEl.innerHTML = '';
-            negativeKeywords.forEach(k => {
-              const span = document.createElement('span');
-              span.className = 'pill';
-              span.style.background = '#f8d7da';
-              span.style.color = '#721c24';
-              span.textContent = `-${k}`;
-              negEl.appendChild(span);
-            });
-          }
+          negativeKeywords = getSectorNegatives(sector);
+          document.getElementById('negatives').style.display = 'block';
+          const negEl = document.getElementById('negativeKeywords');
+          negEl.innerHTML = '';
+          negativeKeywords.forEach(k => {
+            const span = document.createElement('span');
+            span.className = 'pill pill-negative';
+            span.textContent = `-${k}`;
+            negEl.appendChild(span);
+          });
         }
 
         // أزرار النسخ والتصدير
@@ -459,7 +516,7 @@
           
           activePlatforms.forEach(p => {
             const cpm = countryData.cpm[p] || 2;
-            const impressions = (budgetPerPlatform/cpm)*1000;
+            const impressions = (budgetPerPlatform/cmp)*1000;
             const clicks = impressions*0.015;
             planRows.push([p, `${Math.round(budgetPerPlatform)} ${countryData.currency}`, `$${cpm}`, Math.round(impressions), Math.round(clicks)]);
           });
@@ -494,6 +551,7 @@
         // عرض التوزيع والتوقعات
         const allocEl = document.getElementById('allocation');
         allocEl.innerHTML = '';
+        const budgetPerPlatform = budget / activePlatforms.length;
         activePlatforms.forEach(p=>{
           const d = document.createElement('div');
           d.innerHTML = `<b>${p}</b><br>${fmt(budgetPerPlatform)} ${countryData.currency}`;
@@ -521,9 +579,18 @@
           fEl.appendChild(div);
         });
 
+        const totalDiv = document.createElement('div');
+        totalDiv.innerHTML = `<b>الإجمالي</b><br>ظهور ${fmt(totals.impressions)} | نقرات ${fmt(totals.clicks)} | تحويلات ${fmt(totals.conversions)} | مبيعات ${fmt(totals.sales)}`;
+        totalDiv.style.background = '#e7f3ff';
+        totalDiv.style.borderColor = '#3b82f6';
+        fEl.appendChild(totalDiv);
+
         document.getElementById('out').style.display = 'block';
         document.getElementById('successMsg').style.display = 'block';
-        setTimeout(() => document.getElementById('successMsg').style.display = 'none', 5000);
+        setTimeout(() => document.getElementById('successMsg').style.display = 'none', 7000);
+        
+        // التنقل التلقائي لقسم الكلمات
+        setTimeout(() => scrollToSection('keywords'), 1000);
       });
     });
   </script>
