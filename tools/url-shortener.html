@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + نشر تلقائي للباك لينك</title>
+  <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + فتح منظم للباك لينك</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -14,7 +14,6 @@
     textarea{direction:ltr;font-family:monospace}
     .progress{height:25px;border-radius:15px}
     .progress-text{position:absolute;width:100%;text-align:center;line-height:25px;font-weight:bold;z-index:1;color:#000}
-    .backlink-results{background:#f8f9fa;border-radius:10px;padding:15px;margin:15px 0;font-family:monospace;font-size:0.9rem;direction:ltr;text-align:left}
     .mode-tabs{display:flex;gap:8px;margin:15px 0;flex-wrap:wrap}
     .mode-tab{background:rgba(255,255,255,.2);color:white;border:2px solid rgba(255,255,255,.3);padding:10px 20px;border-radius:25px;cursor:pointer;transition:all .3s}
     .mode-tab:hover{background:rgba(255,255,255,.4);transform:translateY(-2px)}
@@ -26,7 +25,7 @@
     <!-- Header -->
     <div class="text-center text-white mb-4">
       <h1 class="h3">🌍 مختصر الروابط العالمي</h1>
-      <p>تقصير + تجميل + نشر تلقائي للباك لينك (بدون تسجيل دخول)</p>
+      <p>تقصير + تجميل + فتح منظم للباك لينك (مواقع حقيقية بدون APIs وهمية)</p>
     </div>
 
     <!-- Main Card -->
@@ -84,36 +83,47 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
           <i class="fas fa-broom me-2"></i>تنظيف الروابط
         </button>
         <button id="backlinkBtn" class="btn btn-danger" disabled>
-          <i class="fas fa-rocket me-2"></i>🚀 نشر تلقائي — بدون فتح
+          <i class="fas fa-external-link-alt me-2"></i>📢 فتح منظم (10 مواقع حقيقية)
         </button>
       </div>
 
       <!-- Backlink Progress -->
       <div id="backlinkProgress" style="display:none;">
-        <h6><i class="fas fa-satellite-dish me-2"></i>جاري النشر التلقائي:</h6>
+        <h6><i class="fas fa-rocket me-2"></i>جاري الفتح المنظم:</h6>
         <div class="position-relative mb-2">
           <div class="progress">
             <div class="progress-bar bg-success" id="progressBar" style="width:0%"></div>
           </div>
-          <div class="progress-text" id="progressText">بدء العملية...</div>
+          <div class="progress-text" id="progressText">جاري التحضير...</div>
         </div>
         <div class="row text-center mb-2">
-          <div class="col-6">
-            <div class="badge bg-success fs-6">تم: <span id="successCount">0</span></div>
+          <div class="col-4">
+            <div class="badge bg-primary fs-6">مفتوح: <span id="openedCount">0</span></div>
           </div>
-          <div class="col-6">
-            <div class="badge bg-danger fs-6">فشل: <span id="failCount">0</span></div>
+          <div class="col-4">
+            <div class="badge bg-success fs-6">تم النشر: <span id="publishedCount">0</span></div>
           </div>
+          <div class="col-4">
+            <div class="badge bg-warning fs-6">بانتظار: <span id="pendingCount">0</span></div>
+          </div>
+        </div>
+        <div class="alert alert-info">
+          <strong>📝 تعليمات:</strong> تم فتح المواقع بروابطك جاهزة. اضغط "Submit/Post/Save" في كل تبويب (10 نقرات سريعة) ثم عد هنا.
         </div>
       </div>
 
       <!-- Backlink Results -->
       <div id="backlinkSection" style="display:none;">
-        <h6><i class="fas fa-list me-2"></i>نتائج النشر التلقائي:</h6>
-        <textarea id="backlinkResults" class="form-control backlink-results" rows="8" readonly placeholder="جاري النشر... النتائج ستظهر هنا"></textarea>
-        <div class="text-center mt-2">
-          <button id="copyBacklinkBtn" class="btn btn-outline-primary">
+        <h6><i class="fas fa-list me-2"></i>نتائج المواقع المفتوحة:</h6>
+        <textarea id="backlinkResults" class="form-control mb-3" rows="8" readonly 
+          style="background:#f8f9fa;font-family:monospace;font-size:0.9rem;direction:ltr;text-align:left"
+          placeholder="النتائج ستظهر هنا بعد فتح المواقع..."></textarea>
+        <div class="text-center">
+          <button id="copyResultsBtn" class="btn btn-outline-primary">
             <i class="fas fa-copy me-2"></i>نسخ كل النتائج
+          </button>
+          <button id="downloadBacklinkBtn" class="btn btn-success">
+            <i class="fas fa-download me-2"></i>تحميل تقرير XLSX
           </button>
         </div>
       </div>
@@ -156,17 +166,20 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
     let currentMode = 'short';
     let processedResults = [];
     let backlinkResults = [];
+    let openedTabs = [];
 
-    // AUTOMATIC BACKLINK GENERATORS (NO LOGIN/REGISTRATION)
-    const BACKLINK_GENERATORS = [
-      {name: 'SiteChecker Backlink Generator', endpoint: 'https://sitechecker.pro/api/backlinks-generator', param: 'url'},
-      {name: 'SEO Wagon Backlink Maker', endpoint: 'https://seowagon.com/api/backlink-maker', param: 'domain'},  
-      {name: 'Vefogix Backlink Generator', endpoint: 'https://www.vefogix.com/api/backlink-generator', param: 'url'},
-      {name: 'DAPA Checker Backlinks', endpoint: 'https://www.dapachecker.org/api/backlinks-generator', param: 'url'},
-      {name: 'PrePostSEO Backlink Maker', endpoint: 'https://www.prepostseo.com/api/backlinks-maker', param: 'url'},
-      {name: 'SearchEngineReports Backlink', endpoint: 'https://searchenginereports.net/api/backlink-maker', param: 'url'},
-      {name: 'SmallSEOTools Website Ping', endpoint: 'https://smallseotools.com/api/website-ping', param: 'url'},
-      {name: 'Turbo SEO Tools Backlink', endpoint: 'https://www.turboseotools.com/api/backlink-maker', param: 'url'}
+    // REAL SUBMISSION SITES (NO FAKE APIs)
+    const BACKLINK_SITES = [
+      {name: 'Reddit Submit', url: 'https://www.reddit.com/submit?url=', desc: 'منتدى عالمي - يحتاج حساب'},
+      {name: 'Mix Add Content', url: 'https://mix.com/add?url=', desc: 'شبكة اكتشاف - يحتاج حساب'},
+      {name: 'Pocket Save', url: 'https://getpocket.com/save?url=', desc: 'قراءة لاحقاً - يحتاج حساب'},
+      {name: 'Instapaper Save', url: 'https://www.instapaper.com/save?url=', desc: 'أرشيف مقالات - يحتاج حساب'},
+      {name: 'Diigo Bookmark', url: 'https://www.diigo.com/post?url=', desc: 'إشارات مرجعية اجتماعية'},
+      {name: 'Folkd Submit', url: 'https://www.folkd.com/submit/', desc: 'شبكة إشارات مرجعية'},
+      {name: 'Flipboard Magazine', url: 'https://flipboard.com/add?url=', desc: 'مجلة رقمية - يحتاج حساب'},
+      {name: 'Slashdot Submit', url: 'https://slashdot.org/submit.pl?op=submit&story=', desc: 'موقع تقني شهير'},
+      {name: 'Fark Submit', url: 'https://www.fark.com/submit/', desc: 'أخبار وتسلية'},
+      {name: 'StumbleUpon Archive', url: 'https://www.stumbleupon.com/submit?url=', desc: 'أرشيف اكتشاف المواقع'}
     ];
 
     // UTILITY FUNCTIONS
@@ -281,7 +294,7 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
         const shortCode = `k${validIndex}`;
         const shortUrl = `https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=${encodeURIComponent(normalized)}`;
         const slug = createSlug(normalized);
-        const prettyUrl = normalized; // Same domain as requested
+        const prettyUrl = normalized;
         
         const result = {
           original: originalUrl,
@@ -343,8 +356,8 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
       document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // AUTOMATIC BACKLINK SUBMISSION
-    async function submitAutomaticBacklinks() {
+    // ORGANIZED BACKLINK OPENING
+    async function openBacklinkSites() {
       if (processedResults.length === 0) {
         alert('قم بمعالجة الروابط أولاً');
         return;
@@ -353,7 +366,7 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
       const targetUrl = processedResults[0].prettyUrl;
       const btn = document.getElementById('backlinkBtn');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري النشر التلقائي...';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري الفتح المنظم...';
       
       document.getElementById('backlinkProgress').style.display = 'block';
       document.getElementById('backlinkSection').style.display = 'block';
@@ -363,65 +376,66 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
       const resultsTextarea = document.getElementById('backlinkResults');
       
       backlinkResults = [];
+      openedTabs = [];
       resultsTextarea.value = '';
-      let successCount = 0;
-      let failCount = 0;
+      
+      let openedCount = 0;
+      let publishedCount = 0; // Will be updated manually
+      let pendingCount = 0;
 
-      for (let i = 0; i < BACKLINK_GENERATORS.length; i++) {
-        const generator = BACKLINK_GENERATORS[i];
-        const progress = ((i + 1) / BACKLINK_GENERATORS.length) * 100;
+      for (let i = 0; i < BACKLINK_SITES.length; i++) {
+        const site = BACKLINK_SITES[i];
+        const progress = ((i + 1) / BACKLINK_SITES.length) * 100;
         
         progressBar.style.width = progress + '%';
-        progressText.textContent = `${i + 1}/${BACKLINK_GENERATORS.length} - جاري: ${generator.name}`;
+        progressText.textContent = `${i + 1}/${BACKLINK_SITES.length} - فتح: ${site.name}`;
+        
+        let submitUrl = site.url + encodeURIComponent(targetUrl);
+        let opened = false;
+        let tabRef = null;
         
         try {
-          // Simulate API call (in real implementation, would use fetch with proper endpoints)
-          const submitUrl = `${generator.endpoint}?${generator.param}=${encodeURIComponent(targetUrl)}`;
-          
-          // Simulate HTTP request with timeout
-          await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-          
-          // Simulate success/failure (80% success rate)
-          const success = Math.random() > 0.2;
-          
-          const result = {
-            generator: generator.name,
-            url: submitUrl,
-            status: success ? 'تم بنجاح' : 'فشل',
-            resultUrl: success ? `https://example-backlink-result.com/${Date.now()}` : null,
-            timestamp: new Date().toISOString()
-          };
-          
-          backlinkResults.push(result);
-          
-          if (success) {
-            successCount++;
-            resultsTextarea.value += `✅ ${generator.name} | تم بنجاح | ${result.resultUrl}\n`;
-          } else {
-            failCount++;
-            resultsTextarea.value += `❌ ${generator.name} | فشل | لا يوجد رابط\n`;
-          }
-          
-          document.getElementById('successCount').textContent = successCount;
-          document.getElementById('failCount').textContent = failCount;
-          
-        } catch (error) {
-          failCount++;
-          resultsTextarea.value += `❌ ${generator.name} | خطأ في الاتصال | لا يوجد رابط\n`;
-          document.getElementById('failCount').textContent = failCount;
+          tabRef = window.open(submitUrl, `backlink_${i}_${Date.now()}`);
+          opened = !!tabRef;
+        } catch (e) {
+          opened = false;
         }
         
-        // Small delay between requests
-        await new Promise(resolve => setTimeout(resolve, 500));
+        if (opened) {
+          openedCount++;
+          pendingCount++;
+          openedTabs.push({site: site.name, tab: tabRef, url: submitUrl});
+          resultsTextarea.value += `✅ ${site.name} | مفتوح | ${submitUrl}\n`;
+        } else {
+          resultsTextarea.value += `❌ ${site.name} | محجوب | ${submitUrl}\n`;
+        }
+        
+        const result = {
+          site: site.name,
+          url: submitUrl,
+          status: opened ? 'مفتوح' : 'محجوب',
+          description: site.desc,
+          timestamp: new Date().toISOString()
+        };
+        
+        backlinkResults.push(result);
+        
+        document.getElementById('openedCount').textContent = openedCount;
+        document.getElementById('pendingCount').textContent = pendingCount;
+        
+        // Delay between tabs
+        await new Promise(resolve => setTimeout(resolve, 400));
       }
       
-      progressText.textContent = `تم! النشر على ${BACKLINK_GENERATORS.length} أداة - نجح: ${successCount} | فشل: ${failCount}`;
-      btn.innerHTML = '<i class="fas fa-check me-2"></i>تم النشر التلقائي!';
+      progressText.textContent = `تم فتح ${openedCount}/${BACKLINK_SITES.length} موقع. اضغط Submit في كل تبويب ثم عد هنا.`;
+      btn.innerHTML = `<i class="fas fa-check me-2"></i>تم الفتح (${openedCount}/${BACKLINK_SITES.length})`;
       btn.classList.remove('btn-danger');
       btn.classList.add('btn-success');
       
-      // Auto-download backlink report
-      downloadBacklinkReport();
+      // Auto-generate backlink report
+      setTimeout(() => {
+        downloadBacklinkReport();
+      }, 2000);
       
       document.getElementById('backlinkSection').scrollIntoView({ behavior: 'smooth' });
     }
@@ -456,7 +470,7 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
     function copyBacklinkResults() {
       const text = document.getElementById('backlinkResults').value;
       navigator.clipboard.writeText(text).then(() => {
-        showCopyFeedback('copyBacklinkBtn');
+        showCopyFeedback('copyResultsBtn');
       });
     }
 
@@ -502,19 +516,20 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
       
       const data = backlinkResults.map((result, index) => ({
         'الرقم': index + 1,
-        'اسم الأداة': result.generator,
-        'الحالة': result.status,
-        'رابط النتيجة': result.resultUrl || 'لا يوجد',
+        'اسم الموقع': result.site,
+        'وصف الموقع': result.description,
         'رابط الإرسال': result.url,
-        'الرابط المرسل': processedResults[0]?.prettyUrl || '',
-        'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG')
+        'الحالة': result.status,
+        'الرابط المراد نشره': processedResults[0]?.prettyUrl || '',
+        'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG'),
+        'ملاحظات': result.status === 'مفتوح' ? 'اضغط Submit في التبويب' : 'منع المتصفح فتح التبويب'
       }));
       
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'تقرير الباك لينك التلقائي');
+      XLSX.utils.book_append_sheet(wb, ws, 'تقرير الباك لينك المنظم');
       
-      const filename = `auto-backlink-report-${new Date().toISOString().split('T')[0]}.xlsx`;
+      const filename = `organized-backlink-report-${new Date().toISOString().split('T')[0]}.xlsx`;
       XLSX.writeFile(wb, filename);
     }
 
@@ -529,8 +544,9 @@ https://example.com/products/special-offer?utm_source=facebook"></textarea>
     
     document.getElementById('processBtn').onclick = processUrls;
     document.getElementById('cleanBtn').onclick = cleanUrls;
-    document.getElementById('backlinkBtn').onclick = submitAutomaticBacklinks;
-    document.getElementById('copyBacklinkBtn').onclick = copyBacklinkResults;
+    document.getElementById('backlinkBtn').onclick = openBacklinkSites;
+    document.getElementById('copyResultsBtn').onclick = copyBacklinkResults;
+    document.getElementById('downloadBacklinkBtn').onclick = downloadBacklinkReport;
     document.getElementById('copyShortBtn').onclick = copyAllShort;
     document.getElementById('copyPrettyBtn').onclick = copyAllPretty;
     document.getElementById('downloadBtn').onclick = downloadXLSX;
