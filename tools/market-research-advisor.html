@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الذكاء الاصطناعي التسويقي مع تحكم يدوي</title>
+  <title>الذكاء الاصطناعي التسويقي مع التحكم اليدوي</title>
   <link rel="icon" href="../favicon.svg">
   <link rel="stylesheet" href="../global-styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,23 +14,29 @@
     .container{max-width:1200px;margin:0 auto;padding:20px}
     .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:25px;margin:20px 0;box-shadow:0 4px 16px rgba(0,0,0,.08)}
     .ai-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center;border:none}
-    .input-simple,.manual-input{width:100%;padding:18px 20px;border:3px solid #e5e7eb;border-radius:16px;font-family:inherit;font-size:1.2rem;font-weight:600;text-align:center;transition:all 0.3s}
-    .input-simple:focus,.manual-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.15);transform:scale(1.02)}
+    .manual-input{width:100%;padding:13px;border:2px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:1rem;transition:border 0.2s}
+    .manual-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+    .manual-select{width:100%;padding:13px;border:2px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:1rem}
+    .manual-label{font-weight:700;margin-bottom:7px;display:block;color:#374151}
+    .manual-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:25px 0}
+    .platform-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:15px 0}
+    .platform-btn{padding:12px 18px;border:2px solid #e5e7eb;background:#f9fafb;color:#374151;border-radius:25px;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all 0.3s}
+    .platform-btn.active{background:#3b82f6;color:white;border-color:#3b82f6;transform:translateY(-2px);box-shadow:0 4px 12px rgba(59,130,246,0.3)}
+    .platform-btn:hover{background:#f3f4f6;border-color:#d1d5db;transform:translateY(-1px)}
     .btn-ai{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:30px;padding:16px 32px;cursor:pointer;font-weight:800;font-size:1.3rem;transition:all 0.4s;box-shadow:0 8px 25px rgba(102,126,234,0.3)}
     .btn-ai:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 12px 35px rgba(102,126,234,0.5)}
-    .switcher{display:flex;gap:8px;justify-content:center;align-items:center;margin:20px 0}
-    .switch-btn{padding:10px 24px;font-weight:700;font-size:1rem;border:none;cursor:pointer;border-radius:10px;transition:all 0.2s}
-    .switch-btn.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
-    .manual-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin:25px 0}
-    .manual-label{font-weight:700;margin-bottom:7px;display:block}
-    .manual-select,.manual-input{width:100%;padding:13px 13px;font-size:1rem;margin-bottom:5px;border-radius:9px;border:2px solid #e5e7eb;transition:border 0.2s;min-width:0}
-    .manual-select:focus,.manual-input:focus{border-color:#6366f1}
     .pill{display:inline-block;padding:8px 14px;border-radius:20px;margin:4px;font-size:0.9rem;font-weight:600;border:2px solid;transition:all 0.2s}
     .pill-ai{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
     .pill-expert{background:#dcfce7;color:#166534;border-color:#86efac}
     .pill-premium{background:#fef3c7;color:#92400e;border-color:#fcd34d}
+    .pill-negative{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
     .auto-stats{background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:15px;margin:15px 0;text-align:center;color:#475569;font-weight:600}
-    @media(max-width:768px){.container{padding:15px}.card{padding:18px;margin:15px 0}}
+    .download-zone{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+    .btn-download{background:#059669;color:white;border:none;border-radius:25px;padding:12px 24px;font-weight:700;cursor:pointer;transition:all 0.3s}
+    .btn-download:hover{background:#047857;transform:translateY(-2px)}
+    .btn-copy{background:#64748b;color:white;border:none;border-radius:25px;padding:12px 24px;font-weight:700;cursor:pointer;transition:all 0.3s}
+    .btn-copy:hover{background:#475569;transform:translateY(-2px)}
+    @media(max-width:768px){.container{padding:15px}.card{padding:18px;margin:15px 0}.manual-form{grid-template-columns:1fr}.platform-buttons{justify-content:center}}
   </style>
 </head>
 <body>
@@ -40,45 +46,114 @@
   </nav>
 
   <div class="container">
-    <div class="switcher">
-      <button id="aiModeBtn" class="switch-btn">تلقائي بالكامل 🤖</button>
-      <button id="manualModeBtn" class="switch-btn active">تحكم يدوي ✍️</button>
+    <div class="card ai-card">
+      <h1>🤖 الذكاء الاصطناعي التسويقي مع التحكم اليدوي</h1>
+      <p style="font-size:1.1rem;opacity:0.95;margin:15px 0">حدد اعداداتك بنفسك، والذكاء الاصطناعي يولد لك كلمات واستراتيجية احترافية</p>
     </div>
 
-    <div id="aiSection" style="display:none">
-      <div class="card ai-card">
-        <h1>🤖 الذكاء الاصطناعي التسويقي</h1>
-        <p>ادخل المجال أو الخدمة فقط، الذكاء الاصطناعي يولّد لك كل شيء تلقائياً (دولة، لهجة، منصات، ميزانية، كلمات، استراتيجية).</p>
-      </div>
-      <div class="card">
-        <input id="aiInput" class="input-simple" placeholder="اكتب المجال أو الخدمة..." />
-        <div style="text-align:center;margin-top:20px"><button id="aiGenerate" class="btn-ai">🚀 توليد تلقائي</button></div>
-      </div>
-    </div>
-    <div id="manualSection">
-      <div class="card ai-card"><h2>🛠️ التحكم اليدوي الكامل</h2>
-        <p>حدد اعداداتك بنفسك ثم اضغط توليد - الذكاء يظل فعّال في النتائج!</p>
-      </div>
-      <div class="card">
-        <form id="manualForm">
-          <div class="manual-form">
-            <div><label class="manual-label" for="manualField">المجال / الخدمة</label><input id="manualField" class="manual-input" placeholder="مثال: نقل اثاث، ميديا باير..." required></div>
-            <div><label class="manual-label" for="manualCountry">الدولة</label><select id="manualCountry" class="manual-select">
-            <option>السعودية</option><option>الإمارات</option><option>مصر</option><option>الكويت</option><option>قطر</option><option>البحرين</option><option>عُمان</option><option>الأردن</option><option>لبنان</option><option>المغرب</option><option>تونس</option><option>الجزائر</option></select></div>
-            <div><label class="manual-label" for="manualDialect">اللهجة</label><select id="manualDialect" class="manual-select"><option value="classical">العربية الفصحى</option><option value="local">لهجة الدولة</option></select></div>
-            <div><label class="manual-label" for="manualPlatforms">المنصات</label><select id="manualPlatforms" class="manual-select" multiple>
-              <option>Google Ads</option><option>Facebook</option><option>Instagram</option><option>TikTok</option><option>YouTube</option><option>Snapchat</option><option>LinkedIn</option>
-            </select></div>
-            <div><label class="manual-label" for="manualBudget">الميزانية الشهرية</label><input type="number" id="manualBudget" class="manual-input" min="1" max="10000000" placeholder="اكتب أي رقم" required></div>
-            <div><label class="manual-label" for="manualMatchType">نوع المطابقة</label><select id="manualMatchType" class="manual-select"><option value="mixed">مزيج (موصى)</option><option value="phrase">مطابقة العبارة</option><option value="broad">مطابقة واسعة</option><option value="exact">مطابقة تامة</option></select></div>
-            <div><label class="manual-label" for="manualExpansion">مستوى التوسع</label><select id="manualExpansion" class="manual-select"><option value="moderate">متوسط</option><option value="conservative">محافظ</option><option value="aggressive">توسعي</option></select></div>
+    <div class="card">
+      <h2>🛠️ اعداداتك (تحكم كامل)</h2>
+      <form id="manualForm">
+        <div class="manual-form">
+          <div>
+            <label class="manual-label">المجال / الخدمة</label>
+            <input id="field" class="manual-input" placeholder="مثال: ميديا باير، دكتور نسا، نقل اثاث..." required>
           </div>
-          <div style="text-align:center;margin-top:15px"><button type="submit" class="btn-ai">🚀 توليد يدوي ذكي</button></div>
-        </form>
+          <div>
+            <label class="manual-label">الدولة</label>
+            <select id="country" class="manual-select">
+              <option>السعودية</option><option>الإمارات</option><option>مصر</option><option>الكويت</option><option>قطر</option><option>البحرين</option><option>عُمان</option><option>الأردن</option><option>لبنان</option><option>المغرب</option><option>تونس</option><option>الجزائر</option>
+            </select>
+          </div>
+          <div>
+            <label class="manual-label">اللهجة</label>
+            <select id="dialect" class="manual-select">
+              <option value="classical">العربية الفصحى</option>
+              <option value="local">لهجة الدولة</option>
+            </select>
+          </div>
+          <div>
+            <label class="manual-label">الميزانية الشهرية</label>
+            <input type="number" id="budget" class="manual-input" min="1" max="10000000" placeholder="اكتب أي رقم (1 إلى 10 مليون)" required>
+          </div>
+          <div>
+            <label class="manual-label">نوع المطابقة</label>
+            <select id="matchType" class="manual-select">
+              <option value="mixed">مزيج (موصى)</option>
+              <option value="phrase">مطابقة العبارة</option>
+              <option value="broad">مطابقة واسعة</option>
+              <option value="exact">مطابقة تامة</option>
+            </select>
+          </div>
+          <div>
+            <label class="manual-label">مستوى التوسع</label>
+            <select id="expansion" class="manual-select">
+              <option value="moderate">متوسط (50-80 كلمة)</option>
+              <option value="conservative">محافظ (30-40 كلمة)</option>
+              <option value="aggressive">توسعي (100+ كلمة)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div>
+          <label class="manual-label">اختر المنصات (يمكن اختيار متعددة)</label>
+          <div class="platform-buttons">
+            <button type="button" class="platform-btn" data-platform="Google Ads">📍 Google Ads</button>
+            <button type="button" class="platform-btn" data-platform="Facebook">📘 Facebook</button>
+            <button type="button" class="platform-btn active" data-platform="Instagram">📸 Instagram</button>
+            <button type="button" class="platform-btn" data-platform="TikTok">🎵 TikTok</button>
+            <button type="button" class="platform-btn" data-platform="YouTube">📺 YouTube</button>
+            <button type="button" class="platform-btn" data-platform="Snapchat">👻 Snapchat</button>
+            <button type="button" class="platform-btn" data-platform="LinkedIn">💼 LinkedIn</button>
+          </div>
+          <p style="text-align:center;color:#6b7280;font-size:0.9rem;margin-top:10px">
+            منصات مختارة: <span id="selectedPlatforms">Instagram</span>
+          </p>
+        </div>
+
+        <div style="text-align:center;margin-top:25px">
+          <button type="submit" class="btn-ai">🚀 توليد ذكي بالاعدادات المحددة</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="results" style="display:none">
+      <!-- بطاقة الاستراتيجية -->
+      <div class="card" style="background:#f0f9ff;border-color:#3b82f6">
+        <h2>🎯 الاستراتيجية المولدة</h2>
+        <div id="strategyContent"></div>
+      </div>
+
+      <!-- الكلمات الذكية -->
+      <div class="card">
+        <h2>🔑 الكلمات الذكية</h2>
+        <div id="keywordsContent"></div>
+        <div class="auto-stats" id="keywordStats"></div>
+      </div>
+
+      <!-- الكلمات السلبية -->
+      <div class="card" id="negativeSection" style="display:none">
+        <h2>🚫 الكلمات السلبية</h2>
+        <div id="negativesContent"></div>
+      </div>
+
+      <!-- التوزيع والتوقعات -->
+      <div class="card">
+        <h2>💰 التوزيع والتوقعات</h2>
+        <div id="forecastsContent"></div>
+      </div>
+
+      <!-- التصدير -->
+      <div class="card">
+        <h2>📥 التصدير</h2>
+        <div class="download-zone">
+          <button id="copyKeywords" class="btn-copy">📋 نسخ الكلمات</button>
+          <button id="copyNegatives" class="btn-copy">🚫 نسخ السلبية</button>
+          <button id="exportXLSX" class="btn-download">📊 تنزيل XLSX</button>
+          <button id="exportProfile" class="btn-download">🎯 بروفايل المجال</button>
+        </div>
       </div>
     </div>
-    <div id="outManual" style="display:none"></div>
-    <div id="outAI" style="display:none"></div>
   </div>
 
   <footer style="background:var(--gradient);color:white;margin-top:40px;padding:25px 15px;text-align:center;border-radius:20px 20px 0 0">
@@ -89,7 +164,498 @@
     </div>
     <small style="opacity:0.9">© 2025 الذكاء الاصطناعي التسويقي - يدوي + تلقائي</small>
   </footer>
+
   <script src="../assets/js/xlsx.full.min.js"></script>
-  <!-- سيتم تضمين السكريبت الذكي وخوارزمية التوليد هنا بعد الدفع الكامل للنشر -->
+  <script>
+    // قواعد البيانات الذكية
+    const BENCHMARKS = {
+      'السعودية': {currency:'SAR', cpm:{'Google Ads':2.2,Facebook:1.8,Instagram:2.0,Snapchat:3.1,TikTok:2.5,YouTube:1.6,LinkedIn:4.8}},
+      'الإمارات': {currency:'AED', cpm:{'Google Ads':2.8,Facebook:2.1,Instagram:2.3,LinkedIn:4.2,YouTube:1.9,TikTok:2.7,Snapchat:3.3}},
+      'مصر': {currency:'EGP', cpm:{Facebook:0.4,'Google Ads':0.6,Instagram:0.5,TikTok:0.7,YouTube:0.3,Snapchat:0.8,LinkedIn:1.2}},
+      'الكويت': {currency:'KWD', cpm:{'Google Ads':1.9,Facebook:1.5,Instagram:1.7,Snapchat:2.8,TikTok:2.1,YouTube:1.4,LinkedIn:3.8}},
+      'قطر': {currency:'QAR', cpm:{'Google Ads':3.1,Facebook:2.3,Instagram:2.6,YouTube:2.0,TikTok:2.8,Snapchat:3.5,LinkedIn:5.1}},
+      'البحرين': {currency:'BHD', cpm:{'Google Ads':1.8,Facebook:1.4,Instagram:1.6,TikTok:1.9,YouTube:1.2,Snapchat:2.3,LinkedIn:3.2}},
+      'عُمان': {currency:'OMR', cpm:{'Google Ads':2.0,Facebook:1.6,Instagram:1.8,TikTok:2.2,YouTube:1.5,Snapchat:2.6,LinkedIn:3.6}},
+      'الأردن': {currency:'JOD', cpm:{Facebook:1.2,'Google Ads':1.6,Instagram:1.4,TikTok:1.5,YouTube:1.0,Snapchat:1.8,LinkedIn:2.4}},
+      'لبنان': {currency:'LBP', cpm:{Facebook:0.8,'Google Ads':1.1,Instagram:0.9,TikTok:1.0,YouTube:0.7,Snapchat:1.2,LinkedIn:1.8}},
+      'المغرب': {currency:'MAD', cpm:{Facebook:0.6,'Google Ads':0.9,Instagram:0.7,TikTok:0.8,YouTube:0.5,Snapchat:1.0,LinkedIn:1.5}},
+      'تونس': {currency:'TND', cpm:{Facebook:0.5,'Google Ads':0.8,Instagram:0.6,TikTok:0.7,YouTube:0.4,Snapchat:0.9,LinkedIn:1.3}},
+      'الجزائر': {currency:'DZD', cpm:{Facebook:0.3,'Google Ads':0.5,Instagram:0.4,TikTok:0.5,YouTube:0.2,Snapchat:0.6,LinkedIn:0.9}}
+    };
+
+    // قاعدة البيانات الذكية للمجالات
+    const SMART_FIELDS = {
+      'ميديا باير': {
+        synonyms: ['اعلانات ممولة', 'مدير حملات', 'ادس باير', 'مشتري إعلانات'],
+        smart_keywords: [
+          'ادارة حملات اعلانية ممولة احترافية',
+          'خدمات Google Ads لزيادة ROAS',
+          'ادارة Facebook وInstagram Ads',
+          'تحسين حملات TikTok للشركات', 
+          'خدمات YouTube Ads',
+          'تحسين ROAS والعائد على الاستثمار',
+          'استهداف جمهور دقيق ومتقدم',
+          'تصميم اعلانات احترافية',
+          'تتبع وتحليل الحملات',
+          'استراتيجيات الاعلان المدفوع'
+        ],
+        negatives: ['وظائف ميديا', 'تعليم اعلانات', 'دورات مجانية', 'اعلانات مجانية', 'صور اعلانات', 'برامج اعلانات']
+      },
+      'دكتور نساء': {
+        synonyms: ['طبيب نسا', 'دكتور ولادة', 'طبيب نساء', 'نساء وتوليد'],
+        smart_keywords: [
+          'افضل دكتور نساء وتوليد قريب مني',
+          'حجز موعد دكتور نسا',
+          'اسعار متابعة الحمل الكاملة',
+          'دكتور ولادة 24 ساعة للطوارئ',
+          'عيادة نساء وتوليد بالتأمين',
+          'فحص الموجات الصوتية 4D',
+          'علاج تأخر الحمل والانجاب',
+          'منظار رحمي تشخيصي',
+          'متابعة صحة المرأة الانجابية',
+          'رعاية ما بعد الولادة'
+        ],
+        negatives: ['وظائف طب', 'دراسة طب', 'كتب طب', 'صور طبية', 'جامعة طب', 'تخصص طب']
+      },
+      'نقل اثاث': {
+        synonyms: ['نقل عفش', 'ترحيل اثاث', 'شحن اثاث', 'نقل موبيليا'],
+        smart_keywords: [
+          'اسعار نقل عفش بالرياض',
+          'افضل شركة نقل اثاث مع التأمين',
+          'رافعة نقل اثاث للطوابق العالية',
+          'نقل عفش فوري نفس اليوم',
+          'تغليف اثاث احترافي',
+          'شركة نقل اثاث مضمونة',
+          'تخزين اثاث مؤقت وآمن',
+          'فك وتركيب الاثاث المعقد'
+        ],
+        negatives: ['وظائف نقل', 'توظيف سائقين', 'نقل مجاني', 'صور اثاث', 'اثاث للبيع', 'بيع عفش مستعمل']
+      }
+    };
+
+    let selectedPlatforms = ['Instagram'];
+    let currentKeywords = [];
+    let currentNegatives = [];
+    let currentData = {};
+
+    // تفعيل أزرار المنصات
+    document.addEventListener('DOMContentLoaded', () => {
+      const platformBtns = document.querySelectorAll('.platform-btn');
+      const selectedSpan = document.getElementById('selectedPlatforms');
+
+      platformBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const platform = btn.dataset.platform;
+          
+          if (btn.classList.contains('active')) {
+            btn.classList.remove('active');
+            selectedPlatforms = selectedPlatforms.filter(p => p !== platform);
+          } else {
+            btn.classList.add('active');
+            if (!selectedPlatforms.includes(platform)) {
+              selectedPlatforms.push(platform);
+            }
+          }
+          
+          selectedSpan.textContent = selectedPlatforms.length > 0 ? selectedPlatforms.join(' • ') : 'لم يتم اختيار أي منصة';
+        });
+      });
+
+      // تفعيل النموذج
+      document.getElementById('manualForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        generateResults();
+      });
+
+      // تفعيل أزرار التصدير
+      document.getElementById('copyKeywords').addEventListener('click', copyKeywords);
+      document.getElementById('copyNegatives').addEventListener('click', copyNegatives);
+      document.getElementById('exportXLSX').addEventListener('click', exportXLSX);
+      document.getElementById('exportProfile').addEventListener('click', exportProfile);
+    });
+
+    function generateResults() {
+      const field = document.getElementById('field').value.trim();
+      const country = document.getElementById('country').value;
+      const dialect = document.getElementById('dialect').value;
+      const budget = parseInt(document.getElementById('budget').value);
+      const matchType = document.getElementById('matchType').value;
+      const expansion = document.getElementById('expansion').value;
+
+      if (!field || !budget || selectedPlatforms.length === 0) {
+        alert('من فضلك املا جميع الحقول واختر منصة واحدة على الأقل');
+        return;
+      }
+
+      currentData = { field, country, dialect, budget, matchType, expansion, platforms: [...selectedPlatforms] };
+
+      // توليد الكلمات الذكية
+      currentKeywords = generateSmartKeywords(field, country, dialect, expansion);
+      currentNegatives = generateSmartNegatives(field);
+
+      // عرض الاستراتيجية
+      displayStrategy(currentData);
+      
+      // عرض الكلمات
+      displayKeywords(currentKeywords, matchType);
+      
+      // عرض السلبية
+      displayNegatives(currentNegatives);
+      
+      // عرض التوقعات
+      displayForecasts(currentData);
+
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({behavior: 'smooth'});
+    }
+
+    function generateSmartKeywords(field, country, dialect, expansion) {
+      const fieldLower = field.toLowerCase();
+      let keywords = [];
+
+      // البحث في قاعدة البيانات الذكية
+      Object.entries(SMART_FIELDS).forEach(([key, data]) => {
+        const match = data.synonyms.some(syn => fieldLower.includes(syn.toLowerCase())) || fieldLower.includes(key.toLowerCase());
+        if (match) {
+          keywords.push(...data.smart_keywords);
+        }
+      });
+
+      // إضافة كلمات أساسية إذا لم توجد في القاعدة
+      if (keywords.length === 0) {
+        keywords = [
+          `افضل ${field} قريب مني`,
+          `اسعار ${field}`,
+          `حجز ${field}`,
+          `رقم ${field}`,
+          `خدمات ${field} احترافية`,
+          `${field} مضمون`,
+          `عروض ${field}`,
+          `${field} 24 ساعة`
+        ];
+      }
+
+      // إضافة كلمات جغرافية
+      const cities = {
+        'السعودية': ['الرياض', 'جدة', 'الدمام'],
+        'الإمارات': ['دبي', 'أبوظبي', 'الشارقة'],
+        'مصر': ['القاهرة', 'الإسكندرية', 'الجيزة'],
+        'الكويت': ['الكويت', 'حولي', 'الأحمدي']
+      };
+
+      if (cities[country]) {
+        cities[country].forEach(city => {
+          keywords.push(`${field} في ${city}`);
+          keywords.push(`افضل ${field} ${city}`);
+        });
+      }
+
+      // تطبيق مستوى التوسع
+      if (expansion === 'conservative') {
+        keywords = keywords.slice(0, 30);
+      } else if (expansion === 'aggressive') {
+        // إضافة كلمات إضافية
+        keywords.push(`${field} رخيص`, `${field} جودة عالية`, `${field} سريع`, `${field} مجاني التقدير`);
+      }
+
+      // إزالة التكرار وترتيب
+      return [...new Set(keywords)].slice(0, expansion === 'aggressive' ? 100 : expansion === 'moderate' ? 60 : 30);
+    }
+
+    function generateSmartNegatives(field) {
+      const fieldLower = field.toLowerCase();
+      let negatives = ['وظائف', 'مجاني', 'تعليم', 'دورات', 'صور', 'فيديو'];
+
+      // إضافة سلبية خاصة بالمجال
+      Object.entries(SMART_FIELDS).forEach(([key, data]) => {
+        const match = data.synonyms.some(syn => fieldLower.includes(syn.toLowerCase())) || fieldLower.includes(key.toLowerCase());
+        if (match && data.negatives) {
+          negatives.push(...data.negatives);
+        }
+      });
+
+      return [...new Set(negatives)];
+    }
+
+    function displayStrategy(data) {
+      const strategyDiv = document.getElementById('strategyContent');
+      const countryData = BENCHMARKS[data.country] || BENCHMARKS['السعودية'];
+      
+      strategyDiv.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin:20px 0">
+          <div style="background:#f0f9ff;padding:15px;border-radius:10px;border-left:4px solid #3b82f6">
+            <strong>🎯 المجال</strong><br>${data.field}
+          </div>
+          <div style="background:#f0fdf4;padding:15px;border-radius:10px;border-left:4px solid #22c55e">
+            <strong>🌍 الدولة</strong><br>${data.country} (${countryData.currency})
+          </div>
+          <div style="background:#fef3c7;padding:15px;border-radius:10px;border-left:4px solid #f59e0b">
+            <strong>💰 الميزانية</strong><br>${data.budget.toLocaleString()} ${countryData.currency}
+          </div>
+          <div style="background:#fdf2f8;padding:15px;border-radius:10px;border-left:4px solid #ec4899">
+            <strong>📱 المنصات</strong><br>${data.platforms.join(' • ')}
+          </div>
+        </div>
+        <div style="background:#f8fafc;padding:15px;border-radius:10px;margin-top:15px">
+          <strong>🧠 الاستراتيجية الذكية:</strong> تم تحليل "${data.field}" وتحديد أفضل استراتيجية حسب اختياراتك مع ${data.platforms.length} منصة في ${data.country}
+        </div>
+      `;
+    }
+
+    function displayKeywords(keywords, matchType) {
+      const keywordsDiv = document.getElementById('keywordsContent');
+      keywordsDiv.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>';
+      const container = keywordsDiv.firstElementChild;
+
+      keywords.forEach((keyword, i) => {
+        const pill = document.createElement('span');
+        pill.textContent = keyword;
+        pill.className = i < 20 ? 'pill pill-ai' : i < 40 ? 'pill pill-expert' : 'pill pill-premium';
+        container.appendChild(pill);
+      });
+
+      document.getElementById('keywordStats').innerHTML = `
+        🔑 <strong>${keywords.length}</strong> كلمة ذكية • 
+        🎯 نوع المطابقة: <strong>${matchType === 'mixed' ? 'مزيج' : matchType === 'phrase' ? 'عبارة' : matchType === 'broad' ? 'واسعة' : 'تامة'}</strong> • 
+        ⚡ مولدة حسب اختياراتك
+      `;
+    }
+
+    function displayNegatives(negatives) {
+      const negativesDiv = document.getElementById('negativesContent');
+      negativesDiv.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>';
+      const container = negativesDiv.firstElementChild;
+
+      negatives.forEach(negative => {
+        const pill = document.createElement('span');
+        pill.textContent = `-${negative}`;
+        pill.className = 'pill pill-negative';
+        container.appendChild(pill);
+      });
+
+      document.getElementById('negativeSection').style.display = 'block';
+    }
+
+    function displayForecasts(data) {
+      const forecastsDiv = document.getElementById('forecastsContent');
+      const countryData = BENCHMARKS[data.country] || BENCHMARKS['السعودية'];
+      const budgetPerPlatform = data.budget / data.platforms.length;
+
+      let totalImpressions = 0, totalClicks = 0, totalConversions = 0;
+
+      let content = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;text-align:center">';
+
+      data.platforms.forEach(platform => {
+        const cpm = countryData.cpm[platform] || 2;
+        const impressions = Math.round((budgetPerPlatform / cpm) * 1000);
+        const clicks = Math.round(impressions * 0.015);
+        const conversions = Math.round(clicks * 0.025);
+
+        totalImpressions += impressions;
+        totalClicks += clicks;
+        totalConversions += conversions;
+
+        content += `
+          <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb">
+            <div style="font-weight:800;color:#1e40af;margin-bottom:5px">${platform}</div>
+            <div style="font-size:0.85rem;color:#64748b">
+              CPM: $${cpm.toFixed(2)}<br>
+              ميزانية: ${Math.round(budgetPerPlatform).toLocaleString()} ${countryData.currency}<br>
+              ظهور: ${impressions.toLocaleString()}<br>
+              نقرات: ${clicks.toLocaleString()}<br>
+              تحويلات: ${conversions.toLocaleString()}
+            </div>
+          </div>
+        `;
+      });
+
+      content += `
+        <div style="background:#eff6ff;padding:15px;border-radius:10px;border:2px solid #3b82f6;grid-column:1/-1">
+          <div style="font-weight:800;color:#1e40af;font-size:1.1rem">الإجمالي المتوقع</div>
+          <div style="margin-top:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+            <div><strong>ظهور:</strong> ${totalImpressions.toLocaleString()}</div>
+            <div><strong>نقرات:</strong> ${totalClicks.toLocaleString()}</div>
+            <div><strong>تحويلات:</strong> ${totalConversions.toLocaleString()}</div>
+            <div><strong>ROAS متوقع:</strong> 3.2x - 5.8x</div>
+          </div>
+        </div>
+      </div>`;
+
+      forecastsDiv.innerHTML = content;
+    }
+
+    function copyKeywords() {
+      if (currentKeywords.length === 0) {
+        alert('لا توجد كلمات لنسخها');
+        return;
+      }
+      
+      navigator.clipboard.writeText(currentKeywords.join('\\n')).then(() => {
+        alert(`✅ تم نسخ ${currentKeywords.length} كلمة`);
+      }).catch(() => {
+        alert('فشل النسخ - جرب مرة أخرى');
+      });
+    }
+
+    function copyNegatives() {
+      if (currentNegatives.length === 0) {
+        alert('لا توجد كلمات سلبية لنسخها');
+        return;
+      }
+      
+      const negativesList = currentNegatives.map(n => `-${n}`);
+      navigator.clipboard.writeText(negativesList.join('\\n')).then(() => {
+        alert(`✅ تم نسخ ${currentNegatives.length} كلمة سلبية`);
+      }).catch(() => {
+        alert('فشل النسخ - جرب مرة أخرى');
+      });
+    }
+
+    function exportXLSX() {
+      if (!window.XLSX || typeof XLSX.writeFile !== 'function') {
+        exportCSV();
+        return;
+      }
+
+      try {
+        const wb = XLSX.utils.book_new();
+        const now = new Date();
+        const countryData = BENCHMARKS[currentData.country] || BENCHMARKS['السعودية'];
+
+        // ورقة الملخص
+        const summaryData = [
+          ['🎯 ملخص الحملة (يدوي)', ''],
+          ['', ''],
+          ['المجال', currentData.field],
+          ['الدولة', currentData.country],
+          ['العملة', countryData.currency],
+          ['اللهجة', currentData.dialect === 'classical' ? 'العربية الفصحى' : `لهجة ${currentData.country}`],
+          ['الميزانية الإجمالية', `${currentData.budget} ${countryData.currency}`],
+          ['نوع المطابقة', currentData.matchType],
+          ['مستوى التوسع', currentData.expansion],
+          ['المنصات المختارة', currentData.platforms.join(' • ')],
+          ['تاريخ التوليد', now.toLocaleDateString('ar-SA')],
+          ['وقت التوليد', now.toLocaleTimeString('ar-SA')],
+          ['', ''],
+          ['إجمالي الكلمات', currentKeywords.length],
+          ['إجمالي السلبية', currentNegatives.length],
+          ['طريقة التوليد', 'تحكم يدوي + ذكاء اصطناعي']
+        ];
+
+        const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+        XLSX.utils.book_append_sheet(wb, wsSummary, 'ملخص الحملة');
+
+        // ورقة الكلمات
+        const keywordRows = [['الكلمة', 'نوع المطابقة', 'الأولوية', 'المصدر']];
+        currentKeywords.forEach((kw, i) => {
+          const priority = i < 20 ? 'عالية' : i < 40 ? 'متوسطة' : 'منخفضة';
+          keywordRows.push([kw, currentData.matchType, priority, 'ذكاء اصطناعي']);
+        });
+
+        const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
+        XLSX.utils.book_append_sheet(wb, wsKeywords, 'الكلمات الذكية');
+
+        // ورقة السلبية
+        const negativeRows = [['الكلمة السلبية', 'السبب', 'الأولوية']];
+        currentNegatives.forEach(neg => {
+          negativeRows.push([neg, 'تقليل الهدر', 'عالية']);
+        });
+
+        const wsNegatives = XLSX.utils.aoa_to_sheet(negativeRows);
+        XLSX.utils.book_append_sheet(wb, wsNegatives, 'الكلمات السلبية');
+
+        // ورقة الاستراتيجية
+        const strategyRows = [['المنصة', 'نوع الإعلان المقترح', 'الهدف', 'الميزانية المخصصة', 'CPM المتوقع']];
+        const budgetPerPlatform = currentData.budget / currentData.platforms.length;
+
+        currentData.platforms.forEach(platform => {
+          const cpm = countryData.cpm[platform] || 2;
+          let adType = 'إعلان عام', goal = 'زيادة الوعي';
+          
+          if (platform === 'Google Ads') {
+            adType = 'بحث محلي + خرائط';
+            goal = 'تحويلات مباشرة';
+          } else if (platform === 'Facebook') {
+            adType = 'Lead Generation';
+            goal = 'توليد عملاء محتملين';
+          } else if (platform === 'Instagram') {
+            adType = 'Reels + Stories';
+            goal = 'زيادة الوعي والتفاعل';
+          } else if (platform === 'TikTok') {
+            adType = 'Video Ads';
+            goal = 'الوصول للجيل الجديد';
+          } else if (platform === 'YouTube') {
+            adType = 'In-Stream';
+            goal = 'شرح وتوعية';
+          }
+
+          strategyRows.push([platform, adType, goal, `${Math.round(budgetPerPlatform)} ${countryData.currency}`, `$${cmp.toFixed(2)}`]);
+        });
+
+        const wsStrategy = XLSX.utils.aoa_to_sheet(strategyRows);
+        XLSX.utils.book_append_sheet(wb, wsStrategy, 'استراتيجية الإعلانات');
+
+        const fileName = `Manual-${currentData.field.replace(/\\s+/g,'-')}-${Date.now()}.xlsx`;
+        XLSX.writeFile(wb, fileName);
+
+        alert('✅ تم تنزيل ملف XLSX بنجاح!');
+
+      } catch (error) {
+        console.error('خطأ XLSX:', error);
+        exportCSV();
+      }
+    }
+
+    function exportCSV() {
+      const csvRows = ['الكلمة,نوع المطابقة,الأولوية,المصدر'];
+      currentKeywords.forEach((kw, i) => {
+        const priority = i < 20 ? 'عالية' : 'متوسطة';
+        csvRows.push(`${kw},${currentData.matchType},${priority},ذكي`);
+      });
+
+      const csvContent = '\\ufeff' + csvRows.join('\\n');
+      const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Manual-${currentData.field.replace(/\\s+/g,'-')}-${Date.now()}.csv`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      alert('✅ تم تنزيل ملف CSV!');
+    }
+
+    function exportProfile() {
+      const profileData = {
+        field: currentData.field,
+        country: currentData.country,
+        dialect: currentData.dialect,
+        platforms: currentData.platforms,
+        budget: currentData.budget,
+        keywords: currentKeywords,
+        negatives: currentNegatives,
+        generated_at: new Date().toISOString(),
+        mode: 'manual'
+      };
+
+      const blob = new Blob([JSON.stringify(profileData, null, 2)], {type: 'application/json'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Profile-${currentData.field.replace(/\\s+/g,'-')}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      alert('✅ تم تنزيل بروفايل المجال!');
+    }
+
+    // تأمين تحميل XLSX
+    (function ensureXLSX(){
+      if (!window.XLSX) {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    })();
+  </script>
 </body>
 </html>
