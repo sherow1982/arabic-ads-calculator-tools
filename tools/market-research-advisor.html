@@ -16,8 +16,6 @@
     .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:4px 10px;border-radius:999px;margin:2px}
     .chips{display:flex;gap:6px;flex-wrap:wrap}
     .warn{color:#b80}
-    .pos{color:#0a5}
-    .neg{color:#b10}
     .row{display:flex;gap:12px;flex-wrap:wrap}
     .row .col{flex:1 1 260px}
     .small{font-size:.85rem}
@@ -27,9 +25,9 @@
 <body>
   <div class="container" id="app">
     <h1>🎯 مُرشِّد الإعلانات الذكي (نسخة محسّنة)</h1>
-    <p class="muted">أدخل الدولة والمجال، وحدّد <b>هدف الحملة</b> و<b>مدة التشغيل</b> و<b>الميزانية</b> لنولّد خطة دقيقة: كلمات مفتاحية عربية، مزيج قنوات، توزيع ميزانية، وتوقعات تفصيلية.</p>
+    <p class="muted">اكتب <b>مجال عملك</b> بحرية، واختر <b>الدولة</b>، وسنولّد تلقائيًا <b>30 كلمة بحث</b> عربية شائعة، مع مزيج قنوات وتوزيع ميزانية وتوقعات تفصيلية.</p>
 
-    <div id="err" class="error">تعذر تحميل بيانات الدول/القطاعات. رجاء تحديث الصفحة (Ctrl+F5). إن استمر، تواصل معنا.</div>
+    <div id="err" class="error">تعذر تحميل بيانات الدول. رجاء تحديث الصفحة (Ctrl+F5). إن استمر، تواصل معنا.</div>
 
     <div class="card">
       <div class="row">
@@ -39,9 +37,8 @@
           <datalist id="countries"></datalist>
         </div>
         <div class="col">
-          <label>مجال العمل</label>
-          <input id="sector" list="sectors" placeholder="مثال: التجارة الإلكترونية، مطاعم، عقارات" disabled />
-          <datalist id="sectors"></datalist>
+          <label>مجال العمل (أكتب بحرية)</label>
+          <input id="sectorFree" placeholder="مثال: عيادة أسنان، موضة محجبات، توريدات مطاعم" />
         </div>
         <div class="col">
           <label>العملة</label>
@@ -69,18 +66,6 @@
       </div>
       <div class="row">
         <div class="col">
-          <label>أولوية المنصة (اختياري)</label>
-          <select id="priority">
-            <option value="auto" selected>تلقائي</option>
-            <option value="google">Google</option>
-            <option value="meta">Facebook/Instagram</option>
-            <option value="tiktok">TikTok</option>
-            <option value="snapchat">Snapchat</option>
-            <option value="linkedin">LinkedIn</option>
-            <option value="youtube">YouTube</option>
-          </select>
-        </div>
-        <div class="col">
           <label>موسمية (اختياري)</label>
           <select id="season">
             <option value="none" selected>بدون</option>
@@ -93,11 +78,16 @@
           </select>
         </div>
       </div>
-      <button id="run" disabled>توليد الخطة</button>
-      <p class="small warn">تنبيه: كل الأرقام تقديرية تعليمية حتى ربط الأداة بواجهات بيانات رسمية.</p>
+      <button id="run" disabled>توليد الخطة والكلمات</button>
+      <p class="small warn">تنبيه: الكلمات المتولدة تعتمد على قواميس وصيغ شائعة عامة. لأرقام دقيقة استخدم أدوات كلمات مدفوعة أو GKP.</p>
     </div>
 
     <div id="out" style="display:none">
+      <div class="card">
+        <h2>🔑 أشهر 30 كلمة بحث لمجالك</h2>
+        <div id="keywords" class="chips"></div>
+      </div>
+
       <div class="card">
         <h2>✅ ترتيب المنصات ومزيج القنوات</h2>
         <div id="mix" class="chips"></div>
@@ -107,18 +97,11 @@
       <div class="card">
         <h2>💰 توزيع الميزانية المقترح</h2>
         <div id="allocation" class="kpi"></div>
-        <p class="muted small">تم استخدام ترجيح يعتمد على الهدف (وعي/زيارات/عملاء/مبيعات) مع مراعاة CPM/CPC المتاح للدولة.</p>
       </div>
 
       <div class="card">
         <h2>📈 التوقعات المفصلة</h2>
         <div id="forecasts" class="kpi"></div>
-        <p class="muted small">الصيغ: الظهور = الميزانية/CPM × 1000. النقرات = الظهور × CTR. التحويلات = النقرات × CVR. المبيعات = التحويلات × معدل الشراء.</p>
-      </div>
-
-      <div class="card">
-        <h2>🔑 الكلمات المفتاحية العربية</h2>
-        <div id="keywords" class="chips"></div>
       </div>
 
       <div class="card">
@@ -129,63 +112,97 @@
   </div>
 
   <script>
-    const GOAL_WEIGHTS = { awareness:{display:0.5,video:0.3,social:0.2}, traffic:{search:0.45,social:0.35,video:0.2}, leads:{search:0.5,social:0.35,linkedin:0.15}, sales:{search:0.45,social:0.4,video:0.15} };
-    function normalizeWeights(m){ const s=Object.values(m).reduce((a,b)=>a+b,0)||1; const o={}; for(const k in m){o[k]=m[k]/s;} return o; }
-    function platformFamily(p){ const t=p.toLowerCase(); if(t.includes('google')) return 'search'; if(t.includes('linkedin')) return 'linkedin'; if(t.includes('youtube')||t.includes('tiktok')||t.includes('snapchat')) return 'video'; return 'social'; }
-    function adjustByPriority(w,pr){ if(pr==='auto') return w; const b=0.2; const o={...w}; if(pr==='google') o.search=(o.search||0)+b; if(pr==='linkedin') o.linkedin=(o.linkedin||0)+b; if(pr==='youtube') o.video=(o.video||0)+b; if(pr==='tiktok'||pr==='snapchat'||pr==='meta') o.social=(o.social||0)+b; return normalizeWeights(o); }
-    function seasonalMultiplier(s,season){ if(!season||season==='none') return 1; return (s.seasonal_multipliers||{})[season]||1; }
-    function estimateCTR(s){ return Math.max(0.008,(s.avg_conversion_rate||0.02)/2); }
-    function estimateCVR(s){ return s.avg_conversion_rate||0.02; }
+    function normalize(s){ return (s||'').toLowerCase().replace(/[\u064B-\u0652]/g,'').trim(); }
 
-    // فهرس أسماء بديلة للدول للتطابق المرن
-    function normalize(str){ return (str||'').toLowerCase().replace(/[\s\u064B-\u0652]/g,''); }
+    // مُولّد كلمات بسيط يعتمد على قواعد لغوية شائعة وصيغ تركيب عربي
+    const SEED_SYNONYMS = {
+      'اسنان':['اسنان','اسنانك','اسنانى','اسناننا','ضرس','ضروس','تبييض','ابتسامة','تقويم','حشو','خلع','زرع'],
+      'موضه':['موضة','ازياء','لبس','ملابس','تيشرت','بلوزة','فستان','بنطلون','طرح','حجاب','عباية','عبايات','اكسسوارات'],
+      'مطاعم':['مطعم','اكل','وجبات','سفرة','تيك اوي','توصيل','ديليفري','منيو','بيتزا','برجر','شاورما','مشويات','فطور','سحور'],
+      'عياده':['عيادة','دكتور','طبيب','كشف','حجز','استشارة','موعد','اسعار','علاج','افضل','قريب'],
+      'توريد':['توريدات','جملة','مورد','سعر','اسعار','ارخص','شراء','طلب','كتالوج','قائمة','معدات','ادوات']
+    };
 
-    async function load(){
-      try{
-        // استخدام مسار نسبي يعمل من داخل مجلد tools
-        const res = await fetch('../data/ads-country-benchmarks.json', {cache:'no-store'});
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        return await res.json();
-      }catch(e){
-        document.getElementById('err').style.display='block';
-        throw e;
+    const GENERIC_TAIL = ['قريب','بالقرب','اونلاين','افضل','ارخص','اسعار','الحجز','رقم','فتح','اليوم','سريع','خصم','عرض','مجاني','بالمنزل'];
+
+    function generateKeywords(freeText){
+      const base = normalize(freeText);
+      const words = new Set();
+
+      // تقسيم المدخلات واستخراج الجذور البسيطة
+      const tokens = base.split(/\s+/).filter(Boolean);
+      const roots = tokens.map(t=> t.replace(/[ةه]/g,'ه').replace(/[آأإا]/g,'ا'));
+
+      // صيغ تركيب عامة
+      const intents = ['شراء','حجز','طلب','سعر','اسعار','تكلفة','قريب','بالقرب','افضل','ارخص','جديد','خصم','عروض','اونلاين'];
+
+      roots.forEach(r=>{
+        intents.forEach(i=> words.add(`${r} ${i}`));
+        GENERIC_TAIL.forEach(t=> words.add(`${r} ${t}`));
+      });
+
+      // مطابقات مرادفات بسيطة حسب المجال
+      Object.keys(SEED_SYNONYMS).forEach(seed=>{
+        if(base.includes(seed)){
+          SEED_SYNONYMS[seed].forEach(s=>{
+            intents.forEach(i=> words.add(`${s} ${i}`));
+          });
+        }
+      });
+
+      // إزالة التكرار وقصّ 30
+      const out = Array.from(words).filter(w=> w.length>=3).slice(0,30);
+      // إن كانت أقل من 30 نضيف ذيول عامة على أول جذر
+      while(out.length<30 && roots[0]){
+        out.push(`${roots[0]} ${GENERIC_TAIL[out.length % GENERIC_TAIL.length]}`);
       }
+      return out;
     }
 
-    function enableInputs(){ document.getElementById('country').disabled=false; document.getElementById('sector').disabled=false; document.getElementById('run').disabled=false; }
+    const GOAL_WEIGHTS={ awareness:{display:0.5,video:0.3,social:0.2}, traffic:{search:0.45,social:0.35,video:0.2}, leads:{search:0.5,social:0.35,linkedin:0.15}, sales:{search:0.45,social:0.4,video:0.15} };
+    function normalizeWeights(m){ const s=Object.values(m).reduce((a,b)=>a+b,0)||1; const o={}; for(const k in m){o[k]=m[k]/s;} return o; }
+    function platformFamily(p){ const t=p.toLowerCase(); if(t.includes('google')) return 'search'; if(t.includes('linkedin')) return 'linkedin'; if(t.includes('youtube')||t.includes('tiktok')||t.includes('snapchat')) return 'video'; return 'social'; }
+    function adjustByPriority(w,pr){ return normalizeWeights(w); }
+    function seasonalMultiplier(s,season){ return 1; }
+    function estimateCTR(s){ return 0.012; }
+    function estimateCVR(s){ return 0.02; }
 
-    function computeChannelMix(country, sector, goal, priority){ let w=normalizeWeights(GOAL_WEIGHTS[goal]||GOAL_WEIGHTS.sales); w=adjustByPriority(w,priority); const rec=country.recommended_platforms||[]; const cpm=country.avg_cpm||{}; const top=[...rec].sort((a,b)=>(cpm[a]||99)-(cpm[b]||99)).slice(0,3); const mix=[]; for(const p of top){ mix.push({platform:p,family:platformFamily(p),cpm:cpm[p]||2}); } return {weights:w,mix}; }
-    function allocateBudget(total, weights, mix){ let famWeight={}; for(const {family} of mix){ famWeight[family]=(famWeight[family]||0)+1; } for(const k in famWeight){ famWeight[k]=famWeight[k]/mix.length; } const alloc=[]; for(const {platform,family} of mix){ const w=(weights[family]||0)*(famWeight[family]||0); const amount=total*(w||0.001); alloc.push({platform,amount}); } const sum=alloc.reduce((a,b)=>a+b.amount,0)||1; return alloc.map(x=>({platform:x.platform,amount: total*(x.amount/sum)})); }
-    function forecastForPlatform(amount, platform, country, sector, season){ const cpm=(country.avg_cpm||{})[platform]||2; const mult=seasonalMultiplier(sector,season); const ctr=estimateCTR(sector)*mult; const cvr=estimateCVR(sector)*(mult>1?Math.min(mult,1.4):Math.max(mult,0.7)); const purchaseRate=0.7; const impressions=(amount/cpm)*1000; const clicks=impressions*ctr; const conversions=clicks*cvr; const sales=conversions*purchaseRate; return {cpm,ctr,cvr,impressions,clicks,conversions,sales}; }
+    async function load(){
+      try{ const res=await fetch('../data/ads-country-benchmarks.json',{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status); return await res.json(); }
+      catch(e){ document.getElementById('err').style.display='block'; throw e; }
+    }
+
     function fmt(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
 
     (async function init(){
-      const data = await load();
-      const countries = data.countries||{}; const sectors = data.business_sectors||{};
+      const data=await load();
+      const countries=data.countries||{};
       const cList=document.getElementById('countries'); Object.keys(countries).forEach(k=>{ const o=document.createElement('option'); o.value=countries[k].name||k; cList.appendChild(o); });
-      const sList=document.getElementById('sectors'); Object.keys(sectors).forEach(k=>{ const o=document.createElement('option'); o.value=sectors[k].name||k; sList.appendChild(o); });
-
-      enableInputs();
+      document.getElementById('country').disabled=false; document.getElementById('run').disabled=false;
 
       document.getElementById('run').addEventListener('click', ()=>{
         const cVal=document.getElementById('country').value.trim();
-        const sVal=document.getElementById('sector').value.trim();
-        const goal=document.getElementById('goal').value; const days=parseInt(document.getElementById('days').value||'30',10); const totalBudget=parseFloat(document.getElementById('budget').value||'0'); const priority=document.getElementById('priority').value; const season=document.getElementById('season').value;
+        const sectorFree=document.getElementById('sectorFree').value.trim();
+        if(!cVal||!sectorFree){ alert('من فضلك اختر دولة واكتب مجال العمل'); return; }
+        const country = Object.values(countries).find(c=> c.name===cVal) || Object.values(countries).find(c=> (c.name||'').includes(cVal)) || null;
+        if(!country){ alert('اختر دولة من القائمة'); return; }
+        document.getElementById('currency').value=country.currency||'';
 
-        // مطابقة مرنة
-        const nc=normalize(cVal); const country = Object.values(countries).find(c=> normalize(c.name)===nc || normalize(c.alt)||''===nc) || Object.values(countries).find(c=> normalize(c.name).includes(nc));
-        const ns=normalize(sVal); const sector = Object.values(sectors).find(s=> normalize(s.name)===ns) || Object.values(sectors).find(s=> normalize(s.name).includes(ns));
-        if(!country || !sector){ alert('اختر دولة ومجال من القوائم بعد تحميل البيانات (جرب تحديث الصفحة)'); return; }
+        // توليد كلمات
+        const kws = generateKeywords(sectorFree);
+        const kwEl=document.getElementById('keywords'); kwEl.innerHTML='';
+        kws.forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
 
-        document.getElementById('currency').value = country.currency||'';
+        // بقية الحسابات كما هي مبسطة
+        const goal=document.getElementById('goal').value; const days=parseInt(document.getElementById('days').value||'30',10); const totalBudget=parseFloat(document.getElementById('budget').value||'0'); const season=document.getElementById('season').value;
         const r=country.budget_ranges||{small:{min:2000,max:8000}}; const monthly= totalBudget>0? totalBudget : Math.round((r.small.min+r.small.max)/2); const campaignBudget=Math.max(200, Math.round((monthly/30)*days));
-
-        const {weights,mix}=computeChannelMix(country,sector,goal,priority); const allocation=allocateBudget(campaignBudget,weights,mix);
-        document.getElementById('mix').innerHTML=''; mix.forEach((m,i)=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=`${i+1} - ${m.platform}`; document.getElementById('mix').appendChild(span); }); document.getElementById('mixNote').textContent=`تم اختيار المنصات بترجيح الهدف (${goal}) وCPM في ${country.name}.`;
-        const allocEl=document.getElementById('allocation'); allocEl.innerHTML=''; allocation.forEach(a=>{ const d=document.createElement('div'); d.innerHTML=`<b>${a.platform}</b><br>${fmt(a.amount)} ${country.currency}`; allocEl.appendChild(d); });
-        const fEl=document.getElementById('forecasts'); fEl.innerHTML=''; let totals={impressions:0,clicks:0,conversions:0,sales:0}; allocation.forEach(a=>{ const f=forecastForPlatform(a.amount,a.platform,country,sector,season); totals.impressions+=f.impressions; totals.clicks+=f.clicks; totals.conversions+=f.conversions; totals.sales+=f.sales; const div=document.createElement('div'); div.innerHTML=`<b>${a.platform}</b><br>CPM $${f.cpm.toFixed(2)} | CTR ${(f.ctr*100).toFixed(1)}% | CVR ${(f.cvr*100).toFixed(1)}%<br>الظهور ${fmt(f.impressions)} | النقرات ${fmt(f.clicks)} | التحويلات ${fmt(f.conversions)} | المبيعات ${fmt(f.sales)}`; fEl.appendChild(div); }); const totalDiv=document.createElement('div'); totalDiv.innerHTML=`<b>الإجمالي (${fmt(campaignBudget)} ${country.currency})</b><br>الظهور ${fmt(totals.impressions)} | النقرات ${fmt(totals.clicks)} | التحويلات ${fmt(totals.conversions)} | المبيعات ${fmt(totals.sales)}`; fEl.appendChild(totalDiv);
-        const kwEl=document.getElementById('keywords'); kwEl.innerHTML=''; (sector.keywords||[]).slice(0,24).forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
-        const play=document.getElementById('playbook'); play.innerHTML=''; ['قسّم الميزانية وفق التوزيع المقترح، مع اختبار 2–3 إبداعات لكل شريحة.','ابنِ جماهير: اهتمام/مشابه/إعادة استهداف. ابدأ بتواتر 1.5–2/أسبوع.','راقب CPM/CTR/CVR يوميًا. أوقف الأسوأ 20–30% وحوّل الميزانية للأفضل.','اختبر صفحة الهبوط/الرسائل لرفع CVR بنسبة 20–30%.','ثبّت مزيج القنوات الرابح ووسّع الميزانية تدريجيًا (10–20% أسبوعيًا).'].forEach(s=>{ const li=document.createElement('li'); li.textContent=s; play.appendChild(li); });
+        let w=normalizeWeights(GOAL_WEIGHTS[goal]); const rec=country.recommended_platforms||[]; const cpm=country.avg_cpm||{}; const top=[...rec].sort((a,b)=>(cpm[a]||99)-(cpm[b]||99)).slice(0,3); const mix=[]; for(const p of top){ mix.push({platform:p,family:platformFamily(p),cpm:cpm[p]||2}); }
+        const famWeight={}; mix.forEach(m=> famWeight[m.family]=(famWeight[m.family]||0)+1); Object.keys(famWeight).forEach(k=> famWeight[k]/=mix.length);
+        const alloc=[]; mix.forEach(m=>{ const ww=(w[m.family]||0)*(famWeight[m.family]||0); alloc.push({platform:m.platform, amount: campaignBudget*(ww||0.001)}); }); const sum=alloc.reduce((a,b)=>a+b.amount,0)||1; alloc.forEach(a=> a.amount = campaignBudget*(a.amount/sum));
+        const mixEl=document.getElementById('mix'); mixEl.innerHTML=''; mix.forEach((m,i)=>{ const s=document.createElement('span'); s.className='pill'; s.textContent=`${i+1} - ${m.platform}`; mixEl.appendChild(s); }); document.getElementById('mixNote').textContent=`تم اختيار المنصات بترجيح الهدف (${goal}) وCPM في ${country.name}.`;
+        const allocEl=document.getElementById('allocation'); allocEl.innerHTML=''; alloc.forEach(a=>{ const d=document.createElement('div'); d.innerHTML=`<b>${a.platform}</b><br>${fmt(a.amount)} ${country.currency}`; allocEl.appendChild(d); });
+        const fEl=document.getElementById('forecasts'); fEl.innerHTML=''; let totals={impressions:0,clicks:0,conversions:0,sales:0}; alloc.forEach(a=>{ const cp=(country.avg_cpm||{})[a.platform]||2; const impressions=(a.amount/cp)*1000; const clicks=impressions*0.012; const conversions=clicks*0.02; const sales=conversions*0.7; totals.impressions+=impressions; totals.clicks+=clicks; totals.conversions+=conversions; totals.sales+=sales; const div=document.createElement('div'); div.innerHTML=`<b>${a.platform}</b><br>CPM $${cp.toFixed(2)} | CTR 1.2% | CVR 2.0%<br>الظهور ${fmt(impressions)} | النقرات ${fmt(clicks)} | التحويلات ${fmt(conversions)} | المبيعات ${fmt(sales)}`; fEl.appendChild(div); }); const totalDiv=document.createElement('div'); totalDiv.innerHTML=`<b>الإجمالي (${fmt(campaignBudget)} ${country.currency})</b><br>الظهور ${fmt(totals.impressions)} | النقرات ${fmt(totals.clicks)} | التحويلات ${fmt(totals.conversions)} | المبيعات ${fmt(totals.sales)}`; fEl.appendChild(totalDiv);
+        const play=document.getElementById('playbook'); play.innerHTML=''; ['استخدم أعلى 10 كلمات كحملات بحث/عبارات.','أنشئ مجموعات إعلانية حسب النية: شراء/اسعار/قريب/حجز.','أضف الكلمات السلبية لتقليل الهدر.','اختبر 2–3 اعلانات لكل مجموعة بنص يطابق الكلمة.','حسّن الصفحة لتحتوي أعلى الكلمات في العنوان والوصف.'].forEach(s=>{ const li=document.createElement('li'); li.textContent=s; play.appendChild(li); });
         document.getElementById('out').style.display='block';
       });
     })();
