@@ -485,13 +485,6 @@
         </div>
     </div>
 
-    <!-- Floating Language Toggle for Mobile -->
-    <div class="floating-action d-md-none">
-        <button class="btn btn-light btn-sm" onclick="toggleLanguage()">
-            <i class="fas fa-globe"></i>
-        </button>
-    </div>
-
     <script>
         // Language System
         const translations = {
@@ -575,18 +568,6 @@
             document.querySelectorAll('.mode-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.mode === mode);
             });
-            
-            updateModeDescription();
-        }
-
-        function updateModeDescription() {
-            const info = currentMode === 'shorten' 
-                ? (currentLang === 'ar' ? 'الوضع الحالي: تقصير - سنُنشئ أكواد k1, k2, k3...' : 'Current mode: Shorten - Will create k1, k2, k3...')
-                : currentMode === 'beautify' 
-                ? (currentLang === 'ar' ? 'الوضع الحالي: تجميل - سنُنشئ سلاج عربي/إنجليزي نظيف' : 'Current mode: Beautify - Will create clean Arabic/English slugs')
-                : (currentLang === 'ar' ? 'الوضع الحالي: التقصير + التجميل معاً' : 'Current mode: Both shortening and beautifying');
-            
-            // Update info display (add if needed)
         }
 
         // Language Toggle
@@ -609,16 +590,17 @@
             localStorage.setItem('urlShortenerLang', currentLang);
         }
 
-        // URL Processing Functions
+        // URL Processing Functions - FIXED REGEX
         function normalizeUrl(url) {
             if (!url) return url;
             try {
-                url = url.trim().replace(/[\\u0000-\\u001F\\u007F-\\u009F]/g, '');
+                url = url.trim().replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
                 if (!url.startsWith('http://') && !url.startsWith('https://')) {
                     url = 'https://' + url;
                 }
                 const urlObj = new URL(url);
-                let pathname = urlObj.pathname.replace(/\\/\\.\\/\\//g, '/').replace(/\\/+/g, '/');
+                // FIXED: Correct regex without double escaping
+                let pathname = urlObj.pathname.replace(/\/\.\//g, '/').replace(/\/+/g, '/');
                 return `${urlObj.protocol}//${urlObj.hostname}${urlObj.port ? ':' + urlObj.port : ''}${pathname}${urlObj.search}${urlObj.hash}`;
             } catch (error) {
                 return url;
@@ -634,9 +616,9 @@
                           urlObj.pathname.split('/').filter(p => p && p.length > 2).pop() || 'item';
                 
                 text = decodeURIComponent(text)
-                    .replace(/[\\u0000-\\u001F\\u007F]/g, '')
-                    .replace(/[^\\u0600-\\u06FFa-zA-Z0-9\\s\\-]/g, '-')
-                    .replace(/\\s+/g, '-')
+                    .replace(/[\u0000-\u001F\u007F]/g, '')
+                    .replace(/[^\u0600-\u06FFa-zA-Z0-9\s\-]/g, '-')
+                    .replace(/\s+/g, '-')
                     .replace(/-+/g, '-')
                     .replace(/^-|-$/g, '')
                     .substring(0, 60);
@@ -656,9 +638,24 @@
             }
         }
 
+        // FIXED: Clean URLs function defined properly
+        function cleanUrls() {
+            const textarea = document.getElementById('urlInput');
+            const lines = textarea.value.split('\n').map(line => line.trim()).filter(Boolean);
+            const cleanedLines = lines.map(normalizeUrl);
+            textarea.value = cleanedLines.join('\n');
+            updateStats();
+            
+            // Show feedback
+            const btn = document.getElementById('cleanBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-2"></i>تم التنظيف!';
+            setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+        }
+
         function updateStats() {
             const input = document.getElementById('urlInput').value;
-            const lines = input.split('\\n').filter(line => line.trim() !== '');
+            const lines = input.split('\n').filter(line => line.trim() !== '');
             
             let validCount = 0, invalidCount = 0, duplicateCount = 0;
             const seen = new Set();
@@ -689,7 +686,7 @@
         // Main Processing Function
         async function processUrls() {
             const input = document.getElementById('urlInput').value;
-            const lines = input.split('\\n').filter(line => line.trim() !== '');
+            const lines = input.split('\n').filter(line => line.trim() !== '');
             
             if (lines.length === 0) {
                 alert(currentLang === 'ar' ? 'يرجى إدخال روابط للمعالجة' : 'Please enter URLs to process');
@@ -820,14 +817,14 @@
 
         function copyAllShort() {
             const shortUrls = processedResults.map(r => r.shortUrl);
-            navigator.clipboard.writeText(shortUrls.join('\\n')).then(() => {
+            navigator.clipboard.writeText(shortUrls.join('\n')).then(() => {
                 showCopyFeedback('copyShortBtn');
             });
         }
 
         function copyAllPretty() {
             const prettyUrls = processedResults.map(r => r.prettyUrl);
-            navigator.clipboard.writeText(prettyUrls.join('\\n')).then(() => {
+            navigator.clipboard.writeText(prettyUrls.join('\n')).then(() => {
                 showCopyFeedback('copyPrettyBtn');
             });
         }
@@ -836,21 +833,6 @@
             const btn = document.getElementById(btnId);
             const originalHtml = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check me-1"></i>تم النسخ!';
-            setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
-        }
-
-        // Clean URLs Function
-        function cleanUrls() {
-            const textarea = document.getElementById('urlInput');
-            const lines = textarea.value.split('\\n').map(line => line.trim()).filter(Boolean);
-            const cleanedLines = lines.map(normalizeUrl);
-            textarea.value = cleanedLines.join('\\n');
-            updateStats();
-            
-            // Show feedback
-            const btn = document.getElementById('cleanBtn');
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check me-2"></i>تم التنظيف!';
             setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
         }
 
@@ -879,7 +861,7 @@
                         submitUrl += `?url=${encodeURIComponent(firstUrl)}`;
                     }
                     
-                    window.open(submitUrl, `_blank_${site.name.replace(/\\s+/g, '')}`);
+                    window.open(submitUrl, `_blank_${site.name.replace(/\s+/g, '')}`);
                     
                     backlinkResults.push({
                         site: site.name,
