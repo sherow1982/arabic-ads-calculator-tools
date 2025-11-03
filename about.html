@@ -6,21 +6,251 @@
   <meta name="robots" content="index, follow">
   <meta name="author" content="مؤسسة إعلانات العرب">
   <meta name="language" content="Arabic">
-  <title>عن الأدوات | أدوات الإعلانات العربية</title>
+  
+  <title>عن أدوات الإعلانات العربية - 27 أداة مجانية لتحسين حملاتك الرقمية | مؤسسة إعلانات العرب</title>
+  <meta name="description" content="تعرف على مجموعتنا الشاملة من 27 أداة مجانية مصممة خصيصاً للمسوقين العرب - حاسبات، محللات، مخططات ومولدات لتحسين أداء إعلاناتك الرقمية">
+  <meta name="keywords" content="عن الأدوات، أدوات إعلانات عربية، مجانية، حاسبات تسويق، محللات حملات، مخططات ميزانية، مولدات كلمات">
+  
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="global-styles.css">
   <link rel="stylesheet" href="global-search.css">
+  <link rel="stylesheet" href="quick-fab.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    .about-header {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      color: white;
+      padding: 50px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .about-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    
+    .about-intro {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      opacity: 0.95;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .info-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+    
+    .info-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .section-content {
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    
+    .features-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .features-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .features-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .feature-icon {
+      color: var(--success);
+      font-weight: 700;
+    }
+    
+    .popular-tools {
+      margin: 40px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 10px;
+    }
+    
+    .section-subtitle {
+      color: white;
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+    
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .popular-tool {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+      border: 2px solid transparent;
+    }
+    
+    .popular-tool:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+      border-color: var(--primary);
+      text-decoration: none;
+      color: var(--text);
+    }
+    
+    .tool-header-pop {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .tool-icon-pop {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+    }
+    
+    .tool-title-pop {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    
+    .tool-desc-pop {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .tool-launch-pop {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .popular-tool:hover .tool-launch-pop {
+      background: var(--success);
+    }
+    
+    .contact-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      margin: 40px 0;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .contact-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    
+    .contact-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    @media (max-width: 768px) {
+      .info-sections,
+      .popular-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .about-header {
+        padding: 40px 25px;
+      }
+      
+      .about-header h1 {
+        font-size: 2rem;
+      }
+      
+      .about-intro {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="unified-container">
+    <!-- التنقل الموحد -->
     <nav class="unified-nav">
-      <a href="./"><i class="fas fa-home"></i> الرئيسية</a>
-      <a href="alerts.html"><i class="fas fa-bell"></i> التنبيهات</a>
-      <a href="tools-directory.html"><i class="fas fa-list"></i> الدليل</a>
+      <a href="./" class="nav-home"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="all-tools.html" class="nav-tools"><i class="fas fa-tools"></i> جميع الأدوات</a>
+      <a href="alerts.html" class="nav-alerts"><i class="fas fa-bell"></i> التنبيهات</a>
+      <a href="tools-directory.html" class="nav-showcase"><i class="fas fa-list"></i> الدليل</a>
+      <a href="about.html" class="nav-about nav-active"><i class="fas fa-info-circle"></i> عن الأدوات</a>
     </nav>
 
+    <!-- شريط البحث الموحد -->
     <div class="unified-search-wrapper">
       <div class="unified-search" id="globalSearchBar">
         <select id="globalSearchFilter" class="filter-select">
@@ -34,9 +264,255 @@
       </div>
     </div>
 
-    <!-- المحتوى الأصلي للصفحة يبقى كما هو أدناه -->
-    <!-- سيتم الحفاظ على كافة الأقسام الحالية دون تغيير -->
+    <!-- Header -->
+    <div class="about-header">
+      <h1><i class="fas fa-info-circle"></i> عن أدوات الإعلانات العربية</h1>
+      <div class="about-intro">
+        مجموعة شاملة من 27 أداة مجانية مصممة خصيصاً للمسوقين والمعلنين العرب<br>
+        لتحسين أداء الحملات الرقمية وزيادة العائد على الاستثمار الإعلاني
+      </div>
+    </div>
+
+    <!-- أقسام المعلومات -->
+    <div class="info-sections">
+      <div class="info-section">
+        <h3 class="section-title">
+          <i class="fas fa-bullseye"></i>
+          الهدف والرؤية
+        </h3>
+        <div class="section-content">
+          <p>نهدف إلى تمكين المسوقين العرب بأدوات احترافية مجانية تعمل بكفاءة عالية، مصممة خصيصاً لفهم خصائص السوق العربي ومتطلبات المعلنين الناطقين بالعربية.</p>
+          
+          <p><strong>رؤيتنا:</strong> أن نكون المرجع الأول للأدوات التسويقية المجانية في المنطقة العربية، مع دعم كامل للغة العربية والتوجه من اليمين إلى اليسار.</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h3 class="section-title">
+          <i class="fas fa-star"></i>
+          المميزات الرئيسية
+        </h3>
+        <div class="section-content">
+          <ul class="features-list">
+            <li>
+              <i class="fas fa-gift feature-icon"></i>
+              <span>27 أداة مجانية 100% بدون رسوم أو اشتراكات</span>
+            </li>
+            <li>
+              <i class="fas fa-language feature-icon"></i>
+              <span>دعم كامل للعربية مع التوجه RTL</span>
+            </li>
+            <li>
+              <i class="fas fa-mobile-alt feature-icon"></i>
+              <span>تصميم متجاوب يعمل على الجوال والكمبيوتر</span>
+            </li>
+            <li>
+              <i class="fas fa-shield-alt feature-icon"></i>
+              <span>خصوصية كاملة - لا تخزين بيانات خارجي</span>
+            </li>
+            <li>
+              <i class="fas fa-globe feature-icon"></i>
+              <span>يعمل بدون إنترنت كتطبيق PWA</span>
+            </li>
+            <li>
+              <i class="fas fa-chart-bar feature-icon"></i>
+              <span>حسابات دقيقة مبنية على بيانات السوق العربي</span>
+            </li>
+            <li>
+              <i class="fas fa-robot feature-icon"></i>
+              <span>بوت ذكي يفهم اللهجات العربية المختلفة</span>
+            </li>
+            <li>
+              <i class="fas fa-bell feature-icon"></i>
+              <span>تنبيهات تلقائية لتحديثات المنصات الإعلانية</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h3 class="section-title">
+          <i class="fas fa-users"></i>
+          من نخدم؟
+        </h3>
+        <div class="section-content">
+          <p><strong>المسوقون الرقميون:</strong> احترافيو التسويق الرقمي الذين يديرون حملات على Google Ads وFacebook وInstagram وغيرها.</p>
+          
+          <p><strong>أصحاب الأعمال:</strong> رواد الأعمال والشركات الناشئة التي تريد تحسين أداء إعلاناتها بدون تكاليف إضافية.</p>
+          
+          <p><strong>الوكالات الإعلانية:</strong> الوكالات التي تبحث عن أدوات مجانية احترافية لخدمة عملائها بكفاءة أعلى.</p>
+          
+          <p><strong>الطلاب والمبتدئون:</strong> دارسو التسويق الرقمي الذين يريدون فهم حسابات الحملات عملياً.</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h3 class="section-title">
+          <i class="fas fa-cog"></i>
+          كيف تعمل الأدوات؟
+        </h3>
+        <div class="section-content">
+          <ul class="features-list">
+            <li>
+              <i class="fas fa-browser feature-icon"></i>
+              <span>تعمل بالكامل على متصفحك - لا حاجة لخوادم</span>
+            </li>
+            <li>
+              <i class="fas fa-lock feature-icon"></i>
+              <span>بياناتك آمنة - لا يتم إرسال شيء للخوارج</span>
+            </li>
+            <li>
+              <i class="fas fa-zap feature-icon"></i>
+              <span>نتائج فورية وحسابات سريعة ودقيقة</span>
+            </li>
+            <li>
+              <i class="fas fa-download feature-icon"></i>
+              <span>تصدير النتائج إلى CSV أو Excel</span>
+            </li>
+            <li>
+              <i class="fas fa-sync feature-icon"></i>
+              <span>تحديثات مستمرة بأحدث خوارزميات المنصات</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- أشهر الأدوات -->
+    <div class="popular-tools">
+      <div class="section-header">
+        <h2><i class="fas fa-fire"></i> أشهر الأدوات</h2>
+        <p class="section-subtitle">الأدوات الأكثر استخداماً من قبل المسوقين العرب</p>
+      </div>
+      
+      <div class="popular-grid">
+        <a href="tools/smart-bidding-calculator.html" class="popular-tool tool-card" data-category="advanced">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-brain"></i></div>
+            <div class="tool-title-pop tool-title">حاسبة المزايدة الذكية</div>
+          </div>
+          <div class="tool-desc-pop tool-description">احسب Target CPA وTarget ROAS المثلى واختر الاستراتيجية الأفضل</div>
+          <div class="tool-launch-pop"><i class="fas fa-calculator"></i> ابدأ الحساب</div>
+        </a>
+        
+        <a href="tools/performance-max-calculator.html" class="popular-tool tool-card" data-category="advanced">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-rocket"></i></div>
+            <div class="tool-title-pop tool-title">محسّن Performance Max</div>
+          </div>
+          <div class="tool-desc-pop tool-description">حسن أداء حملات Performance Max مع التوزيع الذكي للميزانية</div>
+          <div class="tool-launch-pop"><i class="fas fa-optimize"></i> حسّن الأداء</div>
+        </a>
+        
+        <a href="budget-planner.html" class="popular-tool tool-card" data-category="basic">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-chart-pie"></i></div>
+            <div class="tool-title-pop tool-title">مخطط الميزانية الذكي</div>
+          </div>
+          <div class="tool-desc-pop tool-description">وزع ميزانيتك بذكاء على المنصات المختلفة لتحقيق أفضل النتائج</div>
+          <div class="tool-launch-pop"><i class="fas fa-chart"></i> خطط ميزانيتك</div>
+        </a>
+        
+        <a href="tools/attribution-calculator.html" class="popular-tool tool-card" data-category="advanced">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-route"></i></div>
+            <div class="tool-title-pop tool-title">حاسبة الإسناد</div>
+          </div>
+          <div class="tool-desc-pop tool-description">حلل مسار التحويل متعدد القنوات واكتشف القيمة الحقيقية</div>
+          <div class="tool-launch-pop"><i class="fas fa-analysis"></i> ابدأ التحليل</div>
+        </a>
+        
+        <a href="keyword-generator.html" class="popular-tool tool-card" data-category="basic">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-key"></i></div>
+            <div class="tool-title-pop tool-title">مولد الكلمات المفتاحية</div>
+          </div>
+          <div class="tool-desc-pop tool-description">اكتشف أفضل الكلمات المفتاحية مع تحليل شامل للتكلفة والمنافسة</div>
+          <div class="tool-launch-pop"><i class="fas fa-search"></i> ابدأ البحث</div>
+        </a>
+        
+        <a href="tools/campaign-optimizer.html" class="popular-tool tool-card" data-category="advanced">
+          <div class="tool-header-pop">
+            <div class="tool-icon-pop"><i class="fas fa-chart-line"></i></div>
+            <div class="tool-title-pop tool-title">محسن الحملات الذكي</div>
+          </div>
+          <div class="tool-desc-pop tool-description">حلل أداء حملاتك واحصل على توصيات ذكية لتحسين النتائج</div>
+          <div class="tool-launch-pop"><i class="fas fa-optimize"></i> حسّن الأداء</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- قسم التواصل -->
+    <div class="contact-section">
+      <h2 class="contact-title"><i class="fas fa-handshake"></i> تحتاج مساعدة مخصصة؟</h2>
+      <p class="contact-text">
+        فريق مؤسسة إعلانات العرب جاهز لمساعدتك في بناء استراتيجية إعلانية مخصصة<br>
+        وتحقيق أفضل عائد على استثمارك الإعلاني مع دعم كامل باللغة العربية
+      </p>
+      <a href="https://wa.me/201110760081" class="unified-btn-primary" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 10px;">
+        <i class="fab fa-whatsapp"></i>
+        تواصل لاستشارة مجانية
+      </a>
+    </div>
+    
+    <!-- الفوتر الموحد -->
+    <footer class="unified-footer">
+      <div class="unified-footer-links">
+        <a href="./">الرئيسية</a>
+        <a href="all-tools.html">جميع الأدوات</a>
+        <a href="tools-directory.html">دليل الأدوات</a>
+        <a href="alerts.html">التنبيهات</a>
+        <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer">الموقع الرسمي</a>
+        <a href="https://wa.me/201110760081" target="_blank" rel="noopener noreferrer">واتساب</a>
+      </div>
+      
+      <p>&copy; 2025 مؤسسة إعلانات العرب – جميع الأدوات مجانية إلى الأبد</p>
+    </footer>
   </div>
+
+  <!-- الأزرار العائمة -->
+  <a href="https://wa.me/201110760081" class="unified-whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <button class="unified-back-to-top" id="backToTop" style="display: none;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Quick Access FAB -->
+  <button class="unified-quick-fab" onclick="window.location.href='all-tools.html'" aria-label="جميع الأدوات">
+    <i class="fas fa-th-large"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="shared-scripts.js"></script>
   <script src="global-search.js" defer></script>
+  
+  <script>
+    // تتبع زيارة الصفحة
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'about_page_view', {
+        event_category: 'About Page',
+        event_label: 'Page Visit'
+      });
+    }
+    
+    // Back to Top functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTop = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTop.style.display = 'flex';
+        } else {
+          backToTop.style.display = 'none';
+        }
+      });
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>
