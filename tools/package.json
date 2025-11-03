@@ -1,0 +1,68 @@
+{
+  "name": "arabic-url-shortener-cli",
+  "version": "1.0.0",
+  "description": "أداة اختصار الروابط بالجملة عبر GitHub Issues - Bulk URL Shortener CLI via GitHub Issues",
+  "main": "url-shortener-cli.js",
+  "bin": {
+    "arabic-url-shortener": "./url-shortener-cli.js"
+  },
+  "scripts": {
+    "start": "node url-shortener-cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-global": "npm install -g .",
+    "shorten": "node url-shortener-cli.js"
+  },
+  "keywords": [
+    "url-shortener",
+    "arabic",
+    "github-pages",
+    "bulk",
+    "cli",
+    "xlsx",
+    "github-issues",
+    "اختصار-روابط",
+    "عربي",
+    "أدوات-تسويق"
+  ],
+  "author": {
+    "name": "Sherif Salama",
+    "email": "sherow1982@gmail.com",
+    "url": "https://github.com/sherow1982"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherow1982/arabic-ads-calculator-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sherow1982/arabic-ads-calculator-tools/issues"
+  },
+  "homepage": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "preferGlobal": true,
+  "files": [
+    "url-shortener-cli.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "peerDependencies": {
+    "@github/cli": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@github/cli": {
+      "optional": false
+    }
+  }
+}
