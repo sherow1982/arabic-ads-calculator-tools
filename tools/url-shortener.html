@@ -3,86 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌍 مختصر الروابط العالمي - مُحدّث (بدون نشر أونلاين)</title>
+  <title>🌍 مختصر الروابط العالمي - أوضاع: تقصير • تجميل • كلاهما</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    .btn-backlink{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;font-weight:700}
-    .btn-backlink:hover{background:linear-gradient(135deg,#b91c1c,#991b1b)}
+    .mode-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:10px 0}
+    .mode-tabs .btn{border-radius:999px}
+    .pill{background:#0ea5e9;color:#fff;border-radius:999px;padding:.4rem .8rem;font-weight:600}
+    textarea{direction:ltr;font-family:monospace}
   </style>
 </head>
 <body>
   <div class="container py-4">
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-      <i class="fa-solid fa-circle-info me-2"></i>
-      تم إزالة زر "نشر أونلاين" بالكامل. الأداة لا تنشر أي ملفات على الريبو.
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h1 class="h5 m-0">🌍 مختصر الروابط العالمي</h1>
+      <span class="pill">أوضاع: تقصير • تجميل • كلاهما</span>
     </div>
 
-    <div class="d-flex gap-2 mb-3">
-      <button class="btn btn-outline-warning" id="btnCleanUrls"><i class="fas fa-broom me-1"></i>تنظيف الروابط (لا يغيّر الدومين)</button>
-      <button class="btn btn-backlink" id="backlinkBtn"><i class="fas fa-bolt me-1"></i>باك لينك DA عالي - بدون تسجيل دخول</button>
+    <div class="mode-tabs mb-2">
+      <button id="tabShort" class="btn btn-primary btn-sm"><i class="fa-solid fa-scissors me-1"></i>تقصير الروابط</button>
+      <button id="tabPretty" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-wand-magic-sparkles me-1"></i>تجميل الروابط</button>
+      <button id="tabBoth" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-star me-1"></i>التقصير + التجميل</button>
+      <button id="btnCleanUrls" class="btn btn-outline-warning btn-sm ms-auto"><i class="fas fa-broom me-1"></i>تنظيف الروابط (لا يغيّر الدومين)</button>
+      <button id="backlinkBtn" class="btn btn-danger btn-sm"><i class="fas fa-bolt me-1"></i>باك لينك DA عالي (بدون تسجيل دخول)</button>
     </div>
 
-    <label class="form-label">روابطك:</label>
+    <div class="alert alert-info py-2" id="info">الصق حتى 1000 رابط - الوضع الحالي: تقصير</div>
+
+    <label class="form-label fw-bold">الروابط (كل رابط في سطر):</label>
     <textarea id="urlInput" class="form-control" rows="8" placeholder="https://example.com/./product.html?name=منتج-عربي"></textarea>
 
-    <div id="results" class="mt-3"></div>
+    <div class="d-flex gap-2 my-3">
+      <button id="action" class="btn btn-primary"><i class="fa-solid fa-play me-1"></i>تنفيذ</button>
+      <button id="copyShort" class="btn btn-success d-none"><i class="fa-solid fa-copy me-1"></i>نسخ القصيرة</button>
+      <button id="copyPretty" class="btn btn-info text-white d-none"><i class="fa-solid fa-copy me-1"></i>نسخ الجميلة</button>
+      <button id="downloadXlsx" class="btn btn-warning d-none"><i class="fa-solid fa-download me-1"></i>XLSX</button>
+    </div>
+
+    <div id="results" class="card p-3 d-none">
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>الأصلي</th>
+              <th>القصير</th>
+              <th>الجميل</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
+  <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
-    // تحميل وحدات التنظيف والباك لينك (بدون تسجيل دخول)
+    // تحميل منظف الروابط وعدم تغيير الدومين
     (function(){
-      const loader1=document.createElement('script');
-      loader1.src='https://sherow1982.github.io/arabic-ads-calculator-tools/tools/modules/url-cleaner.js';
-      loader1.defer=true; document.head.appendChild(loader1);
+      const s=document.createElement('script');
+      s.src='https://sherow1982.github.io/arabic-ads-calculator-tools/tools/modules/url-cleaner.js';
+      s.defer=true;document.head.appendChild(s);
     })();
 
-    // قائمة مواقع باك لينك لا تتطلب تسجيل دخول (فتح/إرسال فقط)
+    // مواقع باك لينك بدون تسجيل دخول (موجودة من النسخة السابقة)
     const NO_LOGIN_SITES = [
-      { name:'Digg', url:'https://digg.com/submit', type:'news', da:94 },
-      { name:'AllTop', url:'https://alltop.com/submit', type:'directory', da:85 },
-      { name:'Mix', url:'https://mix.com/add', type:'discovery', da:92 },
-      { name:'Pocket', url:'https://getpocket.com/save', type:'bookmark', da:89 },
-      { name:'Instapaper', url:'https://www.instapaper.com/save', type:'bookmark', da:85 },
-      { name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/', type:'seo', da:79 },
-      { name:'All-in-one Tools Backlink', url:'https://allinonetools.net/backlink-maker/', type:'ping', da:70 },
-      { name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker', type:'ping', da:80 },
-      { name:'SearchEngineReports Backlinks', url:'https://searchenginereports.net/backlink-maker', type:'ping', da:76 },
-      { name:'Turbo SEO Backlinks', url:'https://www.turboseotools.com/backlink-maker', type:'ping', da:72 }
+      { name:'Digg', url:'https://digg.com/submit', da:94 },
+      { name:'AllTop', url:'https://alltop.com/submit', da:85 },
+      { name:'Mix', url:'https://mix.com/add', da:92 },
+      { name:'Pocket', url:'https://getpocket.com/save', da:89 },
+      { name:'Instapaper', url:'https://www.instapaper.com/save', da:85 },
+      { name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/', da:79 },
+      { name:'All-in-one Tools Backlink', url:'https://allinonetools.net/backlink-maker/', da:70 },
+      { name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker', da:80 },
+      { name:'SearchEngineReports Backlinks', url:'https://searchenginereports.net/backlink-maker', da:76 },
+      { name:'Turbo SEO Backlinks', url:'https://www.turboseotools.com/backlink-maker', da:72 }
     ];
 
-    function detectLang(text){ return /[\u0600-\u06FF]/.test(text) ? 'ar' : 'en'; }
-    function genContent(slug, lang){
-      const name=slug.replace(/-/g,' ');
-      return lang==='ar' ? {
-        title:`🎯 عرض مميز: ${name}`,
-        desc:`✅ ${name}\n🚚 توصيل سريع\n💯 جودة عالية\n👇 اطلب الآن`
-      } : {
-        title:`🎯 Special Offer: ${name}`,
-        desc:`✅ ${name}\n🚚 Fast delivery\n💯 High quality\n👇 Order now`
+    // وظائف أساسية
+    const BASE = 'https://sherow1982.github.io/arabic-ads-calculator-tools';
+    const SHORT_BASE = BASE + '/s.html?to=';
+
+    let mode = 'short'; // short | pretty | both
+
+    const info = document.getElementById('info');
+    const tabShort = document.getElementById('tabShort');
+    const tabPretty= document.getElementById('tabPretty');
+    const tabBoth  = document.getElementById('tabBoth');
+    const actionBtn= document.getElementById('action');
+    const copyShort= document.getElementById('copyShort');
+    const copyPretty=document.getElementById('copyPretty');
+    const downloadXlsx=document.getElementById('downloadXlsx');
+
+    function setMode(m){
+      mode=m;
+      tabShort.className = 'btn btn-' + (m==='short'?'':'outline-') + 'primary btn-sm';
+      tabPretty.className= 'btn btn-' + (m==='pretty'?'':'outline-') + 'primary btn-sm';
+      tabBoth.className  = 'btn btn-' + (m==='both'?'':'outline-') + 'primary btn-sm';
+      info.textContent = m==='short'? 'الصق حتى 1000 رابط - الوضع الحالي: تقصير'
+        : m==='pretty'? 'الوضع الحالي: تجميل - سننشئ سلاج عربي/إنجليزي نظيف'
+        : 'الوضع الحالي: التقصير + التجميل معاً';
+    }
+
+    tabShort.onclick = ()=> setMode('short');
+    tabPretty.onclick= ()=> setMode('pretty');
+    tabBoth.onclick  = ()=> setMode('both');
+
+    function normalizeUrl(url){
+      url=url.trim();
+      if(!/^https?:\/\//.test(url)) url='https://'+url;
+      try{
+        const u = new URL(url);
+        const path = u.pathname.replace(/\/\.\//g,'/').replace(/\/+/, '/');
+        return `${u.protocol}//${u.host}${path}${u.search}${u.hash}`;
+      }catch{ return url; }
+    }
+
+    function slugify(input){
+      if(!input) return '';
+      let s=input.trim();
+      try{ s=decodeURIComponent(s); }catch(_){ }
+      try{
+        const u=new URL(s);
+        const qp=new URLSearchParams(u.search);
+        const name = qp.get('name')||qp.get('title')||qp.get('q')||'';
+        if(name) s=name;
+      }catch(_){ }
+      s=s.replace(/[\u0000-\u001F\u007F]/g,'')
+        .replace(/\s+/g,'-')
+        .replace(/[^\u0600-\u06FFa-zA-Z0-9\-]+/g,'-')
+        .replace(/-+/g,'-')
+        .replace(/^-|-$/g,'')
+        .toLowerCase();
+      return s.substring(0,80);
+    }
+
+    function genShort(i){ return SHORT_BASE + 'k' + i; }
+
+    function process(){
+      const lines = document.getElementById('urlInput').value.split('\n').filter(l=>l.trim());
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML='';
+      const outShort=[]; const outPretty=[];
+
+      lines.forEach((line, idx)=>{
+        const original = normalizeUrl(line);
+        const shortUrl = genShort(idx+1);
+        const slug = slugify(original);
+        const pretty = BASE + '/' + slug; // شكل جميل فقط للعرض
+
+        const showShort = (mode==='short' || mode==='both');
+        const showPretty= (mode==='pretty'|| mode==='both');
+
+        const tr=document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td style="font-family:monospace" dir="ltr">${original}</td>
+          <td>${ showShort? `<a href="${shortUrl}" target="_blank">${shortUrl}</a>` : '-' }</td>
+          <td>${ showPretty? `<span dir="ltr">${pretty}</span> <small class="text-muted">/${slug}</small>` : '-' }</td>
+        `;
+        tbody.appendChild(tr);
+        if(showShort) outShort.push(shortUrl);
+        if(showPretty) outPretty.push(pretty);
+      });
+
+      document.getElementById('results').classList.remove('d-none');
+      copyShort.classList.toggle('d-none', !(mode==='short'||mode==='both'));
+      copyPretty.classList.toggle('d-none', !(mode==='pretty'||mode==='both'));
+      downloadXlsx.classList.remove('d-none');
+
+      copyShort.onclick = ()=> navigator.clipboard.writeText(outShort.join('\n'));
+      copyPretty.onclick= ()=> navigator.clipboard.writeText(outPretty.join('\n'));
+
+      // تصدير XLSX
+      downloadXlsx.onclick = ()=>{
+        const rows = Array.from(tbody.children).map(tr=>{
+          const tds = tr.querySelectorAll('td');
+          return {
+            '#': tds[0].textContent.trim(),
+            'الأصلي': tds[1].textContent.trim(),
+            'القصير': tds[2].textContent.replace(/\s+/g,' ').trim(),
+            'الجميل': tds[3].textContent.replace(/\s+/g,' ').trim(),
+          };
+        });
+        const ws = XLSX.utils.json_to_sheet(rows);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'النتائج');
+        XLSX.writeFile(wb, 'smart-urls.xlsx');
       };
     }
 
+    document.getElementById('action').onclick = process;
+
+    // باك لينك بدون تسجيل دخول (فتح تبويبات)
     document.getElementById('backlinkBtn').onclick = ()=>{
-      const lines = document.getElementById('urlInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
-      if(!lines.length){ alert('ضع روابط أولاً'); return; }
-      // لكل موقع بدون تسجيل دخول: افتح تبويب جاهز بالعنوان والوصف إن أمكن
-      const baseSlug = 'منتج-عربي';
-      const lang = detectLang(lines[0]);
-      const content = genContent(baseSlug, lang);
-      NO_LOGIN_SITES.forEach(site=>{
-        let submit = site.url;
-        // تمرير بارامترات للعنوان/الوصف إذا يدعم
-        if(site.name==='Digg'){
-          submit += `?url=${encodeURIComponent(lines[0])}&title=${encodeURIComponent(content.title)}`;
-        } else if(site.name==='Mix'){
-          submit += `?url=${encodeURIComponent(lines[0])}`;
-        } else if(site.name==='Pocket' || site.name==='Instapaper'){
-          submit += `?url=${encodeURIComponent(lines[0])}`;
-        }
-        window.open(submit, '_blank');
+      const first = document.getElementById('urlInput').value.split('\n').map(s=>s.trim()).filter(Boolean)[0];
+      if(!first){ alert('ضع روابط أولاً'); return; }
+      NO_LOGIN_SITES.forEach(s=>{
+        let u=s.url;
+        if(s.name==='Digg') u+=`?url=${encodeURIComponent(first)}`;
+        if(s.name==='Mix'||s.name==='Pocket'||s.name==='Instapaper') u+=`?url=${encodeURIComponent(first)}`;
+        window.open(u,'_blank');
       });
     };
+
+    // تفعيل الوضع الافتراضي
+    setMode('short');
   </script>
 </body>
 </html>
