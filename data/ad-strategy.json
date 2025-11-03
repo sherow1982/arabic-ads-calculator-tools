@@ -1,0 +1,242 @@
+{
+  "نقل أثاث": {
+    "Google Ads": {
+      "type": "بحث محلي + خرائط",
+      "reason": "نية عالية + مكالمات مباشرة"
+    },
+    "Facebook": {
+      "type": "Local Awareness + صور قبل وبعد",
+      "reason": "انتشار محلي + بناء ثقة"
+    },
+    "Instagram": {
+      "type": "Reels + قصص",
+      "reason": "استعراض بصري للخدمة"
+    },
+    "YouTube": {
+      "type": "In-Stream قصير",
+      "reason": "شرح الخدمة وبناء المصداقية"
+    },
+    "TikTok": {
+      "type": "Short Video قبل وبعد",
+      "reason": "تفاعل عالي مع المحتوى البصري"
+    },
+    "Snapchat": {
+      "type": "Geo Filters محلي",
+      "reason": "استهداف جغرافي دقيق"
+    },
+    "LinkedIn": {
+      "type": "غير مقترح للقطاع المحلي",
+      "reason": "لا يناسب الخدمات المنزلية"
+    }
+  },
+  "شركة نظافة": {
+    "Google Ads": {
+      "type": "بحث محلي + خرائط",
+      "reason": "طلب فوري + احتياج محلي"
+    },
+    "Facebook": {
+      "type": "Local Awareness + Carousel",
+      "reason": "عرض أنواع الخدمات"
+    },
+    "Instagram": {
+      "type": "Reels + قصص قبل وبعد",
+      "reason": "تأثير بصري قوي"
+    },
+    "YouTube": {
+      "type": "In-Stream توعوي",
+      "reason": "شرح أهمية النظافة"
+    },
+    "TikTok": {
+      "type": "Transformation Videos",
+      "reason": "محتوى فيرالي محتمل"
+    },
+    "Snapchat": {
+      "type": "AR Filters + Geo",
+      "reason": "تفاعل مع الفئة الشابة"
+    },
+    "LinkedIn": {
+      "type": "للشركات فقط - Sponsored Content",
+      "reason": "تنظيف مكاتب وشركات"
+    }
+  },
+  "شركة صرف صحي": {
+    "Google Ads": {
+      "type": "بحث طوارئ + خرائط",
+      "reason": "طلب عاجل 24/7"
+    },
+    "Facebook": {
+      "type": "Local Awareness",
+      "reason": "بناء وعي بالخدمة"
+    },
+    "Instagram": {
+      "type": "قصص معلوماتية",
+      "reason": "توعية وتثقيف"
+    },
+    "YouTube": {
+      "type": "فيديو تعليمي قصير",
+      "reason": "شرح المشاكل والحلول"
+    },
+    "TikTok": {
+      "type": "محتوى تعليمي خفيف",
+      "reason": "توعية الجمهور الشاب"
+    },
+    "Snapchat": {
+      "type": "Geo Filters طوارئ",
+      "reason": "وصول سريع للحالات العاجلة"
+    },
+    "LinkedIn": {
+      "type": "غير مناسب",
+      "reason": "طبيعة الخدمة لا تناسب المنصة"
+    }
+  },
+  "مطعم": {
+    "Google Ads": {
+      "type": "خرائط + Shopping (قائمة الطعام)",
+      "reason": "اكتشاف محلي + عرض المنتجات"
+    },
+    "Facebook": {
+      "type": "Carousel + Local Awareness",
+      "reason": "عرض الأطباق + استهداف محلي"
+    },
+    "Instagram": {
+      "type": "Reels + قصص طعام",
+      "reason": "محتوى بصري جذاب للطعام"
+    },
+    "YouTube": {
+      "type": "فيديو قصير للأجواء",
+      "reason": "عرض تجربة المطعم"
+    },
+    "TikTok": {
+      "type": "Food Videos + تحديات",
+      "reason": "ترند الطعام والفيرالية"
+    },
+    "Snapchat": {
+      "type": "AR Filters + Geo",
+      "reason": "تفاعل مع الطعام والموقع"
+    },
+    "LinkedIn": {
+      "type": "غير مناسب للمطاعم العادية",
+      "reason": "إلا للفعاليات الرسمية"
+    }
+  },
+  "ملابس": {
+    "Google Ads": {
+      "type": "Shopping + Performance Max",
+      "reason": "عرض منتجات + تغطية واسعة"
+    },
+    "Facebook": {
+      "type": "Catalog + Dynamic Ads",
+      "reason": "عرض منتجات مخصص"
+    },
+    "Instagram": {
+      "type": "Reels + قصص + Collection",
+      "reason": "منصة مثالية للموضة"
+    },
+    "YouTube": {
+      "type": "In-Stream أزياء",
+      "reason": "عرض مجموعات كاملة"
+    },
+    "TikTok": {
+      "type": "Fashion Videos + تحدي أزياء",
+      "reason": "ترند الموضة والستايل"
+    },
+    "Snapchat": {
+      "type": "AR Try-On + Shopping",
+      "reason": "تجربة افتراضية للملابس"
+    },
+    "LinkedIn": {
+      "type": "للملابس الرسمية فقط",
+      "reason": "استهداف المهنيين"
+    }
+  },
+  "عقارات": {
+    "Google Ads": {
+      "type": "بحث + خرائط + Performance Max",
+      "reason": "بحث نشط + موقع + تغطية"
+    },
+    "Facebook": {
+      "type": "Carousel + Lead Generation",
+      "reason": "عرض وحدات + جمع بيانات"
+    },
+    "Instagram": {
+      "type": "Carousel + قصص مصورة",
+      "reason": "عرض بصري للعقارات"
+    },
+    "YouTube": {
+      "type": "جولات افتراضية",
+      "reason": "عرض تفصيلي للوحدات"
+    },
+    "TikTok": {
+      "type": "جولات قصيرة",
+      "reason": "عرض سريع وجذاب"
+    },
+    "Snapchat": {
+      "type": "AR + Geo للمواقع",
+      "reason": "تجربة تفاعلية للموقع"
+    },
+    "LinkedIn": {
+      "type": "للعقارات التجارية",
+      "reason": "استثمارات ومكاتب"
+    }
+  },
+  "تعليم": {
+    "Google Ads": {
+      "type": "بحث + يوتيوب",
+      "reason": "بحث نشط + محتوى تعليمي"
+    },
+    "Facebook": {
+      "type": "Lead Generation + فيديو",
+      "reason": "جمع بيانات + محتوى تعليمي"
+    },
+    "Instagram": {
+      "type": "Reels تعليمي + قصص",
+      "reason": "محتوى تفاعلي ومبسط"
+    },
+    "YouTube": {
+      "type": "In-Stream + محتوى طويل",
+      "reason": "المنصة المثلى للتعليم"
+    },
+    "TikTok": {
+      "type": "محتوى تعليمي قصير",
+      "reason": "تعلم سريع وممتع"
+    },
+    "Snapchat": {
+      "type": "محتوى تفاعلي تعليمي",
+      "reason": "جذب الفئة الشابة"
+    },
+    "LinkedIn": {
+      "type": "للتدريب المهني",
+      "reason": "تطوير المهارات الوظيفية"
+    }
+  },
+  "خدمات طبية": {
+    "Google Ads": {
+      "type": "بحث + خرائط",
+      "reason": "حاجة عاجلة + موقع"
+    },
+    "Facebook": {
+      "type": "Lead Generation + توعوي",
+      "reason": "جمع بيانات + تثقيف صحي"
+    },
+    "Instagram": {
+      "type": "محتوى توعوي + قصص",
+      "reason": "تثقيف صحي بصري"
+    },
+    "YouTube": {
+      "type": "محتوى تعليمي طبي",
+      "reason": "شرح تفصيلي للحالات"
+    },
+    "TikTok": {
+      "type": "نصائح صحية قصيرة",
+      "reason": "توعية سريعة وبسيطة"
+    },
+    "Snapchat": {
+      "type": "توعية صحية للشباب",
+      "reason": "وصول للفئة الشابة"
+    },
+    "LinkedIn": {
+      "type": "للخدمات المهنية",
+      "reason": "خدمات طبية للشركات"
+    }
+  }
+}
