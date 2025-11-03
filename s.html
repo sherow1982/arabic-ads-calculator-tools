@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري إعادة التوجيه - مختصر الروابط العربي</title>
+    <meta name="description" content="مختصر روابط عربي مجاني - إعادة توجيه تلقائية للروابط الطويلة">
+    
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .status {
+            font-size: 1.3rem;
+            margin: 1.5rem 0;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+        
+        .url-display {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .url-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .url-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            word-break: break-all;
+            color: #fbbf24;
+        }
+        
+        .manual-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            color: #4f46e5;
+            padding: 1.2rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 2rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .manual-button:hover {
+            background: white;
+            color: #4f46e5;
+            text-decoration: none;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .footer-info {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            opacity: 0.75;
+            line-height: 1.6;
+        }
+        
+        .error-state {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner" id="spinner"></div>
+        
+        <h1 id="title">🚀 جاري إعادة التوجيه...</h1>
+        
+        <div class="status" id="status">
+            جاري تحليل الرابط القصير...
+        </div>
+        
+        <div class="url-display" id="urlDisplay" style="display: none;">
+            <div class="url-label">🎯 الوجهة النهائية:</div>
+            <div class="url-value" id="targetUrl"></div>
+        </div>
+        
+        <a href="#" class="manual-button" id="manualButton" style="display: none;">
+            🔗 اضغط للتوجيه يدوياً
+        </a>
+        
+        <div class="footer-info">
+            رابط قصير من 🇦🇭 <strong>أدوات الإعلانات العربية</strong><br>
+            مجاني 100% • بدون أطراف ثالثة • آمن وموثوق
+        </div>
+    </div>
+    
+    <script>
+        // URL mapping database - add your URLs here
+        const URL_MAP = {
+            '3': 'https://example.com/test-long-url-for-shortening-demo',
+            'test': 'https://www.google.com',
+            'demo': 'https://sherow1982.github.io/arabic-ads-calculator-tools/',
+            'tools': 'https://sherow1982.github.io/arabic-ads-calculator-tools/tools-directory.html',
+            'fb': 'https://facebook.com/arabads.me',
+            'wa': 'https://wa.me/201110760081',
+            // Add more mappings as needed
+        };
+        
+        function getShortCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('to') || urlParams.get('url') || urlParams.get('go');
+        }
+        
+        function showError(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('title').innerHTML = '⚠️ خطأ في الرابط';
+            document.getElementById('status').innerHTML = `<span class="error-state">${message}</span>`;
+            
+            // Show home button
+            const manualButton = document.getElementById('manualButton');
+            manualButton.href = 'https://sherow1982.github.io/arabic-ads-calculator-tools/';
+            manualButton.innerHTML = '🏠 العودة للصفحة الرئيسية';
+            manualButton.style.display = 'inline-block';
+        }
+        
+        function showSuccess(targetUrl) {
+            document.getElementById('title').innerHTML = '✅ تم العثور على الرابط!';
+            document.getElementById('status').innerHTML = 'سيتم توجيهك إلى الوجهة المطلوبة...';
+            
+            // Show target URL
+            document.getElementById('targetUrl').textContent = targetUrl;
+            document.getElementById('urlDisplay').style.display = 'block';
+            
+            // Show manual button
+            const manualButton = document.getElementById('manualButton');
+            manualButton.href = targetUrl;
+            manualButton.innerHTML = '🔗 اضغط للتوجيه الفوري';
+            manualButton.style.display = 'inline-block';
+        }
+        
+        function performRedirect() {
+            const shortCode = getShortCode();
+            
+            console.log('Current URL:', window.location.href);
+            console.log('Short code:', shortCode);
+            console.log('Available codes:', Object.keys(URL_MAP));
+            
+            if (!shortCode) {
+                showError('لا يوجد رمز رابط في العنوان. استخدم: ?to=رمزالرابط');
+                return;
+            }
+            
+            const targetUrl = URL_MAP[shortCode];
+            
+            if (!targetUrl) {
+                showError(`رمز الرابط "${shortCode}" غير معرّف. الرموز المتاحة: ${Object.keys(URL_MAP).join(', ')}`);
+                return;
+            }
+            
+            showSuccess(targetUrl);
+            
+            // Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'short_url_redirect', {
+                    'short_code': shortCode,
+                    'target_url': targetUrl,
+                    'user_agent': navigator.userAgent
+                });
+            }
+            
+            // Perform redirect
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 2000);
+        }
+        
+        // Start the process when page loads
+        document.addEventListener('DOMContentLoaded', performRedirect);
+        
+        // Fallback: if page is already loaded
+        if (document.readyState === 'loading') {
+            // Wait for DOMContentLoaded
+        } else {
+            performRedirect();
+        }
+        
+        // Emergency fallback after 10 seconds
+        setTimeout(() => {
+            const shortCode = getShortCode();
+            const targetUrl = URL_MAP[shortCode];
+            if (targetUrl) {
+                window.location.href = targetUrl;
+            } else {
+                window.location.href = 'https://sherow1982.github.io/arabic-ads-calculator-tools/';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
