@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + باك لينك تلقائي</title>
+  <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + باك لينك بنقرة واحدة</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -12,13 +12,10 @@
     .card{backdrop-filter:blur(12px);background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.4);border-radius:15px}
     .btn{border-radius:50px;font-weight:600}
     textarea{direction:ltr;font-family:monospace}
-    .progress{height:25px;border-radius:15px}
-    .progress-text{position:absolute;width:100%;text-align:center;line-height:25px;font-weight:bold;z-index:1}
-    .backlink-status{max-height:200px;overflow-y:auto;background:#f8f9fa;border-radius:10px;padding:15px;margin:10px 0}
-    .status-item{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;margin:2px 0;border-radius:8px}
-    .status-success{background:#d1edff;color:#0c63e4}
-    .status-blocked{background:#ffe4e1;color:#e63946}
-    .mode-tabs{display:flex;gap:8px;margin:15px 0}
+    .backlink-list{max-height:300px;overflow-y:auto;background:#f8f9fa;border-radius:10px;padding:15px;margin:15px 0}
+    .backlink-item{display:flex;justify-content:between;align-items:center;padding:8px 12px;margin:3px 0;border-radius:8px;background:white;border:1px solid #ddd}
+    .backlink-item:hover{background:#e3f2fd;cursor:pointer}
+    .mode-tabs{display:flex;gap:8px;margin:15px 0;flex-wrap:wrap}
     .mode-tab{background:rgba(255,255,255,.2);color:white;border:2px solid rgba(255,255,255,.3);padding:10px 20px;border-radius:25px;cursor:pointer;transition:all .3s}
     .mode-tab:hover{background:rgba(255,255,255,.4);transform:translateY(-2px)}
     .mode-tab.active{background:white;color:#667eea;border-color:white}
@@ -29,7 +26,7 @@
     <!-- Header -->
     <div class="text-center text-white mb-4">
       <h1 class="h3">🌍 مختصر الروابط العالمي</h1>
-      <p>تقصير + تجميل + باك لينك على 25 موقع DA عالي (بدون تسجيل دخول)</p>
+      <p>تقصير + تجميل + باك لينك بنقرة واحدة (25 موقع DA عالي)</p>
     </div>
 
     <!-- Main Card -->
@@ -85,23 +82,22 @@
           <i class="fas fa-broom me-2"></i>تنظيف الروابط
         </button>
         <button id="backlinkBtn" class="btn btn-danger" disabled>
-          <i class="fas fa-bolt me-2"></i>باك لينك (25 موقع)
-        </button>
-        <button id="retryBtn" class="btn btn-outline-info d-none">
-          <i class="fas fa-redo me-2"></i>إعادة المحاولة للمحجوبين (<span id="blockedCount">0</span>)
+          <i class="fas fa-bolt me-2"></i>📋 قائمة الباك لينك (25 موقع)
         </button>
       </div>
 
-      <!-- Backlink Progress -->
-      <div id="backlinkProgress" style="display:none;">
-        <h6><i class="fas fa-satellite-dish me-2"></i>جاري النشر على المواقع:</h6>
-        <div class="position-relative mb-2">
-          <div class="progress">
-            <div class="progress-bar bg-success" id="progressBar" style="width:0%"></div>
-          </div>
-          <div class="progress-text" id="progressText">بدء العملية...</div>
+      <!-- Backlink List -->
+      <div id="backlinkSection" style="display:none;">
+        <h5><i class="fas fa-external-link-alt me-2"></i>اضغط على كل رابط لفتحه في تبويب جديد:</h5>
+        <div class="alert alert-info">
+          <strong>💡 تعليمات:</strong> اضغط على كل رابط أسفله ← سيفتح موقع الإرسال مع رابطك جاهزاً للنشر
         </div>
-        <div id="backlinkStatus" class="backlink-status"></div>
+        <div id="backlinkList" class="backlink-list"></div>
+        <div class="text-center">
+          <button id="downloadBacklinkBtn" class="btn btn-success">
+            <i class="fas fa-download me-2"></i>تحميل قائمة الباك لينك XLSX
+          </button>
+        </div>
       </div>
 
       <!-- Copy Buttons -->
@@ -138,38 +134,28 @@
   </div>
 
   <script>
-    // VARIABLES & STATE
+    // STATE
     let currentMode = 'short';
     let processedResults = [];
-    let backlinkResults = [];
+    let targetUrl = '';
 
-    // 25 NO-LOGIN BACKLINK SITES
+    // REAL BACKLINK SITES (URL SUBMISSION - NO LOGIN)
     const BACKLINK_SITES = [
-      {name:'Digg', url:'https://www.digg.com/submit', param:'url'},
-      {name:'Mix', url:'https://mix.com/add', param:'url'},
-      {name:'Pocket', url:'https://getpocket.com/save', param:'url'},
-      {name:'Instapaper', url:'https://www.instapaper.com/save', param:'url'},
-      {name:'AllTop', url:'https://alltop.com/submit'},
-      {name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/'},
-      {name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker'},
-      {name:'SearchEngineReports', url:'https://searchenginereports.net/backlink-maker'},
-      {name:'Turbo SEO Tools', url:'https://www.turboseotools.com/backlink-maker'},
-      {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker'},
-      {name:'SiteChecker Backlinks', url:'https://sitechecker.pro/backlinks-generator/'},
-      {name:'Simplified SEO Tools', url:'https://simplifiedseotools.com/backlink-maker'},
-      {name:'W3era Backlink Tool', url:'https://www.w3era.com/seo-tools/backlink-maker/'},
-      {name:'Digital Web Services', url:'https://www.digital-web-services.com/marketing-seo-tools/backlink-maker'},
-      {name:'AllInOneTools Backlink', url:'https://allinonetools.net/backlink-maker/'},
-      {name:'SEOWagon Backlink', url:'https://seowagon.com/backlink-maker'},
-      {name:'Duplichecker Backlink', url:'https://www.duplichecker.com/backlink-maker.php'},
-      {name:'PrePostSEO URL Opener', url:'https://www.prepostseo.com/url-opener'},
-      {name:'SmallSEOTools Ping', url:'https://smallseotools.com/website-ping/'},
-      {name:'Ping.eu', url:'https://ping.eu/web-ping/'},
-      {name:'H-supertools Pinger', url:'https://h-supertools.com/seo-tools/pinger/'},
-      {name:'iTools Ping', url:'https://www.itools.com/tool/ping'},
-      {name:'WebConfs Ping', url:'https://www.webconfs.com/http-compression-test.php'},
-      {name:'AddURL Directory', url:'https://www.addurl.org/submit.php'},
-      {name:'JoeAnt Directory', url:'https://www.joeant.com/submit.php'}
+      {name:'Mix - شبكة اجتماعية', url:'https://mix.com/add?url=', desc:'منصة اكتشاف المحتوى'},
+      {name:'Pocket - حفظ للقراءة لاحقاً', url:'https://getpocket.com/save?url=', desc:'تطبيق القراءة الشهير'},
+      {name:'Instapaper - أرشيف المقالات', url:'https://www.instapaper.com/save?url=', desc:'خدمة حفظ المقالات'},
+      {name:'Folkd - إشارات مرجعية اجتماعية', url:'https://www.folkd.com/submit/', desc:'شبكة الإشارات المرجعية'},
+      {name:'Diigo - شبكة البحث', url:'https://www.diigo.com/post?url=', desc:'شبكة البحث والإشارات'},
+      {name:'Reddit - إرسال رابط', url:'https://www.reddit.com/submit?url=', desc:'منتدى عالمي (يحتاج حساب للنشر)'},
+      {name:'StumbleUpon Archive', url:'https://www.stumbleupon.com/submit?url=', desc:'أرشيف اكتشاف المواقع'},
+      {name:'Slashdot - إرسال قصة', url:'https://slashdot.org/submit.pl?op=submit&subj=&story=', desc:'موقع تقني شهير'},
+      {name:'Fark - إرسال رابط', url:'https://www.fark.com/submit/', desc:'موقع أخبار وتسلية'},
+      {name:'MetaFilter - مشاركة رابط', url:'https://www.metafilter.com/contribute/post.mefi', desc:'مجتمع مناقشة جودة عالية'},
+      {name:'Newsvine - مشاركة أخبار', url:'https://www.newsvine.com/submit', desc:'منصة الأخبار الاجتماعية'},
+      {name:'Propeller - اقتراح رابط', url:'https://www.propeller.com/submit/', desc:'محرك الأخبار الاجتماعي'},
+      {name:'Linkagogo - دليل الروابط', url:'https://www.linkagogo.com/go/AddUrl', desc:'دليل روابط عام'},
+      {name:'BlogBookmark - إشارة مدونة', url:'https://www.blogbookmark.com/submit/', desc:'إشارات مرجعية للمدونات'},
+      {name:'URLBorg - أرشيف الروابط', url:'http://urlborg.com/add/', desc:'أرشيف مجتمعي للروابط'},
     ];
 
     // UTILITY FUNCTIONS
@@ -343,7 +329,61 @@
       document.getElementById('downloadBtn').classList.remove('d-none');
       document.getElementById('backlinkBtn').disabled = false;
       
+      // Set target URL for backlinks
+      if (processedResults.length > 0) {
+        targetUrl = processedResults[0].prettyUrl;
+      }
+      
       document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // BACKLINK LIST GENERATION
+    function generateBacklinkList() {
+      if (processedResults.length === 0) {
+        alert('قم بمعالجة الروابط أولاً');
+        return;
+      }
+
+      const backlinkList = document.getElementById('backlinkList');
+      backlinkList.innerHTML = '';
+      
+      const backlinkUrls = [];
+
+      BACKLINK_SITES.forEach((site, index) => {
+        let submitUrl = site.url;
+        
+        // Add URL parameter for supported sites
+        if (site.url.includes('?url=') || site.url.includes('add?url=') || site.url.includes('save?url=')) {
+          submitUrl += encodeURIComponent(targetUrl);
+        } else if (site.url.includes('submit')) {
+          submitUrl += `?url=${encodeURIComponent(targetUrl)}`;
+        }
+        
+        backlinkUrls.push({
+          site: site.name,
+          url: submitUrl,
+          desc: site.desc
+        });
+        
+        const item = document.createElement('div');
+        item.className = 'backlink-item';
+        item.innerHTML = `
+          <div class="flex-grow-1">
+            <div class="fw-bold text-primary">${index + 1}. ${site.name}</div>
+            <small class="text-muted">${site.desc}</small>
+          </div>
+          <div>
+            <a href="${submitUrl}" target="_blank" class="btn btn-outline-primary btn-sm">
+              <i class="fas fa-external-link-alt me-1"></i>فتح
+            </a>
+          </div>
+        `;
+        
+        backlinkList.appendChild(item);
+      });
+      
+      document.getElementById('backlinkSection').style.display = 'block';
+      document.getElementById('backlinkSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     // COPY FUNCTIONS
@@ -380,124 +420,6 @@
       setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
     }
 
-    // BACKLINK FUNCTIONS
-    async function createBacklinks() {
-      if (processedResults.length === 0) {
-        alert('قم بمعالجة الروابط أولاً');
-        return;
-      }
-
-      const targetUrl = processedResults[0].prettyUrl;
-      const btn = document.getElementById('backlinkBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري النشر...';
-      
-      document.getElementById('backlinkProgress').style.display = 'block';
-      const progressBar = document.getElementById('progressBar');
-      const progressText = document.getElementById('progressText');
-      const statusDiv = document.getElementById('backlinkStatus');
-      
-      backlinkResults = [];
-      statusDiv.innerHTML = '';
-      
-      for (let i = 0; i < BACKLINK_SITES.length; i++) {
-        const site = BACKLINK_SITES[i];
-        const progress = ((i + 1) / BACKLINK_SITES.length) * 100;
-        
-        progressBar.style.width = progress + '%';
-        progressText.textContent = `${i + 1}/${BACKLINK_SITES.length} - جاري فتح: ${site.name}`;
-        
-        let submitUrl = site.url;
-        if (site.param) {
-          const separator = submitUrl.includes('?') ? '&' : '?';
-          submitUrl += `${separator}${site.param}=${encodeURIComponent(targetUrl)}`;
-        }
-        
-        let opened = false;
-        try {
-          const win = window.open(submitUrl, `_blank_${site.name.replace(/\s+/g, '')}`);
-          opened = !!win;
-        } catch (e) {
-          opened = false;
-        }
-        
-        const result = {
-          site: site.name,
-          url: submitUrl,
-          ok: opened,
-          timestamp: new Date().toISOString()
-        };
-        
-        backlinkResults.push(result);
-        
-        // Update status display
-        const statusItem = document.createElement('div');
-        statusItem.className = `status-item ${opened ? 'status-success' : 'status-blocked'}`;
-        statusItem.innerHTML = `
-          <span><strong>${site.name}</strong></span>
-          <span>${opened ? '✅ فُتح' : '❌ محجوب'}</span>
-        `;
-        statusDiv.appendChild(statusItem);
-        
-        // Batch delay
-        if ((i + 1) % 12 === 0) await new Promise(r => setTimeout(r, 1200));
-        else await new Promise(r => setTimeout(r, 400));
-      }
-      
-      progressText.textContent = 'تم! انتهاء النشر على 25 موقع';
-      btn.innerHTML = '<i class="fas fa-check me-2"></i>تم النشر على 25 موقع!';
-      btn.classList.remove('btn-danger');
-      btn.classList.add('btn-success');
-      
-      // Show retry button if blocked sites exist
-      const blockedSites = backlinkResults.filter(r => !r.ok);
-      if (blockedSites.length > 0) {
-        document.getElementById('blockedCount').textContent = blockedSites.length;
-        document.getElementById('retryBtn').classList.remove('d-none');
-      }
-      
-      // Auto-download report
-      downloadBacklinkReport();
-    }
-
-    async function retryBlocked() {
-      const blockedSites = backlinkResults.filter(r => !r.ok);
-      if (blockedSites.length === 0) {
-        alert('لا توجد مواقع محجوبة لإعادة المحاولة');
-        return;
-      }
-      
-      const btn = document.getElementById('retryBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>إعادة المحاولة...';
-      
-      for (let i = 0; i < blockedSites.length; i++) {
-        const site = blockedSites[i];
-        try {
-          const win = window.open(site.url, `_blank_retry_${site.site.replace(/\s+/g, '')}`);
-          if (win) {
-            // Update original result
-            const originalIndex = backlinkResults.findIndex(r => r.site === site.site);
-            if (originalIndex !== -1) {
-              backlinkResults[originalIndex].ok = true;
-              backlinkResults[originalIndex].retried = true;
-            }
-          }
-        } catch (e) {
-          console.warn('Retry failed for', site.site);
-        }
-        await new Promise(r => setTimeout(r, 500));
-      }
-      
-      btn.innerHTML = '<i class="fas fa-check me-2"></i>تمت إعادة المحاولة!';
-      setTimeout(() => {
-        btn.classList.add('d-none');
-      }, 3000);
-      
-      // Update backlink report
-      downloadBacklinkReport('retry');
-    }
-
     // XLSX EXPORT
     function downloadXLSX() {
       if (processedResults.length === 0) {
@@ -528,23 +450,31 @@
       XLSX.writeFile(wb, filename);
     }
 
-    function downloadBacklinkReport(suffix = '') {
-      if (backlinkResults.length === 0) return;
-      
-      const data = backlinkResults.map((result, index) => ({
-        'الرقم': index + 1,
-        'اسم الموقع': result.site,
-        'الرابط المرسل': result.url,
-        'الحالة': result.ok ? 'تم الفتح ✅' : 'محجوب ❌',
-        'معاود المحاولة': result.retried ? 'نعم' : 'لا',
-        'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG')
-      }));
+    function downloadBacklinkList() {
+      const data = BACKLINK_SITES.map((site, index) => {
+        let submitUrl = site.url;
+        if (site.url.includes('?url=') || site.url.includes('add?url=') || site.url.includes('save?url=')) {
+          submitUrl += encodeURIComponent(targetUrl);
+        } else if (site.url.includes('submit')) {
+          submitUrl += `?url=${encodeURIComponent(targetUrl)}`;
+        }
+        
+        return {
+          'الرقم': index + 1,
+          'اسم الموقع': site.name,
+          'الوصف': site.desc,
+          'رابط الإرسال': submitUrl,
+          'الرابط المراد نشره': targetUrl,
+          'تاريخ الإنشاء': new Date().toLocaleString('ar-EG'),
+          'ملاحظات': 'اضغط على رابط الإرسال لفتح موقع النشر'
+        };
+      });
       
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'تقرير الباك لينكات');
+      XLSX.utils.book_append_sheet(wb, ws, 'قائمة الباك لينك');
       
-      const filename = `backlink-report${suffix ? '-' + suffix : ''}-${new Date().toISOString().split('T')[0]}.xlsx`;
+      const filename = `backlink-list-${new Date().toISOString().split('T')[0]}.xlsx`;
       XLSX.writeFile(wb, filename);
     }
 
@@ -559,8 +489,8 @@
     
     document.getElementById('processBtn').onclick = processUrls;
     document.getElementById('cleanBtn').onclick = cleanUrls;
-    document.getElementById('backlinkBtn').onclick = createBacklinks;
-    document.getElementById('retryBtn').onclick = retryBlocked;
+    document.getElementById('backlinkBtn').onclick = generateBacklinkList;
+    document.getElementById('downloadBacklinkBtn').onclick = downloadBacklinkList;
     document.getElementById('copyShortBtn').onclick = copyAllShort;
     document.getElementById('copyPrettyBtn').onclick = copyAllPretty;
     document.getElementById('downloadBtn').onclick = downloadXLSX;
