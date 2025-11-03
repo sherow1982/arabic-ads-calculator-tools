@@ -1,0 +1,25 @@
+{
+  "core_patterns": {
+    "pricing": ["اسعار {field}", "تكلفة {field}", "كم سعر {field}", "تسعيرة {field}", "عرض أسعار {field}", "اسعار {service}", "تكلفة {service}"],
+    "quality_search": ["افضل {field}", "احسن {field}", "أجود {field}", "{field} ممتاز", "{field} مضمون", "{field} موثوق", "اشهر {field}", "اكبر {field}"],
+    "local_proximity": ["{field} قريب مني", "{field} في منطقتي", "{field} محلي", "افضل {field} بالمدينة", "{field} بالحي", "{field} قريب"],
+    "contact_booking": ["رقم {field}", "هاتف {field}", "اتصال {field}", "{field} برقم واحد", "تليفون {field}", "حجز {field}", "طلب {field}", "موعد {field}"],
+    "immediacy_urgency": ["{field} فوري", "{field} عاجل", "{field} سريع", "{field} طوارئ", "{field} 24 ساعة", "{field} اليوم"],
+    "offers_deals": ["عروض {field}", "خصومات {field}", "{field} مجاني التقدير", "تخفيضات {field}", "عرض خاص {field}"],
+    "reputation_reviews": ["تقييمات {field}", "آراء {field}", "مراجعات {field}", "تجارب {field}", "شهادات {field}"]
+  },
+  "service_patterns": {
+    "scheduling": ["حجز {service} اونلاين", "موعد {service}", "جدولة {service}", "{service} بالموعد"],
+    "consultation": ["استشارة {service}", "كشف {service}", "فحص {service}", "تقييم {service}"],
+    "delivery": ["توصيل {service}", "{service} للمنازل", "خدمة توصيل {service}"],
+    "emergency": ["طوارئ {service}", "{service} اسعاف", "{service} طارئ"]
+  },
+  "geo_patterns": {
+    "city_specific": ["{field} في {city}", "{field} {city}", "{service} في {city}"],
+    "area_specific": ["{field} في {area}", "{field} {area}"]
+  },
+  "specialization_patterns": {
+    "expert": ["أخصائي {specialization}", "خبير {specialization}", "مختص {specialization}", "استشاري {specialization}"],
+    "service_combo": ["{field} و {service}", "{service} {field}", "{field} مع {service}"]
+  }
+}
