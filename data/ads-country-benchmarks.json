@@ -1,16 +1,310 @@
 {
-  "version": 1,
+  "version": 2,
   "last_updated": "2025-11-03",
+  "metadata": {
+    "total_countries": 12,
+    "total_sectors": 10,
+    "data_sources": ["industry_reports", "platform_benchmarks", "regional_analysis"],
+    "disclaimer": "هذه أرقام مرجعية تقريبية للتجربة التعليمية وليست بديلاً عن بيانات المنصات الفعلية أو تقديرات Google/TikTok/Meta الرسمية."
+  },
   "countries": {
-    "Egypt": {"name":"مصر","currency":"EGP","recommended_platforms":["Facebook","Instagram","Google Ads","TikTok"],"avg_cpm":{"Facebook":0.62,"Instagram":0.69,"Google Display":0.45,"TikTok":0.35,"Snapchat":0.40,"LinkedIn":3.5},"budget_ranges":{"small":{"min":2000,"max":8000},"medium":{"min":8000,"max":25000},"large":{"min":25000,"max":100000}}},
-    "Saudi Arabia": {"name":"السعودية","currency":"SAR","recommended_platforms":["Snapchat","Instagram","TikTok","Google Ads","Facebook"],"avg_cpm":{"Facebook":3.2,"Instagram":4.1,"Google Display":2.8,"TikTok":1.8,"Snapchat":2.4,"LinkedIn":12.0},"budget_ranges":{"small":{"min":5000,"max":20000},"medium":{"min":20000,"max":75000},"large":{"min":75000,"max":300000}}},
-    "UAE": {"name":"الإمارات","currency":"AED","recommended_platforms":["Instagram","LinkedIn","Google Ads","Facebook","Snapchat"],"avg_cpm":{"Facebook":8.98,"Instagram":9.5,"Google Display":6.2,"TikTok":3.8,"Snapchat":4.2,"LinkedIn":18.5},"budget_ranges":{"small":{"min":8000,"max":30000},"medium":{"min":30000,"max":100000},"large":{"min":100000,"max":500000}}}
+    "Egypt": {
+      "name": "مصر",
+      "currency": "EGP",
+      "population": 105000000,
+      "internet_penetration": 0.72,
+      "social_media_penetration": 0.42,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 0.62, "Instagram": 0.69, "Google Display": 0.45, "TikTok": 0.35, "Snapchat": 0.40, "LinkedIn": 3.5, "YouTube": 0.55
+      },
+      "avg_cpc": {
+        "Google Ads": 0.8, "Facebook": 1.2, "Instagram": 1.5, "TikTok": 0.6, "LinkedIn": 4.0
+      },
+      "budget_ranges": {
+        "small": {"min": 2000, "max": 8000}, "medium": {"min": 8000, "max": 25000}, "large": {"min": 25000, "max": 100000}
+      },
+      "performance_metrics": {"avg_ctr": 0.012, "avg_cvr": 0.025, "avg_roas": 3.2}
+    },
+    "Saudi Arabia": {
+      "name": "السعودية",
+      "currency": "SAR",
+      "population": 35000000,
+      "internet_penetration": 0.95,
+      "social_media_penetration": 0.89,
+      "recommended_platforms": ["Snapchat", "Instagram", "TikTok", "Google Ads", "Facebook"],
+      "avg_cpm": {
+        "Facebook": 3.2, "Instagram": 4.1, "Google Display": 2.8, "TikTok": 1.8, "Snapchat": 2.4, "LinkedIn": 12.0, "YouTube": 2.1
+      },
+      "avg_cpc": {
+        "Google Ads": 2.8, "Facebook": 4.2, "Instagram": 5.5, "TikTok": 1.9, "LinkedIn": 8.5
+      },
+      "budget_ranges": {
+        "small": {"min": 5000, "max": 20000}, "medium": {"min": 20000, "max": 75000}, "large": {"min": 75000, "max": 300000}
+      },
+      "performance_metrics": {"avg_ctr": 0.018, "avg_cvr": 0.032, "avg_roas": 4.1}
+    },
+    "UAE": {
+      "name": "الإمارات",
+      "currency": "AED",
+      "population": 10000000,
+      "internet_penetration": 0.99,
+      "social_media_penetration": 1.0,
+      "recommended_platforms": ["Instagram", "LinkedIn", "Google Ads", "Facebook", "Snapchat"],
+      "avg_cpm": {
+        "Facebook": 8.98, "Instagram": 9.5, "Google Display": 6.2, "TikTok": 3.8, "Snapchat": 4.2, "LinkedIn": 18.5, "YouTube": 5.8
+      },
+      "avg_cpc": {
+        "Google Ads": 4.2, "Facebook": 6.5, "Instagram": 7.8, "TikTok": 2.6, "LinkedIn": 15.0
+      },
+      "budget_ranges": {
+        "small": {"min": 8000, "max": 30000}, "medium": {"min": 30000, "max": 100000}, "large": {"min": 100000, "max": 500000}
+      },
+      "performance_metrics": {"avg_ctr": 0.022, "avg_cvr": 0.038, "avg_roas": 4.8}
+    },
+    "Kuwait": {
+      "name": "الكويت",
+      "currency": "KWD",
+      "population": 4500000,
+      "internet_penetration": 0.98,
+      "social_media_penetration": 0.85,
+      "recommended_platforms": ["Instagram", "Snapchat", "Google Ads", "Facebook", "TikTok"],
+      "avg_cpm": {
+        "Facebook": 5.8, "Instagram": 6.8, "Google Display": 4.2, "TikTok": 2.8, "Snapchat": 3.2, "LinkedIn": 14.0, "YouTube": 3.8
+      },
+      "avg_cpc": {
+        "Google Ads": 3.5, "Facebook": 5.0, "Instagram": 6.2, "TikTok": 2.0, "LinkedIn": 10.5
+      },
+      "budget_ranges": {
+        "small": {"min": 6000, "max": 25000}, "medium": {"min": 25000, "max": 80000}, "large": {"min": 80000, "max": 350000}
+      },
+      "performance_metrics": {"avg_ctr": 0.020, "avg_cvr": 0.035, "avg_roas": 4.2}
+    },
+    "Qatar": {
+      "name": "قطر",
+      "currency": "QAR",
+      "population": 2900000,
+      "internet_penetration": 0.99,
+      "social_media_penetration": 0.90,
+      "recommended_platforms": ["Instagram", "LinkedIn", "Google Ads", "Snapchat", "Facebook"],
+      "avg_cpm": {
+        "Facebook": 7.2, "Instagram": 8.5, "Google Display": 5.8, "TikTok": 3.5, "Snapchat": 4.0, "LinkedIn": 16.8, "YouTube": 5.2
+      },
+      "avg_cpc": {
+        "Google Ads": 4.5, "Facebook": 6.2, "Instagram": 7.5, "TikTok": 2.8, "LinkedIn": 13.5
+      },
+      "budget_ranges": {
+        "small": {"min": 7000, "max": 28000}, "medium": {"min": 28000, "max": 90000}, "large": {"min": 90000, "max": 400000}
+      },
+      "performance_metrics": {"avg_ctr": 0.021, "avg_cvr": 0.036, "avg_roas": 4.5}
+    },
+    "Bahrain": {
+      "name": "البحرين",
+      "currency": "BHD",
+      "population": 1700000,
+      "internet_penetration": 0.98,
+      "social_media_penetration": 0.88,
+      "recommended_platforms": ["Instagram", "Facebook", "Google Ads", "Snapchat", "TikTok"],
+      "avg_cpm": {
+        "Facebook": 4.2, "Instagram": 5.1, "Google Display": 3.2, "TikTok": 2.1, "Snapchat": 2.5, "LinkedIn": 11.0, "YouTube": 3.0
+      },
+      "avg_cpc": {
+        "Google Ads": 2.8, "Facebook": 4.0, "Instagram": 5.2, "TikTok": 1.6, "LinkedIn": 8.0
+      },
+      "budget_ranges": {
+        "small": {"min": 4000, "max": 15000}, "medium": {"min": 15000, "max": 50000}, "large": {"min": 50000, "max": 200000}
+      },
+      "performance_metrics": {"avg_ctr": 0.019, "avg_cvr": 0.033, "avg_roas": 4.0}
+    },
+    "Oman": {
+      "name": "عُمان",
+      "currency": "OMR",
+      "population": 5100000,
+      "internet_penetration": 0.95,
+      "social_media_penetration": 0.78,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "Snapchat"],
+      "avg_cpm": {
+        "Facebook": 2.8, "Instagram": 3.5, "Google Display": 2.2, "TikTok": 1.5, "Snapchat": 1.8, "LinkedIn": 8.2, "YouTube": 2.0
+      },
+      "avg_cpc": {
+        "Google Ads": 2.2, "Facebook": 2.8, "Instagram": 3.8, "TikTok": 1.2, "LinkedIn": 6.5
+      },
+      "budget_ranges": {
+        "small": {"min": 3000, "max": 12000}, "medium": {"min": 12000, "max": 40000}, "large": {"min": 40000, "max": 150000}
+      },
+      "performance_metrics": {"avg_ctr": 0.016, "avg_cvr": 0.028, "avg_roas": 3.5}
+    },
+    "Jordan": {
+      "name": "الأردن",
+      "currency": "JOD",
+      "population": 10200000,
+      "internet_penetration": 0.87,
+      "social_media_penetration": 0.65,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 1.8, "Instagram": 2.2, "Google Display": 1.5, "TikTok": 0.9, "Snapchat": 1.1, "LinkedIn": 6.5, "YouTube": 1.3
+      },
+      "avg_cpc": {
+        "Google Ads": 1.2, "Facebook": 1.8, "Instagram": 2.2, "TikTok": 0.8, "LinkedIn": 5.0
+      },
+      "budget_ranges": {
+        "small": {"min": 2500, "max": 10000}, "medium": {"min": 10000, "max": 30000}, "large": {"min": 30000, "max": 120000}
+      },
+      "performance_metrics": {"avg_ctr": 0.014, "avg_cvr": 0.025, "avg_roas": 3.0}
+    },
+    "Lebanon": {
+      "name": "لبنان",
+      "currency": "LBP",
+      "population": 6800000,
+      "internet_penetration": 0.78,
+      "social_media_penetration": 0.68,
+      "recommended_platforms": ["Facebook", "Instagram", "TikTok", "Google Ads", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 1.2, "Instagram": 1.5, "Google Display": 0.9, "TikTok": 0.6, "Snapchat": 0.7, "LinkedIn": 5.0, "YouTube": 0.8
+      },
+      "avg_cpc": {
+        "Google Ads": 0.8, "Facebook": 1.2, "Instagram": 1.6, "TikTok": 0.5, "LinkedIn": 4.0
+      },
+      "budget_ranges": {
+        "small": {"min": 1500, "max": 6000}, "medium": {"min": 6000, "max": 18000}, "large": {"min": 18000, "max": 75000}
+      },
+      "performance_metrics": {"avg_ctr": 0.013, "avg_cvr": 0.022, "avg_roas": 2.5}
+    },
+    "Morocco": {
+      "name": "المغرب",
+      "currency": "MAD",
+      "population": 37000000,
+      "internet_penetration": 0.84,
+      "social_media_penetration": 0.58,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 0.9, "Instagram": 1.1, "Google Display": 0.7, "TikTok": 0.4, "Snapchat": 0.5, "LinkedIn": 4.2, "YouTube": 0.6
+      },
+      "avg_cpc": {
+        "Google Ads": 0.7, "Facebook": 1.0, "Instagram": 1.4, "TikTok": 0.4, "LinkedIn": 3.2
+      },
+      "budget_ranges": {
+        "small": {"min": 1200, "max": 5000}, "medium": {"min": 5000, "max": 15000}, "large": {"min": 15000, "max": 60000}
+      },
+      "performance_metrics": {"avg_ctr": 0.012, "avg_cvr": 0.020, "avg_roas": 2.8}
+    },
+    "Tunisia": {
+      "name": "تونس",
+      "currency": "TND",
+      "population": 11800000,
+      "internet_penetration": 0.67,
+      "social_media_penetration": 0.52,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 0.7, "Instagram": 0.9, "Google Display": 0.5, "TikTok": 0.3, "Snapchat": 0.4, "LinkedIn": 3.5, "YouTube": 0.5
+      },
+      "avg_cpc": {
+        "Google Ads": 0.6, "Facebook": 0.9, "Instagram": 1.2, "TikTok": 0.3, "LinkedIn": 2.8
+      },
+      "budget_ranges": {
+        "small": {"min": 1000, "max": 4000}, "medium": {"min": 4000, "max": 12000}, "large": {"min": 12000, "max": 50000}
+      },
+      "performance_metrics": {"avg_ctr": 0.011, "avg_cvr": 0.018, "avg_roas": 2.4}
+    },
+    "Algeria": {
+      "name": "الجزائر",
+      "currency": "DZD",
+      "population": 44000000,
+      "internet_penetration": 0.61,
+      "social_media_penetration": 0.48,
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok", "YouTube"],
+      "avg_cpm": {
+        "Facebook": 0.5, "Instagram": 0.6, "Google Display": 0.4, "TikTok": 0.2, "Snapchat": 0.3, "LinkedIn": 2.8, "YouTube": 0.3
+      },
+      "avg_cpc": {
+        "Google Ads": 0.4, "Facebook": 0.7, "Instagram": 0.9, "TikTok": 0.2, "LinkedIn": 2.2
+      },
+      "budget_ranges": {
+        "small": {"min": 800, "max": 3000}, "medium": {"min": 3000, "max": 10000}, "large": {"min": 10000, "max": 40000}
+      },
+      "performance_metrics": {"avg_ctr": 0.010, "avg_cvr": 0.016, "avg_roas": 2.2}
+    }
   },
   "business_sectors": {
-    "E-commerce": {"name":"التجارة الإلكترونية","keywords":["متجر إلكتروني","تسوق أونلاين","شراء","منتجات","عروض","تخفيضات","توصيل","دفع إلكتروني"],"avg_conversion_rate":0.025},
-    "Food & Restaurant": {"name":"المطاعم والأغذية","keywords":["مطعم","طعام","توصيل","وجبات","إفطار","غداء","عشاء","حلويات","مشروبات"],"avg_conversion_rate":0.035},
-    "Real Estate": {"name":"العقارات","keywords":["عقار","شقة","فيلا","بيت","إيجار","بيع","استثمار عقاري","أراضي"],"avg_conversion_rate":0.015},
-    "Healthcare": {"name":"الرعاية الصحية","keywords":["طبيب","عيادة","مستشفى","علاج","دواء","صيدلية","فحص طبي","أسنان"],"avg_conversion_rate":0.04}
-  },
-  "disclaimer": "هذه أرقام مرجعية تقريبية للتجربة التعليمية وليست بديلاً عن بيانات المنصات الفعلية أو تقديرات Google/TikTok/Meta الرسمية."
+    "E-commerce": {
+      "name": "التجارة الإلكترونية",
+      "keywords": ["متجر إلكتروني", "تسوق أونلاين", "شراء", "منتجات", "عروض", "تخفيضات", "توصيل", "دفع إلكتروني", "تسوق آمن", "شحن مجاني", "كاش باك", "خصم", "تطبيق تسوق", "سلة التسوق", "مول أونلاين"],
+      "avg_conversion_rate": 0.025,
+      "seasonal_multipliers": {"Ramadan": 1.8, "Back_to_school": 1.4, "Black_Friday": 2.2, "Winter": 0.8, "Summer": 1.2, "Eid": 2.0},
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "TikTok"],
+      "typical_funnel": {"awareness": 0.4, "consideration": 0.35, "conversion": 0.25}
+    },
+    "Food & Restaurant": {
+      "name": "المطاعم والأغذية",
+      "keywords": ["مطعم", "طعام", "توصيل", "وجبات", "إفطار", "غداء", "عشاء", "حلويات", "مشروبات", "بيتزا", "برجر", "شاورما", "ملوخية", "كشري", "فطار", "سحور", "بوفيه", "منيو"],
+      "avg_conversion_rate": 0.035,
+      "seasonal_multipliers": {"Ramadan": 2.2, "Weekend": 1.3, "Holidays": 1.6, "Summer": 1.1, "Winter": 1.0},
+      "recommended_platforms": ["Instagram", "Facebook", "Google Ads", "TikTok", "Snapchat"],
+      "typical_funnel": {"awareness": 0.3, "consideration": 0.3, "conversion": 0.4}
+    },
+    "Real Estate": {
+      "name": "العقارات",
+      "keywords": ["عقار", "شقة", "فيلا", "بيت", "إيجار", "بيع", "استثمار عقاري", "أراضي", "مكتب", "محل", "عمارة", "مول", "كمبوند", "التجمع", "الشيخ زايد", "مدينة نصر", "دوبلكس", "روف"],
+      "avg_conversion_rate": 0.015,
+      "seasonal_multipliers": {"Spring": 1.4, "Summer": 1.2, "Winter": 0.9, "Holidays": 0.8, "Ramadan": 0.7},
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "LinkedIn"],
+      "typical_funnel": {"awareness": 0.5, "consideration": 0.35, "conversion": 0.15}
+    },
+    "Healthcare": {
+      "name": "الرعاية الصحية",
+      "keywords": ["طبيب", "عيادة", "مستشفى", "علاج", "دواء", "صيدلية", "فحص طبي", "أسنان", "عيون", "جلدية", "باطنة", "نساء وولادة", "أطفال", "عظام", "قلب", "تحاليل", "أشعة", "عملية"],
+      "avg_conversion_rate": 0.040,
+      "seasonal_multipliers": {"Winter": 1.5, "Spring": 1.2, "Summer": 0.9, "Flu_season": 1.8, "School_start": 1.3},
+      "recommended_platforms": ["Google Ads", "Facebook", "LinkedIn", "YouTube"],
+      "typical_funnel": {"awareness": 0.4, "consideration": 0.4, "conversion": 0.2}
+    },
+    "Education": {
+      "name": "التعليم",
+      "keywords": ["تعليم", "دورات", "جامعة", "مدرسة", "كورس", "تدريب", "شهادة", "دراسة", "أونلاين", "ماستر", "دكتوراه", "لغات", "إنجليزي", "كمبيوتر", "محاسبة", "إدارة", "تسويق", "منحة"],
+      "avg_conversion_rate": 0.020,
+      "seasonal_multipliers": {"Back_to_school": 2.0, "Summer": 1.3, "Exams": 1.6, "Holidays": 0.7, "Ramadan": 0.8},
+      "recommended_platforms": ["Facebook", "Instagram", "Google Ads", "LinkedIn", "YouTube"],
+      "typical_funnel": {"awareness": 0.45, "consideration": 0.35, "conversion": 0.2}
+    },
+    "Fashion & Beauty": {
+      "name": "الأزياء والجمال",
+      "keywords": ["أزياء", "ملابس", "جمال", "مكياج", "عطور", "إكسسوارات", "حقائب", "أحذية", "فساتين", "بدل", "جينز", "قمصان", "عبايات", "حجاب", "كريمات", "شامبو", "عناية", "تجميل"],
+      "avg_conversion_rate": 0.028,
+      "seasonal_multipliers": {"Eid": 2.5, "Wedding_season": 1.8, "Winter": 1.3, "Summer": 1.1, "Ramadan": 1.2},
+      "recommended_platforms": ["Instagram", "TikTok", "Snapchat", "Facebook", "Pinterest"],
+      "typical_funnel": {"awareness": 0.35, "consideration": 0.35, "conversion": 0.3}
+    },
+    "Technology": {
+      "name": "التكنولوجيا",
+      "keywords": ["تقنية", "هواتف", "كمبيوتر", "إلكترونيات", "برمجيات", "تطبيقات", "ألعاب", "لابتوب", "تابلت", "سمارت ووتش", "سماعات", "كاميرا", "تلفزيون", "واي فاي", "انترنت", "أندرويد", "آيفون"],
+      "avg_conversion_rate": 0.022,
+      "seasonal_multipliers": {"Black_Friday": 2.0, "New_Year": 1.5, "Back_to_school": 1.3, "Summer": 0.9, "Ramadan": 0.8},
+      "recommended_platforms": ["Google Ads", "Facebook", "Instagram", "LinkedIn", "YouTube"],
+      "typical_funnel": {"awareness": 0.4, "consideration": 0.4, "conversion": 0.2}
+    },
+    "Automotive": {
+      "name": "السيارات",
+      "keywords": ["سيارة", "سيارات", "قطع غيار", "إطارات", "صيانة", "تأمين سيارات", "رخصة قيادة", "معرض", "تويوتا", "نيسان", "هيونداي", "BMW", "مرسيدس", "محرك", "فرامل", "زيت", "بنزين"],
+      "avg_conversion_rate": 0.012,
+      "seasonal_multipliers": {"Spring": 1.4, "Summer": 1.2, "Winter": 0.8, "New_Year": 1.6, "Bonus_season": 1.8},
+      "recommended_platforms": ["Facebook", "Google Ads", "Instagram", "YouTube"],
+      "typical_funnel": {"awareness": 0.5, "consideration": 0.4, "conversion": 0.1}
+    },
+    "Travel & Tourism": {
+      "name": "السفر والسياحة",
+      "keywords": ["سفر", "سياحة", "فندق", "رحلات", "طيران", "حجز", "عطلة", "منتجع", "شنطة", "جواز سفر", "فيزا", "تذاكر", "كروز", "شهر عسل", "عمرة", "حج", "دبي", "تركيا"],
+      "avg_conversion_rate": 0.018,
+      "seasonal_multipliers": {"Summer": 2.0, "Holidays": 1.8, "Spring": 1.4, "Winter": 0.6, "Ramadan": 0.5},
+      "recommended_platforms": ["Instagram", "Facebook", "Google Ads", "TikTok"],
+      "typical_funnel": {"awareness": 0.4, "consideration": 0.45, "conversion": 0.15}
+    },
+    "Finance & Banking": {
+      "name": "البنوك والمالية",
+      "keywords": ["بنك", "قرض", "تأمين", "استثمار", "بطاقة ائتمان", "حساب بنكي", "تمويل", "رهن عقاري", "ودائع", "فوائد", "صراف آلي", "تحويل أموال", "فيزا", "ماستركارد", "بورصة", "ذهب", "عملات"],
+      "avg_conversion_rate": 0.008,
+      "seasonal_multipliers": {"New_Year": 1.6, "Tax_season": 1.4, "Ramadan": 0.8, "Summer": 0.9, "Bonus_time": 1.5},
+      "recommended_platforms": ["Google Ads", "LinkedIn", "Facebook", "YouTube"],
+      "typical_funnel": {"awareness": 0.6, "consideration": 0.3, "conversion": 0.1}
+    }
+  }
 }
