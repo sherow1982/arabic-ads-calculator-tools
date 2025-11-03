@@ -1,0 +1,10 @@
+{
+  "pricing": ["اسعار {sector}", "تكلفة {sector}", "كم سعر {sector}", "تسعيرة {sector}", "عرض أسعار {sector}"],
+  "quality": ["افضل {sector}", "احسن {sector}", "أجود {sector}", "{sector} ممتاز", "{sector} مضمون", "{sector} موثوق"],
+  "local": ["{sector} قريب مني", "{sector} في منطقتي", "{sector} محلي", "افضل {sector} بالمدينة", "{sector} بالحي"],
+  "contact": ["رقم {sector}", "هاتف {sector}", "اتصال {sector}", "{sector} برقم واحد", "تليفون {sector}"],
+  "booking": ["حجز {sector}", "طلب {sector}", "موعد {sector}", "{sector} اليوم", "حجز {sector} اونلاين"],
+  "immediate": ["{sector} فوري", "{sector} عاجل", "{sector} سريع", "{sector} طوارئ", "{sector} 24 ساعة"],
+  "offers": ["عروض {sector}", "خصومات {sector}", "{sector} مجاني التقدير", "تخفيضات {sector}"],
+  "reputation": ["تقييمات {sector}", "آراء {sector}", "مراجعات {sector}", "أكبر {sector}", "أشهر {sector}"]
+}
