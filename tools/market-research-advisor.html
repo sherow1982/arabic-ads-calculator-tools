@@ -24,25 +24,26 @@
     .btn{background:var(--gradient);color:#fff;border:none;border-radius:20px;padding:8px 14px;cursor:pointer}
     .platforms{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .platforms label{display:flex;align-items:center;gap:6px;background:#f6f7f9;border:1px solid #e7e9ee;border-radius:999px;padding:6px 10px;cursor:pointer}
+    .inline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   </style>
 </head>
 <body>
   <div class="container" id="app">
     <h1>🎯 مُرشِّد الإعلانات الذكي (نسخة محسّنة)</h1>
-    <p class="muted">اكتب <b>مجال عملك</b> بحرية، اختر <b>الدولة</b> و<b>المنصات</b>، وسنولّد <b>30 كلمة</b> مرتبطة مباشرة بمجالك فقط + مزيج قنوات وتوزيع ميزانية وتوقعات. مع <b>تصدير XLSX</b>.</p>
+    <p class="muted">مصدر كلمات بحث حقيقية (مجاني) من Google Autocomplete عربياً، مع فلترة الصلة بالمجال، وتصدير XLSX. يدعم دول الخليج.</p>
 
-    <div id="err" class="error">تعذر تحميل بيانات الدول. رجاء تحديث الصفحة (Ctrl+F5). إن استمر، تواصل معنا.</div>
+    <div id="err" class="error">تعذر تحميل بيانات الدول. رجاء تحديث الصفحة (Ctrl+F5).</div>
 
     <div class="card">
       <div class="row">
         <div class="col">
           <label>الدولة</label>
-          <input id="country" list="countries" placeholder="مثال: السعودية، مصر" disabled />
+          <input id="country" list="countries" placeholder="مثال: السعودية، الإمارات" disabled />
           <datalist id="countries"></datalist>
         </div>
         <div class="col">
           <label>مجال العمل (أكتب بحرية)</label>
-          <input id="sectorFree" placeholder="مثال: نقل أثاث، توريدات مطاعم، عيادة أسنان" />
+          <input id="sectorFree" placeholder="مثال: نقل أثاث، شركة نظافة، شركة صرف صحي" />
         </div>
         <div class="col">
           <label>العملة</label>
@@ -50,37 +51,23 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <label>هدف الحملة</label>
-          <select id="goal">
-            <option value="awareness">وعي</option>
-            <option value="traffic">زيارات</option>
-            <option value="leads">عملاء محتملون</option>
-            <option value="sales" selected>مبيعات</option>
+      <div class="row inline">
+        <div>
+          <label>مصدر الكلمات</label>
+          <select id="source">
+            <option value="google">Google Autocomplete (مجاني)</option>
+            <option value="local">توليد محلي (بدون إنترنت)</option>
           </select>
         </div>
-        <div class="col">
-          <label>المدة (أيام)</label>
-          <input id="days" type="number" min="7" step="1" value="30" />
+        <div>
+          <label>توسيع A–Z</label>
+          <input type="checkbox" id="expandAZ" checked />
         </div>
-        <div class="col">
-          <label>الميزانية الإجمالية</label>
-          <input id="budget" type="number" min="200" step="50" placeholder="أدخل ميزانية الحملة" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <label>موسمية (اختياري)</label>
-          <select id="season">
-            <option value="none" selected>بدون</option>
-            <option value="Ramadan">رمضان</option>
-            <option value="Eid">العيد</option>
-            <option value="Back_to_school">العودة للمدارس</option>
-            <option value="Black_Friday">الجمعة السوداء</option>
-            <option value="Summer">الصيف</option>
-            <option value="Winter">الشتاء</option>
+        <div>
+          <label>لهجة</label>
+          <select id="dialect">
+            <option value="std" selected>عربية فصحى</option>
+            <option value="gcc">خليجي</option>
           </select>
         </div>
       </div>
@@ -92,17 +79,17 @@
         </div>
       </div>
 
-      <button id="run" disabled>توليد الخطة والكلمات</button>
+      <button id="run" disabled>جلب كلمات حقيقية + توليد الخطة</button>
       <div class="actions">
         <button id="copyTop30" class="btn" disabled>نسخ أفضل 30</button>
         <button id="exportXlsx" class="btn" disabled>تنزيل XLSX</button>
       </div>
-      <p class="small warn">لن تُعرض أي كلمة لا تحتوي جذر/مرادف من مجالك. لو الكلمات قليلة زوّد تفاصيل المجال (مدينة/خدمة فرعية).</p>
+      <p class="small warn">البيانات من Google Autocomplete مجانية وقد تُقيَّد بالطلب السريع. عند قلة النتائج، أضف مدينة/خدمة فرعية.</p>
     </div>
 
     <div id="out" style="display:none">
       <div class="card">
-        <h2>🔑 أشهر 30 كلمة بحث مرتبطة بمجالك</h2>
+        <h2>🔑 كلمات بحث حقيقية مرتبطة بمجالك</h2>
         <div id="keywords" class="chips"></div>
       </div>
 
@@ -121,101 +108,112 @@
         <h2>📈 التوقعات المفصلة</h2>
         <div id="forecasts" class="kpi"></div>
       </div>
-
-      <div class="card">
-        <h2>🧪 Playbook التنفيذ</h2>
-        <ol id="playbook"></ol>
-      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="js/xlsx-exporter.js"></script>
-
   <script>
+    const GCC_GL = { 'السعودية':'sa', 'الإمارات':'ae', 'الكويت':'kw', 'قطر':'qa', 'البحرين':'bh', 'عُمان':'om' };
+    const ALL_PLATFORMS=['Google Ads','Facebook','Instagram','TikTok','Snapchat','YouTube','LinkedIn'];
     function normalize(s){ return (s||'').toLowerCase().replace(/[\u064B-\u0652]/g,'').trim(); }
 
-    // اشتقاق مرادفات حسب المجال المكتوب + المدينة إن وجدت
-    function deriveSynonyms(base){
-      const b=normalize(base);
-      const syn=new Set();
-      const tokens=b.split(/\s+/).filter(Boolean);
-      tokens.forEach(t=>{ if(t.length>2) syn.add(t.replace(/[ةه]/g,'ه').replace(/[آأإا]/g,'ا')); });
-      // قواميس صغيرة حسب المجالات الشائعة
+    function deriveSynonyms(base, dialect){
+      const b=normalize(base); const syn=new Set();
+      const tokens=b.split(/\s+/).filter(Boolean); tokens.forEach(t=> syn.add(t.replace(/[ةه]/g,'ه').replace(/[آأإا]/g,'ا')));
       if(/نقل/.test(b)) ['نقل','ترحيل','شحن','تحميل','تنزيل'].forEach(x=>syn.add(x));
       if(/عفش|اثاث|موبيليا/.test(b)) ['عفش','اثاث','موبيليا','اثاث منزلي','اثاث مكتبي'].forEach(x=>syn.add(x));
-      if(/توريد|تجهيز|مطاعم/.test(b)) ['توريدات','مستلزمات','معدات','ادوات مطاعم','تجهيز مطاعم','لوازم'].forEach(x=>syn.add(x));
-      if(/سيارات|تأجير/.test(b)) ['تأجير','ايجار','استئجار','سياره','سيارات'].forEach(x=>syn.add(x));
-      if(/اسنان|عياده/.test(b)) ['اسنان','عياده','تقويم','تبييض','زرع','حشو','ابتسامه'].forEach(x=>syn.add(x));
+      if(dialect==='gcc' && /نقل/.test(b)) ['نقل عفش','دينا نقل','سطحه نقل'].forEach(x=>syn.add(normalize(x)));
+      if(/نظافه|تنظيف/.test(b)) ['تنظيف','تعقيم','غسيل','تلميع'].forEach(x=>syn.add(x));
+      if(/صرف|مجاري/.test(b)) ['صرف صحي','مجاري','تسليك','شفط','بيارات','بياره'].forEach(x=>syn.add(x));
       return Array.from(syn);
     }
 
-    const INTENTS_CORE = ['سعر','اسعار','تكلفه','حجز','طلب','قريب','بالقرب','رقم','هاتف','تواصل','اونلاين','افضل','ارخص','عروض','خصم'];
-
-    function generateKeywordsStrict(freeText){
-      const syns = deriveSynonyms(freeText);
-      const out = new Set();
-      syns.forEach(root=>{ INTENTS_CORE.forEach(i=> out.add(`${root} ${i}`)); });
-      // فلترة صارمة: اقبل فقط ما يحتوي أحد الجذور
-      let list = Array.from(out).filter(k=> syns.some(r=> k.includes(r)));
-      // إعادة ترتيب: الكلمات التي تحتوي على أول جذر للمجال ثم بقية المرادفات
-      const mainRoot = syns[0]||'';
-      list = list.sort((a,b)=> (b.includes(mainRoot)?1:0) - (a.includes(mainRoot)?1:0));
-      return list.slice(0,30);
+    async function fetchGoogleSuggest(q, gl){
+      const url = `https://suggestqueries.google.com/complete/search?client=chrome&hl=ar&gl=${gl}&q=${encodeURIComponent(q)}`;
+      const res = await fetch(url, {headers:{'Accept':'application/json'}});
+      if(!res.ok) return [];
+      const data = await res.json();
+      // شكل استجابة client=chrome: [query, [suggestions...]]
+      return Array.isArray(data) && Array.isArray(data[1]) ? data[1] : [];
     }
 
-    const ALL_PLATFORMS=['Google Ads','Facebook','Instagram','TikTok','Snapchat','YouTube','LinkedIn'];
+    async function expandSuggestions(base, gl){
+      const letters = ' ابتثجحخدذرزسشصضطظعغفقكلمنهويabcdefghijklmnopqrstuvwxyz'.split('');
+      const batches = [base, ...letters.slice(0,12).map(l=> `${base} ${l}`)]; // توسيع محدود لحماية المعدلات
+      const out=new Set();
+      for(const b of batches){
+        try{ const sug = await fetchGoogleSuggest(b, gl); sug.forEach(s=> out.add(s)); }
+        catch(e){}
+        await new Promise(r=> setTimeout(r, 200)); // تهدئة المعدل
+      }
+      return Array.from(out);
+    }
 
-    async function load(){ const res=await fetch('../data/ads-country-benchmarks.json',{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status); return await res.json(); }
+    function filterRelevant(suggestions, syns){
+      const sn = syns.map(s=> normalize(s));
+      return suggestions.filter(s=>{ const x=normalize(s); return sn.some(r=> x.includes(r)); });
+    }
+
+    async function load(){
+      const res=await fetch('../data/ads-country-benchmarks.json',{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status); return await res.json();
+    }
     function fmt(n){ return new Intl.NumberFormat('ar-EG').format(Math.round(n||0)); }
 
     (async function init(){
       try{
         const data=await load();
         const countries=data.countries||{};
-        const cList=document.getElementById('countries'); Object.keys(countries).forEach(k=>{ const o=document.createElement('option'); o.value=countries[k].name||k; cList.appendChild(o); });
+        const cList=document.getElementById('countries');
+        ['السعودية','الإمارات','الكويت','قطر','البحرين','عُمان'].forEach(name=>{ const o=document.createElement('option'); o.value=name; cList.appendChild(o); });
+
         const runBtn=document.getElementById('run'); const copyBtn=document.getElementById('copyTop30'); const xlsxBtn=document.getElementById('exportXlsx');
         document.getElementById('country').disabled=false; runBtn.disabled=false; copyBtn.disabled=false; xlsxBtn.disabled=false;
 
-        const toggles=document.getElementById('platformToggles');
-        ALL_PLATFORMS.forEach(p=>{ const id='pl_'+p.replace(/\s+/g,'_'); const label=document.createElement('label'); label.innerHTML=`<input type="checkbox" id="${id}" checked> ${p}`; toggles.appendChild(label); });
+        const toggles=document.getElementById('platformToggles'); ALL_PLATFORMS.forEach(p=>{ const id='pl_'+p.replace(/\s+/g,'_'); const label=document.createElement('label'); label.innerHTML=`<input type="checkbox" id="${id}" checked> ${p}`; toggles.appendChild(label); });
 
-        runBtn.addEventListener('click', ()=>{
+        runBtn.addEventListener('click', async ()=>{
           const cVal=document.getElementById('country').value.trim();
           const sectorFree=document.getElementById('sectorFree').value.trim();
+          const source=document.getElementById('source').value;
+          const expand=document.getElementById('expandAZ').checked;
+          const dialect=document.getElementById('dialect').value;
           if(!cVal||!sectorFree){ alert('من فضلك اختر دولة واكتب مجال العمل'); return; }
-          const country = Object.values(countries).find(c=> c.name===cVal) || Object.values(countries).find(c=> (c.name||'').includes(cVal)) || null;
-          if(!country){ alert('اختر دولة من القائمة'); return; }
-          document.getElementById('currency').value=country.currency||'';
+          const gl=GCC_GL[cVal]||'sa';
 
-          // توليد كلمات مرتبطة فقط
-          const kws = generateKeywordsStrict(sectorFree);
+          // كلمات حقيقية
+          let suggestions=[];
+          if(source==='google'){
+            if(expand) suggestions = await expandSuggestions(sectorFree, gl); else suggestions = await fetchGoogleSuggest(sectorFree, gl);
+          }
+          // فلترة الصلة
+          const syns = deriveSynonyms(sectorFree, dialect);
+          let kws = filterRelevant(suggestions, syns);
+          if(kws.length<30){ // استكمال إلى 30 بصيغ نية حول الجذور
+            const intents=['سعر','اسعار','تكلفه','قريب','بالقرب','حجز','طلب','رقم','هاتف','اونلاين'];
+            for(const r of syns){ for(const i of intents){ if(kws.length>=30) break; const combo=`${r} ${i}`; if(!kws.includes(combo)) kws.push(combo); } if(kws.length>=30) break; }
+          }
+          kws = kws.slice(0,100); // يمكن عرض أكثر من 30 الآن
+
           const kwEl=document.getElementById('keywords'); kwEl.innerHTML='';
           kws.forEach(k=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=k; kwEl.appendChild(span); });
-          copyBtn.onclick = ()=>{ navigator.clipboard.writeText(kws.join('\n')).then(()=> alert('تم نسخ أفضل 30 كلمة')); };
-          xlsxBtn.onclick = ()=>{ const rows = [['الكلمة','النية/ملاحظة'], ...kws.map(k=> [k,''])]; if(window.__XLSX_EXPORT__) window.__XLSX_EXPORT__.downloadXlsx('arabic-keywords.xlsx', rows); else alert('مكون XLSX غير مُحمّل'); };
+          copyBtn.onclick = ()=>{ navigator.clipboard.writeText(kws.slice(0,30).join('\n')).then(()=> alert('تم نسخ أفضل 30 كلمة')); };
+          xlsxBtn.onclick = ()=>{ const rows = [['الكلمة','ملاحظة'], ...kws.map(k=> [k,''])]; if(window.__XLSX_EXPORT__) window.__XLSX_EXPORT__.downloadXlsx('arabic-keywords.xlsx', rows); else alert('مكون XLSX غير مُحمّل'); };
 
+          // بقية الحسابات (المزيج/التوزيع/التوقعات) كما هي من بيانات الدولة
+          const country = Object.values(countries).find(c=> c.name===cVal) || null; if(country) document.getElementById('currency').value=country.currency||'';
           const activePlatforms = ALL_PLATFORMS.filter(p=> document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked);
-          const goal=document.getElementById('goal').value; const days=parseInt(document.getElementById('days').value||'30',10); const totalBudget=parseFloat(document.getElementById('budget').value||'0');
-          const r=country.budget_ranges||{small:{min:2000,max:8000}}; const monthly= totalBudget>0? totalBudget : Math.round((r.small.min+r.small.max)/2); const campaignBudget=Math.max(200, Math.round((monthly/30)*days));
-
-          const cpm=country.avg_cpm||{}; const recommended=(country.recommended_platforms||[]).filter(p=> activePlatforms.includes(p));
+          const r=country?.budget_ranges||{small:{min:2000,max:8000}}; const monthly= Math.round((r.small.min+r.small.max)/2); const campaignBudget=Math.max(200, Math.round((monthly/30)*30));
+          const cpm=country?.avg_cpm||{}; const recommended=(country?.recommended_platforms||[]).filter(p=> activePlatforms.includes(p));
           const top=[...recommended].sort((a,b)=>(cpm[a]||99)-(cpm[b]||99)).slice(0,Math.min(3,activePlatforms.length));
           const mix=[]; top.forEach(p=> mix.push({platform:p}));
-
           const equal= activePlatforms.length? campaignBudget/activePlatforms.length : campaignBudget;
           const allocation = activePlatforms.map(p=> ({platform:p, amount: equal}));
-
           const mixEl=document.getElementById('mix'); mixEl.innerHTML=''; activePlatforms.forEach((p,i)=>{ const s=document.createElement('span'); s.className='pill'; s.textContent=`${i+1} - ${p}`; mixEl.appendChild(s); });
           document.getElementById('mixNote').textContent=`تم استخدام المنصات المفعّلة فقط: ${activePlatforms.join('، ')}`;
-
-          const allocEl=document.getElementById('allocation'); allocEl.innerHTML=''; allocation.forEach(a=>{ const d=document.createElement('div'); d.innerHTML=`<b>${a.platform}</b><br>${fmt(a.amount)} ${country.currency}`; allocEl.appendChild(d); });
-
-          const fEl=document.getElementById('forecasts'); fEl.innerHTML=''; let totals={impressions:0,clicks:0,conversions:0,sales:0};
-          allocation.forEach(a=>{ const cp=(cpm[a.platform]||2); const impressions=(a.amount/cp)*1000; const clicks=impressions*0.012; const conversions=clicks*0.02; const sales=conversions*0.7; totals.impressions+=impressions; totals.clicks+=clicks; totals.conversions+=conversions; totals.sales+=sales; const div=document.createElement('div'); div.innerHTML=`<b>${a.platform}</b><br>CPM $${cp.toFixed(2)} | CTR 1.2% | CVR 2.0%<br>الظهور ${fmt(impressions)} | النقرات ${fmt(clicks)} | التحويلات ${fmt(conversions)} | المبيعات ${fmt(sales)}`; fEl.appendChild(div); });
-          const totalDiv=document.createElement('div'); totalDiv.innerHTML=`<b>الإجمالي (${fmt(campaignBudget)} ${country.currency})</b><br>الظهور ${fmt(totals.impressions)} | النقرات ${fmt(totals.clicks)} | التحويلات ${fmt(totals.conversions)} | المبيعات ${fmt(totals.sales)}`; fEl.appendChild(totalDiv);
-
-          const play=document.getElementById('playbook'); play.innerHTML=''; ['قسّم الكلمات لمجموعات نية واضحة، واستخدم كلمات سلبية لتقليل الهدر.','أنشئ 2–3 اعلانات لكل مجموعة بنص يطابق الكلمة.','اختبر صفحة الهبوط واربط أحداث تتبع.','تابع CPM/CTR/CVR يوميًا وحرّك الميزانية للأفضل.','وسّع تدريجيًا وفقًا لأعلى ROAS.'].forEach(s=>{ const li=document.createElement('li'); li.textContent=s; play.appendChild(li); });
+          const allocEl=document.getElementById('allocation'); allocEl.innerHTML=''; allocation.forEach(a=>{ const d=document.createElement('div'); d.innerHTML=`<b>${a.platform}</b><br>${fmt(a.amount)} ${country?.currency||''}`; allocEl.appendChild(d); });
+          const fEl=document.getElementById('forecasts'); fEl.innerHTML=''; let totals={impressions:0,clicks:0,conversions:0,sales:0}; allocation.forEach(a=>{ const cp=(cpm[a.platform]||2); const impressions=(a.amount/cp)*1000; const clicks=impressions*0.012; const conversions=clicks*0.02; const sales=conversions*0.7; totals.impressions+=impressions; totals.clicks+=clicks; totals.conversions+=conversions; totals.sales+=sales; const div=document.createElement('div'); div.innerHTML=`<b>${a.platform}</b><br>CPM $${cp.toFixed(2)} | CTR 1.2% | CVR 2.0%<br>الظهور ${fmt(impressions)} | النقرات ${fmt(clicks)} | التحويلات ${fmt(conversions)} | المبيعات ${fmt(sales)}`; fEl.appendChild(div); });
+          const totalDiv=document.createElement('div'); totalDiv.innerHTML=`<b>الإجمالي (${fmt(campaignBudget)} ${country?.currency||''})</b><br>الظهور ${fmt(totals.impressions)} | النقرات ${fmt(totals.clicks)} | التحويلات ${fmt(totals.conversions)} | المبيعات ${fmt(totals.sales)}`; fEl.appendChild(totalDiv);
 
           document.getElementById('out').style.display='block';
         });
