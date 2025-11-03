@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة اختصار الروابط بالجملة - مختصر الروابط المجاني</title>
+    <meta name="description" content="أداة مجانية لاختصار 1000 رابط دفعة واحدة باللغة العربية والإنجليزية مع تصدير XLSX ونسخ سريع">
+    <meta name="keywords" content="اختصار روابط، مختصر روابط عربي، أداة تقصير روابط، روابط قصيرة، URL shortener">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for XLSX -->
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #16a34a;
+            --warning-color: #ea580c;
+            --danger-color: #dc2626;
+            --dark-color: #1f2937;
+            --light-bg: #f8fafc;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .form-control, .form-select {
+            border-radius: var(--border-radius);
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        .btn {
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .stats-card {
+            background: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .results-table {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .results-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+        
+        .results-table td {
+            vertical-align: middle;
+            border-color: #e2e8f0;
+        }
+        
+        .url-cell {
+            max-width: 300px;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            border-radius: 50px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .loading-spinner {
+            display: none;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .utm-section {
+            background: #f1f5f9;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .utm-section h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        #results-section {
+            display: none;
+        }
+        
+        .copy-btn {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="btn btn-outline-light btn-sm" onclick="toggleLanguage()" id="langToggle">
+            <i class="fas fa-language"></i> EN
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header">
+                <h1 id="mainTitle">أداة اختصار الروابط بالجملة</h1>
+                <p id="mainSubtitle">اختصر حتى 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Instructions -->
+                <div class="alert alert-info mb-4" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span id="instructions">
+                        الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). يمكنك إدخال حتى 1000 رابط دفعة واحدة.
+                    </span>
+                </div>
+
+                <!-- UTM Builder Section -->
+                <div class="utm-section">
+                    <h5 id="utmTitle"><i class="fas fa-tags me-2"></i>إضافة معاملات UTM (اختياري)</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="utmSource" class="form-label" id="utmSourceLabel">المصدر (Source)</label>
+                            <input type="text" class="form-control" id="utmSource" placeholder="facebook">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="utmMedium" class="form-label" id="utmMediumLabel">الوسيط (Medium)</label>
+                            <input type="text" class="form-control" id="utmMedium" placeholder="social">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="utmCampaign" class="form-label" id="utmCampaignLabel">الحملة (Campaign)</label>
+                            <input type="text" class="form-control" id="utmCampaign" placeholder="summer-sale">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="utmTerm" class="form-label" id="utmTermLabel">الكلمة المفتاحية (Term)</label>
+                            <input type="text" class="form-control" id="utmTerm" placeholder="keyword">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="utmContent" class="form-label" id="utmContentLabel">المحتوى (Content)</label>
+                            <input type="text" class="form-control" id="utmContent" placeholder="banner-top">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="mb-4">
+                    <label for="urlInput" class="form-label fw-bold" id="inputLabel">
+                        <i class="fas fa-link me-2"></i>الصق الروابط هنا (كل رابط في سطر منفصل)
+                    </label>
+                    <textarea 
+                        class="form-control" 
+                        id="urlInput" 
+                        rows="10" 
+                        placeholder="https://example1.com/very-long-url-that-needs-shortening
+https://example2.com/another-very-long-url
+https://example3.com/yet-another-long-url"
+                        data-ar-placeholder="https://example1.com/very-long-url-that-needs-shortening
+https://example2.com/another-very-long-url
+https://example3.com/yet-another-long-url"
+                        data-en-placeholder="https://example1.com/very-long-url-that-needs-shortening
+https://example2.com/another-very-long-url
+https://example3.com/yet-another-long-url"
+                    ></textarea>
+                    
+                    <!-- Stats -->
+                    <div class="row mt-3">
+                        <div class="col-md-3 mb-2">
+                            <div class="stats-card">
+                                <div class="stats-number" id="totalCount">0</div>
+                                <small id="totalLabel">إجمالي الروابط</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <div class="stats-card">
+                                <div class="stats-number text-success" id="validCount">0</div>
+                                <small id="validLabel">روابط صالحة</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <div class="stats-card">
+                                <div class="stats-number text-warning" id="duplicateCount">0</div>
+                                <small id="duplicateLabel">مكررة</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <div class="stats-card">
+                                <div class="stats-number text-danger" id="invalidCount">0</div>
+                                <small id="invalidLabel">غير صالحة</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center mb-4">
+                    <button class="btn btn-primary btn-lg me-2" onclick="processUrls()" id="processBtn">
+                        <i class="fas fa-magic me-2"></i>
+                        <span id="processBtnText">اختصار الروابط</span>
+                        <div class="spinner-border spinner-border-sm ms-2 loading-spinner" role="status"></div>
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="clearAll()" id="clearBtn">
+                        <i class="fas fa-trash me-2"></i>
+                        <span id="clearBtnText">مسح الكل</span>
+                    </button>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="fade-in">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 id="resultsTitle"><i class="fas fa-list me-2"></i>النتائج</h4>
+                        <div>
+                            <button class="btn btn-success me-2" onclick="copyAll()" id="copyAllBtn">
+                                <i class="fas fa-copy me-2"></i>
+                                <span id="copyAllText">نسخ الكل</span>
+                            </button>
+                            <button class="btn btn-warning" onclick="downloadXLSX()" id="downloadBtn">
+                                <i class="fas fa-download me-2"></i>
+                                <span id="downloadText">تحميل XLSX</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped results-table">
+                            <thead>
+                                <tr>
+                                    <th id="originalHeader">الرابط الأصلي</th>
+                                    <th id="shortHeader">الرابط القصير</th>
+                                    <th id="statusHeader">الحالة</th>
+                                    <th id="actionHeader">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-tbody">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Language data
+        const translations = {
+            ar: {
+                mainTitle: "أداة اختصار الروابط بالجملة",
+                mainSubtitle: "اختصر حتى 1000 رابط دفعة واحدة مع تصدير XLSX ونسخ سريع",
+                instructions: "الصق الروابط الطويلة في المربع أدناه (كل رابط في سطر منفصل). يمكنك إدخال حتى 1000 رابط دفعة واحدة.",
+                utmTitle: "إضافة معاملات UTM (اختياري)",
+                utmSourceLabel: "المصدر (Source)",
+                utmMediumLabel: "الوسيط (Medium)",
+                utmCampaignLabel: "الحملة (Campaign)",
+                utmTermLabel: "الكلمة المفتاحية (Term)",
+                utmContentLabel: "المحتوى (Content)",
+                inputLabel: "الصق الروابط هنا (كل رابط في سطر منفصل)",
+                totalLabel: "إجمالي الروابط",
+                validLabel: "روابط صالحة",
+                duplicateLabel: "مكررة",
+                invalidLabel: "غير صالحة",
+                processBtnText: "اختصار الروابط",
+                clearBtnText: "مسح الكل",
+                resultsTitle: "النتائج",
+                copyAllText: "نسخ الكل",
+                downloadText: "تحميل XLSX",
+                originalHeader: "الرابط الأصلي",
+                shortHeader: "الرابط القصير",
+                statusHeader: "الحالة",
+                actionHeader: "إجراءات",
+                copyBtn: "نسخ",
+                processing: "جاري المعالجة...",
+                success: "نجح",
+                failed: "فشل",
+                duplicate: "مكرر",
+                invalid: "غير صالح",
+                copied: "تم النسخ!",
+                allCopied: "تم نسخ جميع الروابط!",
+                noResults: "لا توجد نتائج للتصدير",
+                maxExceeded: "تم تجاوز الحد الأقصى (1000 رابط). سيتم معالجة أول 1000 رابط فقط."
+            },
+            en: {
+                mainTitle: "Bulk URL Shortener Tool",
+                mainSubtitle: "Shorten up to 1000 URLs at once with XLSX export and quick copy",
+                instructions: "Paste long URLs in the box below (one URL per line). You can input up to 1000 URLs at once.",
+                utmTitle: "Add UTM Parameters (Optional)",
+                utmSourceLabel: "Source",
+                utmMediumLabel: "Medium",
+                utmCampaignLabel: "Campaign",
+                utmTermLabel: "Term",
+                utmContentLabel: "Content",
+                inputLabel: "Paste URLs here (one URL per line)",
+                totalLabel: "Total URLs",
+                validLabel: "Valid URLs",
+                duplicateLabel: "Duplicates",
+                invalidLabel: "Invalid",
+                processBtnText: "Shorten URLs",
+                clearBtnText: "Clear All",
+                resultsTitle: "Results",
+                copyAllText: "Copy All",
+                downloadText: "Download XLSX",
+                originalHeader: "Original URL",
+                shortHeader: "Short URL",
+                statusHeader: "Status",
+                actionHeader: "Actions",
+                copyBtn: "Copy",
+                processing: "Processing...",
+                success: "Success",
+                failed: "Failed",
+                duplicate: "Duplicate",
+                invalid: "Invalid",
+                copied: "Copied!",
+                allCopied: "All URLs copied!",
+                noResults: "No results to export",
+                maxExceeded: "Maximum limit exceeded (1000 URLs). Only the first 1000 URLs will be processed."
+            }
+        };
+        
+        let currentLang = 'ar';
+        let processedResults = [];
+        let urlCounter = 1; // Simple counter for demo purposes
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            document.getElementById('urlInput').addEventListener('input', updateStats);
+        });
+        
+        // Language toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all text elements
+            Object.keys(translations[currentLang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+            
+            // Update button text
+            document.getElementById('langToggle').innerHTML = `<i class="fas fa-language"></i> ${currentLang === 'ar' ? 'EN' : 'AR'}`;
+            
+            // Update placeholder
+            const textarea = document.getElementById('urlInput');
+            const placeholder = textarea.getAttribute(`data-${currentLang}-placeholder`);
+            if (placeholder) {
+                textarea.placeholder = placeholder;
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const input = document.getElementById('urlInput').value;
+            const lines = input.split('\n').filter(line => line.trim() !== '');
+            
+            let validCount = 0;
+            let invalidCount = 0;
+            let duplicateCount = 0;
+            const seen = new Set();
+            
+            lines.forEach(line => {
+                const url = line.trim();
+                if (url === '') return;
+                
+                if (seen.has(url)) {
+                    duplicateCount++;
+                } else {
+                    seen.add(url);
+                    if (isValidUrl(url)) {
+                        validCount++;
+                    } else {
+                        invalidCount++;
+                    }
+                }
+            });
+            
+            document.getElementById('totalCount').textContent = lines.length;
+            document.getElementById('validCount').textContent = validCount;
+            document.getElementById('duplicateCount').textContent = duplicateCount;
+            document.getElementById('invalidCount').textContent = invalidCount;
+        }
+        
+        // Validate URL
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === 'http:' || url.protocol === 'https:';
+            } catch (_) {
+                return false;
+            }
+        }
+        
+        // Add UTM parameters
+        function addUtmParams(url) {
+            const utmSource = document.getElementById('utmSource').value.trim();
+            const utmMedium = document.getElementById('utmMedium').value.trim();
+            const utmCampaign = document.getElementById('utmCampaign').value.trim();
+            const utmTerm = document.getElementById('utmTerm').value.trim();
+            const utmContent = document.getElementById('utmContent').value.trim();
+            
+            if (!utmSource && !utmMedium && !utmCampaign && !utmTerm && !utmContent) {
+                return url;
+            }
+            
+            try {
+                const urlObj = new URL(url);
+                const params = new URLSearchParams(urlObj.search);
+                
+                if (utmSource) params.set('utm_source', utmSource);
+                if (utmMedium) params.set('utm_medium', utmMedium);
+                if (utmCampaign) params.set('utm_campaign', utmCampaign);
+                if (utmTerm) params.set('utm_term', utmTerm);
+                if (utmContent) params.set('utm_content', utmContent);
+                
+                urlObj.search = params.toString();
+                return urlObj.toString();
+            } catch (e) {
+                return url;
+            }
+        }
+        
+        // Generate short URL (demo function)
+        function generateShortUrl() {
+            const domains = ['bit.ly', 'tinyurl.com', 'short.link', 'rb.gy'];
+            const domain = domains[Math.floor(Math.random() * domains.length)];
+            const id = Math.random().toString(36).substring(2, 8);
+            return `https://${domain}/${id}`;
+        }
+        
+        // Process URLs
+        async function processUrls() {
+            const input = document.getElementById('urlInput').value;
+            const lines = input.split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length === 0) {
+                alert(currentLang === 'ar' ? 'يرجى إدخال روابط للمعالجة' : 'Please enter URLs to process');
+                return;
+            }
+            
+            if (lines.length > 1000) {
+                alert(translations[currentLang].maxExceeded);
+                lines = lines.slice(0, 1000);
+            }
+            
+            // Show loading
+            const processBtn = document.getElementById('processBtn');
+            const spinner = processBtn.querySelector('.loading-spinner');
+            const btnText = document.getElementById('processBtnText');
+            
+            processBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = translations[currentLang].processing;
+            
+            processedResults = [];
+            const tbody = document.getElementById('results-tbody');
+            tbody.innerHTML = '';
+            
+            const seen = new Set();
+            
+            // Process each URL with delay for realistic effect
+            for (let i = 0; i < lines.length; i++) {
+                const originalUrl = lines[i].trim();
+                if (originalUrl === '') continue;
+                
+                let status, shortUrl;
+                
+                if (seen.has(originalUrl)) {
+                    status = 'duplicate';
+                    shortUrl = '';
+                } else if (!isValidUrl(originalUrl)) {
+                    status = 'invalid';
+                    shortUrl = '';
+                } else {
+                    seen.add(originalUrl);
+                    // Add UTM params if provided
+                    const urlWithUtm = addUtmParams(originalUrl);
+                    // Generate short URL (demo)
+                    shortUrl = generateShortUrl();
+                    status = 'success';
+                }
+                
+                const result = {
+                    original: originalUrl,
+                    short: shortUrl,
+                    status: status,
+                    index: i + 1
+                };
+                
+                processedResults.push(result);
+                addResultRow(result);
+                
+                // Add small delay for smooth UI
+                if (i % 10 === 0) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+            
+            // Hide loading and show results
+            processBtn.disabled = false;
+            spinner.style.display = 'none';
+            btnText.textContent = translations[currentLang].processBtnText;
+            
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Add result row to table
+        function addResultRow(result) {
+            const tbody = document.getElementById('results-tbody');
+            const row = document.createElement('tr');
+            
+            const statusText = translations[currentLang][result.status] || result.status;
+            const statusClass = {
+                'success': 'bg-success text-white',
+                'failed': 'bg-danger text-white',
+                'duplicate': 'bg-warning text-dark',
+                'invalid': 'bg-secondary text-white'
+            }[result.status] || 'bg-secondary text-white';
+            
+            row.innerHTML = `
+                <td class="url-cell">${result.original}</td>
+                <td class="url-cell">
+                    ${result.short ? `<a href="${result.short}" target="_blank">${result.short}</a>` : '-'}
+                </td>
+                <td>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                </td>
+                <td>
+                    ${result.short ? `<button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyUrl('${result.short}')"><i class="fas fa-copy"></i> ${translations[currentLang].copyBtn}</button>` : '-'}
+                </td>
+            `;
+            
+            tbody.appendChild(row);
+        }
+        
+        // Copy single URL
+        function copyUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                // Show temporary feedback
+                const originalText = event.target.innerHTML;
+                event.target.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].copied}`;
+                event.target.classList.add('btn-success');
+                event.target.classList.remove('btn-outline-primary');
+                
+                setTimeout(() => {
+                    event.target.innerHTML = originalText;
+                    event.target.classList.remove('btn-success');
+                    event.target.classList.add('btn-outline-primary');
+                }, 2000);
+            });
+        }
+        
+        // Copy all successful URLs
+        function copyAll() {
+            const successfulResults = processedResults.filter(r => r.status === 'success');
+            
+            if (successfulResults.length === 0) {
+                alert(currentLang === 'ar' ? 'لا توجد روابط ناجحة للنسخ' : 'No successful URLs to copy');
+                return;
+            }
+            
+            const textToCopy = successfulResults.map(r => `${r.original}\t${r.short}`).join('\n');
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copyAllBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i class="fas fa-check me-2"></i>${translations[currentLang].allCopied}`;
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-outline-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-success');
+                }, 3000);
+            });
+        }
+        
+        // Download XLSX
+        function downloadXLSX() {
+            if (processedResults.length === 0) {
+                alert(translations[currentLang].noResults);
+                return;
+            }
+            
+            const data = processedResults.map((result, index) => ({
+                'رقم / #': index + 1,
+                'الرابط الأصلي / Original URL': result.original,
+                'الرابط القصير / Short URL': result.short || '',
+                'الحالة / Status': translations[currentLang][result.status] || result.status,
+                'تاريخ الإنشاء / Created': new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US')
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, currentLang === 'ar' ? 'الروابط المختصرة' : 'Shortened URLs');
+            
+            const filename = `shortened-urls-${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(wb, filename);
+        }
+        
+        // Clear all
+        function clearAll() {
+            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح جميع البيانات؟' : 'Are you sure you want to clear all data?')) {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('utmSource').value = '';
+                document.getElementById('utmMedium').value = '';
+                document.getElementById('utmCampaign').value = '';
+                document.getElementById('utmTerm').value = '';
+                document.getElementById('utmContent').value = '';
+                document.getElementById('results-section').style.display = 'none';
+                processedResults = [];
+                updateStats();
+            }
+        }
+        
+        // Initialize with saved language preference
+        const savedLang = localStorage.getItem('urlShortenerLang');
+        if (savedLang && savedLang !== currentLang) {
+            toggleLanguage();
+        }
+        
+        // Save language preference
+        function saveLanguagePreference() {
+            localStorage.setItem('urlShortenerLang', currentLang);
+        }
+        
+        // Override toggleLanguage to save preference
+        const originalToggleLanguage = toggleLanguage;
+        toggleLanguage = function() {
+            originalToggleLanguage();
+            saveLanguagePreference();
+        };
+    </script>
+</body>
+</html>

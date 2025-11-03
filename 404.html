@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري إعادة التوجيه...</title>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .url-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            word-break: break-all;
+        }
+        .error {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner" id="spinner"></div>
+        <div class="message" id="message">جاري إعادة التوجيه...</div>
+        <div class="url-info" id="url-info" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const GITHUB_ISSUES_LINK = 'https://api.github.com/repos/sherow1982/arabic-ads-calculator-tools/issues/';
+        const PATH_SEGMENTS_TO_SKIP = 1; // For GitHub Pages project pages
+        
+        function getShortCode() {
+            const path = window.location.pathname;
+            const segments = path.split('/').filter(segment => segment.length > 0);
+            
+            // Skip the repository name segment for project pages
+            if (segments.length > PATH_SEGMENTS_TO_SKIP) {
+                return segments[PATH_SEGMENTS_TO_SKIP];
+            }
+            return null;
+        }
+        
+        function showError(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('message').innerHTML = `<span class="error">${message}</span>`;
+        }
+        
+        function showInfo(message) {
+            document.getElementById('url-info').style.display = 'block';
+            document.getElementById('url-info').textContent = message;
+        }
+        
+        async function redirectToOriginalUrl() {
+            const shortCode = getShortCode();
+            
+            if (!shortCode) {
+                showError('رابط غير صالح');
+                showInfo('لم يتم العثور على رمز الرابط القصير');
+                setTimeout(() => {
+                    window.location.href = '/arabic-ads-calculator-tools/';
+                }, 3000);
+                return;
+            }
+            
+            // Check if shortCode is numeric (Issue number)
+            const issueNumber = parseInt(shortCode);
+            if (isNaN(issueNumber)) {
+                showError('رمز الرابط غير صالح');
+                showInfo(`رمز الرابط: ${shortCode}`);
+                setTimeout(() => {
+                    window.location.href = '/arabic-ads-calculator-tools/';
+                }, 3000);
+                return;
+            }
+            
+            try {
+                showInfo(`جاري البحث عن الرابط #${issueNumber}...`);
+                
+                const response = await fetch(`${GITHUB_ISSUES_LINK}${issueNumber}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('الرابط غير موجود');
+                    }
+                    throw new Error(`خطأ في الخادم: ${response.status}`);
+                }
+                
+                const issue = await response.json();
+                
+                // The original URL should be in the issue title
+                const originalUrl = issue.title;
+                
+                if (!originalUrl) {
+                    throw new Error('لم يتم العثور على الرابط الأصلي');
+                }
+                
+                // Validate URL format
+                try {
+                    new URL(originalUrl);
+                } catch {
+                    throw new Error('صيغة الرابط غير صحيحة');
+                }
+                
+                // Show redirect message
+                document.getElementById('message').textContent = 'تم العثور على الرابط! جاري التوجيه...';
+                showInfo(`سيتم توجيهك إلى: ${originalUrl}`);
+                
+                // Add to redirect history (for analytics)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'redirect', {
+                        'short_code': shortCode,
+                        'original_url': originalUrl,
+                        'user_agent': navigator.userAgent
+                    });
+                }
+                
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = originalUrl;
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Redirect error:', error);
+                showError(error.message || 'حدث خطأ غير متوقع');
+                showInfo('سيتم توجيهك إلى الصفحة الرئيسية...');
+                
+                setTimeout(() => {
+                    window.location.href = '/arabic-ads-calculator-tools/';
+                }, 3000);
+            }
+        }
+        
+        // Start the redirection process
+        redirectToOriginalUrl();
+        
+        // Fallback: if nothing happens in 10 seconds, redirect to home
+        setTimeout(() => {
+            if (window.location.href.includes('404.html') || window.location.pathname !== '/arabic-ads-calculator-tools/') {
+                window.location.href = '/arabic-ads-calculator-tools/';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
