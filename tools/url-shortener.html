@@ -1,49 +1,134 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌍 مختصر الروابط العالمي</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 مختصر الروابط العالمي - تقصير + تجميل + باك لينك تلقائي</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
-    body{background:linear-gradient(135deg,#667eea,#764ba2);font-family:'Cairo',sans-serif}
-    .card{backdrop-filter: blur(12px);background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3)}
-    .mode .btn{border-radius:999px}
+    body{background:linear-gradient(135deg,#667eea,#764ba2);font-family:'Cairo',sans-serif;min-height:100vh}
+    .card{backdrop-filter:blur(12px);background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.4);border-radius:15px}
+    .btn{border-radius:50px;font-weight:600}
     textarea{direction:ltr;font-family:monospace}
+    .progress{height:25px;border-radius:15px}
+    .progress-text{position:absolute;width:100%;text-align:center;line-height:25px;font-weight:bold;z-index:1}
+    .backlink-status{max-height:200px;overflow-y:auto;background:#f8f9fa;border-radius:10px;padding:15px;margin:10px 0}
+    .status-item{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;margin:2px 0;border-radius:8px}
+    .status-success{background:#d1edff;color:#0c63e4}
+    .status-blocked{background:#ffe4e1;color:#e63946}
+    .mode-tabs{display:flex;gap:8px;margin:15px 0}
+    .mode-tab{background:rgba(255,255,255,.2);color:white;border:2px solid rgba(255,255,255,.3);padding:10px 20px;border-radius:25px;cursor:pointer;transition:all .3s}
+    .mode-tab:hover{background:rgba(255,255,255,.4);transform:translateY(-2px)}
+    .mode-tab.active{background:white;color:#667eea;border-color:white}
   </style>
 </head>
 <body>
   <div class="container py-4">
-    <div class="card p-3 mb-3">
-      <div class="d-flex gap-2 mode mb-2">
-        <button id="tabShort" class="btn btn-primary btn-sm">تقصير</button>
-        <button id="tabPretty" class="btn btn-outline-primary btn-sm">تجميل</button>
-        <button id="tabBoth" class="btn btn-outline-primary btn-sm">كلاهما</button>
-        <button id="cleanBtn" class="btn btn-outline-warning btn-sm ms-auto">تنظيف الروابط</button>
-        <button id="backlinkBtn" class="btn btn-danger btn-sm">باك لينك (10 مواقع)</button>
+    <!-- Header -->
+    <div class="text-center text-white mb-4">
+      <h1 class="h3">🌍 مختصر الروابط العالمي</h1>
+      <p>تقصير + تجميل + باك لينك على 25 موقع DA عالي (بدون تسجيل دخول)</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card p-4">
+      <!-- Mode Tabs -->
+      <div class="mode-tabs">
+        <div class="mode-tab active" data-mode="short" id="tabShort">
+          <i class="fas fa-scissors me-2"></i>تقصير الروابط
+        </div>
+        <div class="mode-tab" data-mode="pretty" id="tabPretty">
+          <i class="fas fa-magic me-2"></i>تجميل الروابط
+        </div>
+        <div class="mode-tab" data-mode="both" id="tabBoth">
+          <i class="fas fa-star me-2"></i>التقصير + التجميل معاً
+        </div>
       </div>
-      <div class="row g-2 text-white small mb-2">
-        <div class="col">إجمالي: <b id="totalCount">0</b></div>
-        <div class="col">صالحة: <b id="validCount">0</b></div>
-        <div class="col">مكررة: <b id="duplicateCount">0</b></div>
-        <div class="col">غير صالحة: <b id="invalidCount">0</b></div>
+
+      <!-- Stats -->
+      <div class="row text-center mb-3">
+        <div class="col-3">
+          <div class="badge bg-primary fs-6">
+            إجمالي: <span id="totalCount">0</span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="badge bg-success fs-6">
+            صالحة: <span id="validCount">0</span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="badge bg-warning fs-6">
+            مكررة: <span id="duplicateCount">0</span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="badge bg-danger fs-6">
+            غير صالحة: <span id="invalidCount">0</span>
+          </div>
+        </div>
       </div>
-      <textarea id="urlInput" class="form-control" rows="7" placeholder="https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية"></textarea>
-      <div class="d-flex gap-2 mt-2">
-        <button id="processBtn" class="btn btn-primary">🤖 معالجة ذكية</button>
-        <button id="copyShortBtn" class="btn btn-success d-none">نسخ القصيرة</button>
-        <button id="copyPrettyBtn" class="btn btn-info text-white d-none">نسخ الجميلة</button>
-        <button id="downloadBtn" class="btn btn-warning d-none">XLSX</button>
+
+      <!-- Input -->
+      <label class="form-label fw-bold">🔗 الصق الروابط هنا (حتى 1000 رابط):</label>
+      <textarea id="urlInput" class="form-control mb-3" rows="8" 
+        placeholder="https://kuwait-matjar.arabsad.com/./product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية&#10;https://kuwait-matjar.arabsad.com/./product.html?name=عربة-متنقلة-قابلة-للطي-بغطاء-و-عجلات&#10;https://example.com/products/special-offer?utm_source=facebook"></textarea>
+
+      <!-- Buttons -->
+      <div class="d-flex gap-2 flex-wrap mb-3">
+        <button id="processBtn" class="btn btn-primary">
+          <i class="fas fa-cogs me-2"></i>🤖 معالجة ذكية تلقائية
+        </button>
+        <button id="cleanBtn" class="btn btn-outline-warning">
+          <i class="fas fa-broom me-2"></i>تنظيف الروابط
+        </button>
+        <button id="backlinkBtn" class="btn btn-danger" disabled>
+          <i class="fas fa-bolt me-2"></i>باك لينك (25 موقع)
+        </button>
+        <button id="retryBtn" class="btn btn-outline-info d-none">
+          <i class="fas fa-redo me-2"></i>إعادة المحاولة للمحجوبين (<span id="blockedCount">0</span>)
+        </button>
+      </div>
+
+      <!-- Backlink Progress -->
+      <div id="backlinkProgress" style="display:none;">
+        <h6><i class="fas fa-satellite-dish me-2"></i>جاري النشر على المواقع:</h6>
+        <div class="position-relative mb-2">
+          <div class="progress">
+            <div class="progress-bar bg-success" id="progressBar" style="width:0%"></div>
+          </div>
+          <div class="progress-text" id="progressText">بدء العملية...</div>
+        </div>
+        <div id="backlinkStatus" class="backlink-status"></div>
+      </div>
+
+      <!-- Copy Buttons -->
+      <div class="d-flex gap-2 mb-3">
+        <button id="copyShortBtn" class="btn btn-success d-none">
+          <i class="fas fa-scissors me-2"></i>نسخ الروابط القصيرة
+        </button>
+        <button id="copyPrettyBtn" class="btn btn-info text-white d-none">
+          <i class="fas fa-magic me-2"></i>نسخ الروابط الجميلة
+        </button>
+        <button id="downloadBtn" class="btn btn-warning d-none">
+          <i class="fas fa-download me-2"></i>تحميل XLSX
+        </button>
       </div>
     </div>
 
-    <div id="results" class="card p-3" style="display:none">
+    <!-- Results Table -->
+    <div id="results" class="card p-4" style="display:none;">
+      <h5><i class="fas fa-list-check me-2"></i>النتائج</h5>
       <div class="table-responsive">
         <table class="table table-hover">
-          <thead>
+          <thead class="table-primary">
             <tr>
-              <th>#</th><th>الأصلي</th><th>القصير</th><th>الجميل</th>
+              <th style="width:5%">#</th>
+              <th style="width:35%">الرابط الأصلي</th>
+              <th style="width:30%">الرابط القصير</th>
+              <th style="width:30%">الرابط الجميل</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -52,111 +137,437 @@
     </div>
   </div>
 
-  <script src="https://sherow1982.github.io/arabic-ads-calculator-tools/tools/modules/loader-backlink-nologin.js"></script>
   <script>
-    // STATE
-    let currentMode='short';
-    let processed=[];
+    // VARIABLES & STATE
+    let currentMode = 'short';
+    let processedResults = [];
+    let backlinkResults = [];
 
-    // MODE SWITCH
-    const tabShort=document.getElementById('tabShort');
-    const tabPretty=document.getElementById('tabPretty');
-    const tabBoth=document.getElementById('tabBoth');
-    function setMode(m){
-      currentMode=m;
-      tabShort.className='btn btn-'+(m==='short'?'':'outline-')+'primary btn-sm';
-      tabPretty.className='btn btn-'+(m==='pretty'?'':'outline-')+'primary btn-sm';
-      tabBoth.className='btn btn-'+(m==='both'?'':'outline-')+'primary btn-sm';
-    }
-    tabShort.onclick = ()=>setMode('short');
-    tabPretty.onclick= ()=>setMode('pretty');
-    tabBoth.onclick  = ()=>setMode('both');
+    // 25 NO-LOGIN BACKLINK SITES
+    const BACKLINK_SITES = [
+      {name:'Digg', url:'https://www.digg.com/submit', param:'url'},
+      {name:'Mix', url:'https://mix.com/add', param:'url'},
+      {name:'Pocket', url:'https://getpocket.com/save', param:'url'},
+      {name:'Instapaper', url:'https://www.instapaper.com/save', param:'url'},
+      {name:'AllTop', url:'https://alltop.com/submit'},
+      {name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/'},
+      {name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker'},
+      {name:'SearchEngineReports', url:'https://searchenginereports.net/backlink-maker'},
+      {name:'Turbo SEO Tools', url:'https://www.turboseotools.com/backlink-maker'},
+      {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker'},
+      {name:'SiteChecker Backlinks', url:'https://sitechecker.pro/backlinks-generator/'},
+      {name:'Simplified SEO Tools', url:'https://simplifiedseotools.com/backlink-maker'},
+      {name:'W3era Backlink Tool', url:'https://www.w3era.com/seo-tools/backlink-maker/'},
+      {name:'Digital Web Services', url:'https://www.digital-web-services.com/marketing-seo-tools/backlink-maker'},
+      {name:'AllInOneTools Backlink', url:'https://allinonetools.net/backlink-maker/'},
+      {name:'SEOWagon Backlink', url:'https://seowagon.com/backlink-maker'},
+      {name:'Duplichecker Backlink', url:'https://www.duplichecker.com/backlink-maker.php'},
+      {name:'PrePostSEO URL Opener', url:'https://www.prepostseo.com/url-opener'},
+      {name:'SmallSEOTools Ping', url:'https://smallseotools.com/website-ping/'},
+      {name:'Ping.eu', url:'https://ping.eu/web-ping/'},
+      {name:'H-supertools Pinger', url:'https://h-supertools.com/seo-tools/pinger/'},
+      {name:'iTools Ping', url:'https://www.itools.com/tool/ping'},
+      {name:'WebConfs Ping', url:'https://www.webconfs.com/http-compression-test.php'},
+      {name:'AddURL Directory', url:'https://www.addurl.org/submit.php'},
+      {name:'JoeAnt Directory', url:'https://www.joeant.com/submit.php'}
+    ];
 
-    // HELPERS
-    function normalizeUrl(url){
-      if(!url) return '';
-      url=url.trim();
-      if(!/^https?:\/\//.test(url)) url='https://'+url;
-      try{
-        const u=new URL(url);
-        const path=u.pathname.replace(/\/\.\//g,'/').replace(/\/+/g,'/');
+    // UTILITY FUNCTIONS
+    function normalizeUrl(url) {
+      if (!url) return '';
+      url = url.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+      try {
+        const u = new URL(url);
+        const path = u.pathname.replace(/\/\.\//g, '/').replace(/\/+/g, '/');
         return `${u.protocol}//${u.host}${path}${u.search}${u.hash}`;
-      }catch{return url}
+      } catch { return url; }
     }
-    function slugifyFromUrl(url){
-      try{
-        const u=new URL(url); const q=new URLSearchParams(u.search);
-        let t=q.get('name')||q.get('title')||q.get('q')||u.pathname.split('/').filter(Boolean).pop()||'item';
-        t=decodeURIComponent(t).replace(/[\u0000-\u001F\u007F]/g,'').replace(/[^\u0600-\u06FFa-zA-Z0-9\s-]/g,'-').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-        return t.substring(0,80)||'item';
-      }catch{return 'item'}
-    }
-    function stats(){
-      const lines=document.getElementById('urlInput').value.split('\n').filter(s=>s.trim());
-      const seen=new Set();
-      let v=0,inv=0,dup=0;
-      lines.forEach(l=>{const n=normalizeUrl(l); if(seen.has(n)) dup++; else {seen.add(n); /^https?:\/\//.test(n)?v++:inv++;}});
-      document.getElementById('totalCount').textContent=lines.length;
-      document.getElementById('validCount').textContent=v;
-      document.getElementById('duplicateCount').textContent=dup;
-      document.getElementById('invalidCount').textContent=inv;
-    }
-    document.getElementById('urlInput').addEventListener('input',stats);
 
-    // CLEAN
-    function clean(){
-      const ta=document.getElementById('urlInput');
-      ta.value=ta.value.split('\n').map(s=>s.trim()).filter(Boolean).map(normalizeUrl).join('\n');
-      stats();
+    function createSlug(url) {
+      try {
+        const u = new URL(url);
+        const params = new URLSearchParams(u.search);
+        let text = params.get('name') || params.get('title') || params.get('q') || 
+                   u.pathname.split('/').filter(p => p && p.length > 2).pop() || 'item';
+        text = decodeURIComponent(text)
+          .replace(/[\u0000-\u001F\u007F]/g, '')
+          .replace(/[^\u0600-\u06FFa-zA-Z0-9\s\-]/g, '-')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '')
+          .substring(0, 60);
+        return text || 'item';
+      } catch {
+        return 'item-' + Date.now().toString(36).substr(-5);
+      }
     }
-    document.getElementById('cleanBtn').onclick=clean;
 
-    // PROCESS
-    document.getElementById('processBtn').onclick=function(){
-      const lines=document.getElementById('urlInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
-      if(!lines.length){alert('أدخل روابط');return}
-      const tbody=document.getElementById('tbody'); tbody.innerHTML=''; processed=[];
-      const base='https://sherow1982.github.io/arabic-ads-calculator-tools';
-      lines.forEach((l,i)=>{
-        const n=normalizeUrl(l); const slug=slugifyFromUrl(n);
-        const short=`${base}/s.html?to=${encodeURIComponent(n)}`;
-        const showShort=(currentMode==='short'||currentMode==='both');
-        const showPretty=(currentMode==='pretty'||currentMode==='both');
-        const tr=document.createElement('tr');
-        tr.innerHTML=`<td>${i+1}</td><td dir="ltr" style="font-family:monospace">${n}</td><td>${showShort?`<a href="${short}" target="_blank">${short}</a>`:'-'}</td><td>${showPretty?`${n}`:'-'}</td>`;
-        tbody.appendChild(tr);
-        processed.push({index:i+1,original:l,normalized:n,short:short,slug:slug,pretty:n});
+    function isValidUrl(url) {
+      try {
+        const u = new URL(url);
+        return u.protocol === 'http:' || u.protocol === 'https:';
+      } catch { return false; }
+    }
+
+    function updateStats() {
+      const input = document.getElementById('urlInput').value;
+      const lines = input.split('\n').filter(line => line.trim() !== '');
+      let validCount = 0, invalidCount = 0, duplicateCount = 0;
+      const seen = new Set();
+      
+      lines.forEach(line => {
+        const url = line.trim();
+        if (url === '') return;
+        const normalized = normalizeUrl(url);
+        if (seen.has(normalized)) {
+          duplicateCount++;
+        } else {
+          seen.add(normalized);
+          if (isValidUrl(normalized)) validCount++; else invalidCount++;
+        }
       });
-      document.getElementById('results').style.display='block';
-      document.getElementById('copyShortBtn').classList.toggle('d-none',!(currentMode==='short'||currentMode==='both'));
-      document.getElementById('copyPrettyBtn').classList.toggle('d-none',!(currentMode==='pretty'||currentMode==='both'));
+      
+      document.getElementById('totalCount').textContent = lines.length;
+      document.getElementById('validCount').textContent = validCount;
+      document.getElementById('duplicateCount').textContent = duplicateCount;
+      document.getElementById('invalidCount').textContent = invalidCount;
+    }
+
+    // MODE MANAGEMENT
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.mode === mode);
+      });
+    }
+
+    // CLEAN URLS
+    function cleanUrls() {
+      const textarea = document.getElementById('urlInput');
+      const lines = textarea.value.split('\n').map(line => line.trim()).filter(Boolean);
+      const cleaned = lines.map(normalizeUrl);
+      textarea.value = cleaned.join('\n');
+      updateStats();
+      
+      const btn = document.getElementById('cleanBtn');
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check me-2"></i>تم التنظيف!';
+      setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+    }
+
+    // PROCESS URLS
+    function processUrls() {
+      const input = document.getElementById('urlInput').value;
+      const lines = input.split('\n').filter(line => line.trim() !== '');
+      
+      if (lines.length === 0) {
+        alert('يرجى إدخال روابط للمعالجة');
+        return;
+      }
+
+      processedResults = [];
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
+      
+      const seenUrls = new Set();
+      let validIndex = 1;
+
+      lines.forEach(originalUrl => {
+        const url = originalUrl.trim();
+        if (url === '') return;
+        
+        const normalized = normalizeUrl(url);
+        if (seenUrls.has(normalized) || !isValidUrl(normalized)) return;
+        seenUrls.add(normalized);
+        
+        const shortCode = `k${validIndex}`;
+        const shortUrl = `https://sherow1982.github.io/arabic-ads-calculator-tools/s.html?to=${encodeURIComponent(normalized)}`;
+        const slug = createSlug(normalized);
+        const prettyUrl = normalized; // Same domain as requested
+        
+        const result = {
+          original: originalUrl,
+          normalized: normalized,
+          shortCode: shortCode,
+          shortUrl: shortUrl,
+          slug: slug,
+          prettyUrl: prettyUrl,
+          index: validIndex
+        };
+        
+        processedResults.push(result);
+        
+        // Display row
+        const showShort = (currentMode === 'short' || currentMode === 'both');
+        const showPretty = (currentMode === 'pretty' || currentMode === 'both');
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="text-center fw-bold">${validIndex}</td>
+          <td>
+            <div style="font-family:monospace;font-size:0.8rem;word-break:break-all;" dir="ltr">
+              ${originalUrl.length > 60 ? originalUrl.substring(0, 57) + '...' : originalUrl}
+            </div>
+          </td>
+          <td>
+            ${showShort ? `
+              <div class="text-primary mb-1" style="font-family:monospace;font-size:0.9rem;">
+                ${shortCode}
+              </div>
+              <button class="btn btn-outline-primary btn-sm" onclick="copyToClipboard('${shortUrl}', this)">
+                <i class="fas fa-copy"></i>
+              </button>
+            ` : '<span class="text-muted">-</span>'}
+          </td>
+          <td>
+            ${showPretty ? `
+              <div class="text-success mb-1" style="font-family:monospace;font-size:0.8rem;" dir="ltr">
+                /${slug}
+              </div>
+              <button class="btn btn-outline-success btn-sm" onclick="copyToClipboard('${prettyUrl}', this)">
+                <i class="fas fa-magic"></i>
+              </button>
+            ` : '<span class="text-muted">-</span>'}
+          </td>
+        `;
+        
+        tbody.appendChild(row);
+        validIndex++;
+      });
+      
+      // Show results and buttons
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('copyShortBtn').classList.toggle('d-none', !(currentMode === 'short' || currentMode === 'both'));
+      document.getElementById('copyPrettyBtn').classList.toggle('d-none', !(currentMode === 'pretty' || currentMode === 'both'));
       document.getElementById('downloadBtn').classList.remove('d-none');
-    };
+      document.getElementById('backlinkBtn').disabled = false;
+      
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
 
-    // COPY & XLSX
-    document.getElementById('copyShortBtn').onclick=function(){
-      const list=processed.map(r=>r.short).join('\n'); navigator.clipboard.writeText(list);
-    };
-    document.getElementById('copyPrettyBtn').onclick=function(){
-      const list=processed.map(r=>r.pretty).join('\n'); navigator.clipboard.writeText(list);
-    };
-    document.getElementById('downloadBtn').onclick=function(){
-      const rows=processed.map(r=>({'#':r.index,'الأصلي':r.original,'القصير':r.short,'الجميل':r.pretty,'Slug':r.slug}));
-      const ws=XLSX.utils.json_to_sheet(rows); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'النتائج'); XLSX.writeFile(wb,'smart-urls.xlsx');
-    };
+    // COPY FUNCTIONS
+    function copyToClipboard(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove('btn-success');
+        }, 2000);
+      });
+    }
 
-    // BACKLINK (NO-LOGIN)
-    document.getElementById('backlinkBtn').onclick=function(){
-      if(!processed.length){alert('نفّذ المعالجة أولاً');return}
-      const url=processed[0].pretty; // نفس الدومين كما طُلب
-      if(!window.BacklinkNoLogin){alert('وحدة الباك لينك لم تُحمّل بعد. حدّث الصفحة وجرب.');return}
-      const opened=window.BacklinkNoLogin.run(url);
-      const ws=XLSX.utils.json_to_sheet(opened.map((r,i)=>({'#':i+1,'Site':r.site,'URL':r.url,'Opened':r.ok?'Yes':'Popup blocked'})));
-      const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Backlinks'); XLSX.writeFile(wb,'backlink-report.xlsx');
-    };
+    function copyAllShort() {
+      const shortUrls = processedResults.map(r => r.shortUrl);
+      navigator.clipboard.writeText(shortUrls.join('\n')).then(() => {
+        showCopyFeedback('copyShortBtn');
+      });
+    }
 
-    // INIT
-    setMode('short'); stats();
+    function copyAllPretty() {
+      const prettyUrls = processedResults.map(r => r.prettyUrl);
+      navigator.clipboard.writeText(prettyUrls.join('\n')).then(() => {
+        showCopyFeedback('copyPrettyBtn');
+      });
+    }
+
+    function showCopyFeedback(btnId) {
+      const btn = document.getElementById(btnId);
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check me-2"></i>تم النسخ!';
+      setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+    }
+
+    // BACKLINK FUNCTIONS
+    async function createBacklinks() {
+      if (processedResults.length === 0) {
+        alert('قم بمعالجة الروابط أولاً');
+        return;
+      }
+
+      const targetUrl = processedResults[0].prettyUrl;
+      const btn = document.getElementById('backlinkBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري النشر...';
+      
+      document.getElementById('backlinkProgress').style.display = 'block';
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const statusDiv = document.getElementById('backlinkStatus');
+      
+      backlinkResults = [];
+      statusDiv.innerHTML = '';
+      
+      for (let i = 0; i < BACKLINK_SITES.length; i++) {
+        const site = BACKLINK_SITES[i];
+        const progress = ((i + 1) / BACKLINK_SITES.length) * 100;
+        
+        progressBar.style.width = progress + '%';
+        progressText.textContent = `${i + 1}/${BACKLINK_SITES.length} - جاري فتح: ${site.name}`;
+        
+        let submitUrl = site.url;
+        if (site.param) {
+          const separator = submitUrl.includes('?') ? '&' : '?';
+          submitUrl += `${separator}${site.param}=${encodeURIComponent(targetUrl)}`;
+        }
+        
+        let opened = false;
+        try {
+          const win = window.open(submitUrl, `_blank_${site.name.replace(/\s+/g, '')}`);
+          opened = !!win;
+        } catch (e) {
+          opened = false;
+        }
+        
+        const result = {
+          site: site.name,
+          url: submitUrl,
+          ok: opened,
+          timestamp: new Date().toISOString()
+        };
+        
+        backlinkResults.push(result);
+        
+        // Update status display
+        const statusItem = document.createElement('div');
+        statusItem.className = `status-item ${opened ? 'status-success' : 'status-blocked'}`;
+        statusItem.innerHTML = `
+          <span><strong>${site.name}</strong></span>
+          <span>${opened ? '✅ فُتح' : '❌ محجوب'}</span>
+        `;
+        statusDiv.appendChild(statusItem);
+        
+        // Batch delay
+        if ((i + 1) % 12 === 0) await new Promise(r => setTimeout(r, 1200));
+        else await new Promise(r => setTimeout(r, 400));
+      }
+      
+      progressText.textContent = 'تم! انتهاء النشر على 25 موقع';
+      btn.innerHTML = '<i class="fas fa-check me-2"></i>تم النشر على 25 موقع!';
+      btn.classList.remove('btn-danger');
+      btn.classList.add('btn-success');
+      
+      // Show retry button if blocked sites exist
+      const blockedSites = backlinkResults.filter(r => !r.ok);
+      if (blockedSites.length > 0) {
+        document.getElementById('blockedCount').textContent = blockedSites.length;
+        document.getElementById('retryBtn').classList.remove('d-none');
+      }
+      
+      // Auto-download report
+      downloadBacklinkReport();
+    }
+
+    async function retryBlocked() {
+      const blockedSites = backlinkResults.filter(r => !r.ok);
+      if (blockedSites.length === 0) {
+        alert('لا توجد مواقع محجوبة لإعادة المحاولة');
+        return;
+      }
+      
+      const btn = document.getElementById('retryBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>إعادة المحاولة...';
+      
+      for (let i = 0; i < blockedSites.length; i++) {
+        const site = blockedSites[i];
+        try {
+          const win = window.open(site.url, `_blank_retry_${site.site.replace(/\s+/g, '')}`);
+          if (win) {
+            // Update original result
+            const originalIndex = backlinkResults.findIndex(r => r.site === site.site);
+            if (originalIndex !== -1) {
+              backlinkResults[originalIndex].ok = true;
+              backlinkResults[originalIndex].retried = true;
+            }
+          }
+        } catch (e) {
+          console.warn('Retry failed for', site.site);
+        }
+        await new Promise(r => setTimeout(r, 500));
+      }
+      
+      btn.innerHTML = '<i class="fas fa-check me-2"></i>تمت إعادة المحاولة!';
+      setTimeout(() => {
+        btn.classList.add('d-none');
+      }, 3000);
+      
+      // Update backlink report
+      downloadBacklinkReport('retry');
+    }
+
+    // XLSX EXPORT
+    function downloadXLSX() {
+      if (processedResults.length === 0) {
+        alert('لا توجد نتائج للتصدير');
+        return;
+      }
+      
+      const data = processedResults.map(result => {
+        const showShort = (currentMode === 'short' || currentMode === 'both');
+        const showPretty = (currentMode === 'pretty' || currentMode === 'both');
+        
+        return {
+          'الرقم': result.index,
+          'الرابط الأصلي': result.original,
+          'الرابط القصير': showShort ? result.shortUrl : '-',
+          'الرابط الجميل': showPretty ? result.prettyUrl : '-',
+          'الاسم الجميل': showPretty ? result.slug : '-',
+          'الوضع المستخدم': currentMode === 'short' ? 'تقصير' : currentMode === 'pretty' ? 'تجميل' : 'كلاهما',
+          'تاريخ الإنشاء': new Date().toLocaleString('ar-EG')
+        };
+      });
+      
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'الروابط الذكية');
+      
+      const filename = `smart-urls-${currentMode}-${new Date().toISOString().split('T')[0]}.xlsx`;
+      XLSX.writeFile(wb, filename);
+    }
+
+    function downloadBacklinkReport(suffix = '') {
+      if (backlinkResults.length === 0) return;
+      
+      const data = backlinkResults.map((result, index) => ({
+        'الرقم': index + 1,
+        'اسم الموقع': result.site,
+        'الرابط المرسل': result.url,
+        'الحالة': result.ok ? 'تم الفتح ✅' : 'محجوب ❌',
+        'معاود المحاولة': result.retried ? 'نعم' : 'لا',
+        'التاريخ': new Date(result.timestamp).toLocaleString('ar-EG')
+      }));
+      
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'تقرير الباك لينكات');
+      
+      const filename = `backlink-report${suffix ? '-' + suffix : ''}-${new Date().toISOString().split('T')[0]}.xlsx`;
+      XLSX.writeFile(wb, filename);
+    }
+
+    // EVENT LISTENERS
+    document.getElementById('urlInput').addEventListener('input', updateStats);
+    
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        setMode(this.dataset.mode);
+      });
+    });
+    
+    document.getElementById('processBtn').onclick = processUrls;
+    document.getElementById('cleanBtn').onclick = cleanUrls;
+    document.getElementById('backlinkBtn').onclick = createBacklinks;
+    document.getElementById('retryBtn').onclick = retryBlocked;
+    document.getElementById('copyShortBtn').onclick = copyAllShort;
+    document.getElementById('copyPrettyBtn').onclick = copyAllPretty;
+    document.getElementById('downloadBtn').onclick = downloadXLSX;
+
+    // INITIALIZE
+    setMode('short');
+    updateStats();
   </script>
 </body>
 </html>
