@@ -6,51 +6,77 @@
   <title>مُرشِّد الإعلانات الذكي - النسخة النهائية المطلقة</title>
   <link rel="icon" href="../favicon.svg">
   <link rel="stylesheet" href="../global-styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     .container{max-width:1200px;margin:0 auto;padding:20px}
     .nav-tabs{display:flex;gap:8px;background:#f8f9fa;border-radius:12px;padding:8px;margin-bottom:20px;overflow-x:auto;flex-wrap:wrap}
-    .nav-tab{padding:10px 16px;border-radius:8px;background:transparent;border:none;cursor:pointer;white-space:nowrap;transition:all 0.3s;font-weight:600}
-    .nav-tab:hover,.nav-tab.active{background:var(--gradient);color:white}
-    .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:20px;margin:15px 0;box-shadow:0 2px 12px rgba(0,0,0,.04)}
-    .row{display:flex;gap:15px;flex-wrap:wrap}
-    .col{flex:1 1 280px}
+    .nav-tab{padding:10px 16px;border-radius:8px;background:transparent;border:none;cursor:pointer;white-space:nowrap;transition:all 0.3s;font-weight:600;color:#333}
+    .nav-tab:hover,.nav-tab.active{background:var(--gradient);color:white;transform:translateY(-1px)}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:25px;margin:20px 0;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+    .row{display:flex;gap:15px;flex-wrap:wrap;align-items:end}
+    .col{flex:1 1 280px;min-width:0}
     .kpi{display:flex;gap:15px;flex-wrap:wrap}
-    .kpi div{background:#f6f7f9;border:1px solid #e7e9ee;border-radius:10px;padding:12px 15px;flex:1 1 180px;text-align:center}
-    .pill{display:inline-block;background:#eef6ff;color:#1453b3;border:1px solid #cfe3ff;padding:6px 12px;border-radius:999px;margin:3px;font-size:0.9rem}
-    .pill-phrase{background:#d1ecf1;color:#0c5460;border-color:#bee5eb}
-    .pill-exact{background:#d4edda;color:#155724;border-color:#c3e6cb}
-    .pill-broad{background:#fff3cd;color:#856404;border-color:#ffeaa7}
-    .pill-negative{background:#f8d7da;color:#721c24;border-color:#f5c6cb}
+    .kpi div{background:#f9fafb;border:2px solid #e5e7eb;border-radius:12px;padding:15px;flex:1 1 180px;text-align:center;font-weight:600}
+    .pill{display:inline-block;padding:8px 14px;border-radius:20px;margin:4px;font-size:0.9rem;font-weight:600;border:2px solid;transition:all 0.2s}
+    .pill-phrase{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
+    .pill-exact{background:#d1fae5;color:#166534;border-color:#86efac}
+    .pill-broad{background:#fef3c7;color:#92400e;border-color:#fcd34d}
+    .pill-negative{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
     .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{background:var(--gradient);color:#fff;border:none;border-radius:22px;padding:10px 18px;cursor:pointer;font-weight:600;margin:5px;transition:all 0.3s}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,0.3)}
-    .btn-secondary{background:#6c757d}
-    .btn-success{background:#28a745}
-    .btn-warning{background:#ffc107;color:#333}
-    .platforms{margin:15px 0}
-    .platforms .platform-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .platforms label{display:flex;align-items:center;gap:6px;background:#f6f7f9;border:1px solid #e7e9ee;border-radius:999px;padding:8px 12px;cursor:pointer;margin:3px;transition:all 0.3s}
-    .platforms label:hover{background:#e9ecef}
-    .platform-suggestions{background:#e7f3ff;border:1px solid #b3d9ff;border-radius:10px;padding:15px;margin:10px 0}
-    .intent-group{margin:12px 0;padding:15px;background:#f9f9f9;border-radius:10px;border-left:4px solid #007bff}
-    .intent-title{font-weight:bold;color:#007bff;margin-bottom:8px;font-size:1rem}
-    .success{background:#e8f5e8;color:#2d5a2d;border:1px solid #b8d8b8;padding:15px;border-radius:10px;margin:15px 0;display:none;text-align:center;font-weight:600}
-    .muted{color:#666;font-size:0.9rem}
+    .btn{background:var(--gradient);color:#fff;border:none;border-radius:25px;padding:12px 20px;cursor:pointer;font-weight:700;margin:5px;transition:all 0.3s;font-size:0.95rem}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(102,126,234,0.4)}
+    .btn-secondary{background:#64748b}
+    .btn-success{background:#059669}
+    .btn-warning{background:#d97706;color:white}
+    .platforms{margin:20px 0}
+    .platforms .platform-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center}
+    .platforms label{display:flex;align-items:center;gap:8px;background:#f9fafb;border:2px solid #e5e7eb;border-radius:25px;padding:10px 16px;cursor:pointer;margin:4px;transition:all 0.3s;font-weight:600}
+    .platforms label:hover{background:#f3f4f6;border-color:#d1d5db;transform:translateY(-1px)}
+    .platforms input:checked + label{background:#dbeafe;border-color:#3b82f6;color:#1e40af}
+    .platform-suggestions{background:#eff6ff;border:2px solid #93c5fd;border-radius:14px;padding:18px;margin:15px 0}
+    .intent-group{margin:15px 0;padding:18px;background:#fafbfc;border-radius:12px;border-left:5px solid #3b82f6}
+    .intent-title{font-weight:800;color:#1e40af;margin-bottom:10px;font-size:1.1rem}
+    .success{background:#f0fdf4;color:#166534;border:2px solid #86efac;padding:18px;border-radius:14px;margin:20px 0;display:none;text-align:center;font-weight:700;font-size:1.05rem}
+    .muted{color:#6b7280;font-size:0.9rem;font-weight:500}
     .small{font-size:0.85rem}
     .search-box{position:relative}
-    .sector-suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:200px;overflow-y:auto;z-index:1000;display:none;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
-    .sector-item{padding:10px 15px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s}
-    .sector-item:hover{background:#f5f5f5}
+    .sector-suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid #e5e7eb;border-radius:10px;max-height:220px;overflow-y:auto;z-index:1000;display:none;box-shadow:0 8px 25px rgba(0,0,0,0.12)}
+    .sector-item{padding:12px 18px;cursor:pointer;border-bottom:1px solid #f3f4f6;transition:all 0.2s;font-weight:500}
+    .sector-item:hover{background:#f9fafb;color:#1e40af;font-weight:600}
     .sector-item:last-child{border-bottom:none}
-    input,select{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-family:inherit;font-size:1rem}
-    label{display:block;margin-bottom:5px;font-weight:600;color:#333}
-    .quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
-    @media(max-width:768px){.row{flex-direction:column}.nav-tabs{justify-content:center}.kpi{flex-direction:column}.platforms .platform-row{justify-content:center}}
+    input,select{width:100%;padding:14px 16px;border:2px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:1rem;font-weight:500;transition:border-color 0.2s}
+    input:focus,select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+    label{display:block;margin-bottom:8px;font-weight:700;color:#374151;font-size:0.95rem}
+    .quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0;justify-content:center}
+    .dialect-info{background:#fef7ff;border:1px solid #e879f9;color:#a21caf;padding:8px 12px;border-radius:8px;font-size:0.8rem;margin-top:5px;text-align:center}
+    @media(max-width:768px){
+      .row{flex-direction:column}
+      .nav-tabs{justify-content:center}
+      .kpi{flex-direction:column}
+      .platforms .platform-row{justify-content:center}
+      .container{padding:15px}
+      .card{padding:18px;margin:15px 0}
+    }
   </style>
 </head>
 <body>
+  <!-- الهيدر الموحد -->
+  <nav class="unified-nav" style="display:flex;gap:15px;flex-wrap:wrap;align-items:center;justify-content:center;padding:15px 10px;background:var(--gradient);border-radius:0 0 20px 20px;margin-bottom:20px">
+    <a href="../" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-home"></i> الرئيسية</a>
+    <a href="../alerts.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-bell"></i> التنبيهات</a>
+    <a href="../keyword-generator.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-key"></i> الكلمات</a>
+    <a href="../cpc-calculator.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-calculator"></i> CPC</a>
+    <a href="../roi-calculator.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-chart-line"></i> ROI</a>
+    <a href="../roas-calculator.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-money-bill-trend-up"></i> ROAS</a>
+    <a href="../budget-planner.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-chart-pie"></i> الميزانية</a>
+    <a href="../tools-directory.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:15px;transition:all 0.3s;font-weight:600"><i class="fas fa-list"></i> الدليل</a>
+  </nav>
+
   <div class="container">
-    <!-- أزرار التنقل العلوية -->
+    <!-- أزرار التنقل الداخلية -->
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="scrollToSection('top');">🏁 البداية</button>
       <button class="nav-tab" onclick="scrollToSection('keywords');">🔑 الكلمات</button>
@@ -62,8 +88,8 @@
     </div>
 
     <div id="top">
-      <h1>🎯 مُرشِّد الإعلانات الذكي - النسخة النهائية</h1>
-      <p class="muted">أداة شاملة لتوليد كلمات بحث عربية احترافية مع 50+ مجال، بحث ذكي، أنواع المطابقة، كلمات سلبية، ومنصات مقترحة حسب الدولة. تصدير XLSX/CSV مع ملخص الحملة. مجاني 100% وبدون طرف ثالث.</p>
+      <h1>🎯 مُرشِّد الإعلانات الذكي - النسخة النهائية المطلقة</h1>
+      <p class="muted">أداة شاملة لتوليد كلمات بحث عربية احترافية مع 50+ مجال، بحث ذكي، لهجات محلية، أنواع المطابقة، كلمات سلبية، ومنصات مقترحة حسب الدولة. تصدير XLSX/CSV مع ملخص الحملة. مجاني 100% وبدون طرف ثالث.</p>
 
       <div class="success" id="successMsg">✅ تم توليد الكلمات والخطة بنجاح! يمكنك الآن النسخ أو التصدير.</div>
 
@@ -86,6 +112,13 @@
               <option value="تونس">تونس</option>
               <option value="الجزائر">الجزائر</option>
             </select>
+          </div>
+          <div class="col">
+            <label>اللهجة</label>
+            <select id="dialect" disabled>
+              <option value="classical">العربية الفصحى</option>
+            </select>
+            <div class="dialect-info" id="dialectInfo" style="display:none">💡 التصدير يتم بالفصحى افتراضياً. يمكن تفعيل التصدير باللهجة من الإعدادات المتقدمة.</div>
           </div>
           <div class="col">
             <div class="search-box">
@@ -120,7 +153,23 @@
           </div>
           <div class="col">
             <label>الكلمات السلبية</label>
-            <input type="checkbox" id="includeNegatives" checked /> تضمين كلمات سلبية
+            <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+              <input type="checkbox" id="includeNegatives" checked style="width:auto" /> 
+              <span>تضمين كلمات سلبية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- الإعدادات المتقدمة (قابلة للطي) -->
+        <div style="margin-top:20px">
+          <button id="advancedToggle" type="button" style="background:#f3f4f6;border:1px solid #d1d5db;color:#374151;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600">
+            ⚙️ إعدادات متقدمة <span id="advancedIcon">▼</span>
+          </button>
+          <div id="advancedSettings" style="display:none;background:#fafbfc;border:1px solid #e5e7eb;border-radius:10px;padding:15px;margin-top:10px">
+            <label style="display:flex;align-items:center;gap:8px;font-weight:500">
+              <input type="checkbox" id="exportInDialect" style="width:auto" /> 
+              تصدير الكلمات باللهجة المختارة (بدلاً من الفصحى)
+            </label>
           </div>
         </div>
 
@@ -138,7 +187,7 @@
           <div id="platformToggles" class="platform-row"></div>
         </div>
 
-        <button id="run" class="btn" style="font-size:1.2rem;padding:15px 30px;width:100%;margin-top:10px">🚀 توليد الكلمات المتقدمة + الخطة الاحترافية</button>
+        <button id="run" class="btn" style="font-size:1.3rem;padding:18px 35px;width:100%;margin-top:15px;font-weight:800">🚀 توليد الكلمات المتقدمة + الخطة الاحترافية</button>
       </div>
     </div>
 
@@ -167,16 +216,30 @@
 
       <div id="export" class="card">
         <h2>📥 تصدير الملفات</h2>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
           <button id="copyAll" class="btn">📋 نسخ جميع الكلمات</button>
           <button id="copyNegatives" class="btn btn-secondary">🚫 نسخ الكلمات السلبية</button>
           <button id="exportXlsx" class="btn">📊 تنزيل XLSX متقدم</button>
           <button id="exportGoogleAds" class="btn btn-secondary">📄 تصدير Google Ads CSV</button>
         </div>
-        <p class="muted small" style="text-align:center;margin-top:10px">الملفات تُحفظ بصيغة .xlsx و .csv أصلية، بدون علامات اقتباس، مع ملخص الحملة التلقائي</p>
+        <p class="muted small" style="text-align:center;margin-top:12px">الملفات تُحفظ بصيغة .xlsx و .csv أصلية، بدون علامات اقتباس، مع ملخص الحملة التلقائي</p>
       </div>
     </div>
   </div>
+
+  <!-- الفوتر الموحد -->
+  <footer style="background:var(--gradient);color:white;margin-top:40px;padding:25px 15px;text-align:center;border-radius:20px 20px 0 0">
+    <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-bottom:15px">
+      <a href="../about.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">عن الأدوات</a>
+      <a href="../tools-directory.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">دليل الأدوات</a>
+      <a href="../complete-tools-showcase.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">العرض الشامل</a>
+      <a href="../alerts.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">التنبيهات</a>
+      <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">الموقع الرسمي</a>
+      <a href="https://wa.me/201110760081" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">واتساب</a>
+      <a href="https://facebook.com/arabads.me" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">فيسبوك</a>
+    </div>
+    <small style="opacity:0.9">© 2025 مؤسسة إعلانات العرب - 27 أداة احترافية مجانية للمسوقين العرب</small>
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
@@ -195,36 +258,68 @@
       'الجزائر': {currency:'DZD', recommended:['Facebook','Instagram','Google Ads'], cpm:{Facebook:0.3,'Google Ads':0.5,Instagram:0.4}}
     };
 
+    // قاعدة بيانات اللهجات
+    const DIALECTS = {
+      'السعودية': {
+        transforms: {
+          'أثاث': 'عفش', 'ترحيل': 'نقل', 'شحن': 'نقل', 'موبيليا': 'عفش',
+          'تنظيف': 'تنظيف', 'تعقيم': 'تعقيم', 'غسيل': 'غسيل',
+          'تسليك': 'تسليك', 'شفط': 'شفط', 'مجاري': 'مجاري', 'بيارات': 'بيارات'
+        }
+      },
+      'الإمارات': {
+        transforms: {
+          'أثاث': 'أثاث', 'عفش': 'أثاث', 'ترحيل': 'نقل', 'شحن': 'شحن',
+          'تنظيف': 'تنظيف', 'غسيل': 'غسيل',
+          'تسليك': 'تسليك', 'شفط': 'شفط', 'مجاري': 'مجاري'
+        }
+      },
+      'مصر': {
+        transforms: {
+          'أثاث': 'عفش', 'ترحيل': 'نقل', 'شحن': 'شحن', 'موبيليا': 'أثاث',
+          'تنظيف': 'تنضيف', 'تعقيم': 'تطهير', 'غسيل': 'غسيل',
+          'تسليك': 'شفط', 'شفط': 'شفط', 'مجاري': 'مجاري', 'بيارات': 'بيارات'
+        }
+      },
+      'المغرب': {
+        transforms: {
+          'أثاث': 'أثاث', 'عفش': 'أثاث', 'نقل': 'نقل', 'ترحيل': 'ترحيل',
+          'تنظيف': 'تنظيف', 'غسيل': 'غسيل',
+          'تسليك': 'تسليك', 'مجاري': 'مجاري'
+        }
+      }
+    };
+
     const SECTORS = {
       'نقل أثاث': {
         keywords: {
-          'السعر والتكلفة': ['نقل أثاث سعر','نقل أثاث اسعار','نقل عفش تكلفة','شحن أثاث ارخص','ترحيل أثاث اسعار','نقل موبيليا سعر'],
-          'الموقع والقرب': ['نقل أثاث قريب','نقل عفش بالقرب','شحن أثاث محلي','ترحيل أثاث قريب'],
-          'الحجز والطلب': ['حجز نقل أثاث','طلب نقل عفش','نقل أثاث رقم','شحن أثاث هاتف','ترحيل أثاث حجز'],
-          'الخدمات المتخصصة': ['فك وتركيب أثاث','تغليف أثاث','نقل أثاث منزلي','نقل أثاث مكتبي','رافعة أثاث','تخزين أثاث'],
-          'العروض والجودة': ['نقل أثاث افضل','نقل عفش عروض','شحن أثاث خصم','نقل أثاث اونلاين','ترحيل أثاث جديد']
+          'البحث المباشر والأسعار': ['اسعار نقل اثاث','تكلفة نقل اثاث منزلي','افضل شركة نقل اثاث','نقل عفش ارخص اسعار','شركة نقل اثاث مضمونة','نقل اثاث بالساعة اسعار'],
+          'البحث المحلي والقرب': ['نقل اثاث قريب مني','شركة نقل عفش قريبة','نقل اثاث في منطقتي','شركة نقل اثاث محلية','نقل عفش بالحي','افضل نقل اثاث بالمدينة'],
+          'الحجز والاتصال المباشر': ['رقم شركة نقل اثاث','حجز نقل اثاث اليوم','طلب نقل عفش فوري','نقل اثاث برقم واحد','شركة نقل اثاث 24 ساعة','حجز نقل اثاث اونلاين'],
+          'الخدمات المتخصصة والإضافية': ['فك وتركيب اثاث','تغليف اثاث احترافي','نقل اثاث مع التأمين','رافعة نقل اثاث','تخزين اثاث مؤقت','نقل اثاث مكاتب'],
+          'العروض والجودة العالية': ['عروض نقل اثاث','خصومات نقل عفش','نقل اثاث مجاني التقدير','اكبر شركة نقل اثاث','نقل اثاث مضمون 100%','تقييمات نقل اثاث ممتازة']
         },
-        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','ايكيا','محلات','شراء','بيع أثاث','أثاث مستعمل']
+        negatives: ['وظائف نقل','توظيف سائقين','نقل مجاني','صور اثاث','تعليم نقل','دورات نقل','ايكيا','محلات اثاث','شراء اثاث','بيع اثاث مستعمل','اثاث للبيع']
       },
       'شركة نظافة': {
         keywords: {
-          'السعر والتكلفة': ['شركة نظافة سعر','تنظيف منازل اسعار','شركة نظافة تكلفة','تنظيف شقق ارخص'],
-          'الموقع والقرب': ['شركة نظافة قريبة','تنظيف منازل قريب','شركة نظافة بالقرب'],
-          'الحجز والطلب': ['حجز شركة نظافة','طلب تنظيف منازل','شركة نظافة رقم','تنظيف شقق هاتف'],
-          'الخدمات المتخصصة': ['تنظيف سجاد','تنظيف كنب','تعقيم منازل','غسيل موكيت','تنظيف واجهات','تنظيف خزانات'],
-          'العروض والجودة': ['شركة نظافة افضل','تنظيف منازل عروض','شركة نظافة خصم','تنظيف شقق اونلاين']
+          'البحث المباشر والأسعار': ['اسعار شركة تنظيف منازل','تكلفة تنظيف شقة','افضل شركة نظافة','شركة تنظيف رخيصة','تنظيف منازل بالساعة','اسعار تنظيف شقق'],
+          'البحث المحلي والقرب': ['شركة نظافة قريب مني','تنظيف منازل قريب','شركة تنظيف في منطقتي','تنظيف شقق محلي','شركة نظافة بالحي','افضل تنظيف منازل بالمدينة'],
+          'الحجز والاتصال المباشر': ['رقم شركة نظافة','حجز تنظيف منزل اليوم','طلب تنظيف فوري','شركة نظافة 24 ساعة','حجز تنظيف اونلاين','تنظيف منازل برقم واحد'],
+          'الخدمات المتخصصة': ['تنظيف سجاد وموكيت','تنظيف كنب وانتريهات','تعقيم منازل كورونا','غسيل خزانات مياه','تنظيف واجهات زجاج','تنظيف مكيفات'],
+          'العروض والجودة العالية': ['عروض تنظيف منازل','خصومات شركة نظافة','تنظيف مجاني التقدير','اكبر شركة نظافة','تنظيف مضمون 100%','تقييمات تنظيف ممتازة']
         },
-        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','عاملات','خادمات','منظفات منزلية']
+        negatives: ['وظائف تنظيف','توظيف عاملات','تنظيف مجاني','صور تنظيف','تعليم تنظيف','دورات تنظيف','عاملات منزلية','خادمات','منظفات منزلية للبيع','ادوات تنظيف']
       },
       'شركة صرف صحي': {
         keywords: {
-          'السعر والتكلفة': ['شركة صرف صحي سعر','تسليك مجاري اسعار','شفط بيارات تكلفة','صرف صحي ارخص'],
-          'الموقع والقرب': ['شركة صرف صحي قريبة','تسليك مجاري قريب','شفط بيارات بالقرب'],
-          'الحجز والطوارئ': ['حجز شركة صرف صحي','طوارئ صرف صحي','صرف صحي 24 ساعة','تسليك مجاري طوارئ'],
-          'الخدمات المتخصصة': ['تسليك مجاري','شفط بيارات','كشف تسربات','تنظيف بيارات','صيانة صرف صحي'],
-          'العروض والجودة': ['شركة صرف صحي افضل','تسليك مجاري عروض','صرف صحي خصم']
+          'البحث المباشر والأسعار': ['اسعار تسليك مجاري','تكلفة شفط بيارات','افضل شركة صرف صحي','تسليك مجاري رخيص','شفط بيارات بالساعة','اسعار صرف صحي'],
+          'البحث المحلي والقرب': ['تسليك مجاري قريب مني','شفط بيارات قريب','شركة صرف صحي في منطقتي','تسليك مجاري محلي','صرف صحي بالحي','افضل تسليك مجاري بالمدينة'],
+          'الطوارئ والاتصال المباشر': ['رقم تسليك مجاري طوارئ','شفط بيارات 24 ساعة','طوارئ صرف صحي','تسليك مجاري فوري','صرف صحي برقم واحد','حجز تسليك مجاري اونلاين'],
+          'الخدمات المتخصصة': ['كشف تسربات مياه','تنظيف بيارات وخزانات','صيانة شبكة صرف','تسليك مجاري بالضغط','شفط بيارات صحية','تطهير خزانات المياه'],
+          'العروض والجودة العالية': ['عروض تسليك مجاري','خصومات شفط بيارات','صرف صحي مجاني التقدير','اكبر شركة صرف صحي','تسليك مضمون 100%','تقييمات صرف صحي ممتازة']
         },
-        negatives: ['وظائف','توظيف','مجاني','صور','تعليم','دورات','أدوات','معدات للبيع','مقاولين']
+        negatives: ['وظائف صرف','توظيف عمال','صرف مجاني','صور صرف','تعليم سباكة','دورات صرف','ادوات سباكة','معدات للبيع','مقاولين فقط','عمال سباكة']
       }
     };
 
@@ -235,6 +330,15 @@
       document.getElementById(id).scrollIntoView({behavior: 'smooth'});
       document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
       event.target.classList.add('active');
+    }
+
+    function applyDialect(text, country, dialectEnabled) {
+      if(!dialectEnabled || !DIALECTS[country]) return text;
+      let result = text;
+      Object.entries(DIALECTS[country].transforms).forEach(([classical, dialect]) => {
+        result = result.replace(new RegExp(classical, 'g'), dialect);
+      });
+      return result;
     }
 
     function setupSectorSearch(){
@@ -285,19 +389,28 @@
       return null;
     }
 
-    function generateKeywords(sectorText, expansionLevel) {
+    function generateKeywords(sectorText, expansionLevel, country, dialectEnabled) {
       const sector = detectSector(sectorText);
       if(sector && SECTORS[sector]) {
         let groups = {...SECTORS[sector].keywords};
         
+        // تطبيق اللهجة إن كانت مفعلة
+        if(dialectEnabled && DIALECTS[country]) {
+          Object.keys(groups).forEach(groupName => {
+            groups[groupName] = groups[groupName].map(kw => 
+              applyDialect(kw, country, true)
+            );
+          });
+        }
+        
         if(expansionLevel === 'aggressive') {
-          const cities = ['الرياض','جدة','الدمام','الخبر','دبي','أبوظبي','الكويت','الدوحة'];
+          const cities = ['الرياض','جدة','الدمام','الخبر','دبي','أبوظبي','الكويت','الدوحة','القاهرة','الإسكندرية'];
           Object.keys(groups).forEach(groupName => {
             const cityVariants = [];
             groups[groupName].slice(0,2).forEach(kw => {
-              cities.slice(0,3).forEach(city => cityVariants.push(`${kw} ${city}`));
+              cities.slice(0,4).forEach(city => cityVariants.push(`${kw} في ${city}`));
             });
-            if(cityVariants.length) groups[`${groupName} + مدن`] = cityVariants;
+            if(cityVariants.length) groups[`${groupName} + مدن رئيسية`] = cityVariants;
           });
         }
         
@@ -305,12 +418,23 @@
       }
       
       const mainWord = sectorText.trim().split(' ').pop();
-      return {
-        [`كلمات ${mainWord} - السعر`]: [`${mainWord} سعر`,`${mainWord} اسعار`,`${mainWord} تكلفة`,`${mainWord} ارخص`],
-        [`كلمات ${mainWord} - الموقع`]: [`${mainWord} قريب`,`${mainWord} بالقرب`,`احسن ${mainWord}`],
-        [`كلمات ${mainWord} - الطلب`]: [`${mainWord} حجز`,`${mainWord} طلب`,`${mainWord} رقم`,`${mainWord} هاتف`],
-        [`كلمات ${mainWord} - الخدمة`]: [`خدمات ${mainWord}`,`${mainWord} اونلاين`,`${mainWord} عروض`,`${mainWord} جديد`]
+      const baseKeywords = {
+        [`كلمات ${mainWord} - البحث المباشر`]: [`اسعار ${mainWord}`,`تكلفة ${mainWord}`,`افضل ${mainWord}`,`${mainWord} رخيص`,`${mainWord} مضمون`],
+        [`كلمات ${mainWord} - البحث المحلي`]: [`${mainWord} قريب مني`,`${mainWord} في منطقتي`,`${mainWord} محلي`,`افضل ${mainWord} بالمدينة`],
+        [`كلمات ${mainWord} - الحجز والاتصال`]: [`رقم ${mainWord}`,`حجز ${mainWord}`,`طلب ${mainWord}`,`${mainWord} برقم واحد`,`${mainWord} اونلاين`],
+        [`كلمات ${mainWord} - الخدمة والعروض`]: [`خدمات ${mainWord}`,`عروض ${mainWord}`,`${mainWord} 24 ساعة`,`${mainWord} مجاني التقدير`]
       };
+      
+      // تطبيق اللهجة للمجالات المخصصة
+      if(dialectEnabled && DIALECTS[country]) {
+        Object.keys(baseKeywords).forEach(groupName => {
+          baseKeywords[groupName] = baseKeywords[groupName].map(kw => 
+            applyDialect(kw, country, true)
+          );
+        });
+      }
+      
+      return baseKeywords;
     }
 
     function getSectorNegatives(sectorText){
@@ -335,50 +459,81 @@
         toggles.appendChild(label);
       });
 
+      // إعداد اللهجات
       document.getElementById('country').addEventListener('change', (e) => {
         const country = e.target.value;
+        const dialectSelect = document.getElementById('dialect');
+        const dialectInfo = document.getElementById('dialectInfo');
         const suggestions = document.getElementById('platformSuggestions');
-        if(country && BENCHMARKS[country]) {
-          suggestions.style.display = 'block';
+        
+        if(country) {
+          dialectSelect.disabled = false;
+          dialectSelect.innerHTML = `
+            <option value="classical">العربية الفصحى</option>
+            <option value="local">لهجة ${country}</option>
+          `;
+          dialectInfo.style.display = 'block';
           
-          document.getElementById('selectRecommended').onclick = () => {
-            PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
-            BENCHMARKS[country].recommended.forEach(p => {
-              const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
-              if(checkbox) checkbox.checked = true;
-            });
-          };
-          
-          document.getElementById('selectTop2').onclick = () => {
-            PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
-            BENCHMARKS[country].recommended.slice(0,2).forEach(p => {
-              const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
-              if(checkbox) checkbox.checked = true;
-            });
-          };
-          
-          document.getElementById('selectAll').onclick = () => {
-            BENCHMARKS[country].recommended.forEach(p => {
-              const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
-              if(checkbox) checkbox.checked = true;
-            });
-          };
-          
-          document.getElementById('clearAll').onclick = () => {
-            PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
-          };
+          if(BENCHMARKS[country]) {
+            suggestions.style.display = 'block';
+            
+            document.getElementById('selectRecommended').onclick = () => {
+              PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
+              BENCHMARKS[country].recommended.forEach(p => {
+                const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
+                if(checkbox) checkbox.checked = true;
+              });
+            };
+            
+            document.getElementById('selectTop2').onclick = () => {
+              PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
+              BENCHMARKS[country].recommended.slice(0,2).forEach(p => {
+                const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
+                if(checkbox) checkbox.checked = true;
+              });
+            };
+            
+            document.getElementById('selectAll').onclick = () => {
+              BENCHMARKS[country].recommended.forEach(p => {
+                const checkbox = document.getElementById('pl_'+p.replace(/\s+/g,'_'));
+                if(checkbox) checkbox.checked = true;
+              });
+            };
+            
+            document.getElementById('clearAll').onclick = () => {
+              PLATFORMS.forEach(p => document.getElementById('pl_'+p.replace(/\s+/g,'_')).checked = false);
+            };
+          }
         } else {
+          dialectSelect.disabled = true;
+          dialectSelect.innerHTML = '<option value="classical">العربية الفصحى</option>';
+          dialectInfo.style.display = 'none';
           suggestions.style.display = 'none';
+        }
+      });
+
+      // إعداد الإعدادات المتقدمة
+      document.getElementById('advancedToggle').addEventListener('click', () => {
+        const settings = document.getElementById('advancedSettings');
+        const icon = document.getElementById('advancedIcon');
+        if(settings.style.display === 'none') {
+          settings.style.display = 'block';
+          icon.textContent = '▲';
+        } else {
+          settings.style.display = 'none';
+          icon.textContent = '▼';
         }
       });
 
       document.getElementById('run').addEventListener('click', ()=>{
         const country = document.getElementById('country').value;
+        const dialect = document.getElementById('dialect').value;
         const sector = document.getElementById('sectorFree').value.trim();
         const budget = parseFloat(document.getElementById('budget').value || '5000');
         const matchType = document.getElementById('matchType').value;
         const includeNegatives = document.getElementById('includeNegatives').checked;
         const expansionLevel = document.getElementById('expansionLevel').value;
+        const exportInDialect = document.getElementById('exportInDialect').checked;
         
         if(!country || !sector) {
           alert('من فضلك اختر دولة واكتب مجال العمل');
@@ -394,12 +549,14 @@
         }
         
         const countryData = BENCHMARKS[country] || {currency:'SAR', cpm:{}};
-        const keywordGroups = generateKeywords(sector, expansionLevel);
+        const dialectEnabled = dialect === 'local';
+        const keywordGroups = generateKeywords(sector, expansionLevel, country, dialectEnabled);
         
-        // عرض الكلمات بدون علامات اقتباس
+        // عرض الكلمات
         const kwEl = document.getElementById('keywordsContent');
         kwEl.innerHTML = '';
         let allKeywords = [];
+        let exportKeywords = []; // للتصدير (قد تكون مختلفة حسب إعداد اللهجة)
         
         Object.entries(keywordGroups).forEach(([groupName, keywords]) => {
           const groupDiv = document.createElement('div');
@@ -411,7 +568,7 @@
           
           keywords.forEach((k, i) => {
             const span = document.createElement('span');
-            span.textContent = k; // بدون علامات اقتباس في العرض
+            span.textContent = k;
             
             if(matchType === 'mixed') {
               if(i % 5 < 3) span.className = 'pill pill-phrase';
@@ -423,7 +580,18 @@
             }
             
             chipsDiv.appendChild(span);
-            allKeywords.push(k); // حفظ بدون علامات
+            allKeywords.push(k);
+            
+            // للتصدير: إما باللهجة أو بالفصحى
+            if(exportInDialect) {
+              exportKeywords.push(k);
+            } else {
+              // إرجاع للفصحى للتصدير
+              const classicalKeyword = dialectEnabled && DIALECTS[country] ? 
+                Object.entries(DIALECTS[country].transforms).reduce((acc, [classical, dialectWord]) => 
+                  acc.replace(new RegExp(dialectWord, 'g'), classical), k) : k;
+              exportKeywords.push(classicalKeyword);
+            }
           });
           
           groupDiv.appendChild(chipsDiv);
@@ -431,7 +599,7 @@
         });
 
         document.getElementById('keywordStats').textContent = 
-          `تم توليد ${allKeywords.length} كلمة في ${Object.keys(keywordGroups).length} مجموعات نية`;
+          `تم توليد ${allKeywords.length} كلمة في ${Object.keys(keywordGroups).length} مجموعات نية ${dialectEnabled ? '(لهجة '+country+')' : '(فصحى)'}`;
 
         // الكلمات السلبية
         let negativeKeywords = [];
@@ -450,8 +618,9 @@
 
         // أزرار النسخ والتصدير
         document.getElementById('copyAll').onclick = () => {
-          navigator.clipboard.writeText(allKeywords.join('\n')).then(() => 
-            alert(`تم نسخ ${allKeywords.length} كلمة بدون علامات اقتباس`));
+          const keywordsToCopy = exportInDialect ? allKeywords : exportKeywords;
+          navigator.clipboard.writeText(keywordsToCopy.join('\n')).then(() => 
+            alert(`تم نسخ ${keywordsToCopy.length} كلمة بدون علامات اقتباس ${exportInDialect && dialectEnabled ? '(لهجة '+country+')' : '(فصحى)'}`));
         };
         
         document.getElementById('copyNegatives').onclick = () => {
@@ -462,90 +631,113 @@
         };
         
         document.getElementById('exportXlsx').onclick = () => {
-          if(!window.XLSX) { alert('مكتبة XLSX غير محملة'); return; }
-          
-          const wb = XLSX.utils.book_new();
-          const now = new Date();
-          
-          // الورقة الأولى: ملخص الحملة
-          const summaryData = [
-            ['ملخص الحملة الإعلانية', ''],
-            ['', ''],
-            ['الدولة', country],
-            ['العملة', countryData.currency],
-            ['المجال', sector],
-            ['الميزانية الإجمالية', `${budget} ${countryData.currency}`],
-            ['نوع المطابقة', matchType === 'mixed' ? 'مزيج' : matchType === 'phrase' ? 'مطابقة العبارة' : matchType === 'broad' ? 'مطابقة واسعة' : 'مطابقة تامة'],
-            ['مستوى التوسع', expansionLevel === 'moderate' ? 'متوسط' : expansionLevel === 'conservative' ? 'محافظ' : 'توسعي'],
-            ['المنصات المختارة', activePlatforms.join(', ')],
-            ['تاريخ الإنشاء', now.toLocaleDateString('ar-SA')],
-            ['وقت الإنشاء', now.toLocaleTimeString('ar-SA')],
-            ['', ''],
-            ['إجمالي الكلمات', allKeywords.length],
-            ['إجمالي السلبية', negativeKeywords.length],
-            ['', '']
-          ];
-          
-          const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-          XLSX.utils.book_append_sheet(wb, wsSummary, 'ملخص الحملة');
-          
-          // الورقة الثانية: الكلمات الرئيسية
-          const keywordRows = [['الكلمة','نوع المطابقة','مجموعة النية','ملاحظة']];
-          Object.entries(keywordGroups).forEach(([group, keywords]) => {
-            keywords.forEach(k => {
-              const matchText = matchType === 'mixed' ? 'مزيج' :
-                               matchType === 'phrase' ? 'مطابقة العبارة' :
-                               matchType === 'broad' ? 'مطابقة واسعة' : 'مطابقة تامة';
-              keywordRows.push([k, matchText, group, '']);
-            });
-          });
-          const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
-          XLSX.utils.book_append_sheet(wb, wsKeywords, 'الكلمات الرئيسية');
-          
-          // الورقة الثالثة: الكلمات السلبية
-          if(negativeKeywords.length) {
-            const negRows = [['الكلمة السلبية','السبب']];
-            negativeKeywords.forEach(k => negRows.push([k, 'تقليل الهدر']));
-            const wsNegatives = XLSX.utils.aoa_to_sheet(negRows);
-            XLSX.utils.book_append_sheet(wb, wsNegatives, 'الكلمات السلبية');
+          if(!window.XLSX) { 
+            alert('مكتبة XLSX غير محملة - جاري إنشاء CSV بديل...');
+            document.getElementById('exportGoogleAds').click();
+            return; 
           }
           
-          // الورقة الرابعة: الخطة الإعلانية
-          const budgetPerPlatform = budget / activePlatforms.length;
-          const planRows = [['المنصة','الميزانية المخصصة','CPM المتوقع','الظهور المتوقع','النقرات المتوقعة']];
-          
-          activePlatforms.forEach(p => {
-            const cpm = countryData.cpm[p] || 2;
-            const impressions = (budgetPerPlatform/cmp)*1000;
-            const clicks = impressions*0.015;
-            planRows.push([p, `${Math.round(budgetPerPlatform)} ${countryData.currency}`, `$${cpm}`, Math.round(impressions), Math.round(clicks)]);
-          });
-          
-          const wsPlan = XLSX.utils.aoa_to_sheet(planRows);
-          XLSX.utils.book_append_sheet(wb, wsPlan, 'الخطة الإعلانية');
-          
-          const fileName = `${sector.replace(/\s+/g,'-')}-${country}-${timestamp()}.xlsx`;
-          XLSX.writeFile(wb, fileName);
+          try {
+            const wb = XLSX.utils.book_new();
+            const now = new Date();
+            
+            // الورقة الأولى: ملخص الحملة
+            const summaryData = [
+              ['ملخص الحملة الإعلانية', ''],
+              ['', ''],
+              ['الدولة', country],
+              ['اللهجة', dialect === 'local' ? `لهجة ${country}` : 'العربية الفصحى'],
+              ['العملة', countryData.currency],
+              ['المجال', sector],
+              ['الميزانية الإجمالية', `${budget} ${countryData.currency}`],
+              ['نوع المطابقة', matchType === 'mixed' ? 'مزيج' : matchType === 'phrase' ? 'مطابقة العبارة' : matchType === 'broad' ? 'مطابقة واسعة' : 'مطابقة تامة'],
+              ['مستوى التوسع', expansionLevel === 'moderate' ? 'متوسط' : expansionLevel === 'conservative' ? 'محافظ' : 'توسعي'],
+              ['المنصات المختارة', activePlatforms.join(', ')],
+              ['تاريخ الإنشاء', now.toLocaleDateString('ar-SA')],
+              ['وقت الإنشاء', now.toLocaleTimeString('ar-SA')],
+              ['', ''],
+              ['إجمالي الكلمات', allKeywords.length],
+              ['إجمالي السلبية', negativeKeywords.length],
+              ['لغة التصدير', exportInDialect && dialectEnabled ? `لهجة ${country}` : 'العربية الفصحى'],
+              ['', '']
+            ];
+            
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            XLSX.utils.book_append_sheet(wb, wsSummary, 'ملخص الحملة');
+            
+            // الورقة الثانية: الكلمات الرئيسية
+            const keywordsForExport = exportInDialect ? allKeywords : exportKeywords;
+            const keywordRows = [['الكلمة','نوع المطابقة','مجموعة النية','ملاحظة']];
+            let keywordIndex = 0;
+            Object.entries(keywordGroups).forEach(([group, keywords]) => {
+              keywords.forEach(() => {
+                const k = keywordsForExport[keywordIndex];
+                const matchText = matchType === 'mixed' ? 'مزيج' :
+                                 matchType === 'phrase' ? 'مطابقة العبارة' :
+                                 matchType === 'broad' ? 'مطابقة واسعة' : 'مطابقة تامة';
+                keywordRows.push([k, matchText, group, '']);
+                keywordIndex++;
+              });
+            });
+            const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
+            XLSX.utils.book_append_sheet(wb, wsKeywords, 'الكلمات الرئيسية');
+            
+            // الورقة الثالثة: الكلمات السلبية
+            if(negativeKeywords.length) {
+              const negRows = [['الكلمة السلبية','السبب']];
+              negativeKeywords.forEach(k => negRows.push([k, 'تقليل الهدر']));
+              const wsNegatives = XLSX.utils.aoa_to_sheet(negRows);
+              XLSX.utils.book_append_sheet(wb, wsNegatives, 'الكلمات السلبية');
+            }
+            
+            // الورقة الرابعة: الخطة الإعلانية
+            const budgetPerPlatform = budget / activePlatforms.length;
+            const planRows = [['المنصة','الميزانية المخصصة','CPM المتوقع','الظهور المتوقع','النقرات المتوقعة']];
+            
+            activePlatforms.forEach(p => {
+              const cpm = countryData.cpm[p] || 2;
+              const impressions = (budgetPerPlatform/cpm)*1000; // إصلاح من cmp إلى cpm
+              const clicks = impressions*0.015;
+              planRows.push([p, `${Math.round(budgetPerPlatform)} ${countryData.currency}`, `$${cpm.toFixed(2)}`, Math.round(impressions), Math.round(clicks)]);
+            });
+            
+            const wsPlan = XLSX.utils.aoa_to_sheet(planRows);
+            XLSX.utils.book_append_sheet(wb, wsPlan, 'الخطة الإعلانية');
+            
+            const fileName = `${sector.replace(/\s+/g,'-')}-${country}-${timestamp()}.xlsx`;
+            XLSX.writeFile(wb, fileName);
+            
+            alert('✅ تم تنزيل ملف XLSX بنجاح!');
+          } catch(error) {
+            alert('حدث خطأ في تصدير XLSX - جاري إنشاء CSV بديل...');
+            document.getElementById('exportGoogleAds').click();
+          }
         };
         
         document.getElementById('exportGoogleAds').onclick = () => {
+          const keywordsForExport = exportInDialect ? allKeywords : exportKeywords;
           const csvRows = ['Campaign,Ad Group,Keyword,Match Type'];
+          let keywordIndex = 0;
           Object.entries(keywordGroups).forEach(([group, keywords]) => {
-            keywords.forEach(k => {
+            keywords.forEach(() => {
+              const k = keywordsForExport[keywordIndex];
               const matchText = matchType === 'mixed' ? 'Phrase' :
                                matchType === 'phrase' ? 'Phrase' :
                                matchType === 'broad' ? 'Broad' : 'Exact';
               csvRows.push(`${sector} Campaign,${group},${k},${matchText}`);
+              keywordIndex++;
             });
           });
           
-          const csvContent = '\ufeff' + csvRows.join('\n'); // UTF-8 BOM for Arabic
+          const csvContent = '\ufeff' + csvRows.join('\n');
           const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
           const link = document.createElement('a');
           link.href = URL.createObjectURL(blob);
           link.download = `${sector.replace(/\s+/g,'-')}-${country}-${timestamp()}.csv`;
           link.click();
           URL.revokeObjectURL(link.href);
+          
+          alert('✅ تم تنزيل ملف CSV بنجاح!');
         };
 
         // عرض التوزيع والتوقعات
@@ -575,22 +767,23 @@
           totals.sales += sales;
           
           const div = document.createElement('div');
-          div.innerHTML = `<b>${p}</b><br>CPM $${cpm.toFixed(2)}<br>ظهور ${fmt(impressions)} | نقرات ${fmt(clicks)} | تحويلات ${fmt(conversions)}`;
+          div.innerHTML = `<b>${p}</b><br>CPM $${cmp.toFixed(2)}<br>ظهور ${fmt(impressions)} | نقرات ${fmt(clicks)} | تحويلات ${fmt(conversions)}`;
           fEl.appendChild(div);
         });
 
         const totalDiv = document.createElement('div');
         totalDiv.innerHTML = `<b>الإجمالي</b><br>ظهور ${fmt(totals.impressions)} | نقرات ${fmt(totals.clicks)} | تحويلات ${fmt(totals.conversions)} | مبيعات ${fmt(totals.sales)}`;
-        totalDiv.style.background = '#e7f3ff';
+        totalDiv.style.background = '#eff6ff';
         totalDiv.style.borderColor = '#3b82f6';
+        totalDiv.style.fontWeight = '700';
         fEl.appendChild(totalDiv);
 
         document.getElementById('out').style.display = 'block';
         document.getElementById('successMsg').style.display = 'block';
-        setTimeout(() => document.getElementById('successMsg').style.display = 'none', 7000);
+        setTimeout(() => document.getElementById('successMsg').style.display = 'none', 8000);
         
         // التنقل التلقائي لقسم الكلمات
-        setTimeout(() => scrollToSection('keywords'), 1000);
+        setTimeout(() => scrollToSection('keywords'), 1200);
       });
     });
   </script>
