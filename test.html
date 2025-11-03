@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="1;url=https://www.google.com">
+    <title>جاري إعادة التوجيه إلى جوجل...</title>
+    <link rel="canonical" href="https://www.google.com">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .url-preview {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            word-break: break-all;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        .manual-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        .manual-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1 style="font-size: 2.2rem; margin-bottom: 1rem;">🚀 جاري إعادة التوجيه...</h1>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">TEST</div>
+                <div class="stat-label">الرابط القصير</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1ث</div>
+                <div class="stat-label">زمن التوجيه</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">معدل العمل</div>
+            </div>
+        </div>
+        
+        <p style="font-size: 1.2rem; margin-bottom: 1rem; opacity: 0.95;">
+            سيتم توجيهك تلقائياً إلى جوجل خلال ثانية واحدة...
+        </p>
+        
+        <div class="url-preview">
+            <strong style="font-size: 1.1rem;">🎯 الوجهة:</strong><br>
+            <span style="font-weight: 600; color: #fbbf24;">https://www.google.com</span>
+        </div>
+        
+        <a href="https://www.google.com" class="manual-link">
+            🔗 اضغط هنا إذا لم يتم التوجيه تلقائياً
+        </a>
+        
+        <div style="margin-top: 2.5rem; font-size: 0.85rem; opacity: 0.75; line-height: 1.4;">
+            رابط قصير تجريبي من 🇦🇭 <strong>أدوات الإعلانات العربية</strong><br>
+            مجاني 100% | بدون أطراف ثالثة | آمن وموثوق
+        </div>
+    </div>
+    
+    <script>
+        // Multiple redirect methods for maximum compatibility
+        
+        // Method 1: Immediate redirect (fastest)
+        setTimeout(() => {
+            window.location.replace('https://www.google.com');
+        }, 1200);
+        
+        // Method 2: Fallback redirect
+        setTimeout(() => {
+            window.location.href = 'https://www.google.com';
+        }, 2500);
+        
+        // Method 3: User-triggered redirect (click anywhere)
+        document.addEventListener('click', () => {
+            window.location.href = 'https://www.google.com';
+        });
+        
+        // Analytics tracking if available
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'short_url_redirect', {
+                'short_code': 'test',
+                'original_url': 'https://www.google.com',
+                'user_agent': navigator.userAgent,
+                'timestamp': new Date().toISOString()
+            });
+        }
+        
+        // Method 4: Emergency fallback with visual indication
+        setTimeout(() => {
+            if (window.location.href.includes('test.html')) {
+                const manualLink = document.querySelector('.manual-link');
+                if (manualLink) {
+                    manualLink.style.background = 'rgba(239, 68, 68, 0.8)';
+                    manualLink.style.animation = 'pulse 1s infinite';
+                    manualLink.innerHTML = '⚠️ اضغط هنا للتوجيه يدوياً';
+                }
+            }
+        }, 5000);
+    </script>
+    
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</body>
+</html>
