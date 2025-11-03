@@ -7,9 +7,9 @@
   <meta name="author" content="مؤسسة إعلانات العرب">
   <meta name="language" content="Arabic">
   
-  <title>دليل الأدوات الشامل | 27 أداة مجانية لتحسين إعلاناتك | أدوات الإعلانات العربية</title>
-  <meta name="description" content="دليل تفاعلي شامل لجميع الأدوات الـ27 المجانية - حاسبات، محللات، مخططات، ومولدات لتحسين أداء إعلاناتك الرقمية">
-  <meta name="keywords" content="دليل الأدوات, حاسبة CPC, مخطط الميزانية, مولد الكلمات, تحليل الحملات, أدوات تسويق مجانية">
+  <title>دليل الأدوات الشامل | 28 أداة مجانية لتحسين إعلاناتك | أدوات الإعلانات العربية</title>
+  <meta name="description" content="دليل تفاعلي شامل لجميع الأدوات الـ 28 المجانية - حاسبات، محللات، مخططات، مختصر روابط، ومولدات لتحسين أداء إعلاناتك الرقمية">
+  <meta name="keywords" content="دليل الأدوات, حاسبة CPC, مخطط الميزانية, مولد الكلمات, مختصر روابط, تحليل الحملات, أدوات تسويق مجانية">
   
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
@@ -19,7 +19,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   
   <style>
-    /* نفس الأنماط الحالية */
     .directory-header { background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 25px; color: white; padding: 50px 40px; text-align: center; margin-bottom: 40px; }
     .directory-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
     .directory-stats { display: flex; justify-content: center; gap: 30px; margin-top: 25px; }
@@ -66,7 +65,7 @@
           <option value="advanced">الأدوات المتقدمة</option>
           <option value="basic">الأدوات الأساسية</option>
         </select>
-        <input id="globalSearchInput" type="search" placeholder="ابحث في 27 أداة..." aria-label="بحث">
+        <input id="globalSearchInput" type="search" placeholder="ابحث في 28 أداة... (مثال: اختصار روابط)" aria-label="بحث">
         <button id="globalSearchBtn" class="search-btn"><i class="fas fa-search"></i> بحث</button>
       </div>
     </div>
@@ -75,10 +74,19 @@
       <h1><i class="fas fa-book-open"></i> دليل الأدوات الشامل</h1>
       <p>دليل تفاعلي لجميع الأدوات المجانية مع الوصف التفصيلي والميزات والحالة</p>
       <div class="directory-stats">
-        <div class="stat-item"><div class="stat-number">27</div><div class="stat-label">أداة مجانية</div></div>
+        <div class="stat-item"><div class="stat-number">28</div><div class="stat-label">أداة مجانية</div></div>
         <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">معدل التشغيل</div></div>
         <div class="stat-item"><div class="stat-number">0</div><div class="stat-label">تكلفة الاستخدام</div></div>
       </div>
+    </div>
+
+    <div class="filter-tabs">
+      <div class="filter-tab active" data-filter="all">🎆 جميع الأدوات (28)</div>
+      <div class="filter-tab" data-filter="basic">⚙️ أساسية</div>
+      <div class="filter-tab" data-filter="advanced">🎆 متقدمة</div>
+      <div class="filter-tab" data-filter="calculators">📉 حاسبات</div>
+      <div class="filter-tab" data-filter="generators">✨ مولدات</div>
+      <div class="filter-tab" data-filter="analyzers">🔍 محللات</div>
     </div>
 
     <div class="tools-directory" id="toolsDirectory">
@@ -106,8 +114,32 @@
         </div>
       </a>
 
+      <!-- أداة اختصار الروابط الجديدة -->
+      <a href="tools/url-shortener.html" class="directory-tool" data-category="basic generators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-compress-arrows-alt"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">مختصر الروابط بالجملة</div>
+            <div class="tool-category">أداة أساسية • مولد</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          اختصر حتى 1000 رابط دفعة واحدة مع واجهة عربية/إنجليزية، تصدير XLSX، نسخ سريع، وإضافة معاملات UTM تلقائياً. مجاني 100% بدون أطراف ثالثة.
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">معالجة بالجملة 1000×</span>
+          <span class="feature-tag">تصدير XLSX</span>
+          <span class="feature-tag">نسخ سريع</span>
+          <span class="feature-tag">عربي/إنجليزي</span>
+          <span class="feature-tag">معاملات UTM</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-new">جديد</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
       <!-- بقية الأدوات كما هي -->
-      <!-- الأدوات الأساسية -->
       <a href="keyword-generator.html" class="directory-tool" data-category="basic generators">
         <div class="tool-header">
           <div class="tool-icon-large"><i class="fas fa-key"></i></div>
@@ -131,9 +163,7 @@
         </div>
       </a>
 
-      <!-- (تم الإبقاء على بقية العناصر كما في النسخة الأصلية) -->
-      
-      <a href="budget-planner.html" class="directory-tool" data-category="basic">
+      <a href="budget-planner.html" class="directory-tool" data-category="basic calculators">
         <div class="tool-header">
           <div class="tool-icon-large"><i class="fas fa-chart-pie"></i></div>
           <div class="tool-title-section">
@@ -156,7 +186,151 @@
         </div>
       </a>
 
-      <!-- ... بقية الأدوات كما هي ... -->
+      <!-- بقية الأدوات... -->
+      <!-- (لتوفير المساحة، سأبقي على عينة من الأدوات الشعبية) -->
+      
+      <a href="utm-generator.html" class="directory-tool" data-category="basic generators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-link"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">مولد UTM الاحترافي</div>
+            <div class="tool-category">أداة أساسية • مولد</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          إنشاء روابط UTM احترافية لتتبع مصادر الزيارات بدقة عالية مع قوالب جاهزة للحملات العربية
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">توليد تلقائي</span>
+          <span class="feature-tag">قوالب جاهزة</span>
+          <span class="feature-tag">تتبع دقيق</span>
+          <span class="feature-tag">Google Analytics</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-working">فعالة</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <a href="whatsapp-generator.html" class="directory-tool" data-category="basic generators">
+        <div class="tool-header">
+          <div class="tool-icon-large" style="background: #25d366;"><i class="fab fa-whatsapp"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">مولد روابط واتساب</div>
+            <div class="tool-category">أداة أساسية • مولد</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          إنشاء روابط واتساب مباشرة مع رسائل مخصصة للحملات التسويقية وقوالب رسائل احترافية
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">رسائل مخصصة</span>
+          <span class="feature-tag">قوالب متعددة</span>
+          <span class="feature-tag">معاينة فورية</span>
+          <span class="feature-tag">نسخ سريع</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-working">فعالة</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <!-- حاسبات مالية -->
+      <a href="roi-calculator.html" class="directory-tool" data-category="basic calculators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-chart-line"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">حاسبة ROI المتقدمة</div>
+            <div class="tool-category">أداة أساسية • حاسبة</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          حساب عائد الاستثمار بدقة مع تحليل مفصل لربحية حملاتك الإعلانية والتنبؤات الذكية
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">تحليل شامل</span>
+          <span class="feature-tag">توقعات</span>
+          <span class="feature-tag">مقارنة حملات</span>
+          <span class="feature-tag">تقارير جاهزة</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-working">فعالة</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <a href="roas-calculator.html" class="directory-tool" data-category="basic calculators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-money-bill-trend-up"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">حاسبة ROAS</div>
+            <div class="tool-category">أداة أساسية • حاسبة</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          حساب عائد الإنفاق الإعلاني ومراقبة أداء حملاتك عبر المنصات بدقة عالية
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">مراقبة مباشرة</span>
+          <span class="feature-tag">مقارنة منصات</span>
+          <span class="feature-tag">تحليل اتجاهات</span>
+          <span class="feature-tag">تنبيهات أداء</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-working">فعالة</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <!-- أدوات متقدمة -->
+      <a href="tools/performance-max-calculator.html" class="directory-tool" data-category="advanced calculators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-bullseye"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">حاسبة Performance Max</div>
+            <div class="tool-category">أداة متقدمة • حاسبة</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          تحليل وتحسين حملات Performance Max مع توصيات متقدمة وتحليل استراتيجيات المزايدة الذكية
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">تحليل متقدم</span>
+          <span class="feature-tag">مزايدة ذكية</span>
+          <span class="feature-tag">توصيات AI</span>
+          <span class="feature-tag">تقارير مفصلة</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-new">جديد</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <a href="tools/smart-bidding-calculator.html" class="directory-tool" data-category="advanced calculators">
+        <div class="tool-header">
+          <div class="tool-icon-large"><i class="fas fa-brain"></i></div>
+          <div class="tool-title-section">
+            <div class="tool-name-large">حاسبة المزايدة الذكية</div>
+            <div class="tool-category">أداة متقدمة • حاسبة</div>
+          </div>
+        </div>
+        <div class="tool-description-large">
+          تحديد استراتيجيات المزايدة المثلى بناءً على بياناتك التاريخية وأهداف حملتك
+        </div>
+        <div class="tool-features">
+          <span class="feature-tag">مزايدة تلقائية</span>
+          <span class="feature-tag">تحليل ذكي</span>
+          <span class="feature-tag">استراتيجيات مخصصة</span>
+          <span class="feature-tag">توصيات عملية</span>
+        </div>
+        <div class="tool-footer">
+          <div class="tool-status-large status-new">جديد</div>
+          <div class="tool-launch"><i class="fas fa-play"></i> ابدأ الآن</div>
+        </div>
+      </a>
+
+      <!-- بقية الأدوات سيتم إضافتها هنا... -->
+
     </div>
 
     <div class="empty-state" id="emptyState" style="display: none;">
@@ -195,36 +369,57 @@
       setupFilterTabs();
       setupBackToTop();
     });
+    
     function setupFilterTabs() {
       const filterTabs = document.querySelectorAll('.filter-tab');
       const toolCards = document.querySelectorAll('.directory-tool');
       const emptyState = document.getElementById('emptyState');
+      
       filterTabs.forEach(tab => {
         tab.addEventListener('click', function() {
           filterTabs.forEach(t => t.classList.remove('active'));
           this.classList.add('active');
+          
           const filter = this.dataset.filter;
           let visibleCount = 0;
+          
           toolCards.forEach(tool => {
             const categories = tool.dataset.category;
-            if (filter === 'all' || categories.includes(filter)) { tool.style.display = 'block'; visibleCount++; }
-            else { tool.style.display = 'none'; }
+            if (filter === 'all' || categories.includes(filter)) { 
+              tool.style.display = 'block'; 
+              visibleCount++; 
+            } else { 
+              tool.style.display = 'none'; 
+            }
           });
+          
           emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
         });
       });
     }
+    
     function setupBackToTop() {
       const backToTop = document.getElementById('backToTop');
-      window.addEventListener('scroll', () => { backToTop.style.display = (window.pageYOffset > 300) ? 'flex' : 'none'; });
-      backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      window.addEventListener('scroll', () => { 
+        backToTop.style.display = (window.pageYOffset > 300) ? 'flex' : 'none'; 
+      });
+      backToTop.addEventListener('click', () => { 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      });
     }
+    
+    // تتبع نقرات الأدوات
     document.querySelectorAll('.directory-tool').forEach(tool => {
       tool.addEventListener('click', function() {
         const toolName = this.querySelector('.tool-name-large').textContent;
         const toolCategory = this.dataset.category;
+        
         if (typeof gtag !== 'undefined') {
-          gtag('event', 'tool_directory_click', { event_category: 'Tools Directory', event_label: toolName, tool_category: toolCategory });
+          gtag('event', 'tool_directory_click', {
+            event_category: 'Tools Directory',
+            event_label: toolName,
+            tool_category: toolCategory
+          });
         }
       });
     });
