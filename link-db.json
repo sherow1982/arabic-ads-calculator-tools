@@ -1,12 +1,132 @@
 {
   "meta": {
-    "version": "1.0.1",
+    "version": "2.0.0",
     "created": "2025-11-03T08:04:00Z",
-    "description": "قاعدة بيانات الروابط القصيرة لمختصر الروابط العربي - تدعم أي رابط",
-    "total_links": 9,
-    "last_updated": "2025-11-03T08:06:00Z"
+    "description": "قاعدة بيانات الروابط القصيرة لمختصر الروابط العربي - روابط قصيرة حقيقية",
+    "total_links": 24,
+    "last_updated": "2025-11-03T08:33:00Z"
   },
   "links": {
+    "k1": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=3-قطع-كاميرا-مراقبة-تعمل-بالطاقة-الشمسية",
+      "title": "3 قطع كاميرا مراقبة تعمل بالطاقة الشمسية",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k2": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=عربة-متنقلة-قابلة-للطي-بغطاء-و-عجلات",
+      "title": "عربة متنقلة قابلة للطي بغطاء و عجلات",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k3": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=آلة-إزالة-الشعر-الكهربائية-usb",
+      "title": "آلة إزالة الشعر الكهربائية USB",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k4": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=خلاط-كهربائي-2-لتر",
+      "title": "خلاط كهربائي 2 لتر",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k5": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=منظم-ظهر-لمقعد-السيارة",
+      "title": "منظم ظهر لمقعد السيارة",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k6": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=مقص-أظافر-كهربائي",
+      "title": "مقص أظافر كهربائي",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k7": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=فنغتشوانغ-طائرة-بدون-طيار",
+      "title": "فنغتشوانغ طائرة بدون طيار",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k8": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=رف-معطف-معدني",
+      "title": "رف معطف معدني",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k9": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=صندوق-منظم-للمكياج-ومستحضرات-التجميل",
+      "title": "صندوق منظم للمكياج ومستحضرات التجميل",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k10": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=خزانة-ملابس-قابلة-للطي",
+      "title": "خزانة ملابس قابلة للطي",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k11": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=مقلاة-طهي-مزدوجة-من-الألومنيوم-36-سم",
+      "title": "مقلاة طهي مزدوجة من الألومنيوم 36 سم",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k12": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=شال-تدليك-متعدد-الاوضاع-على-شكل-حرف-u-محمول-وكهربائي",
+      "title": "شال تدليك متعدد الاوضاع على شكل حرف U محمول وكهربائي",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k13": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=جهاز-التنظيف-الكهربائية-المحمولة-اللاسلكي",
+      "title": "جهاز التنظيف الكهربائية المحمولة اللاسلكي",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k14": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=رفوف-تجفيف-الملابس",
+      "title": "رفوف تجفيف الملابس",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
+    "k15": {
+      "url": "https://kuwait-matjar.arabsad.com/product.html?name=جهاز-إزالة-الشعر-بالليزر",
+      "title": "جهاز إزالة الشعر بالليزر",
+      "created": "2025-11-03T08:33:00Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "kuwait-products"
+    },
     "1": {
       "url": "https://arabsad.com",
       "title": "الموقع الرسمي لإعلانات العرب",
@@ -30,22 +150,6 @@
       "clicks": 0,
       "status": "active",
       "category": "demo"
-    },
-    "4": {
-      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/tools/keyword-generator.html",
-      "title": "مولد الكلمات المفتاحية",
-      "created": "2025-11-03T08:06:30Z",
-      "clicks": 0,
-      "status": "active",
-      "category": "tools"
-    },
-    "5": {
-      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/budget-planner.html",
-      "title": "مخطط الميزانية الذكي",
-      "created": "2025-11-03T08:06:45Z",
-      "clicks": 0,
-      "status": "active",
-      "category": "tools"
     },
     "demo": {
       "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
@@ -94,18 +198,21 @@
     "max_redirects_per_minute": 1000,
     "allowed_domains": ["*"],
     "auto_cleanup_inactive": false,
-    "redirect_delay_seconds": 2
+    "redirect_delay_seconds": 1,
+    "short_url_format": "s.html?to={code}"
   },
   "instructions": {
     "ar": {
       "how_to_use": "لاستخدام رابط قصير: s.html?to=الرمز",
       "how_to_add": "لإضافة رابط جديد: استخدم أداة مختصر الروابط",
-      "examples": "s.html?to=test, s.html?to=demo, s.html?to=tools"
+      "examples": "s.html?to=k1, s.html?to=k2, s.html?to=test",
+      "short_links": "الروابط القصيرة: k1, k2, k3... k15 للمنتجات الكويتية"
     },
     "en": {
-      "how_to_use": "To use a short link: s.html?to=code",
+      "how_to_use": "To use a short link: s.html?to=code", 
       "how_to_add": "To add new link: use URL shortener tool",
-      "examples": "s.html?to=test, s.html?to=demo, s.html?to=tools"
+      "examples": "s.html?to=k1, s.html?to=k2, s.html?to=test",
+      "short_links": "Short links: k1, k2, k3... k15 for Kuwait products"
     }
   }
 }
