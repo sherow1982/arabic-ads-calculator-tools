@@ -1,67 +1,91 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "created": "2025-11-03T08:04:00Z",
-    "description": "قاعدة بيانات الروابط القصيرة لمختصر الروابط العربي",
-    "total_links": 6,
-    "last_updated": "2025-11-03T08:04:00Z"
+    "description": "قاعدة بيانات الروابط القصيرة لمختصر الروابط العربي - تدعم أي رابط",
+    "total_links": 9,
+    "last_updated": "2025-11-03T08:06:00Z"
   },
   "links": {
     "1": {
-      "url": "https://example.com/test-long-url-for-shortening-demo",
-      "title": "رابط تجريبي للاختبار",
-      "created": "2025-11-03T07:45:00Z",
+      "url": "https://arabsad.com",
+      "title": "الموقع الرسمي لإعلانات العرب",
+      "created": "2025-11-03T08:06:00Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "main-site"
     },
     "2": {
       "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
       "title": "الصفحة الرئيسية للأدوات",
       "created": "2025-11-03T08:00:00Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "tools-home"
     },
     "3": {
       "url": "https://example.com/test-long-url-for-shortening-demo",
       "title": "رابط تجريبي من GitHub Issue",
       "created": "2025-11-03T07:45:57Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "demo"
+    },
+    "4": {
+      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/tools/keyword-generator.html",
+      "title": "مولد الكلمات المفتاحية",
+      "created": "2025-11-03T08:06:30Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "tools"
+    },
+    "5": {
+      "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/budget-planner.html",
+      "title": "مخطط الميزانية الذكي",
+      "created": "2025-11-03T08:06:45Z",
+      "clicks": 0,
+      "status": "active",
+      "category": "tools"
     },
     "demo": {
       "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/",
       "title": "عرض توضيحي للأدوات",
       "created": "2025-11-03T08:00:00Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "demo"
     },
     "test": {
       "url": "https://www.google.com",
       "title": "رابط اختبار لجوجل",
       "created": "2025-11-03T08:00:00Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "test"
     },
     "tools": {
       "url": "https://sherow1982.github.io/arabic-ads-calculator-tools/tools-directory.html",
       "title": "دليل جميع الأدوات",
       "created": "2025-11-03T08:01:00Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "tools"
     },
     "fb": {
       "url": "https://facebook.com/arabads.me",
       "title": "صفحة فيسبوك إعلانات العرب",
       "created": "2025-11-03T08:01:30Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "social"
     },
     "wa": {
       "url": "https://wa.me/201110760081",
       "title": "واتساب الدعم الفني",
       "created": "2025-11-03T08:01:45Z",
       "clicks": 0,
-      "status": "active"
+      "status": "active",
+      "category": "support"
     }
   },
   "settings": {
@@ -69,6 +93,19 @@
     "enable_analytics": true,
     "max_redirects_per_minute": 1000,
     "allowed_domains": ["*"],
-    "auto_cleanup_inactive": false
+    "auto_cleanup_inactive": false,
+    "redirect_delay_seconds": 2
+  },
+  "instructions": {
+    "ar": {
+      "how_to_use": "لاستخدام رابط قصير: s.html?to=الرمز",
+      "how_to_add": "لإضافة رابط جديد: استخدم أداة مختصر الروابط",
+      "examples": "s.html?to=test, s.html?to=demo, s.html?to=tools"
+    },
+    "en": {
+      "how_to_use": "To use a short link: s.html?to=code",
+      "how_to_add": "To add new link: use URL shortener tool",
+      "examples": "s.html?to=test, s.html?to=demo, s.html?to=tools"
+    }
   }
 }
