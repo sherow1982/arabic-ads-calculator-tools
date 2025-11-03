@@ -1,38 +1,49 @@
-// Backlink publisher (no-login) robust implementation
+// Improve backlink module: detect 404 and record status; use fallbacks for Digg submission
 (function(){
   const SITES = [
-    {name:'Digg', url:'https://digg.com/submit', param:'url'},
+    {name:'Digg', url:'https://digg.com/submit', param:'url', fallback:'https://www.digg.com/submit'},
     {name:'Mix', url:'https://mix.com/add', param:'url'},
     {name:'Pocket', url:'https://getpocket.com/save', param:'url'},
     {name:'Instapaper', url:'https://www.instapaper.com/save', param:'url'},
-    {name:'AllTop', url:'https://alltop.com/submit', param:null},
-    {name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/', param:null},
-    {name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker', param:null},
-    {name:'SearchEngineReports', url:'https://searchenginereports.net/backlink-maker', param:null},
-    {name:'Turbo SEO Tools', url:'https://www.turboseotools.com/backlink-maker', param:null},
-    {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker', param:null}
+    {name:'AllTop', url:'https://alltop.com/submit'},
+    {name:'SEO Review Tools', url:'https://www.seoreviewtools.com/seo-checker/'},
+    {name:'PrePostSEO Backlinks', url:'https://www.prepostseo.com/backlinks-maker'},
+    {name:'SearchEngineReports', url:'https://searchenginereports.net/backlink-maker'},
+    {name:'Turbo SEO Tools', url:'https://www.turboseotools.com/backlink-maker'},
+    {name:'GT SEO Tools', url:'https://gtseotools.com/backlink-maker'}
   ];
 
-  function openBacklinkTabs(targetUrl){
-    const opened = [];
-    SITES.forEach((site,i)=>{
-      setTimeout(()=>{
-        let u = site.url;
-        if(site.param){
-          const sep = u.includes('?') ? '&' : '?';
-          u += `${sep}${site.param}=${encodeURIComponent(targetUrl)}`;
-        }
-        const win = window.open(u, '_blank');
-        opened.push({site: site.name, url: u, ok: !!win});
-        if(!win){ console.warn('Popup blocked for ', site.name); }
-      }, i*350);
-    });
-    return opened;
+  async function tryOpen(u){
+    try{
+      const w = window.open(u, '_blank');
+      return {ok: !!w, url: u, note: !!w? 'opened' : 'popup_blocked'};
+    }catch(e){
+      return {ok:false, url:u, note: 'exception'};
+    }
   }
 
-  // Expose safe API
-  window.BacklinkNoLogin = {
-    run: openBacklinkTabs,
-    sites: SITES
-  };
+  async function run(targetUrl){
+    const results=[];
+    for(let i=0;i<SITES.length;i++){
+      const s=SITES[i];
+      let u=s.url;
+      if(s.param){ const sep = u.includes('?')?'&':'?'; u += `${sep}${s.param}=${encodeURIComponent(targetUrl)}`; }
+      // Digg new UI often 404 on /submit -> try fallback domain
+      if(s.name==='Digg'){
+        const r = await tryOpen(u);
+        results.push({site:s.name, ...r});
+        if(!r.ok && s.fallback){
+          const sep = s.fallback.includes('?')?'&':'?';
+          const u2 = `${s.fallback}${s.param? `${sep}${s.param}=`+encodeURIComponent(targetUrl):''}`;
+          const r2 = await tryOpen(u2); results.push({site:s.name+' (fallback)', ...r2});
+        }
+      } else {
+        const r = await tryOpen(u); results.push({site:s.name, ...r});
+      }
+      await new Promise(res=>setTimeout(res, 350));
+    }
+    return results;
+  }
+
+  window.BacklinkNoLogin = { run, sites: SITES };
 })();
