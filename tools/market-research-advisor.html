@@ -41,6 +41,7 @@
     .btn-copy{background:var(--neutral);color:white;border:none;border-radius:25px;padding:12px 24px;font-weight:700;cursor:pointer;transition:all 0.3s}
     .btn-copy:hover{background:#475569;transform:translateY(-2px)}
     .toggle-row{display:flex;gap:10px;align-items:center;justify-content:center;margin:15px 0;flex-wrap:wrap}
+    .ai-indicator{background:#E0E7FF;color:#4338CA;padding:6px 12px;border-radius:15px;font-size:0.75rem;font-weight:700;margin:5px 0}
     @media(max-width:768px){.container{padding:15px}.card{padding:18px;margin:15px 0}.manual-form{grid-template-columns:1fr}.platform-buttons{justify-content:center}}
   </style>
 </head>
@@ -53,7 +54,8 @@
   <div class="container">
     <div class="card ai-card">
       <h1>🤖 الذكاء الاصطناعي التسويقي المتقدم</h1>
-      <p style="font-size:1.1rem;opacity:0.95;margin:15px 0">حدد اعداداتك بنفسك، والذكاء الاصطناعي يولد كلمات مخصصة للمنصات المختارة فقط</p>
+      <p style="font-size:1.1rem;opacity:0.95;margin:15px 0">اكتب بأي لهجة أو تعبير، والذكاء الاصطناعي سيفهم المعنى ويولد كلمات بحثية دقيقة</p>
+      <div class="ai-indicator">🧠 محرك فهم اللهجات والمعاني مفعّل</div>
     </div>
 
     <div class="card">
@@ -62,12 +64,13 @@
         <button id="shareState" class="btn-secondary">🔗 نسخ رابط الحالة</button>
       </div>
       
-      <h2>🛠️ اعداداتك (تحكم كامل)</h2>
+      <h2>🛠️ اعداداتك (تحكم كامل + ذكاء)</h2>
       <form id="manualForm">
         <div class="manual-form">
           <div>
-            <label class="manual-label">المجال / الخدمة</label>
-            <input id="field" class="manual-input" placeholder="مثال: ميديا باير، دكتور نسا، نقل اثاث..." required>
+            <label class="manual-label">المجال / الخدمة (بأي لهجة)</label>
+            <input id="field" class="manual-input" placeholder="مثال: وايت صحي، سباك، ميديا باير، دكتور نسا، شركة تنظيف..." required>
+            <small style="color:#6B7280;font-size:0.8rem;margin-top:5px;display:block">💡 اكتب بأي لهجة أو تعبير - الذكاء الاصطناعي سيفهم المعنى تلقائياً</small>
           </div>
           <div>
             <label class="manual-label">الدولة</label>
@@ -122,7 +125,7 @@
         </div>
 
         <div style="text-align:center;margin-top:25px">
-          <button type="submit" class="btn-ai">🚀 توليد ذكي للمنصات المختارة</button>
+          <button type="submit" class="btn-ai">🚀 توليد ذكي بفهم اللهجات</button>
         </div>
       </form>
     </div>
@@ -172,11 +175,14 @@
       <a href="../tools-directory.html" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">دليل الأدوات</a>
       <a href="https://arabsad.com" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all 0.3s">الموقع الرسمي</a>
     </div>
-    <small style="opacity:0.9">© 2025 الذكاء الاصطناعي التسويقي - متقدم وشامل</small>
+    <small style="opacity:0.9">© 2025 الذكاء الاصطناعي التسويقي - فهم لهجات + معاني دقيقة</small>
   </footer>
 
+  <!-- Load semantic understanding engine first -->
+  <script src="ai-engines/semantic-understanding.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <script>
     // Global variables
     const BENCHMARKS = {
@@ -186,48 +192,12 @@
       'الكويت': {currency:'KWD', cpm:{'Google Ads':1.9,Facebook:1.5,Instagram:1.7,Snapchat:2.8,TikTok:2.1,YouTube:1.4,LinkedIn:3.8}},
       'قطر': {currency:'QAR', cpm:{'Google Ads':3.1,Facebook:2.3,Instagram:2.6,YouTube:2.0,TikTok:2.8,Snapchat:3.5,LinkedIn:5.1}},
       'البحرين': {currency:'BHD', cpm:{'Google Ads':1.8,Facebook:1.4,Instagram:1.6,TikTok:1.9,YouTube:1.2,Snapchat:2.3,LinkedIn:3.2}},
-      'عُمان': {currency:'OMR', cpm:{'Google Ads':2.0,Facebook:1.6,Instagram:1.8,TikTok:2.2,YouTube:1.5,Snapchat:2.6,LinkedIn:3.6}},
+      'عُمان': {currency:'OMR', cmp:{'Google Ads':2.0,Facebook:1.6,Instagram:1.8,TikTok:2.2,YouTube:1.5,Snapchat:2.6,LinkedIn:3.6}},
       'الأردن': {currency:'JOD', cpm:{Facebook:1.2,'Google Ads':1.6,Instagram:1.4,TikTok:1.5,YouTube:1.0,Snapchat:1.8,LinkedIn:2.4}},
       'لبنان': {currency:'LBP', cpm:{Facebook:0.8,'Google Ads':1.1,Instagram:0.9,TikTok:1.0,YouTube:0.7,Snapchat:1.2,LinkedIn:1.8}},
       'المغرب': {currency:'MAD', cpm:{Facebook:0.6,'Google Ads':0.9,Instagram:0.7,TikTok:0.8,YouTube:0.5,Snapchat:1.0,LinkedIn:1.5}},
       'تونس': {currency:'TND', cpm:{Facebook:0.5,'Google Ads':0.8,Instagram:0.6,TikTok:0.7,YouTube:0.4,Snapchat:0.9,LinkedIn:1.3}},
       'الجزائر': {currency:'DZD', cpm:{Facebook:0.3,'Google Ads':0.5,Instagram:0.4,TikTok:0.5,YouTube:0.2,Snapchat:0.6,LinkedIn:0.9}}
-    };
-
-    const SMART_FIELDS = {
-      'ميديا باير': {
-        synonyms: ['اعلانات ممولة', 'مدير حملات', 'ادس باير', 'مشتري إعلانات', 'إعلانات ممولة', 'شركة اعلانات'],
-        platforms: {
-          'Instagram': ['إدارة حملات Instagram احترافية', 'تصميم إعلانات Instagram جذابة', 'استهداف جمهور Instagram دقيق', 'محتوى Instagram تفاعلي', 'إعلانات Stories و Reels', 'تحليل أداء Instagram'],
-          'Facebook': ['إدارة Facebook Ads احترافية', 'حملات Lead Generation', 'استهداف جمهور Facebook متقدم', 'إعلانات Carousel تفاعلية', 'تحليل بيانات Facebook'],
-          'TikTok': ['حملات TikTok للشركات', 'إعلانات فيديو قصيرة', 'استهداف الجيل الجديد', 'محتوى TikTok تريندي', 'فيديوهات إعلانية إبداعية'],
-          'Google Ads': ['خدمات Google Ads لزيادة ROAS', 'إدارة حملات البحث', 'حملات Shopping', 'Display وYouTube', 'تحسين Quality Score'],
-          'YouTube': ['إعلانات YouTube In-Stream', 'حملات Discovery', 'استهداف فيديو متقدم', 'محتوى يوتيوب تسويقي'],
-          'LinkedIn': ['حملات LinkedIn B2B', 'استهداف مهني متقدم', 'Lead Generation للشركات', 'إعلانات احترافية'],
-          'Snapchat': ['إعلانات Snapchat محلية', 'Geo Filters', 'استهداف جغرافي سريع', 'حملات سناب محلية']
-        },
-        negatives: ['وظائف ميديا', 'تعليم اعلانات', 'دورات مجانية', 'اعلانات مجانية', 'صور اعلانات', 'برامج اعلانات']
-      },
-      'دكتور نساء': {
-        synonyms: ['طبيب نسا', 'دكتور ولادة', 'طبيب نساء', 'نساء وتوليد'],
-        platforms: {
-          'Instagram': ['عيادة نساء تصاميم احترافية', 'محتوى توعوي للحامل', 'صور قبل وبعد طبية', 'نصائح الحمل والولادة', 'Stories توعوية طبية'],
-          'Facebook': ['حجز موعد دكتور نساء', 'عيادة نساء وتوليد مضمونة', 'رعاية شاملة للحامل', 'خدمات نسائية متكاملة', 'متابعة الحمل والولادة'],
-          'Google Ads': ['افضل دكتور نساء قريب مني', 'اسعار متابعة الحمل', 'دكتور ولادة طوارئ', 'عيادة نساء بالتأمين', 'حجز دكتور نسا فوري'],
-          'Snapchat': ['دكتور نساء قريب مني', 'عيادة نساء 24 ساعة', 'طوارئ ولادة فورية', 'دكتور نسا محلي']
-        },
-        negatives: ['وظائف طب', 'دراسة طب', 'كتب طب', 'صور طبية', 'جامعة طب']
-      },
-      'نقل اثاث': {
-        synonyms: ['نقل عفش', 'ترحيل اثاث', 'شحن اثاث', 'نقل موبيليا'],
-        platforms: {
-          'Instagram': ['صور نقل اثاث احترافي', 'قبل وبعد نقل العفش', 'تغليف اثاث فني', 'عروض نقل بصرية', 'نقل اثاث جذاب بصريا'],
-          'Facebook': ['شركة نقل اثاث مضمونة', 'عروض نقل العفش', 'نقل اثاث مع التأمين', 'خدمات نقل شاملة', 'نقل عفش بضمان'],
-          'Google Ads': ['اسعار نقل عفش بالرياض', 'افضل شركة نقل اثاث', 'نقل اثاث فوري', 'رافعة نقل للطوابق العالية', 'نقل عفش مضمون'],
-          'Snapchat': ['نقل عفش قريب مني', 'نقل اثاث 24 ساعة', 'نقل فوري اليوم', 'شركة نقل محلية']
-        },
-        negatives: ['وظائف نقل', 'توظيف سائقين', 'نقل مجاني', 'اثاث للبيع']
-      }
     };
 
     let selectedPlatforms = ['Instagram'];
@@ -236,16 +206,17 @@
     let currentData = {};
     let currentClassified = [];
     let groupedView = false;
+    let semanticAnalysisUsed = false;
 
     // Initialize everything
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🚀 بدء تحميل الصفحة...');
+      console.log('🚀 بدء تحميل الصفحة مع الذكاء الاصطناعي...');
       
       loadSettings();
       setupEventListeners();
       loadFromHash();
       
-      console.log('✅ تم تحميل جميع الإعدادات');
+      console.log('✅ تم تحميل جميع الإعدادات مع محرك الفهم الدلالي');
     });
 
     function setupEventListeners() {
@@ -263,7 +234,7 @@
       if (form) {
         form.addEventListener('submit', function(e) {
           e.preventDefault();
-          console.log('تم إرسال النموذج');
+          console.log('تم إرسال النموذج مع التحليل الدلالي');
           generateResults();
         });
       }
@@ -326,7 +297,7 @@
     }
 
     function generateResults() {
-      console.log('🎯 بدء توليد النتائج...');
+      console.log('🎯 بدء توليد النتائج بالذكاء الاصطناعي...');
       
       const field = document.getElementById('field').value.trim();
       const country = document.getElementById('country').value;
@@ -342,12 +313,22 @@
 
       currentData = { field, country, dialect, budget, matchType, expansion, platforms: [...selectedPlatforms] };
       
-      // Generate keywords
-      currentKeywords = generateSmartKeywords(field, country, dialect, expansion, selectedPlatforms);
-      currentNegatives = generateSmartNegatives(field);
+      // Use semantic analysis engine if available
+      if (typeof window.semanticAnalysis === 'function') {
+        console.log('🧠 استخدام محرك الفهم الدلالي...');
+        currentKeywords = window.semanticAnalysis(field, country, selectedPlatforms, expansion);
+        semanticAnalysisUsed = true;
+      } else {
+        console.log('⚠️ محرك الفهم الدلالي غير متاح - استخدام النظام التقليدي');
+        currentKeywords = generateBasicKeywords(field, country, selectedPlatforms, expansion);
+        semanticAnalysisUsed = false;
+      }
+      
+      currentNegatives = generateContextualNegatives(field);
       currentClassified = classifyKeywords(currentKeywords);
       
       console.log(`✅ تم توليد ${currentKeywords.length} كلمة مخصصة للمنصات:`, selectedPlatforms);
+      console.log('🔬 تم استخدام التحليل الدلالي:', semanticAnalysisUsed);
 
       // Display results
       displayStrategy(currentData);
@@ -361,126 +342,47 @@
       saveSettings();
     }
 
-    function generateSmartKeywords(field, country, dialect, expansion, platforms) {
-      const fieldLower = field.toLowerCase();
+    // Fallback basic generation
+    function generateBasicKeywords(field, country, platforms, expansion) {
+      const targetCount = expansion === 'conservative' ? 25 : expansion === 'moderate' ? 40 : 50;
       let keywords = [];
-
-      // Platform-specific keyword generation
-      Object.entries(SMART_FIELDS).forEach(([key, data]) => {
-        const isMatch = data.synonyms.some(syn => fieldLower.includes(syn.toLowerCase())) || 
-                       fieldLower.includes(key.toLowerCase());
-        
-        if (isMatch && data.platforms) {
-          platforms.forEach(platform => {
-            if (data.platforms[platform]) {
-              keywords.push(...data.platforms[platform]);
-            }
-          });
+      
+      platforms.forEach(platform => {
+        if (platform === 'Instagram') {
+          keywords.push(
+            `${field} تصاميم احترافية`,
+            `محتوى ${field} بصري`,
+            `صور ${field} جذابة`,
+            `${field} Stories وReels`,
+            `عروض ${field} تفاعلية`
+          );
+        } else if (platform === 'Google Ads') {
+          keywords.push(
+            `افضل ${field} قريب مني`,
+            `اسعار ${field}`,
+            `حجز ${field}`,
+            `رقم ${field}`,
+            `${field} مضمون`
+          );
         }
       });
-
-      // Fallback generic keywords if no specific match
-      if (keywords.length === 0) {
-        platforms.forEach(platform => {
-          if (platform === 'Instagram') {
-            keywords.push(
-              `${field} تصاميم احترافية`,
-              `محتوى ${field} بصري`,
-              `صور ${field} جذابة`,
-              `${field} Stories وReels`,
-              `عروض ${field} تفاعلية`,
-              `${field} احترافي وجميل`,
-              `تصاميم ${field} حديثة`
-            );
-          } else if (platform === 'Google Ads') {
-            keywords.push(
-              `افضل ${field} قريب مني`,
-              `اسعار ${field}`,
-              `حجز ${field}`,
-              `رقم ${field}`,
-              `${field} مضمون`,
-              `${field} فوري`
-            );
-          } else if (platform === 'Facebook') {
-            keywords.push(
-              `خدمات ${field} شاملة`,
-              `${field} مع الضمان`,
-              `عروض ${field}`,
-              `${field} احترافي`,
-              `${field} موثوق`
-            );
-          } else if (platform === 'TikTok') {
-            keywords.push(
-              `${field} سريع`,
-              `${field} عصري`,
-              `${field} شبابي`,
-              `${field} ترندي`
-            );
-          }
-        });
-      }
-
-      // Add geographic variations only for relevant platforms
-      const cities = {
-        'السعودية': ['الرياض', 'جدة', 'الدمام'],
-        'الإمارات': ['دبي', 'أبوظبي', 'الشارقة'],
-        'مصر': ['القاهرة', 'الإسكندرية', 'الجيزة'],
-        'الكويت': ['الكويت', 'حولي', 'الأحمدي']
-      };
-
-      if (cities[country] && (platforms.includes('Google Ads') || platforms.includes('Snapchat'))) {
-        cities[country].slice(0, 2).forEach(city => {
-          keywords.push(`${field} في ${city}`);
-          if (platforms.includes('Google Ads')) {
-            keywords.push(`افضل ${field} ${city}`);
-          }
-        });
-      }
-
-      // Apply expansion level
-      const targetCount = expansion === 'conservative' ? 25 : expansion === 'moderate' ? 40 : 50;
       
-      // Remove duplicates and sort by popularity
-      const unique = [...new Set(keywords)];
-      const sorted = sortByPopularity(unique);
-      
-      // Ensure minimum count with relevant boosters
-      if (sorted.length < 20) {
-        const boosters = platforms.includes('Instagram') ? 
-          ['احترافي', 'جذاب', 'حديث', 'عصري', 'مميز'] :
-          ['مضمون', 'سريع', 'موثوق', 'محلي', 'جودة عالية'];
-        
-        boosters.forEach(booster => {
-          if (sorted.length < targetCount) {
-            sorted.push(`${field} ${booster}`);
-          }
-        });
+      // Ensure minimum count
+      while (keywords.length < targetCount) {
+        keywords.push(`${field} احترافي`, `${field} موثوق`, `خدمات ${field}`);
       }
       
-      return sorted.slice(0, targetCount);
+      return [...new Set(keywords)].slice(0, targetCount);
     }
 
-    function sortByPopularity(keywords) {
-      return keywords.sort((a, b) => popularityScore(b) - popularityScore(a));
-    }
-
-    function popularityScore(kw) {
-      let score = 0;
-      // High intent indicators
-      if (/اسعار|تكلفة|سعر/.test(kw)) score += 9;
-      if (/افضل|أفضل|احسن/.test(kw)) score += 8;
-      if (/قريب مني|في \S+/.test(kw)) score += 7;
-      if (/حجز|طلب|رقم|اتصال/.test(kw)) score += 7;
-      if (/24\s*ساعة|اليوم|فوري/.test(kw)) score += 6;
-      if (/عروض|خصومات/.test(kw)) score += 5;
-      if (/احترافي|مضمون|جودة/.test(kw)) score += 4;
+    function generateContextualNegatives(field) {
+      // Use semantic engine if available
+      if (typeof window.generateSmartNegatives === 'function') {
+        return window.generateSmartNegatives(field);
+      }
       
-      // Optimal word count (2-4 words are most searched)
-      const wordCount = kw.trim().split(/\s+/).length;
-      if (wordCount >= 2 && wordCount <= 4) score += 2;
-      else if (wordCount > 6) score -= 1;
-      
-      return score;
+      // Basic negatives
+      return ['وظائف', 'مجاني', 'تعليم', 'دورات', 'صور', 'فيديو'];
     }
 
     function classifyKeywords(keywords) {
@@ -532,24 +434,13 @@
       });
     }
 
-    function generateSmartNegatives(field) {
-      const fieldLower = field.toLowerCase();
-      let negatives = ['وظائف', 'مجاني', 'تعليم', 'دورات', 'صور', 'فيديو'];
-
-      Object.entries(SMART_FIELDS).forEach(([key, data]) => {
-        const match = data.synonyms.some(syn => fieldLower.includes(syn.toLowerCase())) || 
-                     fieldLower.includes(key.toLowerCase());
-        if (match && data.negatives) {
-          negatives.push(...data.negatives);
-        }
-      });
-
-      return [...new Set(negatives)];
-    }
-
     function displayStrategy(data) {
       const strategyDiv = document.getElementById('strategyContent');
       const countryData = BENCHMARKS[data.country] || BENCHMARKS['السعودية'];
+      
+      const analysisMethod = semanticAnalysisUsed ? 
+        '🧠 تم استخدام الذكاء الاصطناعي لفهم المعنى واللهجة' :
+        '⚙️ تم استخدام النظام التقليدي';
       
       strategyDiv.innerHTML = `
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin:20px 0">
@@ -567,7 +458,8 @@
           </div>
         </div>
         <div style="background:var(--bg-light);padding:20px;border-radius:12px;margin-top:15px;border-left:4px solid var(--primary)">
-          <strong>🧠 الاستراتيجية الذكية:</strong> تم تحليل "${data.field}" وتوليد <strong>${currentKeywords.length}</strong> كلمة مخصصة حصريًا للمنصات المختارة: <strong>${data.platforms.join('، ')}</strong> في ${data.country}
+          <div style="margin-bottom:10px">${analysisMethod}</div>
+          <strong>🎯 النتيجة:</strong> تم تحليل "${data.field}" وتوليد <strong>${currentKeywords.length}</strong> كلمة مخصصة حصرياً للمنصات المختارة: <strong>${data.platforms.join('، ')}</strong> في ${data.country}
         </div>
       `;
     }
@@ -593,10 +485,11 @@
 
       const statsEl = document.getElementById('keywordStats');
       if (statsEl) {
+        const analysisType = semanticAnalysisUsed ? '🧠 ذكاء دلالي' : '⚙️ تقليدي';
         statsEl.innerHTML = `
           🔑 <strong>${keywords.length}</strong> كلمة مخصصة للمنصات المختارة • 
           🎯 مطابقة: <strong>${getMatchTypeLabel(matchType)}</strong> • 
-          📱 مرتبة ومصنفة تلقائياً • 
+          📊 النوع: <strong>${analysisType}</strong> • 
           ⚡ <strong>بدون كلمات المنصات الأخرى</strong>
         `;
       }
@@ -699,7 +592,7 @@
     // Control functions
     function resetSettings() {
       localStorage.removeItem('ads-tool-settings');
-      localStorage.clear(); // Clear cache too
+      localStorage.clear();
       location.reload();
     }
 
@@ -769,7 +662,7 @@
 
         // Summary sheet
         const summaryData = [
-          ['🎯 ملخص الحملة المتقدمة', ''], ['', ''],
+          ['🎯 ملخص الحملة المتقدمة (ذكاء دلالي)', ''], ['', ''],
           ['المجال', currentData.field],
           ['الدولة', currentData.country],
           ['العملة', countryData.currency],
@@ -779,29 +672,31 @@
           ['التوسع', currentData.expansion],
           ['المنصات المختارة', currentData.platforms.join(' • ')],
           ['التوليد', now.toLocaleString('ar-SA')],
+          ['نوع التحليل', semanticAnalysisUsed ? 'ذكاء اصطناعي دلالي' : 'تقليدي'],
           ['', ''],
           ['إجمالي الكلمات', currentKeywords.length],
           ['إجمالي السلبية', currentNegatives.length],
-          ['النوع', 'يدوي متقدم + ذكاء + تصنيف + فلترة منصات']
+          ['النوع', 'يدوي متقدم + ذكاء + تصنيف + فلترة منصات + فهم لهجات']
         ];
         
         const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
         XLSX.utils.book_append_sheet(wb, wsSummary, 'ملخص الحملة');
 
-        // Keywords with classification
-        const keywordRows = [['الكلمة', 'المطابقة', 'الأولوية', 'المنصات المناسبة', 'CPC تقديري', 'سبب التصنيف']];
+        // Keywords with full classification
+        const keywordRows = [['الكلمة', 'المطابقة', 'الأولوية', 'المنصات المناسبة', 'CPC تقديري', 'سبب التصنيف', 'التحليل']];
         currentClassified.forEach(({keyword, platforms, score}, i) => {
           const priority = i < 15 ? 'عالية' : i < 30 ? 'متوسطة' : 'منخفضة';
           const cpcEstimate = estimateCPC(keyword, currentData.country, score);
           const reason = score > 7 ? 'نية عالية' : score > 4 ? 'متوسط الشيوع' : 'عام';
-          keywordRows.push([keyword, getMatchTypeLabel(currentData.matchType), priority, platforms.join('/'), cpcEstimate, reason]);
+          const analysisType = semanticAnalysisUsed ? 'دلالي' : 'تقليدي';
+          keywordRows.push([keyword, getMatchTypeLabel(currentData.matchType), priority, platforms.join('/'), cpcEstimate, reason, analysisType]);
         });
         
         const wsKeywords = XLSX.utils.aoa_to_sheet(keywordRows);
         XLSX.utils.book_append_sheet(wb, wsKeywords, 'الكلمات المصنفة');
 
-        // Strategy with platform distribution
-        const strategyRows = [['المنصة', 'نوع الإعلان', 'الهدف', 'الميزانية', 'CPM متوقع', 'كلمات مخصصة']];
+        // Enhanced strategy
+        const strategyRows = [['المنصة', 'نوع الإعلان', 'الهدف', 'الميزانية', 'CPM متوقع', 'كلمات مخصصة', 'الاستراتيجية']];
         const budgetPer = currentData.budget / currentData.platforms.length;
         
         currentData.platforms.forEach(platform => {
@@ -809,21 +704,25 @@
           const adType = getAdType(platform);
           const goal = getGoal(platform);
           const kwCount = currentClassified.filter(({platforms}) => platforms.includes(platform)).length;
-          strategyRows.push([platform, adType, goal, `${Math.round(budgetPer)} ${countryData.currency}`, `$${cpm.toFixed(2)}`, kwCount]);
+          const strategy = getStrategy(platform, currentData.field);
+          strategyRows.push([platform, adType, goal, `${Math.round(budgetPer)} ${countryData.currency}`, `$${cpm.toFixed(2)}`, kwCount, strategy]);
         });
         
         const wsStrategy = XLSX.utils.aoa_to_sheet(strategyRows);
         XLSX.utils.book_append_sheet(wb, wsStrategy, 'استراتيجية مفصلة');
 
-        // Negatives
-        const negRows = [['الكلمة السلبية', 'السبب', 'الأولوية']];
-        currentNegatives.forEach(neg => negRows.push([neg, 'تقليل الهدر', 'عالية']));
+        // Smart negatives
+        const negRows = [['الكلمة السلبية', 'السبب', 'الأولوية', 'التحليل']];
+        currentNegatives.forEach(neg => {
+          const reason = semanticAnalysisUsed ? 'ذكي حسب المعنى' : 'عام';
+          negRows.push([neg, 'تقليل الهدر', 'عالية', reason]);
+        });
         const wsNegatives = XLSX.utils.aoa_to_sheet(negRows);
         XLSX.utils.book_append_sheet(wb, wsNegatives, 'الكلمات السلبية');
 
-        const fileName = `Advanced-${currentData.field.replace(/\s+/g,'-')}-${Date.now()}.xlsx`;
+        const fileName = `AI-Semantic-${currentData.field.replace(/\s+/g,'-')}-${Date.now()}.xlsx`;
         XLSX.writeFile(wb, fileName);
-        alert('✅ تم تنزيل XLSX متقدم مع CPC وتصنيف المنصات!');
+        alert('✅ تم تنزيل XLSX متقدم مع التحليل الدلالي والتصنيف!');
 
       } catch (error) {
         console.error('خطأ XLSX:', error);
@@ -852,11 +751,12 @@
     }
 
     function exportCSV() {
-      const rows = ['الكلمة,المطابقة,الأولوية,المنصات,CPC'];
+      const rows = ['الكلمة,المطابقة,الأولوية,المنصات,CPC,التحليل'];
       currentClassified.forEach(({keyword, platforms, score}, i) => {
         const priority = i < 15 ? 'عالية' : 'متوسطة';
         const cpc = estimateCPC(keyword, currentData.country, score);
-        rows.push(`${keyword},${getMatchTypeLabel(currentData.matchType)},${priority},${platforms.join('/')},${cpc}`);
+        const analysisType = semanticAnalysisUsed ? 'دلالي' : 'تقليدي';
+        rows.push(`${keyword},${getMatchTypeLabel(currentData.matchType)},${priority},${platforms.join('/')},${cpc},${analysisType}`);
       });
       downloadCSV('\ufeff' + rows.join('\n'), `Keywords-${Date.now()}.csv`);
       alert('✅ تم تنزيل ملف CSV!');
@@ -872,17 +772,18 @@
         keywords: currentKeywords,
         negatives: currentNegatives,
         classified: currentClassified,
+        semantic_analysis_used: semanticAnalysisUsed,
         generated_at: new Date().toISOString(),
-        mode: 'advanced_manual'
+        mode: 'advanced_semantic_ai'
       };
       
       const blob = new Blob([JSON.stringify(profile, null, 2)], {type: 'application/json'});
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `Profile-${currentData.field.replace(/\s+/g,'-')}.json`;
+      link.download = `Profile-AI-${currentData.field.replace(/\s+/g,'-')}.json`;
       link.click();
       URL.revokeObjectURL(link.href);
-      alert('✅ تم تنزيل بروفايل JSON شامل!');
+      alert('✅ تم تنزيل بروفايل JSON شامل مع الذكاء الاصطناعي!');
     }
 
     function downloadCSV(content, filename) {
@@ -936,6 +837,19 @@
         'Snapchat': 'استهداف جغرافي سريع'
       };
       return goals[platform] || 'زيادة الوعي';
+    }
+
+    function getStrategy(platform, field) {
+      const strategies = {
+        'Google Ads': `استهداف "${field}" بكلمات عالية النية + موقع جغرافي`,
+        'Instagram': `محتوى بصري لـ"${field}" + قصص تفاعلية`,
+        'Facebook': `حملات Lead Generation لـ"${field}" + Carousel`,
+        'TikTok': `فيديوهات قصيرة لـ"${field}" + الجيل الجديد`,
+        'YouTube': `محتوى تعليمي وشرح لـ"${field}"`,
+        'LinkedIn': `استهداف B2B لـ"${field}" + محتوى مهني`,
+        'Snapchat': `استهداف محلي لـ"${field}" + Geo Filters`
+      };
+      return strategies[platform] || 'استراتيجية عامة';
     }
 
     // Settings management
@@ -1013,7 +927,7 @@
 
     // Initialize on load
     window.addEventListener('load', function() {
-      console.log('🎯 الصفحة جاهزة تماماً');
+      console.log('🎯 الصفحة جاهزة تماماً مع الذكاء الاصطناعي الدلالي');
       loadSettings();
     });
   </script>
